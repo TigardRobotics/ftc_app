@@ -71,6 +71,8 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
     manager.register("NullOp", NullOp.class);
 
+    manager.register("RSL", RSL.class);
+    manager.register("CascadeEffect_3058", CascadeEffect_3058.class);
 
     /*
      * The following example op modes are designed to work with a K9-style robot.

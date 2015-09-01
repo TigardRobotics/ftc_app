@@ -32,6 +32,7 @@
     android:required="true" />
 
   <uses-feature android:name="android.hardware.usb.accessory" />
+  <uses-permission android:name="android.permission.CAMERA"/>
 
   <application
     android:allowBackup="true"
