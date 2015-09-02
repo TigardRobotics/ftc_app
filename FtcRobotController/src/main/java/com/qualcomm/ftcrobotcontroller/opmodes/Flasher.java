@@ -46,7 +46,7 @@ import java.util.Date;
  * <p>
  *Enables control of the robot via the gamepad
  */
-public class RSL extends OpMode {
+public class Flasher extends OpMode {
 
   private String startDate;
   private ElapsedTime runtime = new ElapsedTime();
@@ -58,7 +58,7 @@ public class RSL extends OpMode {
   /**
    * Constructor
    */
-  public RSL() {
+  public Flasher() {
   }
 
   /*

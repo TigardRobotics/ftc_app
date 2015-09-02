@@ -71,7 +71,11 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
     manager.register("NullOp", NullOp.class);
 
-    manager.register("RSL", RSL.class);
+    /*
+     * Custom OpModes
+     */
+    manager.register("Flasher", Flasher.class);
+    manager.register("SpeedSensors", SpeedSensors.class);
     manager.register("CascadeEffect_3058", CascadeEffect_3058.class);
 
     /*
@@ -87,7 +91,7 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     /*
      * The following example op modes are designed to work with a pushbot-style robot.
-     *  - PushBotManual is a driver controled (tank drive) op mode.
+     *  - PushBotManual is a driver controlled (tank drive) op mode.
      *  - PushBotAuto uses the event driven (non linear) OpMode class for autonomous operation.
      *  - PushBotDriveTouch uses the LinearOpMode class and shows how to autonomously drive if a button is not pressed.
      *  - PushBotIrSeek uses the LinearOpMode class and shows how to track an IR beacon.
