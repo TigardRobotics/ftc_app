@@ -7,6 +7,7 @@ import android.hardware.Camera;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.IrSeekerSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
@@ -61,6 +62,7 @@ public class CascadeEffect_3058 extends OpMode {
 	Servo tailhook;
 	Servo gate;
 	TouchSensor lift_limit;
+	IrSeekerSensor irSeeker;
 
 	private Camera camera;
 	private Camera.Parameters parm;
@@ -93,6 +95,8 @@ public class CascadeEffect_3058 extends OpMode {
 		tailhook = hardwareMap.servo.get("tailhook");
 		gate = hardwareMap.servo.get("gate");
 		lift_limit = hardwareMap.touchSensor.get(("lift_limit"));
+		irSeeker = hardwareMap.irSeekerSensor.get("ir_seeker");
+		irSeeker.setMode(IrSeekerSensor.Mode.MODE_1200HZ_AC);
 	}
 
 	@Override
@@ -118,6 +122,10 @@ public class CascadeEffect_3058 extends OpMode {
 	 */
 	@Override
 	public void loop() {
+
+		boolean ir_detected = irSeeker.signalDetected();
+		double ir_angle = irSeeker.getAngle();
+		double ir_strength = irSeeker.getStrength();
 
 		/*
 		 * Gamepad 1
@@ -194,15 +202,15 @@ public class CascadeEffect_3058 extends OpMode {
 			motorLift2.setPower(0.0);
 		}
 
-		//Turn camera light on/off using gamepad <- and ->
+		//Turn camera light on/off using gamepad ^ and v
 		if(camera != null) {
-			if (gamepad1.dpad_right) {
-				// if the -> is pushed on gamepad1, turn on the camera light
+			if (gamepad1.dpad_up) {
+				// if the ^ is pushed on gamepad1, turn on the camera light
 				parm.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
 				camera.setParameters(parm);
 				CameraState = "ON";
-			} else if (gamepad1.dpad_left) {
-				// if the <- is pushed on gamepad1, turn off the camera light
+			} else if (gamepad1.dpad_down) {
+				// if the v is pushed on gamepad1, turn off the camera light
 				parm.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
 				camera.setParameters(parm);
 				CameraState = "OFF";
@@ -219,6 +227,9 @@ public class CascadeEffect_3058 extends OpMode {
 								+ " lift_stop=" + (lift_stop ? "on" : "off"));
         telemetry.addData("servos", "tailhook=" + String.format("%.2f", tailhookPosition)
 								+ ", gate=" + String.format("%.2f", gatePosition));
+		telemetry.addData("IR", "detected=" + (ir_detected ? "yes" : "no")
+				+ ", angle=" + String.format("%.2f", ir_angle)
+				+ ", strength=" + String.format("%.2f", ir_strength));
 		//telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
 		//telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
 	}
