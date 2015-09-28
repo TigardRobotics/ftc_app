@@ -77,6 +77,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Flasher", Flasher.class);
     manager.register("SpeedSensors", SpeedSensors.class);
     manager.register("CascadeEffect_3058", CascadeEffect_3058.class);
+    manager.register("Button", ButtonFlash.class);
 
     /*
      * The following example op modes are designed to work with a K9-style robot.
