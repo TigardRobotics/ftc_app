@@ -96,7 +96,7 @@ public class CascadeEffect_3058 extends OpMode {
 		gate = hardwareMap.servo.get("gate");
 		lift_limit = hardwareMap.touchSensor.get(("lift_limit"));
 		irSeeker = hardwareMap.irSeekerSensor.get("ir_seeker");
-		irSeeker.setMode(IrSeekerSensor.Mode.MODE_1200HZ_AC);
+		irSeeker.setMode(IrSeekerSensor.Mode.MODE_1200HZ);
 	}
 
 	@Override
