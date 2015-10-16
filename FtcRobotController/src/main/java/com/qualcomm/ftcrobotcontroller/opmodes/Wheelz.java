@@ -15,16 +15,17 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * TeleOp Mode for controlling 2014-2145 FTC Team 3058 Cascade Effect Robot
  * Hardware Setup
- * 	Motor Controller N/C
- * 		Port 1 - "Motor"
- * 		Port 2 - N/C
+ * 	Motor Controller "wheels"
+ * 		Port 1 - "motor_r"
+ * 		Port 2 - "motor_l"
  *
  * Enables control of the robot via the gamepad
  */
 public class Wheelz extends OpMode {
 
 	//
-	DcMotor motor;
+	DcMotor motorR;
+	DcMotor motorL;
 
 	/**
 	 * Constructor
@@ -40,8 +41,9 @@ public class Wheelz extends OpMode {
 	@Override
 	public void init() {
 
-		telemetry.addData("OpMode", "*** One Motor v1.0 ***");
-		motor = hardwareMap.dcMotor.get("Motor");
+		telemetry.addData("OpMode", "*** Wheelz v1.0 ***");
+		motorR = hardwareMap.dcMotor.get("motor_r");
+		motorL = hardwareMap.dcMotor.get("motor_l");
 	}
 
 	@Override
@@ -57,14 +59,18 @@ public class Wheelz extends OpMode {
 
         // tank drive
         // note that if y equal -1 then joystick is pushed all of the way forward.
-        float power = -gamepad1.right_stick_y;
+        float powerR = -gamepad1.right_stick_y;
+		float powerL = gamepad1.left_stick_y;
 
 		// clip the value so it never exceed +/- 1
-		power = Range.clip(power, -1, 1);
+		powerR = Range.clip(powerR, -1, 1);
+		powerL = Range.clip(powerL, -1, 1);
 
 		// write the values to the motors
-		motor.setPower(power);
-		telemetry.addData("Motor", "Power: " + String.format("%.2f", power));
+		motorR.setPower(powerR);
+		motorL.setPower(powerL);
+		telemetry.addData("MotorR", "Power: " + String.format("%.2f", powerR));
+		telemetry.addData("MotorL", "Power: " + String.format("%.2f", powerL));
 	}
 
 	/**
