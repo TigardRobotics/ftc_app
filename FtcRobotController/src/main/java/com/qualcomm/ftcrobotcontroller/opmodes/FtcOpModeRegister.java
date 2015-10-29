@@ -60,6 +60,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     /*
      * Custom OpModes
      */
+    manager.register("StateFlasher", StateFlasher.class);
     manager.register("Flasher", Flasher.class);
     manager.register("SpeedSensors", SpeedSensors.class);
     manager.register("CascadeEffect_3058", CascadeEffect_3058.class);
