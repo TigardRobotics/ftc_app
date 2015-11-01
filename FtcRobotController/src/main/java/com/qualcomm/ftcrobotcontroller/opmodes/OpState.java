@@ -13,23 +13,46 @@ import java.util.Map;
  */
 public abstract class OpState {
 
+    /**
+     * The state the is currently active
+     */
     private static OpState CurrentState = null;
 
+    /**
+     * Change the the specified state
+     * This will call OnExit of the previous state the OnEntry of the selected state
+     * @param state_name Name of the new State
+     */
     public static void SetCurrentState( String state_name ){
         OpState state = GetOpState(state_name);
         if ( CurrentState != null) CurrentState.OnExit();
         CurrentState = state;
-        CurrentState.OnEntry();
+        if ( CurrentState != null) CurrentState.OnEntry();
     }
 
-    public static OpState GetCurrentState(){
-        return CurrentState;
+    /**
+     * Gets the Name of the Current State
+     * @return Name of the Current State
+     */
+    public static String GetCurrentState(){
+        if ( CurrentState != null) {
+            return CurrentState.Name;
+        }
+        else{
+            return null;
+        }
     }
 
-    public static void DoCurrentState(){
-        CurrentState.Do();
+    /**
+     * Run the Do method for the current state
+     */
+    public static void DoCurrentState() {
+        if ( CurrentState != null) CurrentState.Do();
     }
 
+    /**
+     * Dictionary for all the states that have been contructed
+     */
     private static Map<String, OpState> StateList = new HashMap<String, OpState>();
 
     /**
@@ -37,10 +60,21 @@ public abstract class OpState {
      * @param name Name of the OpState
      * @return OpState
      */
-    public static OpState GetOpState(String name){
+    private static OpState GetOpState(String name){
         return StateList.get(name);
     }
 
+    /**
+     * Set the Current State to null and remove all the States from the State Dictionary
+     */
+    public static void ClearAllStates() {
+        SetCurrentState(null);
+        StateList.clear();
+    }
+
+    /**
+     * State Name
+     */
     public String Name;
 
     /**
