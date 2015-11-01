@@ -17,6 +17,7 @@ class FlashState extends OpState{
     private StateFlasher opMode;
     private int FlashCounter = 0;
     private int FlashCount;
+    public int blinker;
     private String NextStateName;
 
     /**
@@ -35,16 +36,37 @@ class FlashState extends OpState{
 
     @Override
     public void OnEntry() {
-        FlashCount = 0; //reset the flash count
+        FlashCounter = 0; //reset the flash counter
     }
 
     @Override
     public void Do() {
         // Blink the LED.
-        if (opMode.blink()) FlashCounter++;
+        if (blink()) FlashCounter++;
         opMode.telemetry.addData(Name, "Count = " + String.format("%d", FlashCounter));
-        opMode.telemetry.addData(Name, "blinker = " + String.format("%d", opMode.blinker));
+        opMode.telemetry.addData(Name, "blinker = " + String.format("%d", blinker));
         if(FlashCounter>=FlashCount) SetCurrentState(NextStateName);
+    }
+
+    /**
+     * Code to blink the LED at a regular interval
+     * Turn on the LED for 10 cylces and turn off at 100 cycles
+     * @return true when flash is complete(light is turned off) so you can count flashes
+     */
+    private boolean blink() {
+        // Increment blinker and wrap at 100
+        blinker = ++blinker % 100;
+
+        if (blinker == 0) {
+            opMode.SetLight(true);
+            return false;
+        } else  if (blinker == 10) {
+            opMode.SetLight(false);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
 
@@ -96,14 +118,14 @@ public class StateFlasher extends OpMode {
 
     private Camera camera;
     private Parameters parm;
-    public int blinker;
 
+    //Construct the states
     private OpState flash3 = new FlashState("FlashThree", this, 3, "Delay");
-    private OpState delay = new FlashState("Delay", this, 200, "FlashThree");
+    private OpState delay = new DelayState("Delay", this, 200, "FlashThree");
 
     /**
     * Constructor
-    */
+    **/
     public StateFlasher() {
     }
 
@@ -127,7 +149,7 @@ public class StateFlasher extends OpMode {
     */
     @Override
     public void loop() {
-        telemetry.addData(OpState.GetCurrentState().Name, "Running for " + runtime.toString());
+        telemetry.addData(OpState.GetCurrentState(), "Running for " + runtime.toString());
         OpState.DoCurrentState();
     }
 
@@ -142,25 +164,18 @@ public class StateFlasher extends OpMode {
         }
     }
 
-    /*
-    * Code to blink the LED at a regular interval
-    * Turn on the LED for 10 cylces and turn off at 100 cycles
-    */
-    public boolean blink() {
-        // Increment blinker and wrap at 100
-        blinker = ++blinker % 100;
-
-        if (blinker == 0) {
+    /**
+     * Set Light State
+     * @param on true=on, false=off
+     */
+    public void SetLight( boolean on ) {
+        if (on) {
             parm.setFlashMode(Parameters.FLASH_MODE_TORCH);
-            camera.setParameters(parm);
-            return true;
-        } else  if (blinker == 10) {
-            parm.setFlashMode(Parameters.FLASH_MODE_OFF);
-            camera.setParameters(parm);
-            return false;
         }
         else {
-            return false;
+            parm.setFlashMode(Parameters.FLASH_MODE_OFF);
         }
+        camera.setParameters(parm);
     }
+
 }
