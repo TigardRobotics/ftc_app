@@ -24,7 +24,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/build/intermediates/classes/debug" />
     <output-test url="file://$MODULE_DIR$/build/intermediates/classes/androidTest/debug" />
     <exclude-output />
@@ -71,6 +71,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/Analytics-release/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/FtcCommon-release/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/Hardware-release/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/ModernRobotics-release/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/RobotCore-release/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/WirelessP2p-release/jars" />
@@ -91,12 +92,12 @@
     </content>
     <orderEntry type="jdk" jdkName="Android 4.4.2 Google APIs" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="d2xx" level="project" />
     <orderEntry type="library" exported="" name="RobotCore-release-" level="project" />
     <orderEntry type="library" exported="" name="ModernRobotics-release-" level="project" />
     <orderEntry type="library" exported="" name="WirelessP2p-release-" level="project" />
     <orderEntry type="library" exported="" name="Analytics-release-" level="project" />
     <orderEntry type="library" exported="" name="android-support-v4" level="project" />
+    <orderEntry type="library" exported="" name="Hardware-release-" level="project" />
     <orderEntry type="library" exported="" name="FtcCommon-release-" level="project" />
   </component>
 </module>
