@@ -5,6 +5,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -89,8 +90,15 @@ public class AutoWheelz extends OpMode {
 
 		telemetry.addData("OpMode", "*** AutoWheelz v1.0 ***");
 		runtime.reset();
+
 		motorR = hardwareMap.dcMotor.get("motor_r");
+		motorR.setDirection (DcMotor.Direction.REVERSE);
+		motorR.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+		motorR.setChannelMode( DcMotorController.RunMode.RUN_USING_ENCODERS);
+
 		motorL = hardwareMap.dcMotor.get("motor_l");
+		motorL.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+		motorL.setChannelMode( DcMotorController.RunMode.RUN_USING_ENCODERS);
 	}
 
 	@Override
