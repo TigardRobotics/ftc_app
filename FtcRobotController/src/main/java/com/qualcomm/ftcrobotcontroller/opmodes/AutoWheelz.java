@@ -16,9 +16,9 @@ class DriveState extends OpState {
 
 	private AutoWheelz opMode;
 	private String NextStateName;
-	private float Power;
-	private float TargetDistance;
-	private float TravelDistance;
+	private double Power;
+	private double TargetDistance;
+	private double TravelDistance;
 
 	/**
 	 * Constructor
@@ -29,7 +29,7 @@ class DriveState extends OpState {
 	 * @param distance   Distance to go
 	 * @param next_state Next State Name
 	 */
-	DriveState(String name, AutoWheelz opmode, float power, float distance, String next_state) {
+	DriveState(String name, AutoWheelz opmode, double power, double distance, String next_state) {
 		super(name);
 		opMode = opmode;
 		Power = power;
@@ -45,8 +45,8 @@ class DriveState extends OpState {
 
 	@Override
 	public void Do() {
-		float distance = opMode.GetMotorDistance();
-        opMode.telemetry.addData("Drive", String.format("%d of %d", distance, TargetDistance));
+		double distance = opMode.GetMotorDistance();
+        opMode.telemetry.addData("Drive", String.format("%f of %f", distance, TargetDistance));
 		if(distance>=TargetDistance) SetCurrentState(NextStateName);
 	}
 
@@ -72,7 +72,7 @@ public class AutoWheelz extends OpMode {
 	private ElapsedTime runtime = new ElapsedTime();
 
 	private OpState delay = new DelayState("Delay", this, 200, "Forward");
-	private OpState forward = new DriveState("Forward", this, 50, 100, "Delay");
+	private OpState forward = new DriveState("Forward", this, 0.50, 100, "Delay");
 
 	/**
 	 * Constructor
@@ -90,15 +90,17 @@ public class AutoWheelz extends OpMode {
 
 		telemetry.addData("OpMode", "*** AutoWheelz v1.0 ***");
 		runtime.reset();
+		OpState.SetCurrentState("Forward");
 
 		motorR = hardwareMap.dcMotor.get("motor_r");
-		motorR.setDirection (DcMotor.Direction.REVERSE);
+		motorR.setDirection(DcMotor.Direction.REVERSE);
 		motorR.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
 		motorR.setChannelMode( DcMotorController.RunMode.RUN_USING_ENCODERS);
 
 		motorL = hardwareMap.dcMotor.get("motor_l");
 		motorL.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-		motorL.setChannelMode( DcMotorController.RunMode.RUN_USING_ENCODERS);
+		motorL.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
 	}
 
 	@Override
@@ -123,17 +125,17 @@ public class AutoWheelz extends OpMode {
 	public void stop() {
 	}
 
-	public void MotorsForward( float power ){
+	public void MotorsForward( double power ){
 		motorR.setPower(Range.clip(power, -1, 1));
 		motorL.setPower(Range.clip(power, -1, 1));
 	}
 
-	public void MotorsTurn( float power ){
+	public void MotorsTurn( double power ){
 		motorR.setPower(Range.clip(power, -1, 1));
 		motorL.setPower(Range.clip(-power, -1, 1));
 	}
 
-	public float GetMotorDistance(){
+	public double GetMotorDistance(){
 		float distanceR = motorR.getCurrentPosition();
 		float distanceL = motorL.getCurrentPosition();
 		//Report the motor that traveled the shortest distance (slipped the least)
