@@ -4,6 +4,8 @@
  */
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.qualcomm.ftccommon.DbgLog;
+
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +25,7 @@ public abstract class OpState {
      * This will call OnExit of the previous state the OnEntry of the selected state
      * @param state_name Name of the new State
      */
-    public static void SetCurrentState( String state_name ){
+    public final static void SetCurrentState( String state_name ){
         OpState state = GetOpState(state_name);
         if ( CurrentState != null) CurrentState.OnExit();
         CurrentState = state;
@@ -34,7 +36,7 @@ public abstract class OpState {
      * Gets the Name of the Current State
      * @return Name of the Current State
      */
-    public static String GetCurrentState(){
+    public final static String GetCurrentState(){
         if ( CurrentState != null) {
             return CurrentState.Name;
         }
@@ -46,7 +48,7 @@ public abstract class OpState {
     /**
      * Run the Do method for the current state
      */
-    public static void DoCurrentState() {
+    public final static void DoCurrentState() {
         if ( CurrentState != null) CurrentState.Do();
     }
 
@@ -60,14 +62,14 @@ public abstract class OpState {
      * @param name Name of the OpState
      * @return OpState
      */
-    private static OpState GetOpState(String name){
+    private final static OpState GetOpState(String name){
         return StateList.get(name);
     }
 
     /**
      * Set the Current State to null and remove all the States from the State Dictionary
      */
-    public static void ClearAllStates() {
+    public final static void ClearAllStates() {
         SetCurrentState(null);
         StateList.clear();
     }
@@ -75,7 +77,7 @@ public abstract class OpState {
     /**
      * State Name
      */
-    public String Name;
+    public final String Name;
 
     /**
      * Constructor
@@ -85,6 +87,7 @@ public abstract class OpState {
     public OpState(String name){
         Name = name;
         StateList.put(Name, this);
+        DbgLog.msg("Created OpState '" + Name + "'");
     }
 
     /**
@@ -93,6 +96,7 @@ public abstract class OpState {
      */
     protected void finalize() throws Throwable {
         StateList.remove(Name);
+        DbgLog.msg("Removed OpState '" + Name + "'");
         super.finalize();
     }
 
@@ -100,7 +104,9 @@ public abstract class OpState {
      * Called on the entry to this state
      * This can be overridden to implement something you only want to do when you enter the state
      */
-    protected void OnEntry(){}
+    protected void OnEntry(){
+        DbgLog.msg("Entering OpState '"+Name+"'");
+    }
 
     /**
      * Called to perform control when in this state
@@ -112,5 +118,7 @@ public abstract class OpState {
      * Called on exit of this state
      * This can be overridden to implement something you only want to do when you exit the state
      */
-    protected void OnExit(){}
+    protected void OnExit(){
+        DbgLog.msg("Exiting OpState '"+Name+"'");
+    }
 }
