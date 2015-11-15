@@ -18,7 +18,7 @@ class DriveState extends OpState {
 	private String NextStateName;
 	private double Power;
 	private double TargetDistance;
-	private double TravelDistance;
+	private double StartDistance;
 
 	/**
 	 * Constructor
@@ -33,25 +33,27 @@ class DriveState extends OpState {
 		super(name);
 		opMode = opmode;
 		Power = power;
-		TravelDistance = distance;
+		TargetDistance = distance;
 		NextStateName = next_state;
 	}
 
 	@Override
 	public void OnEntry() {
-		TargetDistance = opMode.GetMotorDistance() + TravelDistance;
+		super.OnEntry();
+		StartDistance = opMode.GetMotorDistance();
 		opMode.MotorsForward(Power);
 	}
 
 	@Override
 	public void Do() {
-		double distance = opMode.GetMotorDistance();
+		double distance = Math.abs(opMode.GetMotorDistance()-StartDistance);
         opMode.telemetry.addData("Drive", String.format("%f of %f", distance, TargetDistance));
-		if(distance>=TargetDistance) SetCurrentState(NextStateName);
+		if (distance >= TargetDistance) SetCurrentState(NextStateName);
 	}
 
 	@Override
 	public void OnExit() {
+		super.OnExit();
 		opMode.StopMotors();
 	}
 }
@@ -71,13 +73,16 @@ public class AutoWheelz extends OpMode {
 	DcMotor motorL;
 	private ElapsedTime runtime = new ElapsedTime();
 
-	private OpState delay = new DelayState("Delay", this, 200, "Forward");
-	private OpState forward = new DriveState("Forward", this, 0.50, 100, "Delay");
+	private OpState forward = new DriveState("Forward", this, 0.50, 1000, "Delay");
+	private OpState delay = new DelayState("Delay", this, 200, "Backward");
+	private OpState backward = new DriveState("Backward", this, -0.50, 1000, "Delay2");
+	private OpState delay2 = new DelayState("Delay2", this, 200, "Forward");
 
 	/**
 	 * Constructor
 	 */
 	public AutoWheelz() {
+
 	}
 
 	/*

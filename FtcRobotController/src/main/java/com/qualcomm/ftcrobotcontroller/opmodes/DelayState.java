@@ -29,6 +29,7 @@ public class DelayState extends OpState {
 
     @Override
     public void OnEntry() {
+        super.OnEntry();
         DelayCounter = 0; //reset the delay count
     }
 
