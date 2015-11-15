@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 /**
- * State that delays for a fixed time then moves to the specified state
+ * State that drives for a fixed distance then moves to the specified state
  */
 class DriveState extends OpState {
 
@@ -46,7 +46,7 @@ class DriveState extends OpState {
 
 	@Override
 	public void Do() {
-		double distance = Math.abs(opMode.GetMotorDistance()-StartDistance);
+		double distance = Math.abs(opMode.GetMotorDistance() - StartDistance);
         opMode.telemetry.addData("Drive", String.format("%f of %f", distance, TargetDistance));
 		if (distance >= TargetDistance) SetCurrentState(NextStateName);
 	}
@@ -57,8 +57,9 @@ class DriveState extends OpState {
 		opMode.StopMotors();
 	}
 }
+
 /**
- * TeleOp Mode for controlling 2014-2145 FTC Team 3058 Cascade Effect Robot
+ * Autonomous Mode for basic 2-motor tank drive robot
  * Hardware Setup
  * 	Motor Controller "wheels"
  * 		Port 1 - "motor_r"
@@ -66,13 +67,9 @@ class DriveState extends OpState {
  *
  * Enables control of the robot via the gamepad
  */
-public class AutoWheelz extends OpMode {
+public class AutoWheelz extends Wheelz {
 
-	//
-	DcMotor motorR;
-	DcMotor motorL;
-	private ElapsedTime runtime = new ElapsedTime();
-
+	//Construct drive states
 	private OpState forward = new DriveState("Forward", this, 0.50, 1000, "Delay");
 	private OpState delay = new DelayState("Delay", this, 200, "Backward");
 	private OpState backward = new DriveState("Backward", this, -0.50, 1000, "Delay2");
@@ -86,36 +83,32 @@ public class AutoWheelz extends OpMode {
 	}
 
 	/*
-	 * Code to run when the op mode is first enabled goes here
-	 * 
-	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
+	 * Initialize the encoders
 	 */
 	@Override
 	public void init() {
-
+		
+		super.init();
 		telemetry.addData("OpMode", "*** AutoWheelz v1.0 ***");
-		runtime.reset();
 
-
-		motorR = hardwareMap.dcMotor.get("motor_r");
 		motorR.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
 		motorR.setChannelMode( DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-		motorL = hardwareMap.dcMotor.get("motor_l");
-		motorL.setDirection(DcMotor.Direction.REVERSE);
 		motorL.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
 		motorL.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-
 	}
 
+	/*
+	 * Set the initial state
+	 */
 	@Override
 	public void start() {
 		OpState.SetCurrentState("Forward");
 	}
+	
 	/*
 	 * This method will be called repeatedly in a loop
-	 * 
-	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#run()
+	 * Run the State Machine
 	 */
 	@Override
 	public void loop() {
@@ -148,6 +141,12 @@ public class AutoWheelz extends OpMode {
 		return Math.min(distanceR,distanceL);
 	}
 
+	public double GetMotorDifference(){
+		float distanceR = motorR.getCurrentPosition();
+		float distanceL = motorL.getCurrentPosition();
+		//Report the motor that traveled the shortest distance (slipped the least)
+		return distanceR-distanceL;
+	}
 	public void StopMotors(){
 		motorR.setPower(0);
 		motorL.setPower(0);

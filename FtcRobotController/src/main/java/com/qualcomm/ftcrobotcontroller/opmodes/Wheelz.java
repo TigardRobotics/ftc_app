@@ -3,17 +3,16 @@
 **/
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import android.hardware.Camera;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 /**
- * TeleOp Mode for controlling 2014-2145 FTC Team 3058 Cascade Effect Robot
+ * TeleOp Mode for basic 2-motor tank drive robot
  * Hardware Setup
  * 	Motor Controller "wheels"
  * 		Port 1 - "motor_r"
@@ -26,6 +25,7 @@ public class Wheelz extends OpMode {
 	//
 	DcMotor motorR;
 	DcMotor motorL;
+	ElapsedTime runtime = new ElapsedTime();
 
 	/**
 	 * Constructor
@@ -34,16 +34,16 @@ public class Wheelz extends OpMode {
 	}
 
 	/*
-	 * Code to run when the op mode is first enabled goes here
-	 * 
-	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
+	 * Get and setup the motors
 	 */
 	@Override
 	public void init() {
 
 		telemetry.addData("OpMode", "*** Wheelz v1.0 ***");
+		runtime.reset();
 		motorR = hardwareMap.dcMotor.get("motor_r");
 		motorL = hardwareMap.dcMotor.get("motor_l");
+		motorL.setDirection(DcMotor.Direction.REVERSE);
 	}
 
 	@Override
@@ -51,8 +51,7 @@ public class Wheelz extends OpMode {
 	}
 	/*
 	 * This method will be called repeatedly in a loop
-	 * 
-	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#run()
+	 * Relay the joystick commands to the motors
 	 */
 	@Override
 	public void loop() {
@@ -60,7 +59,7 @@ public class Wheelz extends OpMode {
         // tank drive
         // note that if y equal -1 then joystick is pushed all of the way forward.
         float powerR = -gamepad1.right_stick_y;
-		float powerL = gamepad1.left_stick_y;
+		float powerL = -gamepad1.left_stick_y;
 
 		// clip the value so it never exceed +/- 1
 		powerR = Range.clip(powerR, -1, 1);
