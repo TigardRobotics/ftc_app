@@ -90,14 +90,14 @@ public class AutoWheelz extends OpMode {
 
 		telemetry.addData("OpMode", "*** AutoWheelz v1.0 ***");
 		runtime.reset();
-		OpState.SetCurrentState("Forward");
+
 
 		motorR = hardwareMap.dcMotor.get("motor_r");
-		motorR.setDirection(DcMotor.Direction.REVERSE);
 		motorR.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
 		motorR.setChannelMode( DcMotorController.RunMode.RUN_USING_ENCODERS);
 
 		motorL = hardwareMap.dcMotor.get("motor_l");
+		motorL.setDirection(DcMotor.Direction.REVERSE);
 		motorL.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
 		motorL.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
@@ -105,6 +105,7 @@ public class AutoWheelz extends OpMode {
 
 	@Override
 	public void start() {
+		OpState.SetCurrentState("Forward");
 	}
 	/*
 	 * This method will be called repeatedly in a loop
