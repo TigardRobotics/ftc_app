@@ -33,7 +33,7 @@ class DriveState extends OpState {
 		super(name);
 		opMode = opmode;
 		Power = power;
-		TargetDistance = distance;
+		TargetDistance = opmode.CtsFromDist(distance);
 		NextStateName = next_state;
 	}
 
@@ -59,6 +59,57 @@ class DriveState extends OpState {
 }
 
 /**
+ * State that drives for a fixed distance then moves to the specified state
+ */
+class TurnState extends OpState {
+
+	double TurnCircumference = 37.0;
+
+	private AutoWheelz opMode;
+	private String NextStateName;
+	private double Power;
+	private double TargetDifference;
+	private double StartDifference;
+
+	/**
+	 * Constructor
+	 *
+	 * @param name       State Name
+	 * @param opmode     OpMode
+	 * @param power      Motor Power to use
+	 * @param angle   Distance to go
+	 * @param next_state Next State Name
+	 */
+	TurnState(String name, AutoWheelz opmode, double power, double angle, String next_state) {
+		super(name);
+		opMode = opmode;
+		Power = power;
+		double turnDistance = angle/360.0*TurnCircumference;
+		TargetDifference = opmode.CtsFromDist(turnDistance);;
+		NextStateName = next_state;
+	}
+
+	@Override
+	public void OnEntry() {
+		super.OnEntry();
+		StartDifference = opMode.GetMotorDifference();
+		opMode.MotorsTurn(Power);
+	}
+
+	@Override
+	public void Do() {
+		double currentDifference = Math.abs(opMode.GetMotorDistance() - StartDifference);
+		opMode.telemetry.addData("Turn", String.format("%f of %f", currentDifference, TargetDifference));
+		if (currentDifference >= TargetDifference) SetCurrentState(NextStateName);
+	}
+
+	@Override
+	public void OnExit() {
+		super.OnExit();
+		opMode.StopMotors();
+	}
+}
+/**
  * Autonomous Mode for basic 2-motor tank drive robot
  * Hardware Setup
  * 	Motor Controller "wheels"
@@ -69,11 +120,17 @@ class DriveState extends OpState {
  */
 public class AutoWheelz extends Wheelz {
 
+	private static double CtsPerRev = 1440.0;
+	private static double DistPerRev = 8.3;   //Distance Travelled per motor rev
+
 	//Construct drive states
-	private OpState forward = new DriveState("Forward", this, 0.50, 1000, "Delay");
-	private OpState delay = new DelayState("Delay", this, 200, "Backward");
-	private OpState backward = new DriveState("Backward", this, -0.50, 1000, "Delay2");
-	private OpState delay2 = new DelayState("Delay2", this, 200, "Forward");
+	private OpState forward = new DriveState("Forward", this, 0.50, 12.0, "Delay");
+	private OpState delay = new DelayState("Delay", this, 300, "Turn1");
+	private OpState turn = new TurnState("Turn1", this, 0.50, 180, "Delay2");
+	private OpState delay2 = new DelayState("Delay2", this, 300, "Forward2");
+	private OpState forward2 = new DriveState("Forward2", this, 0.50, 12.0, "Delay3");
+	private OpState delay3 = new DelayState("Delay3", this, 200, "Turn2");
+	private OpState turn2 = new TurnState("Turn2", this, -0.50, 180, "Forward");
 
 	/**
 	 * Constructor
@@ -144,11 +201,14 @@ public class AutoWheelz extends Wheelz {
 	public double GetMotorDifference(){
 		float distanceR = motorR.getCurrentPosition();
 		float distanceL = motorL.getCurrentPosition();
-		//Report the motor that traveled the shortest distance (slipped the least)
 		return distanceR-distanceL;
 	}
 	public void StopMotors(){
 		motorR.setPower(0);
 		motorL.setPower(0);
+	}
+
+	public double CtsFromDist(double distance) {
+			return distance / DistPerRev * CtsPerRev;
 	}
 }
