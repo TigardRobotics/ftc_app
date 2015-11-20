@@ -3,6 +3,7 @@
 **/
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -47,7 +48,7 @@ class DriveState extends OpState {
 	@Override
 	public void Do() {
 		double distance = Math.abs(opMode.GetMotorDistance() - StartDistance);
-        opMode.telemetry.addData("Drive", String.format("%f of %f", distance, TargetDistance));
+        opMode.telemetry.addData(Name, String.format("%f of %f", distance, TargetDistance));
 		if (distance >= TargetDistance) SetCurrentState(NextStateName);
 	}
 
@@ -99,7 +100,7 @@ class TurnState extends OpState {
 	@Override
 	public void Do() {
 		double currentDifference = Math.abs(opMode.GetMotorDistance() - StartDifference);
-		opMode.telemetry.addData("Turn", String.format("%f of %f", currentDifference, TargetDifference));
+		opMode.telemetry.addData(Name, String.format("%f of %f", currentDifference, TargetDifference));
 		if (currentDifference >= TargetDifference) SetCurrentState(NextStateName);
 	}
 
@@ -130,7 +131,8 @@ public class AutoWheelz extends Wheelz {
 	private OpState delay2 = new DelayState("Delay2", this, 300, "Forward2");
 	private OpState forward2 = new DriveState("Forward2", this, 0.50, 12.0, "Delay3");
 	private OpState delay3 = new DelayState("Delay3", this, 200, "Turn2");
-	private OpState turn2 = new TurnState("Turn2", this, -0.50, 180, "Forward");
+	private OpState turn2 = new TurnState("Turn2", this, -0.50, 180, "Spiny");
+	private OpState spin = new TurnState("Spiny", this, 99.9, 360, "Forward" ); // loop back to forward state
 
 	/**
 	 * Constructor
@@ -170,7 +172,6 @@ public class AutoWheelz extends Wheelz {
 	@Override
 	public void loop() {
 
-		telemetry.addData(OpState.GetCurrentState(), "Running for " + runtime.toString());
 		OpState.DoCurrentState();
 	}
 
@@ -182,11 +183,13 @@ public class AutoWheelz extends Wheelz {
 	}
 
 	public void MotorsForward( double power ){
+		DbgLog.msg(toString().format("Motor forward w/ power = %f",power));
 		motorR.setPower(Range.clip(power, -1, 1));
 		motorL.setPower(Range.clip(power, -1, 1));
 	}
 
 	public void MotorsTurn( double power ){
+		DbgLog.msg(toString().format("Motor turning w/ power = %f",power));
 		motorR.setPower(Range.clip(power, -1, 1));
 		motorL.setPower(Range.clip(-power, -1, 1));
 	}
@@ -195,15 +198,20 @@ public class AutoWheelz extends Wheelz {
 		float distanceR = motorR.getCurrentPosition();
 		float distanceL = motorL.getCurrentPosition();
 		//Report the motor that traveled the shortest distance (slipped the least)
-		return Math.min(distanceR,distanceL);
+		float distance = Math.min(distanceR,distanceL);
+		DbgLog.msg(toString().format("Motor distance = %f",distance));
+		return distance;
 	}
 
 	public double GetMotorDifference(){
 		float distanceR = motorR.getCurrentPosition();
 		float distanceL = motorL.getCurrentPosition();
-		return distanceR-distanceL;
+		float difference = distanceR-distanceL;
+		DbgLog.msg(toString().format("Motor difference = %f",difference));
+		return difference;
 	}
 	public void StopMotors(){
+		DbgLog.msg("Stopping Motors");
 		motorR.setPower(0);
 		motorL.setPower(0);
 	}

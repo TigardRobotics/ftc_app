@@ -49,7 +49,10 @@ public abstract class OpState {
      * Run the Do method for the current state
      */
     public final static void DoCurrentState() {
-        if ( CurrentState != null) CurrentState.Do();
+        if ( CurrentState != null) {
+            DbgLog.msg("Doing OpState '" + CurrentState.Name + "'");
+            CurrentState.Do();
+        }
     }
 
     /**

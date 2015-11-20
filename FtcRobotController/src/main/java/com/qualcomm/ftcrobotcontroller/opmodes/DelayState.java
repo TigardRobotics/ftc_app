@@ -36,8 +36,7 @@ public class DelayState extends OpState {
     @Override
     public void Do() {
         DelayCounter++;
-        opMode.telemetry.addData(Name, "Delaying");
-        opMode.telemetry.addData(Name, "Count = " + String.format("%d", DelayCounter));
+        opMode.telemetry.addData(Name, String.format("Count = %d of %d", DelayCounter,DelayCount ));
         if(DelayCounter>=DelayCount) SetCurrentState(NextStateName);
     }
 }
