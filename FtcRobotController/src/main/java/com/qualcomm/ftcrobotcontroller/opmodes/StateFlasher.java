@@ -37,6 +37,7 @@ class FlashState extends OpState{
     @Override
     public void OnEntry() {
         FlashCounter = 0; //reset the flash counter
+        blinker = 0;
     }
 
     @Override
@@ -44,20 +45,19 @@ class FlashState extends OpState{
         // Blink the LED.
         if (blink()) FlashCounter++;
         opMode.telemetry.addData(Name, "Count = " + String.format("%d", FlashCounter));
-        opMode.telemetry.addData(Name, "blinker = " + String.format("%d", blinker));
         if(FlashCounter>=FlashCount) SetCurrentState(NextStateName);
     }
 
     /**
      * Code to blink the LED at a regular interval
-     * Turn on the LED for 10 cylces and turn off at 100 cycles
+     * Turn on the LED at 0 cycles, then off at 10 cylces, repeat at 100 cycles
      * @return true when flash is complete(light is turned off) so you can count flashes
      */
     private boolean blink() {
         // Increment blinker and wrap at 100
         blinker = ++blinker % 100;
 
-        if (blinker == 0) {
+        if (blinker == 1) {
             opMode.SetLight(true);
             return false;
         } else  if (blinker == 10) {
@@ -81,8 +81,12 @@ public class StateFlasher extends OpMode {
     private Parameters parm;
 
     //Construct the states
-    private OpState flash3 = new FlashState("FlashThree", this, 3, "Delay");
-    private OpState delay = new DelayState("Delay", this, 200, "FlashThree");
+    private OpState flash3 = new FlashState("Flash3", this, 3, "Delay1");
+    private OpState delay1 = new DelayState("Delay1", this, 200, "Flash2");
+    private OpState flash2 = new FlashState("Flash2", this, 2, "Delay2");
+    private OpState delay2 = new DelayState("Delay2", this, 200, "Flash1");
+    private OpState flash1 = new FlashState("Flash1", this, 1, "Delay3");
+    private OpState delay3 = new DelayState("Delay3", this, 500, "Flash3");
 
     /**
     * Constructor
@@ -101,7 +105,14 @@ public class StateFlasher extends OpMode {
         // Required to control the Camera LED
         camera = Camera.open();
         parm = camera.getParameters();
-        OpState.SetCurrentState("FlashThree");
+    }
+
+    /*
+     * Set the initial state
+     */
+    @Override
+    public void start() {
+        OpState.SetCurrentState("Flash3");
     }
 
     /*
@@ -110,7 +121,6 @@ public class StateFlasher extends OpMode {
     */
     @Override
     public void loop() {
-        telemetry.addData(OpState.GetCurrentState(), "Running for " + runtime.toString());
         OpState.DoCurrentState();
     }
 

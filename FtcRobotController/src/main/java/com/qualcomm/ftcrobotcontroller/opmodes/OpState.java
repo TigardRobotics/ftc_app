@@ -53,6 +53,9 @@ public abstract class OpState {
             DbgLog.msg("Doing OpState '" + CurrentState.Name + "'");
             CurrentState.Do();
         }
+        else {
+            DbgLog.msg("No OpState to Do");
+        }
     }
 
     /**
@@ -66,7 +69,24 @@ public abstract class OpState {
      * @return OpState
      */
     private final static OpState GetOpState(String name){
-        return StateList.get(name);
+        OpState state = StateList.get(name);
+        if (state == null)
+        {
+            DbgLog.msg("Could not find OpState'" + name + "'");
+            DbgLog.msg("OpState StateList has "+StateList.size()+" members");
+            if( StateList.size()!=0 ) {
+                DbgLog.msg("OpState StateList:" + StateList.keySet().toArray().toString());
+            }
+        }
+        else if (state.Name != name)
+        {
+            DbgLog.msg("OpStateOpState'" + state.Name + "' does not match'" + name + "'");
+            DbgLog.msg("OpState StateList has "+StateList.size()+" members");
+            if( StateList.size()!=0 ) {
+                DbgLog.msg("OpState StateList:" + StateList.keySet().toArray().toString());
+            }
+        }
+        return state;
     }
 
     /**
@@ -87,7 +107,7 @@ public abstract class OpState {
      * Adds this OpState to the StateList
      * @param name Name of the OpState
      */
-    public OpState(String name){
+    public OpState(String name) {
         Name = name;
         StateList.put(Name, this);
         DbgLog.msg("Created OpState '" + Name + "'");
