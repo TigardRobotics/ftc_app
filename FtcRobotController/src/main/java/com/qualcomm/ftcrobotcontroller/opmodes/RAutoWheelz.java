@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 class DriveState extends OpState {
 
-	private AutoWheelz opMode;
+	private RAutoWheelz opMode;
 	private String NextStateName;
 	private double Power;
 	private double TargetDistance;
@@ -30,7 +30,7 @@ class DriveState extends OpState {
 	 * @param distance   Distance to go
 	 * @param next_state Next State Name
 	 */
-	DriveState(String name, AutoWheelz opmode, double power, double distance, String next_state) {
+	DriveState(String name, RAutoWheelz opmode, double power, double distance, String next_state) {
 		super(name);
 		opMode = opmode;
 		Power = power;
@@ -66,9 +66,9 @@ class TurnState extends OpState {
 
 	double TurnCircumference = 37.0;
 
-	private AutoWheelz opMode;
+	private RAutoWheelz opMode;
 	private String NextStateName;
-	private double Power;
+	public double Power;
 	private double TargetDifference;
 	private double StartDifference;
 
@@ -81,7 +81,7 @@ class TurnState extends OpState {
 	 * @param angle   Distance to go
 	 * @param next_state Next State Name
 	 */
-	TurnState(String name, AutoWheelz opmode, double power, double angle, String next_state) {
+	TurnState(String name, RAutoWheelz opmode, double power, double angle, String next_state) {
 		super(name);
 		opMode = opmode;
 		Power = power;
@@ -99,7 +99,7 @@ class TurnState extends OpState {
 
 	@Override
 	public void Do() {
-		double currentDifference = Math.abs(opMode.GetMotorDistance() - StartDifference);
+		double currentDifference = Math.abs(opMode.GetMotorDifference() - StartDifference);
 		opMode.telemetry.addData(Name, String.format("%f of %f", currentDifference, TargetDifference));
 		if (currentDifference >= TargetDifference) SetCurrentState(NextStateName);
 	}
@@ -119,25 +119,21 @@ class TurnState extends OpState {
  *
  * Enables control of the robot via the gamepad
  */
-public class AutoWheelz extends Wheelz {
+public class RAutoWheelz extends Wheelz {
 
 	private static double CtsPerRev = 1440.0;
 	private static double DistPerRev = 8.3;   //Distance Travelled per motor rev
 
 	//Construct drive states
-	private OpState forward = new DriveState("Forward", this, 0.50, 12.0, "Delay");
-	private OpState delay = new DelayState("Delay", this, 300, "Turn1");
-	private OpState turn = new TurnState("Turn1", this, 0.50, 180, "Delay2");
-	private OpState delay2 = new DelayState("Delay2", this, 300, "Forward2");
-	private OpState forward2 = new DriveState("Forward2", this, 0.50, 12.0, "Delay3");
-	private OpState delay3 = new DelayState("Delay3", this, 200, "Turn2");
-	private OpState turn2 = new TurnState("Turn2", this, -0.50, 180, "Spiny");
-	private OpState spin = new TurnState("Spiny", this, 99.9, 360, "Forward" ); // loop back to forward state
+	protected OpState forward = new DriveState("Forward", this, 0.50, 48.0, "Turn");
+	protected TurnState turn = new TurnState("Turn", this, 0.50, 90.0, "Forward2");
+	protected OpState forward2 = new DriveState("Forward2", this, 0.50, 60.0, "Delay");
+	protected OpState delay = new DelayState("Delay", this, 200, "Delay");
 
 	/**
 	 * Constructor
 	 */
-	public AutoWheelz() {
+	public RAutoWheelz() {
 
 	}
 

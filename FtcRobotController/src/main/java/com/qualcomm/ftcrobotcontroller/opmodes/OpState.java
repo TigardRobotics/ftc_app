@@ -61,7 +61,7 @@ public abstract class OpState {
     /**
      * Dictionary for all the states that have been contructed
      */
-    private static Map<String, OpState> StateList = new HashMap<String, OpState>();
+    private static Map<String, OpState> StateList = null;
 
     /**
      * Get an OpState by name
@@ -69,6 +69,7 @@ public abstract class OpState {
      * @return OpState
      */
     private final static OpState GetOpState(String name){
+        if (name== null) return null;
         OpState state = StateList.get(name);
         if (state == null)
         {
@@ -93,8 +94,9 @@ public abstract class OpState {
      * Set the Current State to null and remove all the States from the State Dictionary
      */
     public final static void ClearAllStates() {
+        DbgLog.msg("Clearing all States");
         SetCurrentState(null);
-        StateList.clear();
+        if (StateList != null) StateList.clear();
     }
 
     /**
@@ -109,6 +111,10 @@ public abstract class OpState {
      */
     public OpState(String name) {
         Name = name;
+        if (StateList==null){
+            StateList = new HashMap<String, OpState>();
+            DbgLog.msg("Created Initial StateList");
+        }
         StateList.put(Name, this);
         DbgLog.msg("Created OpState '" + Name + "'");
     }

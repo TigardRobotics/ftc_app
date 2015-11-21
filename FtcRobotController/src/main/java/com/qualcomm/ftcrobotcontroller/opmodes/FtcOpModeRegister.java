@@ -66,8 +66,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("CascadeEffect_3058", CascadeEffect_3058.class);
     manager.register("Button", ButtonFlash.class);
     manager.register("Wheelz", Wheelz.class);
-    manager.register("AutoWheelz", AutoWheelz.class);
-
+    manager.register("RAutoWheelz", RAutoWheelz.class);
+    manager.register("BAutoWheelz", BAutoWheelz.class);
     /*
      * First Supplied Custom OpModes
      */
