@@ -3,6 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 
+import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -108,16 +109,14 @@ public class StateFlasher extends OpMode {
      */
     @Override
     public void start() {
-        //Create the States
-        States = new OpState[6];
-        OpState.ClearAllStates();
-        States[0] = new FlashState("Flash3", this, 3, "Delay1");
-        States[1] = new DelayState("Delay1", this, 200, "Flash2");
-        States[2] = new FlashState("Flash2", this, 2, "Delay2");
-        States[3] = new DelayState("Delay2", this, 200, "Flash1");
-        States[4] = new FlashState("Flash1", this, 1, "Delay3");
-        States[5] = new DelayState("Delay3", this, 500, "Flash3");
-
+        States = new OpState[]{
+            new FlashState("Flash3", this, 3, "Delay1"),
+            new DelayState("Delay1", this, 200, "Flash2"),
+            new FlashState("Flash2", this, 2, "Delay2"),
+            new DelayState("Delay2", this, 200, "Flash1"),
+            new FlashState("Flash1", this, 1, "Delay3"),
+            new DelayState("Delay3", this, 500, "Flash3"),
+        };
         OpState.SetCurrentState("Flash3");
     }
 
@@ -151,9 +150,11 @@ public class StateFlasher extends OpMode {
      */
     public void SetLight( boolean on ) {
         if (on) {
+            DbgLog.msg("Light ON");
             parm.setFlashMode(Parameters.FLASH_MODE_TORCH);
         }
         else {
+            DbgLog.msg("Light OFF");
             parm.setFlashMode(Parameters.FLASH_MODE_OFF);
         }
         camera.setParameters(parm);

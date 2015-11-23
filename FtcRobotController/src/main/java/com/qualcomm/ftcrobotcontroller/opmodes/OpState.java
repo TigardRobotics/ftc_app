@@ -11,6 +11,94 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * This wraps the HashMap to collect additional log data
+ */
+class StateMap
+{
+    private Map<String, OpState> StateList;
+
+    /**
+     * Constructor
+      */
+    public StateMap(){
+        Create();
+    }
+
+    /**
+     * Create the Map
+     */
+    private void Create(){
+        StateList = new HashMap<String, OpState>();
+        DbgLog.msg("Created StateMap");
+    }
+
+    /**
+     * Get an OpState from the Map
+     * @param name State name
+     * @return OpState
+     */
+    public OpState get(String name) {
+        if (name == null || StateList == null) return null;
+        OpState state = StateList.get(name);
+        if (state == null) {
+            DbgLog.msg("Could not find OpState'" + name + "'");
+            DbgLog.msg("StateMap has " + StateList.size() + " members");
+            if (StateList.size() != 0) {
+                DbgLog.msg("StateMap:" + StateList.keySet().toArray().toString());
+            }
+        } else if (state.Name != name) {
+            DbgLog.msg("OpState'" + state.Name + "' does not match'" + name + "'");
+            DbgLog.msg("StateMap has " + StateList.size() + " members");
+            if (StateList.size() != 0) {
+                DbgLog.msg("StateMap:" + StateList.keySet().toArray().toString());
+            }
+        }
+        else {
+            DbgLog.msg("Got '" + name + "' from StateMap");
+        }
+        return state;
+    }
+
+    /**
+     * Add an entry to the StateList
+     * @param name State Name
+     * @param state OpState
+     */
+    public void put(String name, OpState state) {
+        if (StateList==null) Create();
+        StateList.put(name, state);
+        DbgLog.msg("Added '"+name+"' to StateMap");
+    }
+
+    /**
+     * Remove an entry to the StateList
+     * @param name
+     */
+    public void remove(String name) {
+        if (StateList==null) Create();
+        StateList.remove(name);
+        DbgLog.msg("Removed '"+name+"' from StateMap");
+    }
+
+    /**
+     * List has been Garbage Collected
+     * @throws Throwable
+     */
+    protected void finalize() throws Throwable {
+        DbgLog.msg("Removed StateMap");
+        super.finalize();
+    }
+
+    /**
+     * Clear the StateList
+     */
+    public void clear() {
+        DbgLog.msg("Clearing all States");
+        if (StateList != null) StateList.clear();
+    }
+}
+
+/**
  * Operation State base class
  */
 public abstract class OpState {
@@ -61,7 +149,7 @@ public abstract class OpState {
     /**
      * Dictionary for all the states that have been contructed
      */
-    private static Map<String, OpState> StateList = null;
+    private static StateMap StateList = new StateMap();
 
     /**
      * Get an OpState by name
@@ -69,24 +157,7 @@ public abstract class OpState {
      * @return OpState
      */
     private final static OpState GetOpState(String name){
-        if (name== null) return null;
         OpState state = StateList.get(name);
-        if (state == null)
-        {
-            DbgLog.msg("Could not find OpState'" + name + "'");
-            DbgLog.msg("OpState StateList has "+StateList.size()+" members");
-            if( StateList.size()!=0 ) {
-                DbgLog.msg("OpState StateList:" + StateList.keySet().toArray().toString());
-            }
-        }
-        else if (state.Name != name)
-        {
-            DbgLog.msg("OpStateOpState'" + state.Name + "' does not match'" + name + "'");
-            DbgLog.msg("OpState StateList has "+StateList.size()+" members");
-            if( StateList.size()!=0 ) {
-                DbgLog.msg("OpState StateList:" + StateList.keySet().toArray().toString());
-            }
-        }
         return state;
     }
 
@@ -111,16 +182,12 @@ public abstract class OpState {
      */
     public OpState(String name) {
         Name = name;
-        if (StateList==null){
-            StateList = new HashMap<String, OpState>();
-            DbgLog.msg("Created Initial StateList");
-        }
         StateList.put(Name, this);
         DbgLog.msg("Created OpState '" + Name + "'");
     }
 
     /**
-     * Implement a finalize to remove this OpState from the StateList
+     * Implement a finalize to remove this OpState from the StateList when it is Garbage Collected
      * @throws Throwable
      */
     protected void finalize() throws Throwable {
@@ -133,7 +200,7 @@ public abstract class OpState {
      * Called on the entry to this state
      * This can be overridden to implement something you only want to do when you enter the state
      */
-    protected void OnEntry(){
+    protected void OnEntry() {
         DbgLog.msg("Entering OpState '"+Name+"'");
     }
 
@@ -148,6 +215,6 @@ public abstract class OpState {
      * This can be overridden to implement something you only want to do when you exit the state
      */
     protected void OnExit(){
-        DbgLog.msg("Exiting OpState '"+Name+"'");
+        DbgLog.msg("Exiting OpState '" + Name + "'");
     }
 }
