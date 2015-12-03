@@ -123,12 +123,7 @@ public class RAutoWheelz extends Wheelz {
 
 	private static double CtsPerRev = 1440.0;
 	private static double DistPerRev = 8.3;   //Distance Travelled per motor rev
-
-	//Construct drive states
-	protected OpState forward = new DriveState("Forward", this, 0.50, 48.0, "Turn");
-	protected TurnState turn = new TurnState("Turn", this, 0.50, 90.0, "Forward2");
-	protected OpState forward2 = new DriveState("Forward2", this, 0.50, 60.0, "Delay");
-	protected OpState delay = new DelayState("Delay", this, 200, "Delay");
+	protected boolean TurnL = true;
 
 	/**
 	 * Constructor
@@ -158,7 +153,20 @@ public class RAutoWheelz extends Wheelz {
 	 */
 	@Override
 	public void start() {
+		double turnSpeed = 0.5;
+		double driveSpeed = 0.5;
+		if(!TurnL) {
+			turnSpeed *= -1;
+		}
+		//Construct States
+		OpState[] states = new OpState[]{
+			new DriveState("Forward", this, driveSpeed, 48.0, "Turn"),
+			new TurnState("Turn", this, turnSpeed, 90.0, "Forward2"),
+			new DriveState("Forward2", this, driveSpeed, 60.0, "Delay"),
+			new DelayState("Delay", this, 200, "Delay"),
+		};
 		OpState.SetCurrentState("Forward");
+
 	}
 	
 	/*

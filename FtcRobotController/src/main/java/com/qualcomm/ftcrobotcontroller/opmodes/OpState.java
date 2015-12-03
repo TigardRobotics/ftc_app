@@ -187,16 +187,6 @@ public abstract class OpState {
     }
 
     /**
-     * Implement a finalize to remove this OpState from the StateList when it is Garbage Collected
-     * @throws Throwable
-     */
-    protected void finalize() throws Throwable {
-        StateList.remove(Name);
-        DbgLog.msg("Removed OpState '" + Name + "'");
-        super.finalize();
-    }
-
-    /**
      * Called on the entry to this state
      * This can be overridden to implement something you only want to do when you enter the state
      */

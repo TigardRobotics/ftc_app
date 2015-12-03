@@ -81,10 +81,6 @@ public class StateFlasher extends OpMode {
     private Camera camera;
     private Parameters parm;
 
-    //Construct the states
-
-    private OpState[] States;
-
     /**
     * Constructor
     **/
@@ -109,7 +105,8 @@ public class StateFlasher extends OpMode {
      */
     @Override
     public void start() {
-        States = new OpState[]{
+    //Construct States
+        OpState[] states = new OpState[]{
             new FlashState("Flash3", this, 3, "Delay1"),
             new DelayState("Delay1", this, 200, "Flash2"),
             new FlashState("Flash2", this, 2, "Delay2"),
@@ -136,7 +133,6 @@ public class StateFlasher extends OpMode {
     @Override
     public void stop() {
         //Throw away the states
-        States = null;
         OpState.ClearAllStates();
 
         if (camera != null) {

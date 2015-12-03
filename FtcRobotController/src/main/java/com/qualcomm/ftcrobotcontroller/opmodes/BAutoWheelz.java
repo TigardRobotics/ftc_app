@@ -9,7 +9,7 @@ public class BAutoWheelz extends RAutoWheelz {
     @Override
     public void init() {
         super.init();
-        turn.Power=-0.5;
+        TurnL = false;
     }
 
 }
