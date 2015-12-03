@@ -22,9 +22,20 @@ import com.qualcomm.robotcore.util.Range;
  */
 public class Wheelz extends OpMode {
 
+	// position of the plow servo.
+	double plowPosition = 0;
+	final static double plowIncrement = 5.0/180.0;
+	final static double PLOW_MIN_RANGE  = 0.00/180.0;
+	final static double PLOW_MAX_RANGE  = 180.0/180.0;
+
+
 	//
 	DcMotor motorR;
 	DcMotor motorL;
+	Servo plow;
+	TouchSensor crash_r;
+	TouchSensor crash_l;
+
 	ElapsedTime runtime = new ElapsedTime();
 
 	/**
@@ -44,6 +55,10 @@ public class Wheelz extends OpMode {
 		motorR = hardwareMap.dcMotor.get("motor_r");
 		motorL = hardwareMap.dcMotor.get("motor_l");
 		motorL.setDirection(DcMotor.Direction.REVERSE);
+
+		plow = hardwareMap.servo.get("plow");
+		crash_r = hardwareMap.touchSensor.get(("crash_r"));
+		crash_l = hardwareMap.touchSensor.get(("crash_l"));
 	}
 
 	@Override
@@ -57,7 +72,7 @@ public class Wheelz extends OpMode {
 	public void loop() {
 
         // tank drive
-        // note that if y equal -1 then joystick is pushed all of the way forward.
+        // note that if y equals -1 then joystick is pushed all of the way forward.
         float powerR = -gamepad1.right_stick_y;
 		float powerL = -gamepad1.left_stick_y;
 
@@ -68,8 +83,24 @@ public class Wheelz extends OpMode {
 		// write the values to the motors
 		motorR.setPower(powerR);
 		motorL.setPower(powerL);
-		telemetry.addData("MotorR", "Power: " + String.format("%.2f", powerR));
-		telemetry.addData("MotorL", "Power: " + String.format("%.2f", powerL));
+		telemetry.addData("MotorR", String.format("Power=%.2f", powerR));
+		telemetry.addData("MotorL", String.format("Power=%.2f", powerL));
+
+		if (gamepad1.b) {
+			// if the B button is pushed on gamepad1, put the plow up
+			plowPosition += plowIncrement;
+			plowPosition = Range.clip(plowPosition, PLOW_MIN_RANGE, PLOW_MAX_RANGE);
+			plow.setPosition(plowPosition);
+		}
+		else if (gamepad1.x) {
+			// if the X button is pushed on gamepad1, put the plow down
+			plowPosition -= plowIncrement;
+			plowPosition = Range.clip(plowPosition, PLOW_MIN_RANGE, PLOW_MAX_RANGE);
+			plow.setPosition(plowPosition);
+		}
+
+		telemetry.addData("Plow", String.format("Position=%.2f", plowPosition));
+
 	}
 
 	/**
