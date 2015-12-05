@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -22,19 +23,29 @@ import com.qualcomm.robotcore.util.Range;
  */
 public class Wheelz extends OpMode {
 
-	// position of the plow servo.
+	// position of the plow and wing servos
 	double plowPosition = 0;
-	final static double plowIncrement = 5.0/180.0;
+	double wingPositionR = 0;
+	double wingPositionL = 0;
+	final static double plowIncrement = 20.0/180.0;
 	final static double PLOW_MIN_RANGE  = 0.00/180.0;
 	final static double PLOW_MAX_RANGE  = 180.0/180.0;
-
+	final static double PLOW_HOME  = 180.0/180.0;
+	final static double wingIncrement = 20.0 /180.0;
+	final static double WING_MIN_RANGE = 0.00/180.0;
+	final static double WING_MAX_RANGE = 180.00/180.0;
+	final static double WING_R_HOME = 0.00/180.0;
+	final static double WING_L_HOME = 90.00/180.0;
 
 	//
 	DcMotor motorR;
 	DcMotor motorL;
 	Servo plow;
+	Servo wing_r;
+	Servo wing_l;
 	TouchSensor crash_r;
 	TouchSensor crash_l;
+	UltrasonicSensor eyes;
 
 	ElapsedTime runtime = new ElapsedTime();
 
@@ -57,8 +68,16 @@ public class Wheelz extends OpMode {
 		motorL.setDirection(DcMotor.Direction.REVERSE);
 
 		plow = hardwareMap.servo.get("plow");
-		crash_r = hardwareMap.touchSensor.get(("crash_r"));
-		crash_l = hardwareMap.touchSensor.get(("crash_l"));
+		wing_r = hardwareMap.servo.get("wing_r");
+		wing_l = hardwareMap.servo.get("wing_l");
+		crash_r = hardwareMap.touchSensor.get("crash_r");
+		crash_l = hardwareMap.touchSensor.get("crash_l");
+
+		//eyes = hardwareMap.ultrasonicSensor.get("eyes");
+		plow.setPosition(PLOW_HOME);
+		wing_r.setPosition(WING_R_HOME);
+		wing_l.setPosition(WING_L_HOME);
+
 	}
 
 	@Override
@@ -70,6 +89,9 @@ public class Wheelz extends OpMode {
 	 */
 	@Override
 	public void loop() {
+		plowPosition = plow.getPosition();
+		wingPositionL = wing_l.getPosition();
+		wingPositionR = wing_r.getPosition();
 
         // tank drive
         // note that if y equals -1 then joystick is pushed all of the way forward.
@@ -86,20 +108,39 @@ public class Wheelz extends OpMode {
 		telemetry.addData("MotorR", String.format("Power=%.2f", powerR));
 		telemetry.addData("MotorL", String.format("Power=%.2f", powerL));
 
-		if (gamepad1.b) {
+		//Control Plow B=Up, X=Down
+		if (gamepad1.x) {
 			// if the B button is pushed on gamepad1, put the plow up
 			plowPosition += plowIncrement;
-			plowPosition = Range.clip(plowPosition, PLOW_MIN_RANGE, PLOW_MAX_RANGE);
-			plow.setPosition(plowPosition);
 		}
-		else if (gamepad1.x) {
+		else if (gamepad1.b) {
 			// if the X button is pushed on gamepad1, put the plow down
 			plowPosition -= plowIncrement;
-			plowPosition = Range.clip(plowPosition, PLOW_MIN_RANGE, PLOW_MAX_RANGE);
-			plow.setPosition(plowPosition);
+		}
+		plowPosition = Range.clip(plowPosition, PLOW_MIN_RANGE, PLOW_MAX_RANGE);
+		plow.setPosition(plowPosition);
+
+		//Control Wings R-Bumper=Up, L-Bumper=Down
+		if (gamepad1.right_bumper) {
+			// if the right bumper is pushed on gamepad1, put the wings out
+			wingPositionR -= wingIncrement;
+			wingPositionL += wingIncrement;
+		}
+		else if (gamepad1.left_bumper) {
+			// if the right bumper is pushed on gamepad1, put the wings out
+			wingPositionR += wingIncrement;
+			wingPositionL -= wingIncrement;
 		}
 
+		wingPositionR = Range.clip(wingPositionR, WING_MIN_RANGE, WING_MAX_RANGE);
+		wingPositionL = Range.clip(wingPositionL, WING_MIN_RANGE, WING_MAX_RANGE);
+		wing_l.setPosition(wingPositionL);
+		wing_r.setPosition(wingPositionR);
+
+
 		telemetry.addData("Plow", String.format("Position=%.2f", plowPosition));
+		telemetry.addData("Wing_R", String.format("Position=%.2f", wingPositionR));
+		telemetry.addData("Wing_L", String.format("Position=%.2f", wingPositionL));
 
 	}
 

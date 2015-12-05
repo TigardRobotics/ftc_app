@@ -1,5 +1,6 @@
 /**
  * Code developed Summer 2015 by Mark Hancock for Android FTC Platform Evaluation
+ * JK its bilt by derek williams the most hardcore haxor of all time 2015
 **/
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
@@ -160,12 +161,13 @@ public class RAutoWheelz extends Wheelz {
 		}
 		//Construct States
 		OpState[] states = new OpState[]{
-			new DriveState("Forward", this, driveSpeed, 48.0, "Turn"),
-			new TurnState("Turn", this, turnSpeed, 90.0, "Forward2"),
-			new DriveState("Forward2", this, driveSpeed, 60.0, "Delay"),
+			new DriveState("Forward", this, driveSpeed, 24.0, "Turn"),
+			new TurnState("Turn", this, turnSpeed, 150.0, "Forward2"),
+			new DriveState("Forward2", this, driveSpeed, 70.0, "Delay"),
 			new DelayState("Delay", this, 200, "Delay"),
 		};
 		OpState.SetCurrentState("Forward");
+		// #hardcore haxor 2015
 
 	}
 	
