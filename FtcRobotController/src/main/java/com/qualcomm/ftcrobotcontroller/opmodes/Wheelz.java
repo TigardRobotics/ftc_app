@@ -4,6 +4,8 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -46,6 +48,7 @@ public class Wheelz extends OpMode {
 	TouchSensor crash_r;
 	TouchSensor crash_l;
 	UltrasonicSensor eyes;
+	LightSensor lineDetect;
 
 	ElapsedTime runtime = new ElapsedTime();
 
@@ -72,6 +75,8 @@ public class Wheelz extends OpMode {
 		wing_l = hardwareMap.servo.get("wing_l");
 		crash_r = hardwareMap.touchSensor.get("crash_r");
 		crash_l = hardwareMap.touchSensor.get("crash_l");
+		lineDetect = hardwareMap.lightSensor.get("lineDetect");
+
 
 		//eyes = hardwareMap.ultrasonicSensor.get("eyes");
 		plow.setPosition(PLOW_HOME);
@@ -109,11 +114,11 @@ public class Wheelz extends OpMode {
 		telemetry.addData("MotorL", String.format("Power=%.2f", powerL));
 
 		//Control Plow B=Up, X=Down
-		if (gamepad1.x) {
+		if (gamepad1.b) {
 			// if the B button is pushed on gamepad1, put the plow up
 			plowPosition += plowIncrement;
 		}
-		else if (gamepad1.b) {
+		else if (gamepad1.x) {
 			// if the X button is pushed on gamepad1, put the plow down
 			plowPosition -= plowIncrement;
 		}
@@ -137,11 +142,22 @@ public class Wheelz extends OpMode {
 		wing_l.setPosition(wingPositionL);
 		wing_r.setPosition(wingPositionR);
 
+		//Control Line Sensoe LED
+		if (gamepad1.y) {
+			// if the Y button is pushed turn on the LED
+			lineDetect.enableLed(true);
+		}
+		else if (gamepad1.a) {
+			// if the A button is pushed turn off the LED
+			lineDetect.enableLed(false);
+		}
 
+		/*
 		telemetry.addData("Plow", String.format("Position=%.2f", plowPosition));
 		telemetry.addData("Wing_R", String.format("Position=%.2f", wingPositionR));
 		telemetry.addData("Wing_L", String.format("Position=%.2f", wingPositionL));
-
+		*/
+		telemetry.addData("LineDetect", lineDetect.getLightDetected());
 	}
 
 	/**
