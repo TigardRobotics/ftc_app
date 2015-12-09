@@ -163,7 +163,7 @@ public class RAutoWheelz extends Wheelz {
 		OpState[] states = new OpState[]{
 			new DriveState("Forward", this, driveSpeed, 24.0, "Turn"),
 			new TurnState("Turn", this, turnSpeed, 150.0, "Forward2"),
-			new DriveState("Forward2", this, driveSpeed, 70.0, "Delay"),
+			new DriveState("Forward2", this, driveSpeed, 60.0, "Delay"),
 			new DelayState("Delay", this, 200, "Delay"),
 		};
 		OpState.SetCurrentState("Forward");
