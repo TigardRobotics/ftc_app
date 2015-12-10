@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
@@ -48,7 +49,7 @@ public class Wheelz extends OpMode {
 	TouchSensor crash_r;
 	TouchSensor crash_l;
 	UltrasonicSensor eyes;
-	LightSensor lineDetect;
+	OpticalDistanceSensor lineDetect;
 
 	ElapsedTime runtime = new ElapsedTime();
 
@@ -75,10 +76,9 @@ public class Wheelz extends OpMode {
 		wing_l = hardwareMap.servo.get("wing_l");
 		crash_r = hardwareMap.touchSensor.get("crash_r");
 		crash_l = hardwareMap.touchSensor.get("crash_l");
-		lineDetect = hardwareMap.lightSensor.get("lineDetect");
+		lineDetect = hardwareMap.opticalDistanceSensor.get("lineDetect");
 
-
-		//eyes = hardwareMap.ultrasonicSensor.get("eyes");
+		eyes = hardwareMap.ultrasonicSensor.get("eyes");
 		plow.setPosition(PLOW_HOME);
 		wing_r.setPosition(WING_R_HOME);
 		wing_l.setPosition(WING_L_HOME);
@@ -151,13 +151,15 @@ public class Wheelz extends OpMode {
 			// if the A button is pushed turn off the LED
 			lineDetect.enableLed(false);
 		}
+		double lineLight = lineDetect.getLightDetected();
 
+		double distance = eyes.getUltrasonicLevel();
 		/*
 		telemetry.addData("Plow", String.format("Position=%.2f", plowPosition));
 		telemetry.addData("Wing_R", String.format("Position=%.2f", wingPositionR));
 		telemetry.addData("Wing_L", String.format("Position=%.2f", wingPositionL));
 		*/
-		telemetry.addData("LineDetect", lineDetect.getLightDetected());
+		telemetry.addData("LineDetect",String.format("line=%f, dist=%f", lineLight, distance ));
 	}
 
 	/**
