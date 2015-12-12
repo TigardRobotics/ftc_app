@@ -43,12 +43,14 @@ public class Wheelz extends OpMode {
 	//
 	DcMotor motorR;
 	DcMotor motorL;
+	DcMotor armLift;
+	DcMotor armAngle;
 	Servo plow;
 	Servo wing_r;
 	Servo wing_l;
 	TouchSensor crash_r;
 	TouchSensor crash_l;
-	UltrasonicSensor eyes;
+	UltrasonicSensor eyes; // minecraft is my life!
 	OpticalDistanceSensor lineDetect;
 
 	ElapsedTime runtime = new ElapsedTime();
@@ -70,6 +72,9 @@ public class Wheelz extends OpMode {
 		motorR = hardwareMap.dcMotor.get("motor_r");
 		motorL = hardwareMap.dcMotor.get("motor_l");
 		motorL.setDirection(DcMotor.Direction.REVERSE);
+
+		//armAngle = hardwareMap.dcMotor.get("arm_angle");
+		//armLift = hardwareMap.dcMotor.get("arm_lyft");
 
 		plow = hardwareMap.servo.get("plow");
 		wing_r = hardwareMap.servo.get("wing_r");
@@ -100,8 +105,8 @@ public class Wheelz extends OpMode {
 
         // tank drive
         // note that if y equals -1 then joystick is pushed all of the way forward.
-        float powerR = -gamepad1.right_stick_y;
-		float powerL = -gamepad1.left_stick_y;
+        double powerR = -gamepad1.right_stick_y;
+		double powerL = -gamepad1.left_stick_y;
 
 		// clip the value so it never exceed +/- 1
 		powerR = Range.clip(powerR, -1, 1);
@@ -142,16 +147,7 @@ public class Wheelz extends OpMode {
 		wing_l.setPosition(wingPositionL);
 		wing_r.setPosition(wingPositionR);
 
-		//Control Line Sensoe LED
-		if (gamepad1.y) {
-			// if the Y button is pushed turn on the LED
-			lineDetect.enableLed(true);
-		}
-		else if (gamepad1.a) {
-			// if the A button is pushed turn off the LED
-			lineDetect.enableLed(false);
-		}
-		double lineLight = lineDetect.getLightDetected();
+		double lineLight = lineDetect.getLightDetectedRaw();
 
 		double distance = eyes.getUltrasonicLevel();
 		/*

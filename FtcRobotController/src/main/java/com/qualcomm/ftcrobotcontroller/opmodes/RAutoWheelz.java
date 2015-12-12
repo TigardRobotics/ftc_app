@@ -95,7 +95,7 @@ class TurnState extends OpState {
 	public void OnEntry() {
 		super.OnEntry();
 		StartDifference = opMode.GetMotorDifference();
-		opMode.MotorsTurn(Power);
+		opMode.MotorsTurn(Power, true);
 	}
 
 	@Override
@@ -111,6 +111,71 @@ class TurnState extends OpState {
 		opMode.StopMotors();
 	}
 }
+/**
+ * State that FOLLLOWS a line
+ */
+class LineFollowState extends OpState {
+
+	private RAutoWheelz opMode;
+	private String NextStateName;
+	private double Power;
+	private double TargetDistance;
+	private double StartDistance;
+	private boolean FoundLine;
+
+	/**
+	 * Constructor
+	 *
+	 * @param name       State Name
+	 * @param opmode     OpMode
+	 * @param power      Motor Power to use
+	 * @param distance   Distance to go
+	 * @param next_state Next State Name
+	 */
+	LineFollowState(String name, RAutoWheelz opmode, double power, double distance, String next_state) {
+		super(name);
+		opMode = opmode;
+		Power = power;
+		TargetDistance = opmode.CtsFromDist(distance);
+		NextStateName = next_state;
+	}
+
+	@Override
+	public void OnEntry() {
+		super.OnEntry();
+		StartDistance = opMode.GetMotorDistance();
+		opMode.MotorsTurn(Power, true);
+		lineWasDetected = opMode.LineDetected();
+	}
+
+	boolean fallRight = true;
+	boolean lineWasDetected = false;
+	@Override
+	public void Do() {
+		if(opMode.LineDetected()){
+			lineWasDetected = true;
+		}
+		else if(lineWasDetected){
+			Power = -Power;
+			opMode.MotorsTurn(Power, false);
+			lineWasDetected = false;
+		}
+
+		double distance = Math.abs(opMode.GetMotorDistance() - StartDistance);
+		int lineDetect = opMode.lineDetect.getLightDetectedRaw();
+
+		opMode.telemetry.addData(Name, String.format("%f of %f, linedetect=%d, Power=%f", distance, TargetDistance, lineDetect, Power));
+		if (distance >= TargetDistance) SetCurrentState(NextStateName);
+
+	}
+
+	@Override
+	public void OnExit() {
+		super.OnExit();
+		opMode.StopMotors();
+	}
+}
+
 /**
  * Autonomous Mode for basic 2-motor tank drive robot
  * Hardware Setup
@@ -143,10 +208,16 @@ public class RAutoWheelz extends Wheelz {
 		telemetry.addData("OpMode", "*** AutoWheelz v1.0 ***");
 
 		motorR.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-		motorR.setChannelMode( DcMotorController.RunMode.RUN_USING_ENCODERS);
+		motorR.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
 		motorL.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
 		motorL.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+		//armLift.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+		//armLift.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+		//armAngle.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+		//armAngle.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 	}
 
 	/*
@@ -161,12 +232,14 @@ public class RAutoWheelz extends Wheelz {
 		}
 		//Construct States
 		OpState[] states = new OpState[]{
-			new DriveState("Forward", this, driveSpeed, 24.0, "Turn"),
-			new TurnState("Turn", this, turnSpeed, 150.0, "Forward2"),
-			new DriveState("Forward2", this, driveSpeed, 60.0, "Delay"),
-			new DelayState("Delay", this, 200, "Delay"),
+			//new DriveState("Forward", this, driveSpeed, 24.0, "Turn"),
+			//new TurnState("Turn", this, turnSpeed, 150.0, "Forward2"),
+			//new DriveState("Forward2", this, driveSpeed, 60.0, "Delay"),
+			//new DelayState("Delay", this, 200, "Delay"),
+			new LineFollowState("Follow",this, driveSpeed, 240, "halt"),
+			new DelayState("halt", this, 200, "halt"),
 		};
-		OpState.SetCurrentState("Forward");
+		OpState.SetCurrentState("Follow");
 		// #hardcore haxor 2015
 
 	}
@@ -194,18 +267,24 @@ public class RAutoWheelz extends Wheelz {
 		motorL.setPower(Range.clip(power, -1, 1));
 	}
 
-	public void MotorsTurn( double power ){
-		DbgLog.msg(toString().format("Motor turning w/ power = %f",power));
-		motorR.setPower(Range.clip(power, -1, 1));
-		motorL.setPower(Range.clip(-power, -1, 1));
+	public void MotorsTurn( double power, boolean spin ){
+		double rmotorPower = power;
+		double lmotorPower = -power;
+		if(!spin){
+			rmotorPower = Math.max(rmotorPower,0);
+			lmotorPower = Math.max(lmotorPower,0);
+		}
+		DbgLog.msg(toString().format("Motor turning w/ rpower = %f, lpower = %f",rmotorPower,lmotorPower));
+		motorR.setPower(Range.clip(rmotorPower, -1, 1));
+		motorL.setPower(Range.clip(lmotorPower, -1, 1));
 	}
 
 	public double GetMotorDistance(){
 		float distanceR = motorR.getCurrentPosition();
 		float distanceL = motorL.getCurrentPosition();
 		//Report the motor that traveled the shortest distance (slipped the least)
-		float distance = Math.min(distanceR,distanceL);
-		DbgLog.msg(toString().format("Motor distance = %f",distance));
+		float distance = Math.max(distanceR,distanceL);
+		DbgLog.msg(toString().format("Motor distance = %f", distance));
 		return distance;
 	}
 
@@ -220,6 +299,11 @@ public class RAutoWheelz extends Wheelz {
 		DbgLog.msg("Stopping Motors");
 		motorR.setPower(0);
 		motorL.setPower(0);
+	}
+
+	double threshold = 35;
+	public boolean LineDetected(){
+		return(lineDetect.getLightDetectedRaw() > threshold);
 	}
 
 	public double CtsFromDist(double distance) {
