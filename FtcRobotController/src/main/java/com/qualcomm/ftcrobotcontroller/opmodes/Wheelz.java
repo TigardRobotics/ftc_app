@@ -149,7 +149,7 @@ public class Wheelz extends OpMode {
 
 		double lineLight = lineDetect.getLightDetectedRaw();
 
-		double distance = eyes.getUltrasonicLevel();
+		double distance = GetUltraSonicDistance();
 		/*
 		telemetry.addData("Plow", String.format("Position=%.2f", plowPosition));
 		telemetry.addData("Wing_R", String.format("Position=%.2f", wingPositionR));
@@ -163,6 +163,10 @@ public class Wheelz extends OpMode {
 	 */
 	@Override
 	public void stop() {
+	}
+
+	public double GetUltraSonicDistance() {
+		return eyes.getUltrasonicLevel();
 	}
 
 }

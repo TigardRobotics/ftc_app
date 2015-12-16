@@ -111,13 +111,14 @@ class TurnState extends OpState {
 		opMode.StopMotors();
 	}
 }
+
 /**
  * State that FOLLLOWS a line
  */
 class LineFollowState extends OpState {
 
-	private RAutoWheelz opMode;
-	private String NextStateName;
+	protected RAutoWheelz opMode;
+	protected String NextStateName;
 	private double Power;
 	private double TargetDistance;
 	private double StartDistance;
@@ -145,20 +146,29 @@ class LineFollowState extends OpState {
 		super.OnEntry();
 		StartDistance = opMode.GetMotorDistance();
 		opMode.MotorsTurn(Power, true);
-		lineWasDetected = opMode.LineDetected();
+		//lineWasDetected = opMode.LineDetected();
 	}
 
-	boolean fallRight = true;
+	//boolean fallRight = true;
 	boolean lineWasDetected = false;
 	@Override
 	public void Do() {
-		if(opMode.LineDetected()){
+
+		//if(opMode.LineDetected()){
+		//	lineWasDetected = true;
+		//}
+		//else if(lineWasDetected){
+		//	Power = -Power;
+		//	opMode.MotorsTurn(Power, false);
+		//	lineWasDetected = false;
+		//}
+		if (opMode.LineDetected()) {
 			lineWasDetected = true;
-		}
-		else if(lineWasDetected){
-			Power = -Power;
+			Power = Math.abs(Power);
 			opMode.MotorsTurn(Power, false);
-			lineWasDetected = false;
+		} else if(lineWasDetected){
+			Power = -Math.abs(Power);
+			opMode.MotorsTurn(Power, false);
 		}
 
 		double distance = Math.abs(opMode.GetMotorDistance() - StartDistance);
@@ -175,6 +185,42 @@ class LineFollowState extends OpState {
 		opMode.StopMotors();
 	}
 }
+
+/**
+ * State that FOLLLOWS a line
+ */
+class FollowWithUltrasonicState extends LineFollowState {
+
+	private double StopAtDistance;
+	/**
+	 * Constructor
+	 *
+	 * @param name       State Name
+	 * @param opmode     OpMode
+	 * @param power      Motor Power to use
+	 * @param maxDistance   Distance to go
+	 * @param stopAtDistance Distance level from ultrasonic that we stop at
+	 * @param next_state Next State Name
+	 */
+	FollowWithUltrasonicState(String name, RAutoWheelz opmode, double power, double maxDistance, double stopAtDistance,  String next_state) {
+		super(name, opmode, power, maxDistance, next_state);
+		StopAtDistance = stopAtDistance;
+	}
+
+
+
+	@Override
+	public void Do() {
+		super.Do();
+		double ultrasonicLevel = opMode.GetUltraSonicDistance();
+
+
+
+		if ( (ultrasonicLevel <= StopAtDistance)  && (ultrasonicLevel != 0) ) SetCurrentState(NextStateName);
+
+	}
+}
+
 
 /**
  * Autonomous Mode for basic 2-motor tank drive robot
@@ -236,7 +282,8 @@ public class RAutoWheelz extends Wheelz {
 			//new TurnState("Turn", this, turnSpeed, 150.0, "Forward2"),
 			//new DriveState("Forward2", this, driveSpeed, 60.0, "Delay"),
 			//new DelayState("Delay", this, 200, "Delay"),
-			new LineFollowState("Follow",this, driveSpeed, 240, "halt"),
+			//new LineFollowState("Follow",this, driveSpeed, 240, "halt"),
+			new FollowWithUltrasonicState("Follow",this, driveSpeed, 240, 10, "halt"),
 			new DelayState("halt", this, 200, "halt"),
 		};
 		OpState.SetCurrentState("Follow");
@@ -292,10 +339,10 @@ public class RAutoWheelz extends Wheelz {
 		float distanceR = motorR.getCurrentPosition();
 		float distanceL = motorL.getCurrentPosition();
 		float difference = distanceR-distanceL;
-		DbgLog.msg(toString().format("Motor difference = %f",difference));
+		DbgLog.msg(toString().format("Motor difference = %f", difference));
 		return difference;
 	}
-	public void StopMotors(){
+	public void StopMotors() {
 		DbgLog.msg("Stopping Motors");
 		motorR.setPower(0);
 		motorL.setPower(0);
