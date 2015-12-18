@@ -71,6 +71,7 @@ public class Wheelz extends OpMode {
 		runtime.reset();
 		motorR = hardwareMap.dcMotor.get("motor_r");
 		motorL = hardwareMap.dcMotor.get("motor_l");
+		armAngle = hardwareMap.dcMotor.get("arm_angle");
 		motorL.setDirection(DcMotor.Direction.REVERSE);
 
 		//armAngle = hardwareMap.dcMotor.get("arm_angle");
@@ -140,6 +141,19 @@ public class Wheelz extends OpMode {
 			// if the right bumper is pushed on gamepad1, put the wings out
 			wingPositionR += wingIncrement;
 			wingPositionL -= wingIncrement;
+		}
+
+
+		// minecraft
+		// Arm angle teleop control
+		double armAnglePower = 0.5;
+		if (gamepad2.y){
+			armAngle.setPower(armAnglePower);
+		} else if (gamepad2.a) {
+			armAngle.setPower(-armAnglePower);
+		}
+		else {
+			armAngle.setPower(0);
 		}
 
 		wingPositionR = Range.clip(wingPositionR, WING_MIN_RANGE, WING_MAX_RANGE);
