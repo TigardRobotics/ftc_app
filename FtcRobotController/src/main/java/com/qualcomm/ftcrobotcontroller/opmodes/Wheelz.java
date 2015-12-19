@@ -5,6 +5,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
@@ -30,14 +31,14 @@ public class Wheelz extends OpMode {
 	double plowPosition = 0;
 	double wingPositionR = 0;
 	double wingPositionL = 0;
-	final static double plowIncrement = 20.0/180.0;
+	final static double plowIncrement = 5.0/180.0;
 	final static double PLOW_MIN_RANGE  = 0.00/180.0;
 	final static double PLOW_MAX_RANGE  = 180.0/180.0;
 	final static double PLOW_HOME  = 180.0/180.0;
-	final static double wingIncrement = 20.0 /180.0;
+	final static double wingIncrement = 2.5 /180.0;
 	final static double WING_MIN_RANGE = 0.00/180.0;
 	final static double WING_MAX_RANGE = 180.00/180.0;
-	final static double WING_R_HOME = 0.00/180.0;
+	final static double WING_R_HOME = 90.00/180.0;
 	final static double WING_L_HOME = 90.00/180.0;
 
 	//
@@ -71,10 +72,9 @@ public class Wheelz extends OpMode {
 		runtime.reset();
 		motorR = hardwareMap.dcMotor.get("motor_r");
 		motorL = hardwareMap.dcMotor.get("motor_l");
-		armAngle = hardwareMap.dcMotor.get("arm_angle");
 		motorL.setDirection(DcMotor.Direction.REVERSE);
 
-		//armAngle = hardwareMap.dcMotor.get("arm_angle");
+		armAngle = hardwareMap.dcMotor.get("arm_angle");
 		//armLift = hardwareMap.dcMotor.get("arm_lyft");
 
 		plow = hardwareMap.servo.get("plow");
@@ -88,6 +88,12 @@ public class Wheelz extends OpMode {
 		plow.setPosition(PLOW_HOME);
 		wing_r.setPosition(WING_R_HOME);
 		wing_l.setPosition(WING_L_HOME);
+
+		//armLift.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+		//armLift.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+		armAngle.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+		armAngle.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
 	}
 
@@ -146,15 +152,20 @@ public class Wheelz extends OpMode {
 
 		// minecraft
 		// Arm angle teleop control
-		double armAnglePower = 0.5;
-		if (gamepad2.y){
-			armAngle.setPower(armAnglePower);
-		} else if (gamepad2.a) {
-			armAngle.setPower(-armAnglePower);
+
+		//Arm Angle Control using triggers
+		double armAnglePower = 0;
+		if (gamepad1.right_trigger>0.1) {
+			armAnglePower = -0.1;
 		}
-		else {
-			armAngle.setPower(0);
+		else if (gamepad1.left_trigger>0.1) {
+			armAnglePower = 0.1;
 		}
+
+		armAnglePower = Range.clip(armAnglePower, -1, 1);
+		armAngle.setPower(armAnglePower);
+
+		double armAnglePosition = armAngle.getCurrentPosition();
 
 		wingPositionR = Range.clip(wingPositionR, WING_MIN_RANGE, WING_MAX_RANGE);
 		wingPositionL = Range.clip(wingPositionL, WING_MIN_RANGE, WING_MAX_RANGE);
@@ -170,7 +181,10 @@ public class Wheelz extends OpMode {
 		telemetry.addData("Wing_L", String.format("Position=%.2f", wingPositionL));
 		*/
 		telemetry.addData("LineDetect",String.format("line=%f, dist=%f", lineLight, distance ));
+		telemetry.addData("Arm",String.format("power=%f, angle=%f",armAnglePower, armAnglePosition));
 	}
+
+	//my mom's a realestate agent
 
 	/**
 	 * Destructor

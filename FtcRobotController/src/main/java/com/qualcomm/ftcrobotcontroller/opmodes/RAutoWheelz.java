@@ -61,7 +61,7 @@ class DriveState extends OpState {
 }
 
 /**
- * State that drives for a fixed distance then moves to the specified state
+ * State that turns a certain amount
  */
 class TurnState extends OpState {
 
@@ -221,6 +221,54 @@ class FollowWithUltrasonicState extends LineFollowState {
 	}
 }
 
+// state that anglez the arm
+class ArmAngleState extends OpState {
+
+	private RAutoWheelz opMode;
+	private String NextStateName;
+	private double Power;
+	private double TargetAngle;
+	private double StartAngle;
+
+	/**
+	 * Constructor
+	 *
+	 * @param name       State Name
+	 * @param opmode     OpMode
+	 * @param power      Motor Power to use
+	 * @param angle      angle to go
+	 * @param next_state Next State Name
+	 */
+	ArmAngleState(String name, RAutoWheelz opmode, double power, double angle, String next_state) {
+		super(name);
+		opMode = opmode;
+		Power = power;
+		TargetAngle = angle;
+		NextStateName = next_state;
+	}
+
+	@Override
+	public void OnEntry() {
+		super.OnEntry();
+		StartAngle = opMode.GetArmAngle();
+		opMode.SetArmAnglePower(Power);
+	}
+
+	@Override
+	public void Do() {
+		double angle = Math.abs(opMode.GetArmAngle() - StartAngle);
+		opMode.telemetry.addData(Name, String.format("%f of %f", angle, TargetAngle));
+		if (angle >= TargetAngle) SetCurrentState(NextStateName);
+	}
+
+	@Override
+	public void OnExit() {
+		super.OnExit();
+		opMode.SetArmAnglePower(0);
+	}
+}
+
+
 
 /**
  * Autonomous Mode for basic 2-motor tank drive robot
@@ -259,11 +307,6 @@ public class RAutoWheelz extends Wheelz {
 		motorL.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
 		motorL.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-		//armLift.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-		//armLift.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-
-		//armAngle.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-		//armAngle.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 	}
 
 	/*
@@ -345,6 +388,18 @@ public class RAutoWheelz extends Wheelz {
 		motorR.setPower(0);
 		motorL.setPower(0);
 	}
+
+	public double GetArmAngle(){
+		double armAnglePosition = armAngle.getCurrentPosition();
+		return armAnglePosition;
+	}
+
+	public void SetArmAnglePower(double power) {
+		DbgLog.msg(toString().format("Arm motor forward w/ power = %f",power));
+		armAngle.setPower(Range.clip(power, -1, 1));
+	}
+
+	public
 
 	double threshold = 35;
 	public boolean LineDetected(){
