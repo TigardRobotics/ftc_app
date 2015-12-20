@@ -321,9 +321,9 @@ public class RAutoWheelz extends Wheelz {
 		}
 		//Construct States
 		OpState[] states = new OpState[]{
-			new DriveState("Forward", this, driveSpeed, 24.0, "Turn"),
-			new TurnState("Turn", this, turnSpeed, 150.0, "Forward2"),
-			new DriveState("Forward2", this, driveSpeed, 40.0, "Follow"),
+			new DriveState("Forward", this, driveSpeed, 30.0, "Turn"),
+			new TurnState("Turn", this, turnSpeed, 120.0, "Forward2"),
+			new DriveState("Forward2", this, driveSpeed, 69.0, "Follow"),
 			new FollowWithUltrasonicState("Follow",this, driveSpeed, 240, 10, "halt"),
 			new DelayState("halt", this, 200, "halt"),
 		};
