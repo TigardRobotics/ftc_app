@@ -28,9 +28,14 @@ import com.qualcomm.robotcore.util.Range;
 public class Wheelz extends OpMode {
 
 	// position of the plow and wing servos
+	double dumpPosition = 0;
 	double plowPosition = 0;
 	double wingPositionR = 0;
 	double wingPositionL = 0;
+	final static double dumpIncrement = 5.0/180.0;
+	final static double DUMP_MIN_RANGE = 0.00/180;
+	final static double DUMP_MAX_RANGE = 180.0/180.0;
+	final static double DUMP_HOME = 180.0/180.0;
 	final static double plowIncrement = 5.0/180.0;
 	final static double PLOW_MIN_RANGE  = 0.00/180.0;
 	final static double PLOW_MAX_RANGE  = 180.0/180.0;
@@ -45,13 +50,15 @@ public class Wheelz extends OpMode {
 	DcMotor motorR;
 	DcMotor motorL;
 	DcMotor armLift;
+	DcMotor armWinch;
 	DcMotor armAngle;
+	Servo dump;
 	Servo plow;
 	Servo wing_r;
 	Servo wing_l;
 	TouchSensor crash_r;
 	TouchSensor crash_l;
-	UltrasonicSensor eyes; // minecraft is my life!
+	UltrasonicSensor eyes;
 	OpticalDistanceSensor lineDetect;
 
 	ElapsedTime runtime = new ElapsedTime();
@@ -75,8 +82,10 @@ public class Wheelz extends OpMode {
 		motorL.setDirection(DcMotor.Direction.REVERSE);
 
 		armAngle = hardwareMap.dcMotor.get("arm_angle");
-		//armLift = hardwareMap.dcMotor.get("arm_lyft");
+		armLift = hardwareMap.dcMotor.get("arm_lift");
+		armWinch = hardwareMap.dcMotor.get("arm_winch");
 
+		dump = hardwareMap.servo.get("dump");
 		plow = hardwareMap.servo.get("plow");
 		wing_r = hardwareMap.servo.get("wing_r");
 		wing_l = hardwareMap.servo.get("wing_l");
@@ -85,6 +94,7 @@ public class Wheelz extends OpMode {
 		lineDetect = hardwareMap.opticalDistanceSensor.get("lineDetect");
 
 		eyes = hardwareMap.ultrasonicSensor.get("eyes");
+		dump.setPosition(DUMP_HOME);
 		plow.setPosition(PLOW_HOME);
 		wing_r.setPosition(WING_R_HOME);
 		wing_l.setPosition(WING_L_HOME);
@@ -106,6 +116,7 @@ public class Wheelz extends OpMode {
 	 */
 	@Override
 	public void loop() {
+		dumpPosition = dump.getPosition();
 		plowPosition = plow.getPosition();
 		wingPositionL = wing_l.getPosition();
 		wingPositionR = wing_r.getPosition();
@@ -114,6 +125,9 @@ public class Wheelz extends OpMode {
         // note that if y equals -1 then joystick is pushed all of the way forward.
         double powerR = -gamepad1.right_stick_y;
 		double powerL = -gamepad1.left_stick_y;
+
+		double powerLift = -gamepad2.right_stick_y;
+		double powerWinch = -gamepad2.left_stick_y;
 
 		// clip the value so it never exceed +/- 1
 		powerR = Range.clip(powerR, -1, 1);
@@ -149,8 +163,6 @@ public class Wheelz extends OpMode {
 			wingPositionL -= wingIncrement;
 		}
 
-
-		// minecraft
 		// Arm angle teleop control
 
 		//Arm Angle Control using triggers
