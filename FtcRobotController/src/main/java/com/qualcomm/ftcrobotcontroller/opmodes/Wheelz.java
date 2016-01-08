@@ -32,7 +32,7 @@ public class Wheelz extends OpMode {
 	double plowPosition = 0;
 	double wingPositionR = 0;
 	double wingPositionL = 0;
-	final static double dumpIncrement = 5.0/180.0;
+	final static double dumpIncrement = 1.0/180.0;
 	final static double DUMP_MIN_RANGE = 0.00/180;
 	final static double DUMP_MAX_RANGE = 180.0/180.0;
 	final static double DUMP_HOME = 180.0/180.0;
@@ -49,8 +49,8 @@ public class Wheelz extends OpMode {
 	//
 	DcMotor motorR;
 	DcMotor motorL;
-	DcMotor armLift;
-	DcMotor armWinch;
+	//DcMotor armLift;
+	//DcMotor armWinch;
 	DcMotor armAngle;
 	Servo dump;
 	Servo plow;
@@ -82,8 +82,8 @@ public class Wheelz extends OpMode {
 		motorL.setDirection(DcMotor.Direction.REVERSE);
 
 		armAngle = hardwareMap.dcMotor.get("arm_angle");
-		armLift = hardwareMap.dcMotor.get("arm_lift");
-		armWinch = hardwareMap.dcMotor.get("arm_winch");
+		//armLift = hardwareMap.dcMotor.get("arm_lift");
+		//armWinch = hardwareMap.dcMotor.get("arm_winch");
 
 		dump = hardwareMap.servo.get("dump");
 		plow = hardwareMap.servo.get("plow");
@@ -151,6 +151,7 @@ public class Wheelz extends OpMode {
 		plowPosition = Range.clip(plowPosition, PLOW_MIN_RANGE, PLOW_MAX_RANGE);
 		plow.setPosition(plowPosition);
 
+
 		//Control Wings R-Bumper=Up, L-Bumper=Down
 		if (gamepad1.right_bumper) {
 			// if the right bumper is pushed on gamepad1, put the wings out
@@ -162,6 +163,16 @@ public class Wheelz extends OpMode {
 			wingPositionR += wingIncrement;
 			wingPositionL -= wingIncrement;
 		}
+
+		//Control Dump arm (aux)
+		if (gamepad2.dpad_up) {
+			dumpPosition += dumpIncrement;
+		}
+		else if (gamepad2.dpad_down) {
+			dumpPosition -= dumpIncrement;
+		}
+		dumpPosition = Range.clip(dumpPosition, DUMP_MIN_RANGE, DUMP_MAX_RANGE);
+		dump.setPosition(dumpPosition);
 
 		// Arm angle teleop control
 
