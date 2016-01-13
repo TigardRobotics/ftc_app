@@ -268,6 +268,58 @@ class ArmAngleState extends OpState {
 	}
 }
 
+/**
+ * State that drives for a fixed distance then moves to the specified state
+ */
+class DumpState extends OpState {
+
+	private RAutoWheelz opMode;
+	private String NextStateName;
+	private double TargetPosition;
+	private double Speed;
+
+	/**
+	 * Constructor
+	 *
+	 * @param name       State Name
+	 * @param opmode     OpMode
+	 * @param targetPosition	Position to go
+	 * @param next_state	Next State Name
+	 */
+	DumpState(String name, RAutoWheelz opmode, double targetPosition, double speed, String next_state) {
+		super(name);
+		opMode = opmode;
+		TargetPosition = targetPosition;
+		Speed = speed;
+		NextStateName = next_state;
+	}
+
+	@Override
+	public void OnEntry() {
+		super.OnEntry();
+	}
+
+	@Override
+	public void Do() {
+		double dumpPosition = opMode.dump.getPosition();
+		opMode.telemetry.addData(Name, String.format("%f of %f", dumpPosition, TargetPosition));
+		if (dumpPosition >= TargetPosition) {
+			dumpPosition += Speed;
+		}
+		else if (dumpPosition <= TargetPosition) {
+			dumpPosition -= Speed;
+		}
+		//DumpPosition = Range.clip(DumpPosition, DUMP_MIN_RANGE, DUMP_MAX_RANGE);
+		opMode.dump.setPosition(dumpPosition);
+
+}
+
+	@Override
+	public void OnExit() {
+		super.OnExit();
+	}
+}
+
 
 
 /**
@@ -324,7 +376,8 @@ public class RAutoWheelz extends Wheelz {
 			new DriveState("Forward", this, driveSpeed, 30.0, "Turn"),
 			new TurnState("Turn", this, turnSpeed, 120.0, "Forward2"),
 			new DriveState("Forward2", this, driveSpeed, 69.0, "Follow"),
-			new FollowWithUltrasonicState("Follow",this, driveSpeed, 240, 10, "halt"),
+			new FollowWithUltrasonicState("Follow",this, driveSpeed, 240, 10, "dump"),
+			new DumpState("dump", this, 75, 5, "halt"),
 			new DelayState("halt", this, 200, "halt"),
 		};
 		OpState.SetCurrentState("Forward");
@@ -383,6 +436,7 @@ public class RAutoWheelz extends Wheelz {
 		DbgLog.msg(toString().format("Motor difference = %f", difference));
 		return difference;
 	}
+
 	public void StopMotors() {
 		DbgLog.msg("Stopping Motors");
 		motorR.setPower(0);
@@ -399,7 +453,15 @@ public class RAutoWheelz extends Wheelz {
 		armAngle.setPower(Range.clip(power, -1, 1));
 	}
 
-	public
+	public void SetDumpPostion(double position){
+		dumpPosition = position;
+		dump.setPosition(dumpPosition);
+	}
+
+	public double GetDumpPosition() {
+		dumpPosition = dump.getPosition();
+		return dumpPosition;
+	}
 
 	double threshold = 35;
 	public boolean LineDetected(){
