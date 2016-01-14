@@ -35,7 +35,7 @@ public class Wheelz extends OpMode {
 	final static double dumpIncrement = 1.0/180.0;
 	final static double DUMP_MIN_RANGE = 0.00/180;
 	final static double DUMP_MAX_RANGE = 180.0/180.0;
-	final static double DUMP_HOME = 180.0/180.0;
+	final static double DUMP_HOME = 0.0/180.0;
 	final static double plowIncrement = 5.0/180.0;
 	final static double PLOW_MIN_RANGE  = 0.00/180.0;
 	final static double PLOW_MAX_RANGE  = 180.0/180.0;

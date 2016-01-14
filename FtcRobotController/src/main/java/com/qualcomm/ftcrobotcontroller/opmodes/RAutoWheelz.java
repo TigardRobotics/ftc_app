@@ -303,10 +303,10 @@ class DumpState extends OpState {
 	public void Do() {
 		double dumpPosition = opMode.dump.getPosition();
 		opMode.telemetry.addData(Name, String.format("%f of %f", dumpPosition, TargetPosition));
-		if (dumpPosition >= TargetPosition) {
+		if (dumpPosition <= TargetPosition) {
 			dumpPosition += Speed;
 		}
-		else if (dumpPosition <= TargetPosition) {
+		else if (dumpPosition >= TargetPosition) {
 			dumpPosition -= Speed;
 		}
 		//DumpPosition = Range.clip(DumpPosition, DUMP_MIN_RANGE, DUMP_MAX_RANGE);
@@ -373,11 +373,11 @@ public class RAutoWheelz extends Wheelz {
 		}
 		//Construct States
 		OpState[] states = new OpState[]{
-			new DriveState("Forward", this, driveSpeed, 30.0, "Turn"),
+			new DriveState("Forward", this, driveSpeed, 35.0, "Turn"),
 			new TurnState("Turn", this, turnSpeed, 120.0, "Forward2"),
-			new DriveState("Forward2", this, driveSpeed, 69.0, "Follow"),
+			new DriveState("Forward2", this, driveSpeed, 60.0, "Follow"),
 			new FollowWithUltrasonicState("Follow",this, driveSpeed, 240, 10, "dump"),
-			new DumpState("dump", this, 75, 5, "halt"),
+			new DumpState("dump", this, 75.0/180., 1.0/180.0, "halt"),
 			new DelayState("halt", this, 200, "halt"),
 		};
 		OpState.SetCurrentState("Forward");
