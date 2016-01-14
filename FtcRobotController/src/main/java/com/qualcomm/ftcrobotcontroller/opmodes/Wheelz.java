@@ -49,8 +49,8 @@ public class Wheelz extends OpMode {
 	//
 	DcMotor motorR;
 	DcMotor motorL;
-	//DcMotor armLift;
-	//DcMotor armWinch;
+	DcMotor armLift;
+	DcMotor armWinch;
 	DcMotor armAngle;
 	Servo dump;
 	Servo plow;
@@ -82,8 +82,8 @@ public class Wheelz extends OpMode {
 		motorL.setDirection(DcMotor.Direction.REVERSE);
 
 		armAngle = hardwareMap.dcMotor.get("arm_angle");
-		//armLift = hardwareMap.dcMotor.get("arm_lift");
-		//armWinch = hardwareMap.dcMotor.get("arm_winch");
+		armLift = hardwareMap.dcMotor.get("arm_lift");
+		armWinch = hardwareMap.dcMotor.get("arm_winch");
 
 		dump = hardwareMap.servo.get("dump");
 		plow = hardwareMap.servo.get("plow");
@@ -136,8 +136,11 @@ public class Wheelz extends OpMode {
 		// write the values to the motors
 		motorR.setPower(powerR);
 		motorL.setPower(powerL);
+		armLift.setPower(powerLift);
+		armWinch.setPower(powerWinch);
 		telemetry.addData("MotorR", String.format("Power=%.2f", powerR));
 		telemetry.addData("MotorL", String.format("Power=%.2f", powerL));
+
 
 		//Control Plow B=Up, X=Down
 		if (gamepad1.b) {
