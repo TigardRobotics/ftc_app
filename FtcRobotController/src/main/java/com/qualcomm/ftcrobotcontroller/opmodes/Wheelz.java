@@ -181,10 +181,10 @@ public class Wheelz extends OpMode {
 
 		//Arm Angle Control using triggers
 		double armAnglePower = 0;
-		if (gamepad1.right_trigger>0.1) {
+		if (gamepad1.right_trigger>0.1 || gamepad2.right_trigger>0.1) {
 			armAnglePower = -0.1;
 		}
-		else if (gamepad1.left_trigger>0.1) {
+		else if (gamepad1.left_trigger>0.1 || gamepad2.left_trigger>0.1) {
 			armAnglePower = 0.1;
 		}
 
