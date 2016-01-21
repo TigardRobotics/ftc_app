@@ -46,6 +46,12 @@ public class Wheelz extends OpMode {
 	final static double WING_R_HOME = 90.00/180.0;
 	final static double WING_L_HOME = 90.00/180.0;
 
+	boolean wingRTurnModeOut = true;
+	boolean wingLTurnModeOut = true;
+
+	boolean wingRSwitchDirection = false;
+	boolean wingLSwitchDirection = false;
+
 	//
 	DcMotor motorR;
 	DcMotor motorL;
@@ -116,6 +122,7 @@ public class Wheelz extends OpMode {
 	 */
 	@Override
 	public void loop() {
+
 		dumpPosition = dump.getPosition();
 		plowPosition = plow.getPosition();
 		wingPositionL = wing_l.getPosition();
@@ -155,17 +162,44 @@ public class Wheelz extends OpMode {
 		plow.setPosition(plowPosition);
 
 
-		//Control Wings R-Bumper=Up, L-Bumper=Down
+
+		//Control Wings R-Bumper=Right wing, L-Bumper=left wing
 		if (gamepad1.right_bumper) {
-			// if the right bumper is pushed on gamepad1, put the wings out
-			wingPositionR -= wingIncrement;
-			wingPositionL += wingIncrement;
+			// if the right bumper is pushed on gamepad1, turn the right wing
+			wingRSwitchDirection = true;
+			if (wingRTurnModeOut){
+				wingPositionR -= wingIncrement;
+			}
+			else if (!wingRTurnModeOut) {
+				wingPositionR += wingIncrement;
+			}
 		}
 		else if (gamepad1.left_bumper) {
-			// if the right bumper is pushed on gamepad1, put the wings out
-			wingPositionR += wingIncrement;
-			wingPositionL -= wingIncrement;
+			// if the left bumper is pushed on gamepad1, turn the left wing
+			wingLSwitchDirection = true;
+			if (wingLTurnModeOut){
+				wingPositionL -= wingIncrement;
+			}
+			else if (!wingLTurnModeOut) {
+				wingPositionL += wingIncrement;
+			}
+
 		}
+		else if (!gamepad1.right_bumper && wingRSwitchDirection) {
+				wingRTurnModeOut = !wingRTurnModeOut;
+				wingLSwitchDirection = false;
+		}
+		else if (!gamepad1.left_bumper && wingLSwitchDirection) {
+				wingLTurnModeOut = !wingLTurnModeOut;
+				wingLSwitchDirection = false;
+		}
+
+		wingPositionR = Range.clip(wingPositionR, WING_MIN_RANGE, WING_MAX_RANGE);
+		wingPositionL = Range.clip(wingPositionL, WING_MIN_RANGE, WING_MAX_RANGE);
+		wing_l.setPosition(wingPositionL);
+		wing_r.setPosition(wingPositionR);
+
+
 
 		//Control Dump arm (aux)
 		if (gamepad2.dpad_up) {
@@ -193,10 +227,6 @@ public class Wheelz extends OpMode {
 
 		double armAnglePosition = armAngle.getCurrentPosition();
 
-		wingPositionR = Range.clip(wingPositionR, WING_MIN_RANGE, WING_MAX_RANGE);
-		wingPositionL = Range.clip(wingPositionL, WING_MIN_RANGE, WING_MAX_RANGE);
-		wing_l.setPosition(wingPositionL);
-		wing_r.setPosition(wingPositionR);
 
 		double lineLight = lineDetect.getLightDetectedRaw();
 
