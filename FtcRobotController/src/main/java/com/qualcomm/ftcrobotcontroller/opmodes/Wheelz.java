@@ -40,7 +40,7 @@ public class Wheelz extends OpMode {
 	final static double PLOW_MIN_RANGE  = 0.00/180.0;
 	final static double PLOW_MAX_RANGE  = 180.0/180.0;
 	final static double PLOW_HOME  = 180.0/180.0;
-	final static double wingIncrement = 2.5 /180.0;
+	final static double wingIncrement = 1.0 /180.0;
 	final static double WING_MIN_RANGE = 0.00/180.0;
 	final static double WING_MAX_RANGE = 180.00/180.0;
 	final static double WING_R_HOME = 90.00/180.0;
@@ -51,6 +51,9 @@ public class Wheelz extends OpMode {
 
 	boolean wingRSwitchDirection = false;
 	boolean wingLSwitchDirection = false;
+
+	int wingRTilSwitchDirec = 300;
+	int wingLTilSwitchDirec = 300;
 
 	//
 	DcMotor motorR;
@@ -186,12 +189,24 @@ public class Wheelz extends OpMode {
 
 		}
 		else if (!gamepad1.right_bumper && wingRSwitchDirection) {
-				wingRTurnModeOut = !wingRTurnModeOut;
-				wingLSwitchDirection = false;
+				if (wingRTilSwitchDirec <= 0) {
+					wingRTurnModeOut = !wingRTurnModeOut;
+					wingRTilSwitchDirec = 300;
+				}
+				else {
+					--wingRTilSwitchDirec;
+				}
+				wingRSwitchDirection = false;
 		}
 		else if (!gamepad1.left_bumper && wingLSwitchDirection) {
+			if (wingLTilSwitchDirec <= 0) {
 				wingLTurnModeOut = !wingLTurnModeOut;
-				wingLSwitchDirection = false;
+				wingLTilSwitchDirec = 300;
+			}
+			else {
+				--wingLTilSwitchDirec;
+			}
+			wingRSwitchDirection = false;
 		}
 
 		wingPositionR = Range.clip(wingPositionR, WING_MIN_RANGE, WING_MAX_RANGE);
