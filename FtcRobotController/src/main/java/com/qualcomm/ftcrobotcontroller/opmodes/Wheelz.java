@@ -46,14 +46,13 @@ public class Wheelz extends OpMode {
 	final static double WING_R_HOME = 90.00/180.0;
 	final static double WING_L_HOME = 90.00/180.0;
 
-	boolean wingRTurnModeOut = true;
-	boolean wingLTurnModeOut = true;
+	boolean RButtDown = false;
+	boolean RWingDirec = true;
+	int Rcount = 0;
 
-	boolean wingRSwitchDirection = false;
-	boolean wingLSwitchDirection = false;
-
-	int wingRTilSwitchDirec = 300;
-	int wingLTilSwitchDirec = 300;
+	boolean LButtDown = false;
+	boolean LWingDirec = true;
+	int Lcount = 0;
 
 	//
 	DcMotor motorR;
@@ -167,50 +166,62 @@ public class Wheelz extends OpMode {
 
 
 		//Control Wings R-Bumper=Right wing, L-Bumper=left wing
-		if (gamepad1.right_bumper) {
-			// if the right bumper is pushed on gamepad1, turn the right wing
-			wingRSwitchDirection = true;
-			if (wingRTurnModeOut){
-				wingPositionR -= wingIncrement;
-			}
-			else if (!wingRTurnModeOut) {
+
+		//State Transitions Right Wing
+		if (RButtDown && !gamepad1.right_bumper) {
+			Rcount = 10;
+			RButtDown = false;
+		}
+		else if (!RButtDown && (Rcount > 0) && gamepad1.right_bumper) {
+			RButtDown = true;
+		}
+		else if (!RButtDown && (Rcount > 0) ) {
+			--Rcount;
+		}
+		else if (!RButtDown && (Rcount < 1) && gamepad1.right_bumper ) {
+			RWingDirec = !RWingDirec;
+			RButtDown = true;
+		}
+
+		//State Transitions Left Wing
+		if (LButtDown && !gamepad1.left_bumper) {
+			Lcount = 10;
+			LButtDown = false;
+		}
+		else if (!LButtDown && (Lcount > 0) && gamepad1.left_bumper) {
+			LButtDown = true;
+		}
+		else if (!LButtDown && (Lcount > 0) ) {
+			--Lcount;
+		}
+		else if (!LButtDown && (Lcount < 1) && gamepad1.left_bumper ) {
+			LWingDirec = !LWingDirec;
+			LButtDown = true;
+		}
+
+		//State Actions Right Wing
+		if (RButtDown) {
+			if (RWingDirec) {
 				wingPositionR += wingIncrement;
 			}
-		}
-		else if (gamepad1.left_bumper) {
-			// if the left bumper is pushed on gamepad1, turn the left wing
-			wingLSwitchDirection = true;
-			if (wingLTurnModeOut){
-				wingPositionL -= wingIncrement;
+			else {
+				wingPositionR -= wingIncrement;
 			}
-			else if (!wingLTurnModeOut) {
+		}
+
+		//State Actions Left Wing
+		if (LButtDown) {
+			if (LWingDirec) {
 				wingPositionL += wingIncrement;
 			}
-
-		}
-		else if (!gamepad1.right_bumper && wingRSwitchDirection) {
-				if (wingRTilSwitchDirec <= 0) {
-					wingRTurnModeOut = !wingRTurnModeOut;
-					wingRTilSwitchDirec = 300;
-				}
-				else {
-					--wingRTilSwitchDirec;
-				}
-				wingRSwitchDirection = false;
-		}
-		else if (!gamepad1.left_bumper && wingLSwitchDirection) {
-			if (wingLTilSwitchDirec <= 0) {
-				wingLTurnModeOut = !wingLTurnModeOut;
-				wingLTilSwitchDirec = 300;
-			}
 			else {
-				--wingLTilSwitchDirec;
+				wingPositionL -= wingIncrement;
 			}
-			wingRSwitchDirection = false;
 		}
 
-		wingPositionR = Range.clip(wingPositionR, WING_MIN_RANGE, WING_MAX_RANGE);
-		wingPositionL = Range.clip(wingPositionL, WING_MIN_RANGE, WING_MAX_RANGE);
+
+		wingPositionR = Range.clip(wingPositionR, WING_R_HOME, WING_MAX_RANGE);
+		wingPositionL = Range.clip(wingPositionL, WING_MIN_RANGE, WING_L_HOME);
 		wing_l.setPosition(wingPositionL);
 		wing_r.setPosition(wingPositionR);
 
@@ -248,11 +259,12 @@ public class Wheelz extends OpMode {
 		double distance = GetUltraSonicDistance();
 		/*
 		telemetry.addData("Plow", String.format("Position=%.2f", plowPosition));
-		telemetry.addData("Wing_R", String.format("Position=%.2f", wingPositionR));
 		telemetry.addData("Wing_L", String.format("Position=%.2f", wingPositionL));
-		*/
 		telemetry.addData("LineDetect",String.format("line=%f, dist=%f", lineLight, distance ));
 		telemetry.addData("Arm",String.format("power=%f, angle=%f",armAnglePower, armAnglePosition));
+		*/
+		telemetry.addData("Wing_R", String.format("Position=%.2f", wingPositionR));
+		telemetry.addData("Wing_R", String.format("direction=%s, count=%d, ButDown=%s", RWingDirec?"T":"F" , Rcount, RButtDown?"T":"F"));
 	}
 
 	//my mom's a realestate agent
