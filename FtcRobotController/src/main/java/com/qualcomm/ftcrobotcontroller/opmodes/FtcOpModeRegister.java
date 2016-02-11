@@ -80,7 +80,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      * Uncomment any of the following lines if you want to register an op mode.
      */
 
-    //manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
+    manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
     //manager.register("MRRGBExample", MRRGBExample.class);
     //manager.register("ColorSensorDriver", ColorSensorDriver.class);
     //manager.register("HTRGBExample", HTRGBExample.class);
@@ -111,7 +111,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotIrSeek", PushBotIrSeek.java);
     //manager.register("PushBotSquare", PushBotSquare.java);
 
-    
+    manager.register("BluOrRedTest", BluOrRedTest.class);
     
   }
 }

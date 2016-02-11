@@ -32,12 +32,13 @@ public class Wheelz extends OpMode {
 	double plowPosition = 0;
 	double wingPositionR = 0;
 	double wingPositionL = 0;
+	double armAnglePosition = 0;
 	final static double dumpIncrement = 1.0/180.0;
 	final static double DUMP_MIN_RANGE = 0.00/180;
 	final static double DUMP_MAX_RANGE = 180.0/180.0;
 	final static double DUMP_HOME = 0.0/180.0;
 	final static double plowIncrement = 5.0/180.0;
-	final static double PLOW_MIN_RANGE  = 0.00/180.0;
+	final static double PLOW_MIN_RANGE  = 90.00/180.0;
 	final static double PLOW_MAX_RANGE  = 180.0/180.0;
 	final static double PLOW_HOME  = 180.0/180.0;
 	final static double wingIncrement = 1.0 /180.0;
@@ -45,6 +46,10 @@ public class Wheelz extends OpMode {
 	final static double WING_MAX_RANGE = 180.00/180.0;
 	final static double WING_R_HOME = 90.00/180.0;
 	final static double WING_L_HOME = 90.00/180.0;
+	final static double armAngleIncrement = 1.0/180.0;
+	final static double armAngleHome = 0.0/180.0;
+	final static double ARM_ANGLE_MAX_RANGE = 180.0/180.0;
+	final static double ARM_ANGLE_MIN_RANGE = 0.0/180.0;
 
 	boolean RButtDown = false;
 	boolean RWingDirec = true;
@@ -57,13 +62,13 @@ public class Wheelz extends OpMode {
 	//
 	DcMotor motorR;
 	DcMotor motorL;
-	DcMotor armLift;
+	DcMotor armExtend;
 	DcMotor armWinch;
-	DcMotor armAngle;
 	Servo dump;
 	Servo plow;
 	Servo wing_r;
 	Servo wing_l;
+	Servo armAngle;
 	TouchSensor crash_r;
 	TouchSensor crash_l;
 	UltrasonicSensor eyes;
@@ -89,8 +94,8 @@ public class Wheelz extends OpMode {
 		motorL = hardwareMap.dcMotor.get("motor_l");
 		motorL.setDirection(DcMotor.Direction.REVERSE);
 
-		armAngle = hardwareMap.dcMotor.get("arm_angle");
-		armLift = hardwareMap.dcMotor.get("arm_lift");
+		armAngle = hardwareMap.servo.get("arm_angle");
+		armExtend = hardwareMap.dcMotor.get("arm_extend");
 		armWinch = hardwareMap.dcMotor.get("arm_winch");
 
 		dump = hardwareMap.servo.get("dump");
@@ -109,9 +114,6 @@ public class Wheelz extends OpMode {
 
 		//armLift.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
 		//armLift.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-
-		armAngle.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-		armAngle.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
 	}
 
@@ -135,7 +137,7 @@ public class Wheelz extends OpMode {
         double powerR = -gamepad1.right_stick_y;
 		double powerL = -gamepad1.left_stick_y;
 
-		double powerLift = -gamepad2.right_stick_y;
+		double powerExtend = -gamepad2.right_stick_y;
 		double powerWinch = -gamepad2.left_stick_y;
 
 		// clip the value so it never exceed +/- 1
@@ -145,7 +147,7 @@ public class Wheelz extends OpMode {
 		// write the values to the motors
 		motorR.setPower(powerR);
 		motorL.setPower(powerL);
-		armLift.setPower(powerLift);
+		armExtend.setPower(powerExtend);
 		armWinch.setPower(powerWinch);
 		telemetry.addData("MotorR", String.format("Power=%.2f", powerR));
 		telemetry.addData("MotorL", String.format("Power=%.2f", powerL));
@@ -237,21 +239,17 @@ public class Wheelz extends OpMode {
 		dumpPosition = Range.clip(dumpPosition, DUMP_MIN_RANGE, DUMP_MAX_RANGE);
 		dump.setPosition(dumpPosition);
 
-		// Arm angle teleop control
+
 
 		//Arm Angle Control using triggers
-		double armAnglePower = 0;
-		if (gamepad1.right_trigger>0.1 || gamepad2.right_trigger>0.1) {
-			armAnglePower = -0.1;
+		if (gamepad2.left_trigger > 0) {
+			armAnglePosition += armAngleIncrement;
 		}
-		else if (gamepad1.left_trigger>0.1 || gamepad2.left_trigger>0.1) {
-			armAnglePower = 0.1;
+		else if (gamepad2.right_trigger > 0) {
+			armAnglePosition -= armAngleIncrement;
 		}
-
-		armAnglePower = Range.clip(armAnglePower, -1, 1);
-		armAngle.setPower(armAnglePower);
-
-		double armAnglePosition = armAngle.getCurrentPosition();
+		armAnglePosition = Range.clip(armAnglePosition, ARM_ANGLE_MIN_RANGE, ARM_ANGLE_MAX_RANGE);
+		armAngle.setPosition(armAnglePosition);
 
 
 		double lineLight = lineDetect.getLightDetectedRaw();
@@ -260,11 +258,12 @@ public class Wheelz extends OpMode {
 		/*
 		telemetry.addData("Plow", String.format("Position=%.2f", plowPosition));
 		telemetry.addData("Wing_L", String.format("Position=%.2f", wingPositionL));
-		telemetry.addData("LineDetect",String.format("line=%f, dist=%f", lineLight, distance ));
 		telemetry.addData("Arm",String.format("power=%f, angle=%f",armAnglePower, armAnglePosition));
-		*/
 		telemetry.addData("Wing_R", String.format("Position=%.2f", wingPositionR));
 		telemetry.addData("Wing_R", String.format("direction=%s, count=%d, ButDown=%s", RWingDirec?"T":"F" , Rcount, RButtDown?"T":"F"));
+		*/
+		telemetry.addData("LineDetect",String.format("line=%f, dist=%f", lineLight, distance ));
+
 	}
 
 	//my mom's a realestate agent

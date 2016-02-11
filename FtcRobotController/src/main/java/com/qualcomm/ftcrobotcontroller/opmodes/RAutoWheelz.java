@@ -166,7 +166,7 @@ class LineFollowState extends OpState {
 			lineWasDetected = true;
 			Power = Math.abs(Power);
 			opMode.MotorsTurn(Power, false);
-		} else if(lineWasDetected){
+		} else if (lineWasDetected) {
 			Power = -Math.abs(Power);
 			opMode.MotorsTurn(Power, false);
 		}
@@ -221,55 +221,8 @@ class FollowWithUltrasonicState extends LineFollowState {
 	}
 }
 
-// state that anglez the arm
-class ArmAngleState extends OpState {
-
-	private RAutoWheelz opMode;
-	private String NextStateName;
-	private double Power;
-	private double TargetAngle;
-	private double StartAngle;
-
-	/**
-	 * Constructor
-	 *
-	 * @param name       State Name
-	 * @param opmode     OpMode
-	 * @param power      Motor Power to use
-	 * @param angle      angle to go
-	 * @param next_state Next State Name
-	 */
-	ArmAngleState(String name, RAutoWheelz opmode, double power, double angle, String next_state) {
-		super(name);
-		opMode = opmode;
-		Power = power;
-		TargetAngle = angle;
-		NextStateName = next_state;
-	}
-
-	@Override
-	public void OnEntry() {
-		super.OnEntry();
-		StartAngle = opMode.GetArmAngle();
-		opMode.SetArmAnglePower(Power);
-	}
-
-	@Override
-	public void Do() {
-		double angle = Math.abs(opMode.GetArmAngle() - StartAngle);
-		opMode.telemetry.addData(Name, String.format("%f of %f", angle, TargetAngle));
-		if (angle >= TargetAngle) SetCurrentState(NextStateName);
-	}
-
-	@Override
-	public void OnExit() {
-		super.OnExit();
-		opMode.SetArmAnglePower(0);
-	}
-}
-
 /**
- * State that drives for a fixed distance then moves to the specified state
+ * State that DUMPS for a fixed DUMPRANGE then moves to the specified state
  */
 class DumpState extends OpState {
 
@@ -381,7 +334,7 @@ public class RAutoWheelz extends Wheelz {
 			new DelayState("halt", this, 200, "halt"),
 		};
 		OpState.SetCurrentState("Forward");
-		// #hardcore haxor 2015
+		// #hardcore haxor 2016
 
 	}
 	
@@ -391,7 +344,6 @@ public class RAutoWheelz extends Wheelz {
 	 */
 	@Override
 	public void loop() {
-
 		OpState.DoCurrentState();
 	}
 
@@ -442,17 +394,7 @@ public class RAutoWheelz extends Wheelz {
 		motorR.setPower(0);
 		motorL.setPower(0);
 	}
-
-	public double GetArmAngle(){
-		double armAnglePosition = armAngle.getCurrentPosition();
-		return armAnglePosition;
-	}
-
-	public void SetArmAnglePower(double power) {
-		DbgLog.msg(toString().format("Arm motor forward w/ power = %f",power));
-		armAngle.setPower(Range.clip(power, -1, 1));
-	}
-
+	
 	public void SetDumpPostion(double position){
 		dumpPosition = position;
 		dump.setPosition(dumpPosition);
@@ -463,7 +405,7 @@ public class RAutoWheelz extends Wheelz {
 		return dumpPosition;
 	}
 
-	double threshold = 35;
+	double threshold = 200;
 	public boolean LineDetected(){
 		return(lineDetect.getLightDetectedRaw() > threshold);
 	}
