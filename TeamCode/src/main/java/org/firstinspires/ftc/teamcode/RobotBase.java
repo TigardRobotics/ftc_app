@@ -31,5 +31,9 @@ public abstract class RobotBase extends OpMode {
     public void setRightDrivePower(double power){
         rightMotor.setPower(power);
     }
+
+    public double getDrivePower() {
+        return Math.max(leftMotor.getCurrentPosition(), rightMotor.getCurrentPosition());
+    }
 }
 
