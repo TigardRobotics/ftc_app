@@ -11,7 +11,7 @@ public class BasicTeleop extends RobotBase {
 
     @Override
     public void loop(){
-        setLeftDrivePower(-gamepad1.left_stick_y);
-        setRightDrivePower(gamepad1.right_stick_y);
+        setLeftDrivePower(gamepad1.left_stick_y);
+        setRightDrivePower(-gamepad1.right_stick_y);
     }
 }

@@ -71,7 +71,7 @@ abstract class State {
 	protected String Name = null;
 	protected boolean Complete = false;
 	protected String NextStateName = null;
-	//protected RobotBase opMode = null;
+	protected RobotBase Robot = null;
 	
 	public final boolean isIncomplete(){
 		return !Complete;
