@@ -5,6 +5,12 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public abstract class VelocityVortexRobotBase extends RobotBase {
-    DriveMotorDiameter = 35.56; // Centimeters
+    protected static final double DriveMotorDiameter = 35.56; // Centimeters
+
     // All hardware custom to velocity vortex defined here
+
+    @Override
+    public double getDriveMotorDiameter () {
+        return DriveMotorDiameter;
+    }
 }

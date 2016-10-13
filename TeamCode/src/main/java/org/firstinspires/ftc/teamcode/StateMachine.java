@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import java.util.ArrayList;
+import com.qualcomm.ftccommon.DbgLog;
 
 /**
  * Created by Derek Williams of team 3965 on 10/9/2016.
@@ -10,14 +11,15 @@ class StateMachine {
 	private State CurrentState = null;
 	private boolean StateHasStarted = false;
 	private boolean Active = true;
-	private ArrayList<State> OpStates = new ArrayList<State>();
+	private ArrayList<State> States = new ArrayList<State>();
+	//private ArrayList<Transition> Transitions = new Arraylist<Transition>();
 
 	public boolean isActive(){
 		return Active;
 	}
 
-	public State getByName(String name) {
-		for(State state : OpStates) {
+	public State getState(String name) {
+		for(State state : States) {
 			if(state.Name == name) {
 				return state;
 			}
@@ -30,11 +32,11 @@ class StateMachine {
 	}
 	
 	public void setCurrentState(String name) {
-		CurrentState = getByName(name);
+		CurrentState = getState(name);
 	}
 	
 	public void add(State state) {
-		OpStates.add(state);
+		States.add(state);
 	}
 	
 	public void add(State[] states) {
@@ -47,6 +49,7 @@ class StateMachine {
 		if(CurrentState != null) {
 			Active = true;
 			if(!StateHasStarted){
+				DbgLog.msg("Entering State Called "+CurrentState.Name);
 				CurrentState.start();
 				StateHasStarted = true;
 			}
@@ -55,10 +58,11 @@ class StateMachine {
 				CurrentState.checkComplete();
 			}
 			else {
+				DbgLog.msg("Leaving State Called "+CurrentState.Name);
 				String nextStateName = CurrentState.NextStateName;
-				CurrentState.exit();
+				CurrentState.stop();
 				StateHasStarted = false;
-				CurrentState = getByName(nextStateName);
+				CurrentState = getState(nextStateName);
 			}
 		}
 		else {
@@ -72,6 +76,7 @@ abstract class State {
 	protected boolean Complete = false;
 	protected String NextStateName = null;
 	protected RobotBase Robot = null;
+	// protected StateMachine Machine;
 	
 	public final boolean isIncomplete(){
 		return !Complete;
@@ -81,39 +86,24 @@ abstract class State {
 	
 	public void loop(){}
 	
-	abstract public void checkComplete();
+	public abstract void checkComplete();
 	
-	public void exit(){}
+	public void stop(){}
 }
 
-/*
-class PrintState extends State{
-	PrintState(String name, String nextstatename){
-		Name = name;
-		NextStateName = nextstatename;
+// New idea: Experimental
+abstract class Transition {
+	protected StateMachine Machine;
+	protected String FromStateName;
+	protected String ToStateName;
+
+	final State getFromState() {
+		return Machine.getState(FromStateName);
 	}
 
-	@Override
-	public void start(){
-		System.out.println("Startin' the print state called "+Name);
+	final State getToState() {
+		return Machine.getState(ToStateName);
 	}
 
-	@Override
-	public void loop(){
-		System.out.println("Doin' the state called "+Name);
-	}
-
-	@Override
-	public void checkComplete(){
-		System.out.println("Checkin' if this state is done");
-		if(2+2==4){
-			Complete = true;
-		}
-	}
-
-	@Override
-	public void exit(){
-		System.out.println("Exitn' the state known as "+Name);
-	}
+	abstract public boolean Condition();
 }
-*/

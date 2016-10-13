@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 public abstract class RobotBase extends OpMode {
-    protected double DriveMotorDiameter;
     private DcMotor leftMotor = null;
     private DcMotor rightMotor = null;
 
@@ -25,6 +24,10 @@ public abstract class RobotBase extends OpMode {
         rightMotor.setPower(power);
     }
 
+    public void stopDriveMotors(){
+        setDrivePower(0);
+    }
+
     public void setLeftDrivePower(double power){
         leftMotor.setPower(power);
     }
@@ -33,12 +36,16 @@ public abstract class RobotBase extends OpMode {
         rightMotor.setPower(power);
     }
 
-    public double getDrivePower() {
+    public double getDrivePosition() {
         return Math.max(leftMotor.getCurrentPosition(), rightMotor.getCurrentPosition());
     }
 
+    protected double getDriveMotorDiameter() {
+        return 0.0;
+    }
+
     public double getTurnCircumference(){
-        return Math.PI*DriveMotorDiameter;
+        return Math.PI*getDriveMotorDiameter();
     }
 }
 
