@@ -20,7 +20,7 @@ public abstract class RobotBase extends OpMode {
     }
 
     public void setDrivePower(double power){
-        leftMotor.setPower(power);
+        leftMotor.setPower(-power);
         rightMotor.setPower(power);
     }
 
@@ -29,7 +29,7 @@ public abstract class RobotBase extends OpMode {
     }
 
     public void setLeftDrivePower(double power){
-        leftMotor.setPower(power);
+        leftMotor.setPower(-power);
     }
 
     public void setRightDrivePower(double power){
@@ -43,6 +43,8 @@ public abstract class RobotBase extends OpMode {
     protected double getDriveMotorDiameter() {
         return 0.0;
     }
+
+    protected double getFullRotation() { return 0.0; }
 
     public double getTurnCircumference(){
         return Math.PI*getDriveMotorDiameter();

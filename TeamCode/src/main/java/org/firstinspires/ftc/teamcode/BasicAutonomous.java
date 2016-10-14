@@ -13,9 +13,11 @@ public class BasicAutonomous extends RobotBase {
     @Override
     public void start(){
         States.add(new State[]{
-            new DriveState("Forward", this, 100, 100, "Backward"),
-            new DriveState("Backward", this, -100, 100, null),
+            new TurnState("Turn", this, 100, 7900, null),
+            //new DriveState("Forward", this, 100, 2000, "Backward"),
+            //new DriveState("Backward", this, -100, 2000, null),
         });
+        States.setCurrentState("Turn");
     }
 
     @Override

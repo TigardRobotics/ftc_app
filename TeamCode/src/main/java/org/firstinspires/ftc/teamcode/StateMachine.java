@@ -49,7 +49,7 @@ class StateMachine {
 		if(CurrentState != null) {
 			Active = true;
 			if(!StateHasStarted){
-				DbgLog.msg("Entering State Called "+CurrentState.Name);
+				DbgLog.msg("Entering "+CurrentState.Name+" State");
 				CurrentState.start();
 				StateHasStarted = true;
 			}
@@ -58,7 +58,7 @@ class StateMachine {
 				CurrentState.checkComplete();
 			}
 			else {
-				DbgLog.msg("Leaving State Called "+CurrentState.Name);
+				DbgLog.msg("Leaving "+CurrentState.Name+" State");
 				String nextStateName = CurrentState.NextStateName;
 				CurrentState.stop();
 				StateHasStarted = false;
