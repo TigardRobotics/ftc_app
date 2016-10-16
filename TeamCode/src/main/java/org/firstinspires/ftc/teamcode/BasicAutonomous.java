@@ -8,25 +8,33 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name="Basic Autonomous", group="3965")
 public class BasicAutonomous extends RobotBase {
-    private StateMachine States = new StateMachine();
+    private StateMachine machine = new StateMachine(this);
 
     @Override
     public void start(){
-        States.add(new State[]{
-            new TurnState("Turn", this, 100, 7900, null),
+        // Adding states to state machine
+        machine.add(new State[]{
+            new TurnState("Turn", 100),
             //new DriveState("Forward", this, 100, 2000, "Backward"),
             //new DriveState("Backward", this, -100, 2000, null),
         });
-        States.setCurrentState("Turn");
+
+        // Adding transitions to state machine
+        machine.add(new Transition[]{
+            new ProgressReachedTrans("Turn1", null, 7900),
+        });
+
+        // Setting Initial active state
+        machine.setActiveState("Turn");
     }
 
     @Override
     public void loop(){
-        States.step();
+        machine.step();
     }
 
     @Override
     public void stop(){
-
+        machine.stop();
     }
 }

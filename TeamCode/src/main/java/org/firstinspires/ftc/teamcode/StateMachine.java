@@ -2,41 +2,52 @@ package org.firstinspires.ftc.teamcode;
 
 import java.util.ArrayList;
 import com.qualcomm.ftccommon.DbgLog;
+import com.qualcomm.robotcore.robot.Robot;
 
 /**
  * Created by Derek Williams of team 3965 on 10/9/2016.
  */
 
 class StateMachine {
-	private State CurrentState = null;
-	private boolean StateHasStarted = false;
-	private boolean Active = true;
-	private ArrayList<State> States = new ArrayList<State>();
-	//private ArrayList<Transition> Transitions = new Arraylist<Transition>();
+	private State activeState = null;
+	private boolean stateHasStarted = false;
+	private boolean active = true;
+	public RobotBase robot;
+	private ArrayList<State> states = new ArrayList<State>();
+	private ArrayList<Transition> transitions = new ArrayList<Transition>();
+
+	StateMachine(RobotBase robot) {
+		this.robot = robot;
+	}
 
 	public boolean isActive(){
-		return Active;
+		return active;
 	}
 
 	public State getState(String name) {
-		for(State state : States) {
-			if(state.Name == name) {
+		for(State state : states) {
+			if(state.name == name) {
 				return state;
 			}
 		}
 		return null;
 	}
-	
-	public void setCurrentState(State state) {
-		CurrentState = state;
+
+	public void stop() {
+		activeState.stop();
 	}
 	
-	public void setCurrentState(String name) {
-		CurrentState = getState(name);
+	public void setActiveState(State state) {
+		activeState = state;
+	}
+	
+	public void setActiveState(String name) {
+		setActiveState(getState(name));
 	}
 	
 	public void add(State state) {
-		States.add(state);
+		state.machine = this;
+		states.add(state);
 	}
 	
 	public void add(State[] states) {
@@ -44,66 +55,110 @@ class StateMachine {
 			add(state);
 		}
 	}
+
+	public void add(Transition transition) {
+		transition.machine = this;
+		transitions.add(transition);
+	}
+
+	public void add(Transition[] transitions) {
+		for(Transition transition : transitions) {
+			add(transition);
+		}
+	}
+
+	public boolean shouldExitState() {
+		boolean shouldExit = false;
+		for(Transition transition : transitions) {
+				shouldExit = shouldExit || transition.test();
+		}
+		return shouldExit;
+	}
+
+	public ArrayList<Transition> getPossibleTransitions() {
+		ArrayList<Transition> possibleTransitions = new ArrayList<Transition>();
+		for(Transition transition : transitions) {
+			if(activeState == transition.getFromState()) {
+				possibleTransitions.add(transition);
+			}
+		}
+		return possibleTransitions;
+	}
+
+	public Transition getTransitionToTrigger() {
+		for(Transition transition : getPossibleTransitions()) {
+			if(transition.test()){
+				return transition;
+			}
+		}
+		return null;
+	}
+
+	public void triggerTransition(Transition transition) {
+		setActiveState(transition.getToState());
+		stateHasStarted = false;
+	}
+
+	private void handleTransitions() {
+		Transition transitionToTrigger = getTransitionToTrigger();
+		if(transitionToTrigger != null) {
+			DbgLog.msg("Leaving "+ activeState.name +" State");
+			activeState.stop();
+			triggerTransition(transitionToTrigger);
+		}
+	}
+
+	private void handleStartingStates() {
+		if(!stateHasStarted) {
+			DbgLog.msg("Entering "+ activeState.name +" State");
+			activeState.start();
+			stateHasStarted = true;
+		}
+	}
 	
 	public void step(){
-		if(CurrentState != null) {
-			Active = true;
-			if(!StateHasStarted){
-				DbgLog.msg("Entering "+CurrentState.Name+" State");
-				CurrentState.start();
-				StateHasStarted = true;
-			}
-			else if(CurrentState.isIncomplete()) {
-				CurrentState.loop();
-				CurrentState.checkComplete();
-			}
-			else {
-				DbgLog.msg("Leaving "+CurrentState.Name+" State");
-				String nextStateName = CurrentState.NextStateName;
-				CurrentState.stop();
-				StateHasStarted = false;
-				CurrentState = getState(nextStateName);
+		if(activeState != null) {
+			active = true;
+			handleStartingStates();
+			if(!shouldExitState() && !stateHasStarted) {
+				activeState.loop();
+				handleTransitions();
 			}
 		}
 		else {
-			Active = false;
+			active = false;
 		}
 	}
 }
 
 abstract class State {
-	protected String Name = null;
-	protected boolean Complete = false;
-	protected String NextStateName = null;
-	protected RobotBase Robot = null;
-	// protected StateMachine Machine;
-	
-	public final boolean isIncomplete(){
-		return !Complete;
+	protected String name = null;
+	protected StateMachine machine;
+	protected RobotBase robot = null;
+
+	public double getProgress() {
+		return 0.0;
 	}
 	
-	public void start(){}
+	public abstract void start();
 	
-	public void loop(){}
+	public abstract void loop();
 	
-	public abstract void checkComplete();
-	
-	public void stop(){}
+	public abstract void stop();
 }
 
-// New idea: Experimental
 abstract class Transition {
-	protected StateMachine Machine;
-	protected String FromStateName;
-	protected String ToStateName;
+	protected StateMachine machine;
+	protected String fromStateName;
+	protected String toStateName;
 
 	final State getFromState() {
-		return Machine.getState(FromStateName);
+		return machine.getState(fromStateName);
 	}
 
 	final State getToState() {
-		return Machine.getState(ToStateName);
+		return machine.getState(toStateName);
 	}
 
-	abstract public boolean Condition();
+	abstract public boolean test();
 }

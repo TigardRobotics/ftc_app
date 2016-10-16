@@ -5,42 +5,32 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public class DriveState extends State{
-    private double Power;
-    private double TargetDistance;
+    private double power;
     private double InitialEncoderPosition;
 
-    DriveState(String name, RobotBase robot, double power, double distance, String nextstatename){
-        Name = name;
-        Robot = robot;
-        Power = power;
-        TargetDistance = distance;
-        NextStateName = nextstatename;
+    DriveState(String name, double power){
+        this.name = name;
+        this.power = power;
     }
 
-    protected double distanceDriven() {
-        return Math.abs(Robot.getDrivePosition() - InitialEncoderPosition);
+    @Override
+    public double getProgress() {
+        return Math.abs(machine.robot.getDrivePosition() - InitialEncoderPosition);
     }
 
     @Override
     public void start() {
-        InitialEncoderPosition = Robot.getDrivePosition();
-        Robot.setDrivePower(Power);
+        InitialEncoderPosition = machine.robot.getDrivePosition();
+        machine.robot.setDrivePower(power);
     }
 
     @Override
     public void loop() {
-        Robot.telemetry.addData(Name, String.format("%f of %f", distanceDriven(), TargetDistance));
-    }
-
-    @Override
-    public void checkComplete() {
-        if(distanceDriven() >= TargetDistance){
-            Complete = true;
-        }
+        machine.robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override
     public void stop() {
-        Robot.stopDriveMotors();
+        machine.robot.stopDriveMotors();
     }
 }
