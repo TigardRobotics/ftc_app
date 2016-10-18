@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import java.util.ArrayList;
 import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.robot.Robot;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by Derek Williams of team 3965 on 10/9/2016.
@@ -47,6 +48,7 @@ class StateMachine {
 	
 	public void add(State state) {
 		state.machine = this;
+		state.runtime.reset();
 		states.add(state);
 	}
 	
@@ -96,6 +98,7 @@ class StateMachine {
 
 	public void triggerTransition(Transition transition) {
 		setActiveState(transition.getToState());
+		activeState.runtime.reset();
 		stateHasStarted = false;
 	}
 
@@ -135,6 +138,7 @@ abstract class State {
 	protected String name = null;
 	protected StateMachine machine;
 	protected RobotBase robot = null;
+	protected ElapsedTime runtime = new ElapsedTime();
 
 	public double getProgress() {
 		return 0.0;
