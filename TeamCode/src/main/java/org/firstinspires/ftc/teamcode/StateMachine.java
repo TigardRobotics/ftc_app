@@ -31,6 +31,7 @@ class StateMachine {
 				return state;
 			}
 		}
+		DbgLog.msg(name+" NOT FOUND");
 		return null;
 	}
 
@@ -84,6 +85,7 @@ class StateMachine {
 				possibleTransitions.add(transition);
 			}
 		}
+		DbgLog.msg(String.format("%d transitions detected for "+activeState.name, possibleTransitions.toArray().length));
 		return possibleTransitions;
 	}
 

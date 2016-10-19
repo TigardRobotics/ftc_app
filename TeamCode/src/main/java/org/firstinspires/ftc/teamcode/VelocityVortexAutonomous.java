@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 public class VelocityVortexAutonomous extends VelocityVortexRobotBase {
-    protected StateMachine States = new StateMachine();
+    protected StateMachine States = new StateMachine(this);
 
     @Override
     public void start(){

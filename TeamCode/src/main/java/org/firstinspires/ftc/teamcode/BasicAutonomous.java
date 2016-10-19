@@ -21,7 +21,7 @@ public class BasicAutonomous extends RobotBase {
 
         // Adding transitions to state machine
         machine.add(new Transition[]{
-            new ProgressReachedTrans("Turn1", null, 7900),
+            new TimeElapsedTrans("Turn", null, 7900),
         });
 
         // Setting Initial active state
