@@ -36,7 +36,9 @@ class StateMachine {
 	}
 
 	public void stop() {
-		activeState.stop();
+		if (activeState != null) {
+			activeState.stop();
+		}
 	}
 	
 	public void setActiveState(State state) {
@@ -100,7 +102,13 @@ class StateMachine {
 
 	public void triggerTransition(Transition transition) {
 		setActiveState(transition.getToState());
-		activeState.runtime.reset();
+		if (activeState != null) {
+			activeState.runtime.reset();
+		}
+		else {
+			active = false;
+			robot.telemetry.addLine("STATE MACHINE NOW INACTIVE");
+		}
 		stateHasStarted = false;
 	}
 
@@ -116,6 +124,7 @@ class StateMachine {
 	private void handleStartingStates() {
 		if(!stateHasStarted) {
 			DbgLog.msg("Entering "+ activeState.name +" State");
+			//robot.telemetry.addData("Entering "+ activeState.name +" State");
 			activeState.start();
 			stateHasStarted = true;
 		}
@@ -125,13 +134,10 @@ class StateMachine {
 		if(activeState != null) {
 			active = true;
 			handleStartingStates();
-			if(!shouldExitState() && !stateHasStarted) {
+			if(stateHasStarted) {
 				activeState.loop();
 				handleTransitions();
 			}
-		}
-		else {
-			active = false;
 		}
 	}
 }
