@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import java.util.ArrayList;
 import com.qualcomm.ftccommon.DbgLog;
-import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -12,7 +11,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 class StateMachine {
 	private State activeState = null;
 	private boolean stateHasStarted = false;
-	private boolean active = true;
 	public RobotBase robot;
 	private ArrayList<State> states = new ArrayList<State>();
 	private ArrayList<Transition> transitions = new ArrayList<Transition>();
@@ -22,7 +20,7 @@ class StateMachine {
 	}
 
 	public boolean isActive(){
-		return active;
+		return activeState != null;
 	}
 
 	public State getState(String name) {
@@ -48,7 +46,10 @@ class StateMachine {
 	public void setActiveState(String name) {
 		setActiveState(getState(name));
 	}
-	
+
+	/**
+	 * Methods used to add states and transitions to state machine
+     */
 	public void add(State state) {
 		state.machine = this;
 		state.runtime.reset();
@@ -72,14 +73,9 @@ class StateMachine {
 		}
 	}
 
-	public boolean shouldExitState() {
-		boolean shouldExit = false;
-		for(Transition transition : transitions) {
-				shouldExit = shouldExit || transition.test();
-		}
-		return shouldExit;
-	}
-
+	/**
+	 * Methods that handle transitions
+     */
 	public ArrayList<Transition> getPossibleTransitions() {
 		ArrayList<Transition> possibleTransitions = new ArrayList<Transition>();
 		for(Transition transition : transitions) {
@@ -102,14 +98,28 @@ class StateMachine {
 
 	public void triggerTransition(Transition transition) {
 		setActiveState(transition.getToState());
-		if (activeState != null) {
+		if (isActive()) {
 			activeState.runtime.reset();
+			stateHasStarted = false;
 		}
-		else {
-			active = false;
-			robot.telemetry.addLine("STATE MACHINE NOW INACTIVE");
+	}
+
+	/**
+	 * Methods that run every step when state machine is active
+	 */
+	private void handleStartingStates() {
+		if(isActive() && !stateHasStarted) {
+			DbgLog.msg("Entering "+ activeState.name +" State");
+			robot.telemetry.addLine("Entering "+ activeState.name +" State");
+			activeState.start();
+			stateHasStarted = true;
 		}
-		stateHasStarted = false;
+	}
+
+	private void handleLooping() {
+		if(isActive()) {
+			activeState.loop();
+		}
 	}
 
 	private void handleTransitions() {
@@ -121,23 +131,18 @@ class StateMachine {
 		}
 	}
 
-	private void handleStartingStates() {
-		if(!stateHasStarted) {
-			DbgLog.msg("Entering "+ activeState.name +" State");
-			//robot.telemetry.addData("Entering "+ activeState.name +" State");
-			activeState.start();
-			stateHasStarted = true;
+	public void handleBecomingInactive() {
+		if(!isActive()) {
+			robot.telemetry.addLine("STATE MACHINE NOW INACTIVE");
 		}
 	}
 	
 	public void step(){
-		if(activeState != null) {
-			active = true;
+		if (isActive()) {
 			handleStartingStates();
-			if(stateHasStarted) {
-				activeState.loop();
-				handleTransitions();
-			}
+			handleLooping();
+			handleTransitions();
+			handleBecomingInactive();
 		}
 	}
 }

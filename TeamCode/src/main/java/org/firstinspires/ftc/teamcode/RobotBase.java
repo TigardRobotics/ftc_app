@@ -2,26 +2,25 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by Derek Williams of team 3965 on 10/9/2016.
  */
 
 public abstract class RobotBase extends OpMode {
-    private DcMotor leftMotor = null;
-    private DcMotor rightMotor = null;
+    private DcMotor leftDriveMotor;
+    private DcMotor rightDriveMotor;
 
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
-        leftMotor = hardwareMap.dcMotor.get("motor_l");
-        rightMotor = hardwareMap.dcMotor.get("motor_r");
+        leftDriveMotor = hardwareMap.dcMotor.get("motor_l");
+        rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
     }
 
     public void setDrivePower(double power){
-        leftMotor.setPower(-power);
-        rightMotor.setPower(power);
+        leftDriveMotor.setPower(-power);
+        rightDriveMotor.setPower(power);
     }
 
     public void stopDriveMotors(){
@@ -29,15 +28,15 @@ public abstract class RobotBase extends OpMode {
     }
 
     public void setLeftDrivePower(double power){
-        leftMotor.setPower(-power);
+        leftDriveMotor.setPower(-power);
     }
 
     public void setRightDrivePower(double power){
-        rightMotor.setPower(power);
+        rightDriveMotor.setPower(power);
     }
 
     public double getDrivePosition() {
-        return Math.max(leftMotor.getCurrentPosition(), rightMotor.getCurrentPosition());
+        return Math.max(leftDriveMotor.getCurrentPosition(), rightDriveMotor.getCurrentPosition());
     }
 
     protected double getDriveMotorDiameter() {
@@ -48,6 +47,10 @@ public abstract class RobotBase extends OpMode {
 
     public double getTurnCircumference(){
         return Math.PI*getDriveMotorDiameter();
+    }
+
+    public SensorModule getSensorModule() {
+        return null;
     }
 }
 
