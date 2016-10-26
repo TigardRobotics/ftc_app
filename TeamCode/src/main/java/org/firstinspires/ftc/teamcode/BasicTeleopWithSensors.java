@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 /**
@@ -7,14 +8,19 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 
 @TeleOp(name="Sensor Testing", group="3965")
-public class BasicTeleopWithSensors extends BasicTeleop {
+public class BasicTeleopWithSensors extends RobotBase {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
 
     @Override
+    public void init() {
+        sensorModule.init();
+    }
+
+    @Override
     public void loop() {
-        super.loop();
         telemetry.addData("Ultra Sonic Value:", sensorModule.getUsRange());
         telemetry.addData("Optical Distance Sensor Value", sensorModule.getOdsRange());
+        telemetry.addData("Composite Value", sensorModule.getRangeCm());
     }
 
     @Override

@@ -5,6 +5,8 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public abstract class SensorModule {
+    public abstract void init();
+
     public double getRange() {
         return 0.0;
     }
@@ -15,6 +17,10 @@ public abstract class SensorModule {
 
     public double getUsRange() {
         return 0.0;
+    }
+
+    public double getRangeCm() {
+        return 0;
     }
 
     public double getFrontColor() {
