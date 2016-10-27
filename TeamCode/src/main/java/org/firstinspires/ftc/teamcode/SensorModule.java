@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode;
 public abstract class SensorModule {
     public abstract void init();
 
-    public double getRange() {
+    public double getRangeSensor() {
         return 0.0;
     }
 
