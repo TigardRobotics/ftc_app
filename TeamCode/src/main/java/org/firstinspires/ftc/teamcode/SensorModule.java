@@ -20,15 +20,24 @@ public abstract class SensorModule {
     }
 
     public double getRangeCm() {
-        return 0;
-    }
-
-    public double getFrontColor() {
         return 0.0;
     }
 
-    public double getBottomColor() {
+    public double getFrontRed() {
         return 0.0;
+    }
+
+    public double getFrontGreen() {
+        return 0.0;
+    }
+
+    public double getFrontBlue() {
+        return 0.0;
+    }
+
+    public double[] getFrontRGB() {
+        double[] rgb = {getFrontRed(), getFrontGreen(), getFrontBlue()};
+        return rgb;
     }
 
     public boolean isLineDetected() {

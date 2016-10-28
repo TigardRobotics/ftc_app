@@ -20,8 +20,11 @@ public class RangeSensorTrans extends SensorTrans {
     }
 }
 
-/*
 class BelowRangeTrans extends RangeSensorTrans {
+
+    BelowRangeTrans (String fromStateName, String toStateName, double range) {
+        super(fromStateName, toStateName, range);
+    }
 
     @Override
     public boolean test() {
@@ -31,9 +34,13 @@ class BelowRangeTrans extends RangeSensorTrans {
 
 class AboveRangeTrans extends RangeSensorTrans {
 
+    AboveRangeTrans (String fromStateName, String toStateName, double range) {
+        super(fromStateName, toStateName, range);
+    }
+
     @Override
     public boolean test() {
         return sensorModule.getRangeCm() > range;
     }
 }
-*/
+

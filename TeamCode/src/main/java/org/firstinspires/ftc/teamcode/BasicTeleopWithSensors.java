@@ -18,9 +18,8 @@ public class BasicTeleopWithSensors extends RobotBase {
 
     @Override
     public void loop() {
-        telemetry.addData("Ultra Sonic Value:", sensorModule.getUsRange());
-        telemetry.addData("Optical Distance Sensor Value", sensorModule.getOdsRange());
-        telemetry.addData("Composite Value", sensorModule.getRangeCm());
+        telemetry.addData("Distance Value", sensorModule.getRangeCm());
+        telemetry.addData("Front RGB Color", sensorModule.getFrontRGB());
     }
 
     @Override

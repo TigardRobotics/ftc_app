@@ -9,23 +9,29 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="Basic Autonomous", group="3965")
 public class BasicAutonomous extends RobotBase {
     private StateMachine machine = new StateMachine(this);
+    private SensorModule sensorModule = new ModernRoboticsSensorModule(this);
+
+    @Override
+    public void init() {
+        sensorModule.init();
+    }
 
     @Override
     public void start(){
         // Adding states to state machine
         machine.add(new State[]{
-            new TurnState("Turn", 100),
-            //new DriveState("Forward", this, 100, 2000, "Backward"),
-            //new DriveState("Backward", this, -100, 2000, null),
+            new DriveState("forward", 100),
+            new TurnState("turnaround", 100),
         });
 
         // Adding transitions to state machine
         machine.add(new Transition[]{
-            new ProgressReachedTrans("Turn", null, 7900),
+            new BelowRangeTrans("forward", "turnaround", 30),
+            new ProgressReachedTrans("turnaround", "forward", 7660),
         });
 
         // Setting Initial active state
-        machine.setActiveState("Turn");
+        machine.setActiveState("forward");
     }
 
     @Override
@@ -36,5 +42,10 @@ public class BasicAutonomous extends RobotBase {
     @Override
     public void stop(){
         machine.stop();
+    }
+
+    @Override
+    public SensorModule getSensorModule() {
+        return sensorModule;
     }
 }
