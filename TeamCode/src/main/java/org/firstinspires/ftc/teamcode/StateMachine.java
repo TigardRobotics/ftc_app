@@ -29,8 +29,7 @@ class StateMachine {
 				return state;
 			}
 		}
-		DbgLog.msg(name+" NOT FOUND");
-		return null;
+		throw new RuntimeException(name+" NOT FOUND");
 	}
 
 	public void stop() {
@@ -93,6 +92,7 @@ class StateMachine {
 				return transition;
 			}
 		}
+		//throw new RuntimeException("No transitions to trigger found");
 		return null;
 	}
 

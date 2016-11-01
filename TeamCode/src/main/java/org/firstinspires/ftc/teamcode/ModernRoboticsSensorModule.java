@@ -26,7 +26,7 @@ public class ModernRoboticsSensorModule extends SensorModule {
         frontColorSensor.enableLed(false);
     }
 
-    public void makeFrontColorSensorActive(boolean active) {
+    public void activateFrontColorSensor(boolean active) {
         frontColorSensor.enableLed(active);
     }
 

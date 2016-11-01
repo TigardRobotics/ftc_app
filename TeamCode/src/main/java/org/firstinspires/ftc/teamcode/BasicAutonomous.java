@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="Basic Autonomous", group="3965")
 public class BasicAutonomous extends RobotBase {
     private StateMachine machine = new StateMachine(this);
-    private SensorModule sensorModule = new ModernRoboticsSensorModule(this);
+    private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
 
     @Override
     public void init() {
@@ -20,7 +20,7 @@ public class BasicAutonomous extends RobotBase {
     public void start(){
         // Adding states to state machine
         machine.add(new State[]{
-            new DriveState("forward", 100),
+            new DriveState("forward", -100),
             new TurnState("turnaround", 100),
         });
 

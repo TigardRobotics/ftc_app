@@ -43,14 +43,15 @@ public abstract class RobotBase extends OpMode {
         return 0.0;
     }
 
-    protected double getFullRotation() { return 0.0; }
+    protected double getFullRotation() {
+        return 0.0;
+    }
 
     public double getTurnCircumference(){
         return Math.PI*getDriveMotorDiameter();
     }
 
     public SensorModule getSensorModule() {
-        return null;
+        throw new RuntimeException("Sensor Module does not Exist");
     }
 }
-
