@@ -53,9 +53,11 @@ class StateMachine {
 		state.machine = this;
 		state.runtime.reset();
 		states.add(state);
+		state.init();
 	}
 	
 	public void add(State[] states) {
+		robot.telemetry.addLine("Adding states to state machine");
 		for(State state : states) {
 			add(state);
 		}
@@ -64,9 +66,11 @@ class StateMachine {
 	public void add(Transition transition) {
 		transition.machine = this;
 		transitions.add(transition);
+		transition.init();
 	}
 
 	public void add(Transition[] transitions) {
+		robot.telemetry.addLine("Adding transitions to state machine");
 		for(Transition transition : transitions) {
 			add(transition);
 		}
@@ -153,6 +157,8 @@ abstract class State {
 	protected RobotBase robot = null;
 	protected ElapsedTime runtime = new ElapsedTime();
 
+	public void init(){}
+
 	public double getProgress() {
 		return 0.0;
 	}
@@ -168,6 +174,8 @@ abstract class Transition {
 	protected StateMachine machine;
 	protected String fromStateName;
 	protected String toStateName;
+
+	public void init(){}
 
 	final State getFromState() {
 		return machine.getState(fromStateName);

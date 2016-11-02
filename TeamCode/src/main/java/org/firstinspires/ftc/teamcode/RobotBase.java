@@ -13,7 +13,7 @@ public abstract class RobotBase extends OpMode {
 
     @Override
     public void init() {
-        telemetry.addData("Status", "Initialized");
+        telemetry.addLine("Basic Hardware Initialized");
         leftDriveMotor = hardwareMap.dcMotor.get("motor_l");
         rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
     }

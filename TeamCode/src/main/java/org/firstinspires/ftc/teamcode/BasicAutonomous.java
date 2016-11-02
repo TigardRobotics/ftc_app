@@ -13,6 +13,7 @@ public class BasicAutonomous extends RobotBase {
 
     @Override
     public void init() {
+        super.init();
         sensorModule.init();
     }
 
@@ -27,7 +28,7 @@ public class BasicAutonomous extends RobotBase {
         // Adding transitions to state machine
         machine.add(new Transition[]{
             new BelowRangeTrans("forward", "turnaround", 30),
-            new ProgressReachedTrans("turnaround", "forward", 7660),
+            new ProgressReachedTrans("turnaround", "forward", 7660/2),
         });
 
         // Setting Initial active state

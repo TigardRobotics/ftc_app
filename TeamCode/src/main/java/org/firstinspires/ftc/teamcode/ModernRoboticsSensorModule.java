@@ -24,6 +24,7 @@ public class ModernRoboticsSensorModule extends SensorModule {
         frontRangeSensor = robot.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "front_range");
         frontColorSensor = robot.hardwareMap.colorSensor.get("front_color");
         frontColorSensor.enableLed(false);
+        robot.telemetry.addLine("Sensor Module Initialized");
     }
 
     public void activateFrontColorSensor(boolean active) {

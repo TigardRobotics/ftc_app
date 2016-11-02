@@ -11,7 +11,6 @@ public class RangeSensorTrans extends SensorTrans {
         this.fromStateName = fromStateName;
         this.toStateName = toStateName;
         this.range = range;
-        sensorModule = machine.robot.getSensorModule();
     }
 
     @Override

@@ -35,11 +35,6 @@ public abstract class SensorModule {
         return 0.0;
     }
 
-    public double[] getFrontRGB() {
-        double[] rgb = {getFrontRed(), getFrontGreen(), getFrontBlue()};
-        return rgb;
-    }
-
     public boolean isLineDetected() {
         return false;
     }
