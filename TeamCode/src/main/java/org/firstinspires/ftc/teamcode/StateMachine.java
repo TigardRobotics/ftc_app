@@ -151,7 +151,24 @@ class StateMachine {
 	}
 }
 
-abstract class State {
+
+abstract class StateMachineComponent {
+	private StateMachine stateMachine;
+	private boolean stateMachineInitialized = false;
+
+	public void onAddition(){}
+
+	public StateMachine getStateMachine(){
+		return stateMachine;
+	}
+
+	public void setStateMachine(StateMachine stateMachine) {
+		stateMachineInitialized = true;
+		this.stateMachine = stateMachine;
+	}
+}
+
+abstract class State extends StateMachineComponent{
 	protected String name = null;
 	protected StateMachine machine;
 	protected RobotBase robot = null;
@@ -170,7 +187,7 @@ abstract class State {
 	public abstract void stop();
 }
 
-abstract class Transition {
+abstract class Transition extends StateMachineComponent{
 	protected StateMachine machine;
 	protected String fromStateName;
 	protected String toStateName;
