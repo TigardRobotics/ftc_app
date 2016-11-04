@@ -24,7 +24,7 @@ public abstract class RobotBase extends OpMode {
     }
 
     public void stopDriveMotors(){
-        setDrivePower(0);
+        setDrivePower(0.0);
     }
 
     public void setLeftDrivePower(double power){

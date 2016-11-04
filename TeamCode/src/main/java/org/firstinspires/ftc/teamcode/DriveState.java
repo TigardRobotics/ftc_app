@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 public class DriveState extends State{
     private double power;
-    private double InitialEncoderPosition;
+    private double initialEncoderPosition;
 
     DriveState(String name, double power){
         this.name = name;
@@ -15,22 +15,22 @@ public class DriveState extends State{
 
     @Override
     public double getProgress() {
-        return Math.abs(machine.robot.getDrivePosition() - InitialEncoderPosition);
+        return Math.abs(getStateMachine().robot.getDrivePosition() - initialEncoderPosition);
     }
 
     @Override
     public void start() {
-        InitialEncoderPosition = machine.robot.getDrivePosition();
-        machine.robot.setDrivePower(power);
+        initialEncoderPosition = getStateMachine().robot.getDrivePosition();
+        getStateMachine().robot.setDrivePower(power);
     }
 
     @Override
     public void loop() {
-        machine.robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
+        getStateMachine().robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override
     public void stop() {
-        machine.robot.stopDriveMotors();
+        getStateMachine().robot.stopDriveMotors();
     }
 }

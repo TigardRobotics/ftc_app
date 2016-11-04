@@ -14,6 +14,6 @@ public class ProgressReachedTrans extends Transition {
     }
 
     public boolean test() {
-        return machine.getState(fromStateName).getProgress() >= progress;
+        return getStateMachine().getState(fromStateName).getProgress() >= progress;
     }
 }

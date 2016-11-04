@@ -7,12 +7,18 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 public abstract class VelocityVortexRobotBase extends RobotBase {
-    protected static final double DriveMotorDiameter = 35.56; // Centimeters
-    protected static final double fullMotorRotation = 7660;
+    protected static final double DRIVE_DIAMETER = 35.56; // Centimeters
+    protected static final double FULL_TURN_ROTATION = 7660;
 
     // All hardware custom to velocity vortex defined here
     protected Servo rightButtonPusher;
     protected Servo leftButtonPusher;
+
+    // Hardware constants
+    final static double RIGHT_BUTTON_PUSHER_MAX = 1.0;
+    final static double RIGHT_BUTTON_PUSHER_MIN = 0.0;
+    final static double LEFT_BUTTON_PUSHER_MAX = 1.0;
+    final static double LEFT_BUTTON_PUSHER_MIN = 0.0;
 
     @Override
     public void init() {
@@ -24,6 +30,6 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
 
     @Override
     public double getDriveMotorDiameter () {
-        return DriveMotorDiameter;
+        return DRIVE_DIAMETER;
     }
 }

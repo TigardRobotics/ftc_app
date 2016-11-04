@@ -5,8 +5,8 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public class TurnState extends State{
-    private double power;
-    private double InitialEncoderPosition;
+    protected double power;
+    protected double initialEncoderPosition;
 
     TurnState(String name, double power){
         this.name = name;
@@ -14,23 +14,23 @@ public class TurnState extends State{
     }
 
     public double getProgress() {
-        return Math.abs(machine.robot.getDrivePosition() - InitialEncoderPosition);
+        return Math.abs(getStateMachine().robot.getDrivePosition() - initialEncoderPosition);
     }
 
     @Override
     public void start() {
-        InitialEncoderPosition = machine.robot.getDrivePosition();
-        machine.robot.setRightDrivePower(power);
-        machine.robot.setLeftDrivePower(-power);
+        initialEncoderPosition = getStateMachine().robot.getDrivePosition();
+        getStateMachine().robot.setRightDrivePower(power);
+        getStateMachine().robot.setLeftDrivePower(-power);
     }
 
     @Override
     public void loop() {
-        machine.robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
+        getStateMachine().robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override
     public void stop() {
-        machine.robot.stopDriveMotors();
+        getStateMachine().robot.stopDriveMotors();
     }
 }
