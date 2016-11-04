@@ -5,10 +5,7 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public abstract class SensorTrans extends Transition {
-    protected SensorModule sensorModule;
-
-    @Override
-    public void init(){
-        sensorModule = machine.robot.getSensorModule();
+    protected SensorModule getSensorModule() {
+        return getStateMachine().robot.getSensorModule();
     }
 }

@@ -15,7 +15,7 @@ public class RangeSensorTrans extends SensorTrans {
 
     @Override
     public boolean test() {
-        return sensorModule.getRangeCm() == range;
+        return getSensorModule().getRangeCm() == range;
     }
 }
 
@@ -27,7 +27,7 @@ class BelowRangeTrans extends RangeSensorTrans {
 
     @Override
     public boolean test() {
-        return sensorModule.getRangeCm() < range;
+        return getSensorModule().getRangeCm() < range;
     }
 }
 
@@ -39,7 +39,7 @@ class AboveRangeTrans extends RangeSensorTrans {
 
     @Override
     public boolean test() {
-        return sensorModule.getRangeCm() > range;
+        return getSensorModule().getRangeCm() > range;
     }
 }
 

@@ -50,10 +50,8 @@ class StateMachine {
 	 * Methods used to add states and transitions to state machine
      */
 	public void add(State state) {
-		state.machine = this;
-		state.runtime.reset();
+		state.onAddition(this);
 		states.add(state);
-		state.init();
 	}
 	
 	public void add(State[] states) {
@@ -64,9 +62,8 @@ class StateMachine {
 	}
 
 	public void add(Transition transition) {
-		transition.machine = this;
+		transition.onAddition(this);
 		transitions.add(transition);
-		transition.init();
 	}
 
 	public void add(Transition[] transitions) {
@@ -96,14 +93,12 @@ class StateMachine {
 				return transition;
 			}
 		}
-		//throw new RuntimeException("No transitions to trigger found");
 		return null;
 	}
 
 	public void triggerTransition(Transition transition) {
 		setActiveState(transition.getToState());
 		if (isActive()) {
-			activeState.runtime.reset();
 			stateHasStarted = false;
 		}
 	}
@@ -140,7 +135,10 @@ class StateMachine {
 			robot.telemetry.addLine("STATE MACHINE NOW INACTIVE");
 		}
 	}
-	
+
+	/*
+	* Step Method is periodically called
+	 */
 	public void step(){
 		if (isActive()) {
 			handleStartingStates();
@@ -156,10 +154,15 @@ abstract class StateMachineComponent {
 	private StateMachine stateMachine;
 	private boolean stateMachineInitialized = false;
 
-	public void onAddition(){}
+	public void onAddition(StateMachine stateMachine) {
+		this.stateMachine = stateMachine;
+	}
 
 	public StateMachine getStateMachine(){
-		return stateMachine;
+		if (stateMachineInitialized) {
+			return stateMachine;
+		}
+		throw new RuntimeException("State attempting to access state machine before addition to it");
 	}
 
 	public void setStateMachine(StateMachine stateMachine) {
@@ -170,17 +173,21 @@ abstract class StateMachineComponent {
 
 abstract class State extends StateMachineComponent{
 	protected String name = null;
-	protected StateMachine machine;
-	protected RobotBase robot = null;
 	protected ElapsedTime runtime = new ElapsedTime();
 
-	public void init(){}
+	@Override
+	public void onAddition(StateMachine stateMachine) {
+		super.onAddition(stateMachine);
+		runtime.reset();
+	}
 
 	public double getProgress() {
 		return 0.0;
 	}
 	
-	public abstract void start();
+	public void start() {
+		runtime.reset();
+	}
 	
 	public abstract void loop();
 	
@@ -188,18 +195,15 @@ abstract class State extends StateMachineComponent{
 }
 
 abstract class Transition extends StateMachineComponent{
-	protected StateMachine machine;
 	protected String fromStateName;
 	protected String toStateName;
 
-	public void init(){}
-
 	final State getFromState() {
-		return machine.getState(fromStateName);
+		return getStateMachine().getState(fromStateName);
 	}
 
 	final State getToState() {
-		return machine.getState(toStateName);
+		return getStateMachine().getState(toStateName);
 	}
 
 	abstract public boolean test();
