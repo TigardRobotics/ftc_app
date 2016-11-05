@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.ftccommon.DbgLog;
+
 /**
  * Created by Derek Williams on 10/12/2016.
  */
@@ -27,6 +29,7 @@ public class DriveState extends State{
     @Override
     public void loop() {
         getStateMachine().robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
+        DbgLog.msg(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override

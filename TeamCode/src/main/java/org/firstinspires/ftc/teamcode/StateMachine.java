@@ -51,11 +51,11 @@ class StateMachine {
      */
 	public void add(State state) {
 		state.onAddition(this);
+		robot.telemetry.addLine("Adding "+state.name+" to state machine");
 		states.add(state);
 	}
 	
 	public void add(State[] states) {
-		robot.telemetry.addLine("Adding states to state machine");
 		for(State state : states) {
 			add(state);
 		}
@@ -155,7 +155,7 @@ abstract class StateMachineComponent {
 	private boolean stateMachineInitialized = false;
 
 	public void onAddition(StateMachine stateMachine) {
-		this.stateMachine = stateMachine;
+		setStateMachine(stateMachine);
 	}
 
 	public StateMachine getStateMachine(){
@@ -165,7 +165,7 @@ abstract class StateMachineComponent {
 		throw new RuntimeException("State attempting to access state machine before addition to it");
 	}
 
-	public void setStateMachine(StateMachine stateMachine) {
+	protected void setStateMachine(StateMachine stateMachine) {
 		stateMachineInitialized = true;
 		this.stateMachine = stateMachine;
 	}
