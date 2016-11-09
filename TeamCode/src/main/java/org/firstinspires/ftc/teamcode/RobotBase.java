@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -28,6 +29,7 @@ public abstract class RobotBase extends OpMode {
     }
 
     public void setLeftDrivePower(double power){
+        DbgLog.msg(String.format("Enabling Left Motor w/ power: %f", power));
         leftDriveMotor.setPower(-power);
     }
 

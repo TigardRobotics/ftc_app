@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 /**
- * Created by Derek Williamse of team 3965 on 11/3/2016.
+ * Created by Derek Williams of team 3965 on 11/3/2016.
  */
 
 public class WaddleState extends TurnState {

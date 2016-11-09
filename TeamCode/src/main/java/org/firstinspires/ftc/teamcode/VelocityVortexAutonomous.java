@@ -6,8 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Created by Derek Williams on 10/11/2016.
  */
 
-@Autonomous(name="VV Auto Base", group="3965")
+//@Autonomous(name="VV Auto Base", group="3965")
 public class VelocityVortexAutonomous extends VelocityVortexRobotBase {
+    protected int directionMultiplier;
     protected StateMachine stateMachine = new StateMachine(this);
 
     @Override
@@ -15,15 +16,15 @@ public class VelocityVortexAutonomous extends VelocityVortexRobotBase {
         // Adding states to state machine
         stateMachine.add(new State[]{
                 new DriveState("forward1", -100),
-                new TurnState("turn1", 100),
+                new TurnState("turn1", 100*directionMultiplier),
                 new DriveState("forward2", 100),
         });
 
         // Adding transitions to state machine
         stateMachine.add(new Transition[]{
                 new BelowRangeTrans("forward1", "turn1", 5),
-                new ProgressReachedTrans("turn1", "forward2", 20),
-                new ProgressReachedTrans("forward2", null, 300),
+                new ProgressReachedTrans("turn1", "forward2", 28),
+                new ProgressReachedTrans("forward2", null, 15000),
         });
 
         // Setting Initial active state
