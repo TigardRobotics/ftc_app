@@ -5,6 +5,11 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public class LineUndetectedTrans extends SensorTrans {
+    LineUndetectedTrans (String fromStateName, String toStateName) {
+        this.fromStateName = fromStateName;
+        this.toStateName = toStateName;
+    }
+
     @Override
     public boolean test() {
         return getSensorModule().isLineDetected();

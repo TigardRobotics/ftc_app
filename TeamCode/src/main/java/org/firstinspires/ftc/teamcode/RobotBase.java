@@ -20,8 +20,8 @@ public abstract class RobotBase extends OpMode {
     }
 
     public void setDrivePower(double power){
-        leftDriveMotor.setPower(-power);
-        rightDriveMotor.setPower(power);
+        leftDriveMotor.setPower(power);
+        rightDriveMotor.setPower(-power);
     }
 
     public void stopDriveMotors(){

@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 //@Autonomous(name="VV Auto Base", group="3965")
 public class VelocityVortexAutonomous extends VelocityVortexRobotBase {
-    protected int directionMultiplier;
+    protected int directionMultiplier;  // Multiply turn power by this
     protected StateMachine stateMachine = new StateMachine(this);
 
     @Override
