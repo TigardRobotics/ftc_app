@@ -35,6 +35,10 @@ public abstract class SensorModule {
         return 0.0;
     }
 
+    public double getLineDetectorLightLevel() {
+        return 0.0;
+    }
+
     public boolean isLineDetected() {
         return false;
     }

@@ -27,7 +27,7 @@ public class ModernRoboticsSensorModule extends SensorModule {
         frontRangeSensor = robot.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "front_range");
         frontColorSensor = robot.hardwareMap.colorSensor.get("front_color");
         bottomLineSensor = robot.hardwareMap.opticalDistanceSensor.get("bottom_ods");
-        lineSensorLightThreshold = 200;
+        lineSensorLightThreshold = 1.0;
         frontColorSensor.enableLed(false);
         robot.telemetry.addLine("Sensor Module Initialized");
     }
@@ -67,7 +67,12 @@ public class ModernRoboticsSensorModule extends SensorModule {
     }
 
     @Override
+    public double getLineDetectorLightLevel() {
+        return bottomLineSensor.getRawLightDetected();
+    }
+
+    @Override
     public boolean isLineDetected() {
-        return bottomLineSensor.getRawLightDetected() >  lineSensorLightThreshold;
+        return getLineDetectorLightLevel() >  lineSensorLightThreshold;
     }
 }

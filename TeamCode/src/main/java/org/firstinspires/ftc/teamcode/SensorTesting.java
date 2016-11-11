@@ -19,9 +19,10 @@ public class SensorTesting extends RobotBase {
     @Override
     public void loop() {
         telemetry.addData("Distance Value", sensorModule.getRangeCm());
-        telemetry.addData("Front Red", sensorModule.getFrontRed());
-        telemetry.addData("Front Green", sensorModule.getFrontGreen());
-        telemetry.addData("Front Blue", sensorModule.getFrontBlue());
+        //telemetry.addData("Front Red", sensorModule.getFrontRed());
+        //telemetry.addData("Front Green", sensorModule.getFrontGreen());
+        //telemetry.addData("Front Blue", sensorModule.getFrontBlue());
+        telemetry.addData("Ods ", getSensorModule().getLineDetectorLightLevel());
     }
 
     @Override

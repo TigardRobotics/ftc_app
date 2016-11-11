@@ -4,11 +4,17 @@ package org.firstinspires.ftc.teamcode;
  * Created by Derek Williams of team 3965 on 11/8/2016.
  */
 
-public class FollowLineState extends State{
-    protected StateMachine lineFollowStateMachine = new StateMachine(getStateMachine().robot);
+public class FollowLineState extends State {
+    protected StateMachine lineFollowStateMachine;
 
     FollowLineState(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void onAddition (StateMachine stateMachine) {
+        super.onAddition(stateMachine);
+        lineFollowStateMachine = new StateMachine(getStateMachine().robot);
     }
 
     @Override
@@ -25,6 +31,7 @@ public class FollowLineState extends State{
             new LineUndetectedTrans("waddle_left", "waddle_right"),
         });
 
+        // Setting initial state for line follow state machine
         lineFollowStateMachine.setActiveState("waddle_right");
     }
 

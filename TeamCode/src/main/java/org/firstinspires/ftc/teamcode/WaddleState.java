@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode;
  * Created by Derek Williams of team 3965 on 11/3/2016.
  */
 
-public class WaddleState extends TurnState {
+public class WaddleState extends DriveState {
     protected boolean pivotOnLeftDriveMotor;
 
     WaddleState(String name, double power, boolean pivotOnLeftDriveMotor){
@@ -14,13 +14,12 @@ public class WaddleState extends TurnState {
 
     @Override
     public void start() {
-        initialEncoderPosition = getStateMachine().robot.getDrivePosition();
-        getStateMachine().robot.stopDriveMotors();
+        super.start();
         if(pivotOnLeftDriveMotor) {
-            getStateMachine().robot.setRightDrivePower(power);
+            getStateMachine().robot.setLeftDrivePower(power/2);
         }
         else {
-            getStateMachine().robot.setLeftDrivePower(-power);
+            getStateMachine().robot.setRightDrivePower(power/2);
         }
     }
 }

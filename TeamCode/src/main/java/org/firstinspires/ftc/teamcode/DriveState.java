@@ -7,8 +7,8 @@ import com.qualcomm.ftccommon.DbgLog;
  */
 
 public class DriveState extends State{
-    private double power;
-    private double initialEncoderPosition;
+    protected double power;
+    protected double initialEncoderPosition;
 
     DriveState(String name, double power){
         this.name = name;

@@ -54,7 +54,7 @@ public class SensorMROpticalDistance extends LinearOpMode {
   public void runOpMode() throws InterruptedException {
 
     // get a reference to our Light Sensor object.
-    odsSensor = hardwareMap.opticalDistanceSensor.get("ods");
+    odsSensor = hardwareMap.opticalDistanceSensor.get("bottom_ods");
 
     // wait for the start button to be pressed.
     waitForStart();
