@@ -67,6 +67,17 @@ public class ModernRoboticsSensorModule extends SensorModule {
     }
 
     @Override
+    public String getFrontColor() {
+        if (getFrontBlue() > getFrontRed()) {
+            return "blue";
+        }
+        if (getFrontRed() > getFrontBlue()) {
+            return "red";
+        }
+        throw new RuntimeException("Trouble detecting front color");
+    }
+
+    @Override
     public double getLineDetectorLightLevel() {
         return bottomLineSensor.getRawLightDetected();
     }

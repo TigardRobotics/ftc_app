@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 /**
- * Created by Robotics on 11/9/2016.
+ * Created by Derek Williams of team 3965 on 11/9/2016.
  */
 
 @Autonomous(name="Test Auto", group="3965")
@@ -14,7 +14,7 @@ public class TestAutonomous extends VelocityVortexRobotBase {
     public void start(){
         // Adding states to state machine
         stateMachine.add(new State[]{
-            new FollowLineState("follow"),
+            new FollowLineState("follow", 75),
         });
 
         // Adding transitions to state machine
@@ -22,7 +22,7 @@ public class TestAutonomous extends VelocityVortexRobotBase {
             new BelowRangeTrans("follow", null, 4),
         });
 
-        // Setting Initial active state
+        // Setting initial active state
         stateMachine.setActiveState("follow");
     }
 

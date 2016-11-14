@@ -16,10 +16,15 @@ public class WaddleState extends DriveState {
     public void start() {
         super.start();
         if(pivotOnLeftDriveMotor) {
-            getStateMachine().robot.setLeftDrivePower(power/2);
+            getStateMachine().robot.setLeftDrivePower(0.0);
         }
         else {
-            getStateMachine().robot.setRightDrivePower(power/2);
+            getStateMachine().robot.setRightDrivePower(0.0);
         }
+    }
+
+    @Override
+    public void stop() {
+        getStateMachine().robot.stopDriveMotors();
     }
 }

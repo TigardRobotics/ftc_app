@@ -35,6 +35,8 @@ public abstract class SensorModule {
         return 0.0;
     }
 
+    public String getFrontColor() { return "NONE"; }
+
     public double getLineDetectorLightLevel() {
         return 0.0;
     }

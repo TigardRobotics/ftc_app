@@ -6,9 +6,11 @@ package org.firstinspires.ftc.teamcode;
 
 public class FollowLineState extends State {
     protected StateMachine lineFollowStateMachine;
+    protected double power;
 
-    FollowLineState(String name) {
+    FollowLineState(String name, double power) {
         this.name = name;
+        this.power = power;
     }
 
     @Override
@@ -19,10 +21,12 @@ public class FollowLineState extends State {
 
     @Override
     public void start() {
+        super.start();
+
         // Adding states to state machine
         lineFollowStateMachine.add(new State[]{
-            new WaddleState("waddle_right", 100, false),
-            new WaddleState("waddle_left", 100, true),
+            new WaddleState("waddle_right", power, false),
+            new WaddleState("waddle_left", power, true),
         });
 
         // Adding transitions to state machine
