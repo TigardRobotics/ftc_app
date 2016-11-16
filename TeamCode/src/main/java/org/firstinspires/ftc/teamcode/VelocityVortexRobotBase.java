@@ -17,10 +17,10 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     protected Servo leftButtonPusher;
 
     // Hardware constants
-    final static double RIGHT_BUTTON_PUSHER_MAX = 1.0;
-    final static double RIGHT_BUTTON_PUSHER_MIN = 0.0;
-    final static double LEFT_BUTTON_PUSHER_MAX = 1.0;
-    final static double LEFT_BUTTON_PUSHER_MIN = 0.0;
+    final static double RIGHT_BUTTON_PUSHER_MAX = 0.7;
+    final static double RIGHT_BUTTON_PUSHER_MIN = 0.3;
+    final static double LEFT_BUTTON_PUSHER_MAX = 0.7;
+    final static double LEFT_BUTTON_PUSHER_MIN = 0.3;
 
     @Override
     public void init() {
