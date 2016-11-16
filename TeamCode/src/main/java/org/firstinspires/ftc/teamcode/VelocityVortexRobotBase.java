@@ -25,7 +25,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     @Override
     public void init() {
         super.init();
-        sensorModule.init();
+        //sensorModule.init();
         rightButtonPusher = hardwareMap.servo.get("right_button_pusher");
         leftButtonPusher = hardwareMap.servo.get("left_button_pusher");
         telemetry.addLine("Velocity Vortex Base Initialized");

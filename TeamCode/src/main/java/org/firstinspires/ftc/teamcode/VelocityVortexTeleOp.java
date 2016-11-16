@@ -15,25 +15,30 @@ public class VelocityVortexTeleOp extends VelocityVortexRobotBase {
 
     @Override
     public void loop(){
+
         setLeftDrivePower(-gamepad1.left_stick_y);
         setRightDrivePower(-gamepad1.right_stick_y);
 
         if (gamepad1.a) {
-            rightButtonPusher.setPosition(RIGHT_BUTTON_PUSHER_MAX);
-            telemetry.addLine("R OUT");
+            double rightButtonPos = RIGHT_BUTTON_PUSHER_MAX;
+            rightButtonPusher.setPosition(rightButtonPos);
+            telemetry.addData("R OUT", rightButtonPos);
         }
         else if (gamepad1.b) {
-            rightButtonPusher.setPosition(RIGHT_BUTTON_PUSHER_MIN);
-            telemetry.addLine("R IN");
+            double rightButtonPos = RIGHT_BUTTON_PUSHER_MIN;
+            rightButtonPusher.setPosition(rightButtonPos);
+            telemetry.addData("R IN", rightButtonPos);
         }
 
         if(gamepad1.x) {
-            leftButtonPusher.setPosition(LEFT_BUTTON_PUSHER_MAX);
-            telemetry.addLine("L OUT");
+            double leftButtonPos = LEFT_BUTTON_PUSHER_MAX;
+            leftButtonPusher.setPosition(leftButtonPos);
+            telemetry.addData("L OUT", leftButtonPos);
         }
         else if (gamepad1.y) {
-            leftButtonPusher.setPosition(LEFT_BUTTON_PUSHER_MIN);
-            telemetry.addLine("L IN");
+            double leftButtonPos = LEFT_BUTTON_PUSHER_MIN;
+            leftButtonPusher.setPosition(leftButtonPos);
+            telemetry.addData("L IN", leftButtonPos);
         }
 
 

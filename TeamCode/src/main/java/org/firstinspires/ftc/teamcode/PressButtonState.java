@@ -19,7 +19,7 @@ public class PressButtonState extends State {
     @Override
     public void start() {
         super.start();
-        leftColor = getStateMachine().robot.getSensorModule().getFrontColor();
+        //leftColor = getSensorModule().getFrontColor();
         if(leftColor == buttonToPress) {
             // Push left button
         }

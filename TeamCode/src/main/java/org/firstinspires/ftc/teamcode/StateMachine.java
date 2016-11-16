@@ -174,7 +174,7 @@ abstract class StateMachineComponent {
 		if (stateMachineInitialized) {
 			return getStateMachine().robot;
 		}
-		throw new RuntimeException("State attempting to access robot before addition to it");
+		throw new RuntimeException("State attempting to access robot before addition to state machine");
 	}
 }
 
