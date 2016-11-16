@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 
 /**
- * Created by Derek Williams on 10/11/2016.
+ * Created by Derek Williams of team 3965 on 11/15/2016.
  */
 
-@TeleOp(name="VV Teleop", group="3965")
-public class VelocityVortexTeleOp extends VelocityVortexRobotBase {
+@TeleOp(name="Test Teleop", group="3965")
+public class TestTeleop extends VelocityVortexRobotBase {
 
     @Override
     public void start(){}

@@ -17,23 +17,23 @@ public class DriveState extends State{
 
     @Override
     public double getProgress() {
-        return Math.abs(getStateMachine().robot.getDrivePosition() - initialEncoderPosition);
+        return Math.abs(getRobot().getDrivePosition() - initialEncoderPosition);
     }
 
     @Override
     public void start() {
-        initialEncoderPosition = getStateMachine().robot.getDrivePosition();
-        getStateMachine().robot.setDrivePower(power);
+        initialEncoderPosition = getRobot().getDrivePosition();
+        getRobot().setDrivePower(power);
     }
 
     @Override
     public void loop() {
-        getStateMachine().robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
+        getRobot().telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
         DbgLog.msg(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override
     public void stop() {
-        getStateMachine().robot.stopDriveMotors();
+        getRobot().stopDriveMotors();
     }
 }

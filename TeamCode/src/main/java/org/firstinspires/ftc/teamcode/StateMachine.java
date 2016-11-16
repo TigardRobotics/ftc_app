@@ -176,6 +176,13 @@ abstract class StateMachineComponent {
 		}
 		throw new RuntimeException("State attempting to access robot before addition to state machine");
 	}
+
+	public SensorModule getSensorModule() {
+		if (stateMachineInitialized) {
+			return getStateMachine().robot.getSensorModule();
+		}
+		throw new RuntimeException("State attempting to access robot before addition to state machine");
+	}
 }
 
 abstract class State extends StateMachineComponent{
@@ -186,6 +193,10 @@ abstract class State extends StateMachineComponent{
 	public void onAddition(StateMachine stateMachine) {
 		super.onAddition(stateMachine);
 		runtime.reset();
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public double getProgress() {

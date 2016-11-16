@@ -4,11 +4,11 @@ package org.firstinspires.ftc.teamcode;
  * Created by Derek Williams of team 3965 on 11/8/2016.
  */
 
-public class FollowLineState extends State {
+public class LineFollowState extends State {
     protected StateMachine lineFollowStateMachine;
     protected double power;
 
-    FollowLineState(String name, double power) {
+    LineFollowState(String name, double power) {
         this.name = name;
         this.power = power;
     }
@@ -25,8 +25,8 @@ public class FollowLineState extends State {
 
         // Adding states to state machine
         lineFollowStateMachine.add(new State[]{
-            new WaddleState("waddle_right", power, false),
-            new WaddleState("waddle_left", power, true),
+            new WaddleRightState("waddle_right", power),
+            new WaddleLeftState("waddle_left", power),
         });
 
         // Adding transitions to state machine
