@@ -169,6 +169,13 @@ abstract class StateMachineComponent {
 		stateMachineInitialized = true;
 		this.stateMachine = stateMachine;
 	}
+
+	public RobotBase getRobot() {
+		if (stateMachineInitialized) {
+			return getStateMachine().robot;
+		}
+		throw new RuntimeException("State attempting to access robot before addition to it");
+	}
 }
 
 abstract class State extends StateMachineComponent{
