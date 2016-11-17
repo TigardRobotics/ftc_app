@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name="servo testing", group="3965")
 public class ServoTesting extends VelocityVortexRobotBase {
+    double rightButtonPusherPos = 0.5;
+    double leftButtonPusherPos = 0.5;
 
     @Override
     public void init(){
@@ -20,14 +22,12 @@ public class ServoTesting extends VelocityVortexRobotBase {
 
     @Override
     public void loop(){
-        double lb = (1+(-gamepad1.left_stick_y))/2;
-        double rb = (1+(-gamepad1.right_stick_y))/2;
-        leftButtonPusher.setPosition(lb);
-        rightButtonPusher.setPosition(rb);
-        double rba = rightButtonPusher.getPosition();
-        double lba = leftButtonPusher.getPosition();
-        telemetry.addData("Right pusher pos", "%f, %f", rb, rba);
-        telemetry.addData("Left pusher pos", "%f, %f", lb, lba);
+        rightButtonPusherPos += (-gamepad1.left_stick_y)/100;
+        leftButtonPusherPos += (-gamepad1.right_stick_y)/100;
+        leftButtonPusher.setPosition(leftButtonPusherPos);
+        rightButtonPusher.setPosition(rightButtonPusherPos);
+        telemetry.addData("Right pusher pos", "%f, %f", gamepad1.right_stick_y, rightButtonPusherPos);
+        telemetry.addData("Left pusher pos", "%f, %f", gamepad1.left_stick_y, leftButtonPusherPos);
     }
 
     @Override

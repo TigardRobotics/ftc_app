@@ -34,6 +34,7 @@ public class VelocityVortexAutonomous extends VelocityVortexRobotBase {
     @Override
     public void loop(){
         stateMachine.step();
+        telemetry.addData("line detector level", getSensorModule().getLineDetectorLightLevel());
     }
 
     @Override
