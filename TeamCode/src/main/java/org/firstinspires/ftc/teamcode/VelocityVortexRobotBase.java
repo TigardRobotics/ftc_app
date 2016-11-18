@@ -10,7 +10,8 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
 
     protected static final double DRIVE_DIAMETER = 35.56; // Centimeters
-    protected static final double FULL_TURN_ROTATION = 7660; // Encoder counts
+    protected static final double FULL_TURN_ROTATION = 7660.0; // Encoder counts
+    private static final double COUNTS_PER_CENTIMETER = 0.0;
 
     // All hardware custom to velocity vortex defined here
     protected Servo rightButtonPusher;
@@ -39,5 +40,10 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     @Override
     public SensorModule getSensorModule() {
         return sensorModule;
+    }
+
+    @Override
+    public double countsToCentimeters(double counts) {
+        return COUNTS_PER_CENTIMETER*counts;
     }
 }

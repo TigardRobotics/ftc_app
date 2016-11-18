@@ -24,6 +24,7 @@ class StateMachine {
 	}
 
 	public State getState(String name) {
+		if (name == null) return null;
 		for(State state : states) {
 			if(state.name == name) {
 				return state;

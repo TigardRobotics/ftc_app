@@ -31,13 +31,13 @@ public abstract class RobotBase extends OpMode {
     public void setLeftDrivePower(double power){
         DbgLog.msg(String.format("Enabling Left Motor w/ power: %f", power));
         telemetry.addLine(String.format("Enabling Left Motor w/ power: %f", power));
-        leftDriveMotor.setPower(-power);
+        leftDriveMotor.setPower(power);
     }
 
     public void setRightDrivePower(double power){
         DbgLog.msg(String.format("Enabling Right Motor w/ power: %f", power));
         telemetry.addLine(String.format("Enabling Right Motor w/ power: %f", power));
-        rightDriveMotor.setPower(power);
+        rightDriveMotor.setPower(-power);
     }
 
     public void setSquareLeftDrivePower(double power) {
@@ -50,6 +50,10 @@ public abstract class RobotBase extends OpMode {
 
     public double getDrivePosition() {
         return Math.max(leftDriveMotor.getCurrentPosition(), rightDriveMotor.getCurrentPosition());
+    }
+
+    public double countsToCentimeters(double counts) {
+        return 0.0;
     }
 
     protected double getDriveMotorDiameter() {
