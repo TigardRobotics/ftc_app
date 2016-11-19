@@ -14,7 +14,7 @@ public class TestAutonomous extends VelocityVortexRobotBase {
     public void start(){
         // Adding states to state machine
         stateMachine.add(new State[]{
-            new LineFollowState("follow", 5.0),
+            new EdgeFollowState("follow", 0.50),
         });
 
         // Adding transitions to state machine

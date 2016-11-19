@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 public class PressButtonState extends State {
     protected String buttonToPress;
-    String leftColor;
+    String sensorColor;
 
     PressButtonState (String name, String color) {
         this.name = name;
@@ -19,8 +19,8 @@ public class PressButtonState extends State {
     @Override
     public void start() {
         super.start();
-        leftColor = getSensorModule().getFrontColor();
-        if(leftColor == buttonToPress) {
+        sensorColor = getSensorModule().getFrontColor();
+        if(sensorColor == buttonToPress) {
             // Push left button
         }
         else {
