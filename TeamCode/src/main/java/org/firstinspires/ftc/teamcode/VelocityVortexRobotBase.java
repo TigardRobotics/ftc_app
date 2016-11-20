@@ -11,7 +11,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
 
     protected static final double DRIVE_DIAMETER = 35.56; // Centimeters
     protected static final double FULL_TURN_ROTATION = 7660.0; // Encoder counts
-    private static final double COUNTS_PER_CENTIMETER = 0.0;
+    private static final double COUNTS_PER_CENTIMETER = 173.49;
 
     // All hardware custom to velocity vortex defined here
     protected Servo rightButtonPusher;
@@ -45,5 +45,34 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     @Override
     public double countsToCentimeters(double counts) {
         return COUNTS_PER_CENTIMETER*counts;
+    }
+
+
+    public void extendRightPusher() {
+        rightButtonPusher.setPosition(RIGHT_BUTTON_PUSHER_EXTENDED);
+        telemetry.addLine("Extending Right Button Pusher");
+    }
+
+    public void retractRightPusher() {
+        rightButtonPusher.setPosition(RIGHT_BUTTON_PUSHER_RETRACTED);
+        telemetry.addLine("Retracting Right Button Pusher");
+    }
+
+    public void extendLeftPusher() {
+        leftButtonPusher.setPosition(LEFT_BUTTON_PUSHER_EXTENDED);
+        telemetry.addLine("Extending Left Button Pusher");
+    }
+
+    public void retractLeftPusher() {
+        leftButtonPusher.setPosition(LEFT_BUTTON_PUSHER_RETRACTED);
+        telemetry.addLine("Retracting Left Button Pusher");
+    }
+
+    protected double angToEnc (double angle) {
+        return angle*(FULL_TURN_ROTATION/360);
+    }
+
+    protected double cmToEnc(double dist) {
+        return dist*COUNTS_PER_CENTIMETER;
     }
 }

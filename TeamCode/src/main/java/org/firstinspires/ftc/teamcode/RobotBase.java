@@ -9,6 +9,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 
 public abstract class RobotBase extends OpMode {
+    public static final String RED = "red";
+    public static final String BLUE = "blue";
+    public static final String NO_COLOR = "NONE";
+
+
     private DcMotor leftDriveMotor;
     private DcMotor rightDriveMotor;
 

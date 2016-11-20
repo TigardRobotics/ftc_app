@@ -12,5 +12,6 @@ public class RedAutonomous extends VelocityVortexAutonomous {
     public void init() {
         super.init();
         directionMultiplier = 1;
+        color = RED;
     }
 }

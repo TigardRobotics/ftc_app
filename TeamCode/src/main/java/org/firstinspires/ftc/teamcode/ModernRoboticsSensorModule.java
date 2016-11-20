@@ -4,7 +4,6 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
-import org.firstinspires.ftc.robotcontroller.internal.testcode.TestColorSensors;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
@@ -16,7 +15,7 @@ public class ModernRoboticsSensorModule extends SensorModule {
     protected ModernRoboticsI2cRangeSensor frontRangeSensor;
     protected ColorSensor frontColorSensor;
     protected OpticalDistanceSensor bottomLineSensor;
-    protected double lineSensorLightThreshold;
+    protected static final double LINE_SENSOR_LIGHT_THRESHOLD = 0.2;
 
     ModernRoboticsSensorModule(RobotBase robot) {
         this.robot = robot;
@@ -27,7 +26,6 @@ public class ModernRoboticsSensorModule extends SensorModule {
         frontRangeSensor = robot.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "front_range");
         frontColorSensor = robot.hardwareMap.colorSensor.get("front_color");
         bottomLineSensor = robot.hardwareMap.opticalDistanceSensor.get("bottom_ods");
-        lineSensorLightThreshold = 0.2;
         frontColorSensor.enableLed(false);
         robot.telemetry.addLine("Sensor Module Initialized");
     }
@@ -69,12 +67,12 @@ public class ModernRoboticsSensorModule extends SensorModule {
     @Override
     public String getFrontColor() {
         if (getFrontBlue() > getFrontRed()) {
-            return "blue";
+            return RobotBase.BLUE;
         }
         if (getFrontRed() > getFrontBlue()) {
-            return "red";
+            return RobotBase.RED;
         }
-        throw new RuntimeException("Trouble detecting front color");
+        return "NONE";
     }
 
     @Override
@@ -84,6 +82,6 @@ public class ModernRoboticsSensorModule extends SensorModule {
 
     @Override
     public boolean isLineDetected() {
-        return getLineDetectorLightLevel() >  lineSensorLightThreshold;
+        return getLineDetectorLightLevel() > LINE_SENSOR_LIGHT_THRESHOLD;
     }
 }

@@ -4,14 +4,14 @@ package org.firstinspires.ftc.teamcode;
  * Created by Derek Williams of team 3965 on 11/13/2016.
  */
 
-public class PressButtonState extends State {
+public class PushButtonState extends VelocityVortexState {
     protected String buttonToPress;
-    String sensorColor;
+    protected String sensorColor;
 
-    PressButtonState (String name, String color) {
+    PushButtonState(String name, String color) {
         this.name = name;
         this.buttonToPress = color;
-        if (buttonToPress != "blue" && buttonToPress != "red") {
+        if (buttonToPress != RobotBase.BLUE && buttonToPress != RobotBase.RED) {
             throw new RuntimeException("Color given for button state neither red nor blue");
         }
     }
@@ -19,12 +19,13 @@ public class PressButtonState extends State {
     @Override
     public void start() {
         super.start();
-        sensorColor = getSensorModule().getFrontColor();
-        if(sensorColor == buttonToPress) {
+        if(getSensorModule().getFrontColor() == buttonToPress) {
             // Push left button
+            getVelocityVortexRobotBase().extendRightPusher();
         }
         else {
             // Push right button
+            getVelocityVortexRobotBase().extendLeftPusher();
         }
     }
 
@@ -35,6 +36,7 @@ public class PressButtonState extends State {
 
     @Override
     public void stop() {
-
+        getVelocityVortexRobotBase().retractLeftPusher();
+        getVelocityVortexRobotBase().retractRightPusher();
     }
 }

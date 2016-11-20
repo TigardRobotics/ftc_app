@@ -14,8 +14,8 @@ public class TestTeleop extends VelocityVortexRobotBase {
 
     @Override
     public void loop(){
-        setLeftDrivePower(gamepad1.left_stick_y*Math.abs(gamepad1.left_stick_y));
-        setRightDrivePower(gamepad1.right_stick_y*Math.abs(gamepad1.right_stick_y));
+        //setLeftDrivePower(gamepad1.left_stick_y*Math.abs(gamepad1.left_stick_y));
+        //setRightDrivePower(gamepad1.right_stick_y*Math.abs(gamepad1.right_stick_y));
 
         if (gamepad1.a) {
             double rightButtonPos = RIGHT_BUTTON_PUSHER_EXTENDED;
@@ -37,6 +37,21 @@ public class TestTeleop extends VelocityVortexRobotBase {
             double leftButtonPos = LEFT_BUTTON_PUSHER_RETRACTED;
             leftButtonPusher.setPosition(leftButtonPos);
             telemetry.addData("L IN", leftButtonPos);
+        }
+
+
+        if (gamepad1.left_stick_button) {
+            retractLeftPusher();
+        }
+        else if (gamepad1.left_bumper) {
+            extendLeftPusher();
+        }
+
+        if (gamepad1.right_stick_button) {
+            retractRightPusher();
+        }
+        else if (gamepad1.right_bumper) {
+            extendRightPusher();
         }
 
 

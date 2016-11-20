@@ -12,5 +12,6 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
     public void init() {
         super.init();
         directionMultiplier = -1;
+        color = BLUE;
     }
 }
