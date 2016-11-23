@@ -10,8 +10,12 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
 
     protected static final double DRIVE_DIAMETER = 35.56; // Centimeters
-    protected static final double FULL_TURN_ROTATION = 7660.0; // Encoder counts
-    private static final double COUNTS_PER_CENTIMETER = 173.49;
+    protected static final double FULL_TURN_ROTATION = 4843; // Encoder counts
+    private static final double COUNTS_PER_ROTATION = 1440.0;
+    private static final double CENTIMETERS_PER_ROTATION = 31.928;
+    protected static final double COUNTS_PER_CENTIMETER = COUNTS_PER_ROTATION/CENTIMETERS_PER_ROTATION;
+
+    protected double driveSpeed = 0.5;
 
     // All hardware custom to velocity vortex defined here
     protected Servo rightButtonPusher;
@@ -68,8 +72,8 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         telemetry.addLine("Retracting Left Button Pusher");
     }
 
-    protected double angToEnc (double angle) {
-        return angle*(FULL_TURN_ROTATION/360);
+    protected double rotsToEnc (double rots) {
+        return rots*FULL_TURN_ROTATION;
     }
 
     protected double cmToEnc(double dist) {
