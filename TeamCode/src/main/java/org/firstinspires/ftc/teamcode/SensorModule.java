@@ -41,6 +41,10 @@ public abstract class SensorModule {
         return 0.0;
     }
 
+    public double getLastDetect() {
+        return 0.0;
+    }
+
     public boolean isLineDetected() {
         return false;
     }

@@ -17,22 +17,33 @@ public class VelocityVortexAutonomous extends VelocityVortexRobotBase {
         // Adding states to state machine
         stateMachine.add(new State[]{
                 new DriveState("forward1", driveSpeed),
-                new TurnState("turn1", -driveSpeed*directionMultiplier),
+                new TurnState("turn1", -turnSpeed*directionMultiplier),
                 new DriveState("forward2", driveSpeed),
-                new EdgeFollowState("follow", 0.35),
-                new TurnState("align", -0.35),
-                new PushButtonState("push", color),
+                new EdgeFollowState("follow1", 0.35),
+                new PushButtonState("push1", color),
+                new DriveState("reverse", -driveSpeed),
+                new TurnState("turn2", -turnSpeed*directionMultiplier),
+                new DriveState("forward3", driveSpeed),
+                new TurnState("turn3", -turnSpeed*directionMultiplier),
+                new EdgeFollowState("follow2", 0.35),
+                new PushButtonState("push2", color),
+
         });
 
         // Adding transitions to state machine
         stateMachine.add(new Transition[]{
-                new ProgressReachedTrans("forward1", "turn1", cmToEnc(30.0)),
-                new ProgressReachedTrans("turn1", "forward2", rotsToEnc(0.15)),
-                new ProgressReachedTrans("forward2", "follow", cmToEnc(120.0)),
-                new BelowRangeTrans("follow", "align", 5),
-                new ProgressReachedTrans("align", "push", 50.0),
-                new TimeElapsedTrans("push", null, 10),
-        });
+                new ProgressReachedTrans("forward1", "turn1", cmToEnc(55.0)),
+                new ProgressReachedTrans("turn1", "forward2", rotsToEnc(0.135)),
+                new ProgressReachedTrans("forward2", "follow", cmToEnc(100.0)),
+                new BelowRangeTrans("follow1", "push1", 5),
+                new TimeElapsedTrans("push1", "reverse1", 10),
+                new ProgressReachedTrans("reverse", "turn2", cmToEnc(25.0)),
+                new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.270)),
+                new ProgressReachedTrans("forward3", "turn3", cmToEnc(50.0)),
+                new ProgressReachedTrans("turn3", "follow2", cmToEnc(0.250)),
+                new BelowRangeTrans("follow2", "push2", 5),
+                new TimeElapsedTrans("push2", null, 10),
+    });
 
         // Setting Initial active state
         stateMachine.setActiveState("forward1");

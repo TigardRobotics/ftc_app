@@ -16,6 +16,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     protected static final double COUNTS_PER_CENTIMETER = COUNTS_PER_ROTATION/CENTIMETERS_PER_ROTATION;
 
     protected double driveSpeed = 0.5;
+    protected double turnSpeed = 0.25;
 
     // All hardware custom to velocity vortex defined here
     protected Servo rightButtonPusher;
