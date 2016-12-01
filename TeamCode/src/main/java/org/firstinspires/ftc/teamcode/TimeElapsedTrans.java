@@ -9,7 +9,7 @@ public class TimeElapsedTrans extends Transition {
 
     TimeElapsedTrans(String from_state_name, String to_state_name, double time) {
         fromStateName = from_state_name;
-        to_state_name = to_state_name;
+        toStateName = to_state_name;
         triggerAtTime = time;
     }
 

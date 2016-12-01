@@ -41,6 +41,7 @@ class StateMachine {
 	
 	public void setActiveState(State state) {
 		activeState = state;
+		stateHasStarted = false;
 	}
 	
 	public void setActiveState(String name) {
