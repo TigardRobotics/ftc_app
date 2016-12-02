@@ -14,7 +14,7 @@ public abstract class VelocityVortexAutonomous extends VelocityVortexRobotBase {
 
     protected double followSpeed = 0.35;
     protected double rangeToBeacon = 6.0;
-    protected double rangeFromBeacon = 20.0;
+    protected double rangeFromBeacon = 50.0;
 
     @Override
     public void loop(){
