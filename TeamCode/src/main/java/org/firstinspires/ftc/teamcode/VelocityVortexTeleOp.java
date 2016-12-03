@@ -10,13 +10,23 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class VelocityVortexTeleOp extends VelocityVortexRobotBase {
 
     @Override
-    public void start(){}
+    public void start(){
+        stateMachine.add(new EdgeFollowState("follow", followSpeed));
+        stateMachine.add(new BelowRangeTrans("follow", null, rangeToBeacon));
+    }
 
     @Override
     public void loop(){
+        /**
+         * Drive motors
+         */
         setSquareLeftDrivePower(gamepad1.left_stick_y);
         setSquareRightDrivePower(gamepad1.right_stick_y);
 
+
+        /**
+         * Button Pushers
+         */
         if (gamepad1.a) {
             //double rightButtonPos = RIGHT_BUTTON_PUSHER_EXTENDED;
             //rightButtonPusher.setPosition(rightButtonPos);
@@ -42,12 +52,47 @@ public class VelocityVortexTeleOp extends VelocityVortexRobotBase {
             //telemetry.addData("L IN", leftButtonPos);
             retractLeftPusher();
         }
-
-
         //telemetry.addData("Right pusher pos", rightButtonPusher.getPosition());
         //telemetry.addData("Left pusher pos", leftButtonPusher.getPosition());
+
+
+        /**
+         * Particle Flicker
+         */
+        if(gamepad1.right_bumper) {
+            enableFlicker();
+        }
+        else {
+            disableFlicker();
+        }
+
+        /**
+         * true && true = true
+         * false && false = false
+         * false && true = false
+         *
+         * true && true = true
+         * false && false = false
+         * false && true = true
+         *
+         * !true = false
+         * !false = true
+         */
+
+        /**
+         * Line follow
+         */
+        if(gamepad1.dpad_up && (!stateMachine.isActive())) {
+            stateMachine.setActiveState("follow");
+        }
+        if (gamepad1.dpad_down && stateMachine.isActive()) {
+            stateMachine.deactivate();
+        }
+        stateMachine.step();
     }
 
     @Override
-    public void stop(){}
+    public void stop(){
+        stateMachine.stop();
+    }
 }

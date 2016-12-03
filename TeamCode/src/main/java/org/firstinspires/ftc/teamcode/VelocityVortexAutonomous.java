@@ -10,10 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public abstract class VelocityVortexAutonomous extends VelocityVortexRobotBase {
     protected int directionMultiplier;  // Multiply turn power by this
     protected String color = NO_COLOR;  // Pass this into the button pusher state
-    protected StateMachine stateMachine = new StateMachine(this);
 
-    protected double followSpeed = 0.35;
-    protected double rangeToBeacon = 6.0;
     protected double rangeFromBeacon = 50.0;
 
     @Override

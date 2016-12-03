@@ -48,6 +48,11 @@ class StateMachine {
 		setActiveState(getState(name));
 	}
 
+	public void deactivate() {
+		activeState.stop();
+		activeState = null;
+	}
+
 	/**
 	 * Methods used to add states and transitions to state machine
      */

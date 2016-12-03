@@ -43,9 +43,9 @@ public class RedAutonomous extends VelocityVortexAutonomous {
         // Adding transitions to state machine
         stateMachine.add(new Transition[]{
                 // Driving to first beacon
-                new ProgressReachedTrans("forward1", "turn1", cmToEnc(55.0)),
+                new ProgressReachedTrans("forward1", "turn1", cmToEnc(53.0)),
                 new ProgressReachedTrans("turn1", "forward2", rotsToEnc(0.14)),  //0.135
-                new ProgressReachedTrans("forward2", "follow1", cmToEnc(100.0)),
+                new ProgressReachedTrans("forward2", "follow1", cmToEnc(85.0)),
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
@@ -54,7 +54,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 // Driving to second beacon
                 new AboveRangeTrans("reverse1", "turn2", rangeFromBeacon),
                 new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.25)),
-                new ProgressReachedTrans("forward3", "turn3", cmToEnc(130.0)),
+                new ProgressReachedTrans("forward3", "turn3", cmToEnc(120.0)),
                 new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.250)),
 
                 // Pressing second button

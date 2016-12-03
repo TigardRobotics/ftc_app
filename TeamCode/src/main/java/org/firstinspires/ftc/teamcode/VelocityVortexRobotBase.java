@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public abstract class VelocityVortexRobotBase extends RobotBase {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
+    protected StateMachine stateMachine = new StateMachine(this);
 
     protected static final double DRIVE_DIAMETER = 35.56; // Centimeters
     protected static final double FULL_TURN_ROTATION = 4843; // Encoder counts
@@ -17,16 +19,22 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
 
     protected double driveSpeed = 0.6;
     protected double turnSpeed = 0.25;
+    protected double followSpeed = 0.35;
+
+    protected double rangeToBeacon = 6.0;
 
     // All hardware custom to velocity vortex defined here
     protected Servo rightButtonPusher;
     protected Servo leftButtonPusher;
+
+    protected DcMotor particleFlicker;
 
     // Hardware constants
     final static double RIGHT_BUTTON_PUSHER_EXTENDED = 0.75;
     final static double RIGHT_BUTTON_PUSHER_RETRACTED = 0.98;
     final static double LEFT_BUTTON_PUSHER_EXTENDED = 0.69;
     final static double LEFT_BUTTON_PUSHER_RETRACTED = 0.54;
+    final static double PARTICLE_FLICKER_SPEED = 0.8;
 
     @Override
     public void init() {
@@ -34,6 +42,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         sensorModule.init();
         rightButtonPusher = hardwareMap.servo.get("right_button_pusher");
         leftButtonPusher = hardwareMap.servo.get("left_button_pusher");
+        particleFlicker = hardwareMap.dcMotor.get("particle_flicker");
         telemetry.addLine("Velocity Vortex Base Initialized");
     }
 
@@ -71,6 +80,14 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     public void retractLeftPusher() {
         leftButtonPusher.setPosition(LEFT_BUTTON_PUSHER_RETRACTED);
         telemetry.addLine("Retracting Left Button Pusher");
+    }
+
+    public void enableFlicker() {
+        particleFlicker.setPower(PARTICLE_FLICKER_SPEED);
+    }
+
+    public void disableFlicker() {
+        particleFlicker.setPower(0.0);
     }
 
     protected double rotsToEnc (double rots) {
