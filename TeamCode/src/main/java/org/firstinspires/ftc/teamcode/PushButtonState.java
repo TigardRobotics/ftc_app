@@ -19,24 +19,33 @@ public class PushButtonState extends VelocityVortexState {
     @Override
     public void start() {
         super.start();
+        /*if (getSensorModule().getFrontColor() == RobotBase.NO_COLOR) {
+            throw new RuntimeException("");
+        }
+        else*/
         if(getSensorModule().getFrontColor() == buttonToPress) {
             // Push left button
             getVelocityVortexRobotBase().extendRightPusher();
+            getVelocityVortexRobotBase().retractLeftPusher();
+            getRobot().telemetry.addLine("pushing right button");
         }
+
         else {
             // Push right button
             getVelocityVortexRobotBase().extendLeftPusher();
+            getVelocityVortexRobotBase().retractRightPusher();
+            getRobot().telemetry.addLine("pushing left button");
         }
     }
 
     @Override
     public void loop() {
-        getStateMachine().robot.telemetry.addData(name+" runtime:", runtime);
+        //getStateMachine().robot.telemetry.addData(name+" runtime:", runtime);
     }
 
     @Override
     public void stop() {
-        getVelocityVortexRobotBase().retractLeftPusher();
-        getVelocityVortexRobotBase().retractRightPusher();
+        //getVelocityVortexRobotBase().retractLeftPusher();
+        //getVelocityVortexRobotBase().retractRightPusher();
     }
 }

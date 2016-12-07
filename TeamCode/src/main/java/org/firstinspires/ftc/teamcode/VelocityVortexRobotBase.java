@@ -32,7 +32,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     // Hardware constants
     final static double RIGHT_BUTTON_PUSHER_EXTENDED = 0.75;
     final static double RIGHT_BUTTON_PUSHER_RETRACTED = 0.98;
-    final static double LEFT_BUTTON_PUSHER_EXTENDED = 0.69;
+    final static double LEFT_BUTTON_PUSHER_EXTENDED = 0.75;
     final static double LEFT_BUTTON_PUSHER_RETRACTED = 0.54;
     final static double PARTICLE_FLICKER_SPEED = 0.8;
 
