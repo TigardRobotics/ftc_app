@@ -14,6 +14,12 @@ public abstract class VelocityVortexAutonomous extends VelocityVortexRobotBase {
     protected double rangeFromBeacon = 50.0;
 
     @Override
+    public void start() {
+        retractLeftPusher();
+        retractRightPusher();
+    }
+
+    @Override
     public void loop(){
         stateMachine.step();
         //telemetry.addData("line detector level", getSensorModule().getLineDetectorLightLevel());
