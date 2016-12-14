@@ -67,19 +67,6 @@ public class VelocityVortexTeleOp extends VelocityVortexRobotBase {
         }
 
         /**
-         * true && true = true
-         * false && false = false
-         * false && true = false
-         *
-         * true && true = true
-         * false && false = false
-         * false && true = true
-         *
-         * !true = false
-         * !false = true
-         */
-
-        /**
          * Line follow
          */
         if(gamepad1.dpad_up && (!stateMachine.isActive())) {
@@ -92,7 +79,7 @@ public class VelocityVortexTeleOp extends VelocityVortexRobotBase {
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         stateMachine.stop();
     }
 }
