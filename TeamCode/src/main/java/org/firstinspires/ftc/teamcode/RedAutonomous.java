@@ -11,7 +11,6 @@ public class RedAutonomous extends VelocityVortexAutonomous {
     @Override
     public void init() {
         super.init();
-        directionMultiplier = 1;
         color = RED;
     }
 
@@ -23,7 +22,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
         stateMachine.add(new State[]{
                 // Driving to first beacon
                 new DriveState("forward1", driveSpeed),
-                new TurnState("turn1", -turnSpeed*directionMultiplier),
+                new TurnState("turn1", -turnSpeed),
                 new DriveState("forward2", driveSpeed),
 
                 // Pressing first button
@@ -31,13 +30,13 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 new PushButtonState("push1", color),
 
                 // Throwing particles into vortex
-                new ParticleFlickerState("throw"),
+                new FlickParticleState("throw"),
 
                 // Driving to second beacon
                 new DriveState("reverse1", -driveSpeed),
-                new TurnState("turn2", turnSpeed*directionMultiplier),
+                new TurnState("turn2", turnSpeed),
                 new DriveState("forward3", driveSpeed),
-                new TurnState("turn3", -turnSpeed*directionMultiplier),
+                new TurnState("turn3", -turnSpeed),
 
                 // Pressing second beacon
                 new EdgeFollowState("follow2", followSpeed),

@@ -14,49 +14,79 @@ public class TestTeleop extends VelocityVortexRobotBase {
 
     @Override
     public void loop(){
-        //setLeftDrivePower(gamepad1.left_stick_y*Math.abs(gamepad1.left_stick_y));
-        //setRightDrivePower(gamepad1.right_stick_y*Math.abs(gamepad1.right_stick_y));
+        /**
+         * Drive motors
+         */
+        setSquareLeftDrivePower(gamepad1.left_stick_y);
+        setSquareRightDrivePower(gamepad1.right_stick_y);
 
+
+        /**
+         * Button Pushers
+         */
         if (gamepad1.a) {
-            double rightButtonPos = RIGHT_BUTTON_PUSHER_EXTENDED;
-            rightButtonPusher.setPosition(rightButtonPos);
-            telemetry.addData("R OUT", rightButtonPos);
+            //double rightButtonPos = RIGHT_BUTTON_PUSHER_EXTENDED;
+            //rightButtonPusher.setPosition(rightButtonPos);
+            //telemetry.addData("R OUT", rightButtonPos);
+            extendRightPusher();
         }
         else if (gamepad1.b) {
-            double rightButtonPos = RIGHT_BUTTON_PUSHER_RETRACTED;
-            rightButtonPusher.setPosition(rightButtonPos);
-            telemetry.addData("R IN", rightButtonPos);
+            //double rightButtonPos = RIGHT_BUTTON_PUSHER_RETRACTED;
+            //rightButtonPusher.setPosition(rightButtonPos);
+            //telemetry.addData("R IN", rightButtonPos);
+            retractRightPusher();
         }
 
         if(gamepad1.x) {
-            double leftButtonPos = LEFT_BUTTON_PUSHER_EXTENDED;
-            leftButtonPusher.setPosition(leftButtonPos);
-            telemetry.addData("L OUT", leftButtonPos);
-        }
-        else if (gamepad1.y) {
-            double leftButtonPos = LEFT_BUTTON_PUSHER_RETRACTED;
-            leftButtonPusher.setPosition(leftButtonPos);
-            telemetry.addData("L IN", leftButtonPos);
-        }
-
-
-        if (gamepad1.left_stick_button) {
-            retractLeftPusher();
-        }
-        else if (gamepad1.left_bumper) {
+            //double leftButtonPos = LEFT_BUTTON_PUSHER_EXTENDED;
+            //leftButtonPusher.setPosition(leftButtonPos);
+            //telemetry.addData("L OUT", leftButtonPos);
             extendLeftPusher();
         }
-
-        if (gamepad1.right_stick_button) {
-            retractRightPusher();
+        else if (gamepad1.y) {
+            //double leftButtonPos = LEFT_BUTTON_PUSHER_RETRACTED;
+            //leftButtonPusher.setPosition(leftButtonPos);
+            //telemetry.addData("L IN", leftButtonPos);
+            retractLeftPusher();
         }
-        else if (gamepad1.right_bumper) {
-            extendRightPusher();
-        }
-
-
         //telemetry.addData("Right pusher pos", rightButtonPusher.getPosition());
         //telemetry.addData("Left pusher pos", leftButtonPusher.getPosition());
+
+
+        /**
+         * Particle Flicker
+         */
+        if(gamepad1.right_bumper) {
+            enableFlicker();
+        }
+        else {
+            disableFlicker();
+        }
+
+
+        /**
+         * Particle Collector
+         */
+        if (gamepad1.left_bumper) {
+            enableLifter();
+            enableCollector();
+        }
+        else {
+            disableLifter();
+            disableCollector();
+        }
+
+        /**
+         * Line follow
+         *
+        if(gamepad1.dpad_up && (!stateMachine.isActive())) {
+            stateMachine.setActiveState("follow");
+        }
+        if (gamepad1.dpad_down && stateMachine.isActive()) {
+            stateMachine.deactivate();
+        }
+        stateMachine.step();
+         */
     }
 
     @Override

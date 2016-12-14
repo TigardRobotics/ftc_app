@@ -4,8 +4,8 @@ package org.firstinspires.ftc.teamcode;
  * Created by Derek Williams of team 3965 on 12/7/2016.
  */
 
-public class ParticleFlickerState extends VelocityVortexState {
-     ParticleFlickerState (String name) {
+public class FlickParticleState extends VelocityVortexState {
+     FlickParticleState(String name) {
          this.name = name;
      }
 

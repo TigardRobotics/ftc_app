@@ -28,13 +28,17 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     protected Servo leftButtonPusher;
 
     protected DcMotor particleFlicker;
+    protected DcMotor particleLifter;
+    protected DcMotor particleCollector;
 
     // Hardware constants
-    final static double RIGHT_BUTTON_PUSHER_EXTENDED = 0.75;
-    final static double RIGHT_BUTTON_PUSHER_RETRACTED = 0.98;
-    final static double LEFT_BUTTON_PUSHER_EXTENDED = 0.75;
-    final static double LEFT_BUTTON_PUSHER_RETRACTED = 0.54;
+    final static double RIGHT_BUTTON_PUSHER_EXTENDED = 0.99;
+    final static double RIGHT_BUTTON_PUSHER_RETRACTED = 0.6;
+    final static double LEFT_BUTTON_PUSHER_EXTENDED = 0.6;
+    final static double LEFT_BUTTON_PUSHER_RETRACTED = 0.98;
     final static double PARTICLE_FLICKER_SPEED = 0.8;
+    final static double PARTICLE_LIFTER_SPEED = -1.0;
+    final static double PARTICLE_COLLECTOR_SPEED = 0.8;
 
     @Override
     public void init() {
@@ -43,6 +47,8 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         rightButtonPusher = hardwareMap.servo.get("right_button_pusher");
         leftButtonPusher = hardwareMap.servo.get("left_button_pusher");
         particleFlicker = hardwareMap.dcMotor.get("particle_flicker");
+        particleLifter = hardwareMap.dcMotor.get("particle_lifter");
+        particleCollector = hardwareMap.dcMotor.get("particle_collector");
         telemetry.addLine("Velocity Vortex Base Initialized");
     }
 
@@ -88,6 +94,22 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
 
     public void disableFlicker() {
         particleFlicker.setPower(0.0);
+    }
+
+    public void enableLifter() {
+        particleLifter.setPower(PARTICLE_LIFTER_SPEED);
+    }
+
+    public void disableLifter() {
+        particleLifter.setPower(0.0);
+    }
+
+    public void enableCollector() {
+        particleCollector.setPower(PARTICLE_COLLECTOR_SPEED);
+    }
+
+    public void disableCollector() {
+        particleCollector.setPower(0.0);
     }
 
     protected double rotsToEnc (double rots) {
