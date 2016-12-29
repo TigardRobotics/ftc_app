@@ -223,11 +223,11 @@ abstract class Transition extends StateMachineComponent{
 	protected String fromStateName;
 	protected String toStateName;
 
-	final State getFromState() {
+	public final State getFromState() {
 		return getStateMachine().getState(fromStateName);
 	}
 
-	final State getToState() {
+	public final State getToState() {
 		return getStateMachine().getState(toStateName);
 	}
 

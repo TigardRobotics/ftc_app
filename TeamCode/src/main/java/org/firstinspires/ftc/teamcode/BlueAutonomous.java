@@ -59,7 +59,7 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new TimeElapsedTrans("push1", "throw", 1),
 
                 // Throwing particles into vortex
-                new TimeElapsedTrans("throw", "reverse1", 5),
+                new TimeElapsedTrans("throw", "reverse1", 3),
 
                 // Driving to second beacon
                 new AboveRangeTrans("reverse1", "turn2", rangeFromBeacon),

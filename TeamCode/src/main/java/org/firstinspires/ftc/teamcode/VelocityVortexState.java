@@ -10,7 +10,10 @@ public abstract class VelocityVortexState extends State {
     @Override
     public void onAddition(StateMachine stateMachine) {
         super.onAddition(stateMachine);
-        velocityVortexRobotBase = (VelocityVortexRobotBase) getRobot();
+        if (getRobot() instanceof VelocityVortexRobotBase) {
+            velocityVortexRobotBase = (VelocityVortexRobotBase) getRobot();
+        }
+        else throw new RuntimeException("Attempting to use VVstate on non-VVRobot base");
     }
 
     protected VelocityVortexRobotBase getVelocityVortexRobotBase() {

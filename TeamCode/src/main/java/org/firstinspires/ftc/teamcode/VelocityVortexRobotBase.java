@@ -50,6 +50,9 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         particleLifter = hardwareMap.dcMotor.get("particle_lifter");
         particleCollector = hardwareMap.dcMotor.get("particle_collector");
         telemetry.addLine("Velocity Vortex Base Initialized");
+
+        retractLeftPusher();
+        retractRightPusher();
     }
 
     @Override
