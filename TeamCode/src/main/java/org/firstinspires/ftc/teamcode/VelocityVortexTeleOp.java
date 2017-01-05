@@ -67,15 +67,16 @@ public class VelocityVortexTeleOp extends VelocityVortexRobotBase {
         }
 
         /**
-         * Line follow
+         * Particle Collector
          */
-        if(gamepad1.dpad_up && (!stateMachine.isActive())) {
-            stateMachine.setActiveState("follow");
+        if (gamepad1.left_bumper) {
+            enableLifter();
+            enableCollector();
         }
-        if (gamepad1.dpad_down && stateMachine.isActive()) {
-            stateMachine.deactivate();
+        else {
+            disableLifter();
+            disableCollector();
         }
-        stateMachine.step();
     }
 
     @Override
