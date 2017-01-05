@@ -45,7 +45,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 // Pushing the capball and parking
                 new DriveState("reverse2", -driveSpeed),
                 new TurnState("turn4", turnSpeed),
-                new DriveState("forward4", driveSpeed),
+                new DriveState("forward4", -driveSpeed),
 
         });
 
@@ -54,7 +54,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 // Driving to first beacon
                 new ProgressReachedTrans("forward1", "turn1", cmToEnc(53.0)),
                 new ProgressReachedTrans("turn1", "forward2", rotsToEnc(0.14)),  //0.135
-                new ProgressReachedTrans("forward2", "follow1", cmToEnc(195.0)),
+                new ProgressReachedTrans("forward2", "follow1", cmToEnc(95.0)),
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
@@ -77,7 +77,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 // Pushing the capball and parking
                 new AboveRangeTrans("reverse2", "turn4", rangeFromBeacon),
                 new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.14)),
-                new ProgressReachedTrans("forward4", null, cmToEnc(53.0)),
+                new ProgressReachedTrans("forward4", null, cmToEnc(100.0)),
         });
 
         // Setting Initial active state
