@@ -44,6 +44,8 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new EdgeFollowState("follow2", followSpeed),
                 new PushButtonState("push2", color),
 
+                // TODO add pushing capball and parking
+
         });
 
         // Adding transitions to state machine
@@ -59,17 +61,19 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new TimeElapsedTrans("push1", "throw", 1),
 
                 // Throwing particles into vortex
-                new TimeElapsedTrans("throw", "reverse1", 3),
+                new TimeElapsedTrans("throw", "reverse1", throwDuration),
 
                 // Driving to second beacon
                 new AboveRangeTrans("reverse1", "turn2", rangeFromBeacon),
                 new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.23)),
-                new ProgressReachedTrans("forward3", "turn3", cmToEnc(115.0)),
+                new ProgressReachedTrans("forward3", "turn3", cmToEnc(129.0)),
                 new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.25)),
 
                 // Pressing second button
                 new BelowRangeTrans("follow2", "push2", rangeToBeacon),
                 new TimeElapsedTrans("push2", null, 1),
+
+                // TODO add pushing capball and parking
         });
 
         // Setting Initial active state

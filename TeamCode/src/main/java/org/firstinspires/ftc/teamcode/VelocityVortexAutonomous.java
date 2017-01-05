@@ -13,6 +13,8 @@ public abstract class VelocityVortexAutonomous extends VelocityVortexRobotBase {
 
     protected double rangeFromBeacon = 50.0;
 
+    protected double throwDuration = 3.0;
+
     @Override
     public void start() {
         retractLeftPusher();
