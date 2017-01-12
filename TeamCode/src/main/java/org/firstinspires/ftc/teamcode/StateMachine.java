@@ -192,7 +192,8 @@ abstract class StateMachineComponent {
 	}
 }
 
-abstract class State extends StateMachineComponent{
+abstract class State extends StateMachineComponent {
+	protected boolean complete = false;
 	protected String name = null;
 	protected ElapsedTime runtime = new ElapsedTime();
 
@@ -217,6 +218,10 @@ abstract class State extends StateMachineComponent{
 	public abstract void loop();
 	
 	public abstract void stop();
+
+	public final boolean isComplete() {
+		return complete;
+	}
 }
 
 abstract class Transition extends StateMachineComponent{
