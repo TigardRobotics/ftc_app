@@ -22,8 +22,14 @@ public class GyroTest extends RobotBase {
 
     @Override
     public void loop() {
-        if (sensorModule.getHeading() == 0) disableMotor();
-        else enableMotor();
+        telemetry.addData("Heading = %d", sensorModule.getHeading());
+        if (sensorModule.getHeading() == 0) {
+            disableMotor();
+            return;
+        }
+
+        if ((360-sensorModule.getHeading())%360 > 180) enableMotor();
+        else reverseEnableMotor();
     }
 
     @Override
@@ -33,6 +39,10 @@ public class GyroTest extends RobotBase {
 
     public void enableMotor() {
         motor.setPower(drivePower);
+    }
+
+    public void reverseEnableMotor() {
+        motor.setPower(-drivePower);
     }
 
     public void disableMotor() {
