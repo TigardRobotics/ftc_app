@@ -48,4 +48,8 @@ public abstract class SensorModule {
     public boolean isLineDetected() {
         return false;
     }
+
+    public int getHeading() {
+        return 0;
+    }
 }

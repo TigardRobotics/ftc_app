@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -15,6 +16,7 @@ public class ModernRoboticsSensorModule extends SensorModule {
     protected ModernRoboticsI2cRangeSensor frontRangeSensor;
     protected ColorSensor frontColorSensor;
     protected OpticalDistanceSensor bottomLineSensor;
+    protected ModernRoboticsI2cGyro gyro;
     protected static final double LINE_SENSOR_LIGHT_THRESHOLD = 0.2;
 
     ModernRoboticsSensorModule(RobotBase robot) {
@@ -26,7 +28,10 @@ public class ModernRoboticsSensorModule extends SensorModule {
         frontRangeSensor = robot.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "front_range");
         frontColorSensor = robot.hardwareMap.colorSensor.get("front_color");
         bottomLineSensor = robot.hardwareMap.opticalDistanceSensor.get("bottom_ods");
+        gyro = (ModernRoboticsI2cGyro) robot.hardwareMap.gyroSensor.get("gyro");
         frontColorSensor.enableLed(false);
+        robot.telemetry.addLine("Calibrating Gyro, DO NOT MOVE!");
+        gyro.calibrate();
         robot.telemetry.addLine("Sensor Module Initialized");
     }
 
@@ -92,5 +97,10 @@ public class ModernRoboticsSensorModule extends SensorModule {
     @Override
     public boolean isLineDetected() {
         return getLineDetectorLightLevel() > LINE_SENSOR_LIGHT_THRESHOLD;
+    }
+
+    @Override
+    public int getHeading() {
+        return gyro.getHeading();
     }
 }
