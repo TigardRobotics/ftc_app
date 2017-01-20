@@ -22,14 +22,21 @@ public class ChangeHeadingState extends VelocityVortexState {
     @Override
     public void loop() {
         // Exiting if the target heading has been reached
-        if(getHeading() == targetHeading) {
-            complete = true;
-            return;
-        }
+
+        int headingError = (getHeading()-targetHeading+180)%360-180;
 
         // Turning Towards the target heading if not there already
         if(!complete) {
-            if(((360-getHeading())+targetHeading)%360 > 180) {  // checking if faster to turn left
+            if(Math.abs(headingError) < 1) {
+                getRobot().telemetry.addLine("Heading reached");
+                complete = true;
+                return;
+            }
+
+            double power = speed * (headingError / 180.0);
+            getRobot().setRightDrivePower(power);
+            getRobot().setLeftDrivePower(-power);
+            /*else if( headingError > 0) {  // checking if faster to turn left
                 getRobot().telemetry.addLine(String.format("Turning Left, h=%d, t=%d", getHeading(), targetHeading));
                 getRobot().setRightDrivePower(speed);
                 getRobot().setLeftDrivePower(-speed);
@@ -38,7 +45,7 @@ public class ChangeHeadingState extends VelocityVortexState {
                 getRobot().telemetry.addLine(String.format("Turning Right, h=%d, t=%d", getHeading(), targetHeading));
                 getRobot().setRightDrivePower(-speed);
                 getRobot().setLeftDrivePower(speed);
-            }
+            }*/
         }
     }
 

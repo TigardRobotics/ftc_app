@@ -91,7 +91,6 @@ public class ModernRoboticsSensorModule extends SensorModule {
     public double getLineDetectorLightLevel() {
         LastDetect = (bottomLineSensor==null) ? 0.0 : bottomLineSensor.getRawLightDetected();
         return LastDetect;
-
     }
 
     @Override
