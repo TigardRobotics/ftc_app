@@ -31,7 +31,14 @@ public class ModernRoboticsSensorModule extends SensorModule {
         gyro = (ModernRoboticsI2cGyro) robot.hardwareMap.gyroSensor.get("gyro");
         frontColorSensor.enableLed(false);
         robot.telemetry.addLine("Calibrating Gyro, DO NOT MOVE!");
-        gyro.calibrate();
+        try {
+            gyro.calibrate();
+            Thread.sleep(3300);
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException("Gyro Calibration Interrupted");
+        }
+        robot.telemetry.addLine("Gyro Calibrated");
         robot.telemetry.addLine("Sensor Module Initialized");
     }
 
@@ -101,5 +108,10 @@ public class ModernRoboticsSensorModule extends SensorModule {
     @Override
     public int getHeading() {
         return gyro.getHeading();
+    }
+
+    @Override
+    public int getHeadingError(int targetHeading) {
+        return (getHeading()-targetHeading+180)%360-180;
     }
 }

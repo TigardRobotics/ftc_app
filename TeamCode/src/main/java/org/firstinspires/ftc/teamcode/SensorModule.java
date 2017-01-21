@@ -52,4 +52,8 @@ public abstract class SensorModule {
     public int getHeading() {
         return 0;
     }
+
+    public int getHeadingError(int targetHeading) {
+        return 0;
+    }
 }

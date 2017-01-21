@@ -13,23 +13,28 @@ public class GyroTest extends RobotBase {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
     protected double drivePower = 0.5;
     protected DcMotor motor;
+    protected int threshold = 2;
 
     @Override
     public void init() {
+        //super.init();
         sensorModule.init();
-        motor = hardwareMap.dcMotor.get("motor");
+        motor = hardwareMap.dcMotor.get("motor_r");
     }
 
     @Override
     public void loop() {
-        telemetry.addData("Heading = %d", sensorModule.getHeading());
-        if (sensorModule.getHeading() == 0) {
-            disableMotor();
+        telemetry.addData("Heading", sensorModule.getHeading());
+
+        if(Math.abs(sensorModule.getHeadingError(0)) < threshold) { // Exiting if heading within threshold
+            telemetry.addLine("Heading reached");
+            //stopDriveMotors();
+            motor.setPower(0.0);
             return;
         }
 
-        if ((360-sensorModule.getHeading())%360 > 180) enableMotor();
-        else reverseEnableMotor();
+        double power = drivePower * (sensorModule.getHeadingError(0) / 180.0);
+        motor.setPower(power);
     }
 
     @Override

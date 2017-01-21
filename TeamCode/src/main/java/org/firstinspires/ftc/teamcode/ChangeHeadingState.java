@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 public class ChangeHeadingState extends VelocityVortexState {
     protected int targetHeading;
-    protected double speed;
+    protected double speed = 0.15;
 
     ChangeHeadingState(String name, int targetHeading, double speed) {
         this.name = name;
@@ -21,19 +21,18 @@ public class ChangeHeadingState extends VelocityVortexState {
 
     @Override
     public void loop() {
-        // Exiting if the target heading has been reached
-
-        int headingError = (getHeading()-targetHeading+180)%360-180;
+        //int headingError = (getHeading()-targetHeading+180)%360-180;
 
         // Turning Towards the target heading if not there already
         if(!complete) {
-            if(Math.abs(headingError) < 1) {
+            if(Math.abs(getSensorModule().getHeadingError(targetHeading)) < 1) { // Exiting if heading within threshold
                 getRobot().telemetry.addLine("Heading reached");
+                getRobot().stopDriveMotors();
                 complete = true;
                 return;
             }
 
-            double power = speed * (headingError / 180.0);
+            double power = speed * (getSensorModule().getHeadingError(targetHeading) / 180.0);
             getRobot().setRightDrivePower(power);
             getRobot().setLeftDrivePower(-power);
             /*else if( headingError > 0) {  // checking if faster to turn left
@@ -57,4 +56,6 @@ public class ChangeHeadingState extends VelocityVortexState {
     protected int getHeading() {
         return getVelocityVortexRobotBase().getSensorModule().getHeading();
     }
+
+
 }
