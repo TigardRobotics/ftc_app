@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice;
  * Created by Derek Williams of team 3965 on 1/12/2017.
  */
 
-@Autonomous(name="turn right", group="3965")
+@Autonomous(name="Test Abs Turns", group="3965")
 public class TestChangingHeading extends VelocityVortexAutonomous {
     private long iterationCount;
 

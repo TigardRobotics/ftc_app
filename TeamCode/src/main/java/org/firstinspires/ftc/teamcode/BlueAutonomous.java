@@ -32,10 +32,11 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new PushButtonState("push1", color),
 
                 // Throwing particles into vortex
+                new DriveState("reverse1", -driveSpeed),
                 new FlickParticleState("throw"),
 
                 // Driving to second beacon
-                new DriveState("reverse1", -driveSpeed),
+                new DriveState("reverse2", -driveSpeed),
                 new TurnState("turn2", turnSpeed),
                 new DriveState("forward3", driveSpeed),
                 new TurnState("turn3", -turnSpeed),
@@ -61,13 +62,14 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
-                new TimeElapsedTrans("push1", "throw", 1),
+                new TimeElapsedTrans("push1", "reverse1", 1),
 
                 // Throwing particles into vortex
-                new TimeElapsedTrans("throw", "reverse1", throwDuration),
+                new AboveRangeTrans("reverse1", "throw", rangeFromBeacon/2.0),
+                new TimeElapsedTrans("throw", "reverse2", throwDuration),
 
                 // Driving to second beacon
-                new AboveRangeTrans("reverse1", "turn2", rangeFromBeacon),
+                new AboveRangeTrans("reverse2", "turn2", rangeFromBeacon),
                 new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.23)),
                 new ProgressReachedTrans("forward3", "turn3", cmToEnc(100.0)),
                 new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.25)),

@@ -6,12 +6,14 @@ package org.firstinspires.ftc.teamcode;
 
 public class ChangeHeadingState extends VelocityVortexState {
     protected int targetHeading;
-    protected double speed = 0.15;
+    protected double speed = 0.3;
+    //protected double minPower = 0.05;
+    protected int threshold = 1;
 
     ChangeHeadingState(String name, int targetHeading, double speed) {
         this.name = name;
         this.targetHeading = targetHeading;
-        this.speed = speed;
+        //this.speed = speed;
     }
 
     @Override
@@ -25,7 +27,7 @@ public class ChangeHeadingState extends VelocityVortexState {
 
         // Turning Towards the target heading if not there already
         if(!complete) {
-            if(Math.abs(getSensorModule().getHeadingError(targetHeading)) < 1) { // Exiting if heading within threshold
+            if(Math.abs(getSensorModule().getHeadingError(targetHeading)) < threshold) { // Exiting if heading within threshold
                 getRobot().telemetry.addLine("Heading reached");
                 getRobot().stopDriveMotors();
                 complete = true;
@@ -33,8 +35,8 @@ public class ChangeHeadingState extends VelocityVortexState {
             }
 
             double power = speed * (getSensorModule().getHeadingError(targetHeading) / 180.0);
-            getRobot().setRightDrivePower(power);
-            getRobot().setLeftDrivePower(-power);
+            getRobot().setRightDrivePower(-power);
+            getRobot().setLeftDrivePower(power);
             /*else if( headingError > 0) {  // checking if faster to turn left
                 getRobot().telemetry.addLine(String.format("Turning Left, h=%d, t=%d", getHeading(), targetHeading));
                 getRobot().setRightDrivePower(speed);
@@ -56,6 +58,4 @@ public class ChangeHeadingState extends VelocityVortexState {
     protected int getHeading() {
         return getVelocityVortexRobotBase().getSensorModule().getHeading();
     }
-
-
 }
