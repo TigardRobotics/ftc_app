@@ -30,10 +30,11 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 new PushButtonState("push1", color),
 
                 // Throwing particles into vortex
+                new DriveState("reverse1", -driveSpeed),
                 new FlickParticleState("throw"),
 
                 // Driving to second beacon
-                new DriveState("reverse1", -driveSpeed),
+                new DriveState("reverse2", -driveSpeed),
                 new TurnState("turn2", turnSpeed),
                 new DriveState("forward3", driveSpeed),
                 new TurnState("turn3", -turnSpeed),
@@ -43,7 +44,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 new PushButtonState("push2", color),
 
                 // Pushing the capball and parking
-                new DriveState("reverse2", -driveSpeed),
+                new DriveState("reverse3", -driveSpeed),
                 new TurnState("turn4", turnSpeed),
                 new DriveState("forward4", -driveSpeed),
 
@@ -54,29 +55,30 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 // Driving to first beacon
                 new ProgressReachedTrans("forward1", "turn1", cmToEnc(45.0)),
                 new ProgressReachedTrans("turn1", "forward2", rotsToEnc(0.14)),  //0.135
-                new ProgressReachedTrans("forward2", "follow1", cmToEnc(80.0)),
+                new ProgressReachedTrans("forward2", "follow1", cmToEnc(92.0)),
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
-                new TimeElapsedTrans("push1", "throw", 1),
+                new TimeElapsedTrans("push1", "reverse1", 1),
 
                 // Throwing particles into vortex
-                new TimeElapsedTrans("throw", "reverse1", throwDuration),
+                new AboveRangeTrans("reverse1", "throw", rangeToShoot),
+                new TimeElapsedTrans("throw", "reverse2", throwDuration),
 
 
                 // Driving to second beacon
-                new AboveRangeTrans("reverse1", "turn2", rangeFromBeacon),
-                new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.25)),
-                new ProgressReachedTrans("forward3", "turn3", cmToEnc(100.0)),
+                new AboveRangeTrans("reverse2", "turn2", rangeFromBeacon),
+                new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.23)),
+                new ProgressReachedTrans("forward3", "turn3", cmToEnc(116.0)),
                 new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.250)),
 
                 // Pressing second button
                 new BelowRangeTrans("follow2", "push2", rangeToBeacon),
-                new TimeElapsedTrans("push2", "reverse2", 1),
+                new TimeElapsedTrans("push2", "reverse3", 1),
 
                 // Pushing the capball and parking
-                new AboveRangeTrans("reverse2", "turn4", rangeFromBeacon),
-                new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.14)),
+                new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),
+                new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.12)),
                 new ProgressReachedTrans("forward4", null, cmToEnc(120.0)),
         });
 

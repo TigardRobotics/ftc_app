@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by Derek Williams on 10/11/2016.
@@ -12,19 +13,25 @@ public abstract class VelocityVortexAutonomous extends VelocityVortexRobotBase {
     protected String color = NO_COLOR;  // Pass this into the button pusher state
 
     protected double rangeFromBeacon = 30.0;
+    protected double rangeToShoot = rangeFromBeacon*0.2;
 
     protected double throwDuration = 3.0;
+
+    private ElapsedTime timeElapsed;
 
     @Override
     public void start() {
         retractLeftPusher();
         retractRightPusher();
+        timeElapsed = new ElapsedTime();
     }
 
     @Override
     public void loop(){
+        timeElapsed.reset();
         stateMachine.step();
         //telemetry.addData("line detector level", getSensorModule().getLineDetectorLightLevel());
+        telemetry.addData("time elapsed", timeElapsed.milliseconds());
     }
 
     @Override

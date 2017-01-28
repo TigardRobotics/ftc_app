@@ -17,11 +17,11 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     private static final double CENTIMETERS_PER_ROTATION = 31.928;
     protected static final double COUNTS_PER_CENTIMETER = COUNTS_PER_ROTATION/CENTIMETERS_PER_ROTATION;
 
-    protected double driveSpeed = 0.7;
+    protected double driveSpeed = 0.50;
     protected double turnSpeed = 0.25;
-    protected double followSpeed = 0.35;
+    protected double followSpeed = 0.25;
 
-    protected double rangeToBeacon = 4.0;  // was 6.0
+    protected double rangeToBeacon = 4.0;
 
     // All hardware custom to velocity vortex defined here
     protected Servo rightButtonPusher;
@@ -36,7 +36,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     final static double RIGHT_BUTTON_PUSHER_RETRACTED = 0.226;
     final static double LEFT_BUTTON_PUSHER_EXTENDED = 0.471;
     final static double LEFT_BUTTON_PUSHER_RETRACTED = 0.797;
-    final static double PARTICLE_FLICKER_SPEED = 1.0;
+    final static double PARTICLE_FLICKER_SPEED = 0.8;
     final static double PARTICLE_LIFTER_SPEED = -1.0;
     final static double PARTICLE_COLLECTOR_SPEED = 0.8;
 
