@@ -24,6 +24,8 @@ public abstract class RobotBase extends OpMode {
         rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
         leftDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void setDrivePower(double power){
