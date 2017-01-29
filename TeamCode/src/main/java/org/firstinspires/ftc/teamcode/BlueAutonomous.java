@@ -69,7 +69,7 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new TimeElapsedTrans("throw", "reverse2", throwDuration),
 
                 // Driving to second beacon
-                new ProgressReachedTrans("reverse2", "turn2", cmToEnc(20.0)),  // was 20.0
+                new ProgressReachedTrans("reverse2", "turn2", cmToEnc(25.0)),  // was 20.0
                 new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.24)),
                 new ProgressReachedTrans("forward3", "turn3", cmToEnc(116.0)),
                 new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.25)),
