@@ -1,45 +1,41 @@
 package org.firstinspires.ftc.teamcode;
 
 /**
- * Created by Robotics on 1/31/2017.
+ * Created by Derek Williams of team 3965 on 1/31/2017.
  */
 
 public class TeleOpState extends VelocityVortexState {
+    protected double stickPressedPowerFactor = 0.3;
+
     TeleOpState(String name) {
         this.name = name;
-        complete = false;
     }
 
     public void start() {
         getRobot().stopDriveMotors();
-        complete = false;
     }
 
     public void loop() {
         VelocityVortexRobotBase robot = getVelocityVortexRobotBase();
 
-        if(robot.gamepad1.dpad_up) {
-            complete = true;
-            return;
-        }
-
         /**
          * Drive motors
          */
-        robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y);
-        robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y);
-
+        if(robot.gamepad1.left_stick_button) robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y*stickPressedPowerFactor);
+        else robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y);
+        if(robot.gamepad1.right_stick_button) robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y*stickPressedPowerFactor);
+        else robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y);
 
         /**
          * Button Pushers
          */
-        if (robot.gamepad1.a) {
+        if (robot.gamepad1.b) {
             //double rightButtonPos = RIGHT_BUTTON_PUSHER_EXTENDED;
             //rightButtonPusher.setPosition(rightButtonPos);
             //telemetry.addData("R OUT", rightButtonPos);
             robot.extendRightPusher();
         }
-        else if (robot.gamepad1.b) {
+        else {
             //double rightButtonPos = RIGHT_BUTTON_PUSHER_RETRACTED;
             //rightButtonPusher.setPosition(rightButtonPos);
             //telemetry.addData("R IN", rightButtonPos);
@@ -52,7 +48,7 @@ public class TeleOpState extends VelocityVortexState {
             //telemetry.addData("L OUT", leftButtonPos);
             robot.extendLeftPusher();
         }
-        else if (robot.gamepad1.y) {
+        else {
             //double leftButtonPos = LEFT_BUTTON_PUSHER_RETRACTED;
             //leftButtonPusher.setPosition(leftButtonPos);
             //telemetry.addData("L IN", leftButtonPos);
@@ -87,6 +83,8 @@ public class TeleOpState extends VelocityVortexState {
 
     public void stop() {
         getRobot().stopDriveMotors();
-        complete = false;
+        getVelocityVortexRobotBase().disableLifter();
+        getVelocityVortexRobotBase().disableCollector();
+        getVelocityVortexRobotBase().disableFlicker();
     }
 }

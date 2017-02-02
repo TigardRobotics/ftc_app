@@ -46,7 +46,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 // Pushing the capball and parking
                 new DriveState("reverse3", -driveSpeed),
                 new TurnState("turn4", turnSpeed),
-                new DriveState("forward4", -driveSpeed),
+                new DriveAndSweepState("forward4", -driveSpeed),
         });
 
         // Adding transitions to state machine

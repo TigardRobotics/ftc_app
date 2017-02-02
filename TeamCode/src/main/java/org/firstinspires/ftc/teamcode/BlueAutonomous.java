@@ -48,7 +48,7 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 // Pushing the capball and parking
                 new DriveState("reverse3", -driveSpeed),
                 new TurnState("turn4", turnSpeed),
-                new DriveState("forward4", -driveSpeed),
+                new DriveAndSweepState("forward4", -driveSpeed),
 
         });
 
@@ -80,7 +80,7 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
 
                 // Pushing the capball and parking
                 new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),
-                new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.17)),
+                new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.14)),
                 new ProgressReachedTrans("forward4", null, cmToEnc(120.0)),
         });
 

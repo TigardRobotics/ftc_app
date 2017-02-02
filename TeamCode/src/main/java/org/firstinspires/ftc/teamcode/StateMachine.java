@@ -23,6 +23,10 @@ class StateMachine {
 		return activeState != null;
 	}
 
+	public String getActiveStateName() {
+		return activeState.name;
+	}
+
 	public State getState(String name) {
 		if (name == null) return null;
 		for(State state : states) {
