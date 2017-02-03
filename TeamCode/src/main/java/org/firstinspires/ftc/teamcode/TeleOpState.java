@@ -6,6 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 public class TeleOpState extends VelocityVortexState {
     protected double stickPressedPowerFactor = 0.3;
+    protected double triggerActuationThreshold = 0.5;
 
     TeleOpState(String name) {
         this.name = name;
@@ -21,10 +22,10 @@ public class TeleOpState extends VelocityVortexState {
         /**
          * Drive motors
          */
-        if(robot.gamepad1.left_stick_button) robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y*stickPressedPowerFactor);
-        else robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y);
-        if(robot.gamepad1.right_stick_button) robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y*stickPressedPowerFactor);
-        else robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y);
+       // if(robot.gamepad1.left_stick_button) robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y*stickPressedPowerFactor);
+         robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y);
+       // if(robot.gamepad1.right_stick_button) robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y*stickPressedPowerFactor);
+         robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y);
 
         /**
          * Button Pushers
@@ -71,7 +72,7 @@ public class TeleOpState extends VelocityVortexState {
         /**
          * Particle Collector
          */
-        if (robot.gamepad1.left_bumper) {
+        if (robot.gamepad1.right_trigger > triggerActuationThreshold) {
             robot.enableLifter();
             robot.enableCollector();
         }

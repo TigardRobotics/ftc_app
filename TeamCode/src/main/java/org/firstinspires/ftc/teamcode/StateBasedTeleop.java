@@ -11,7 +11,7 @@ public abstract class StateBasedTeleop extends VelocityVortexRobotBase {
     protected String color;
 
     @Override
-    public void start(){
+    public void start() {
         stateMachine.add(new State[]{
                 new TeleOpState("teleop"),
                 new EdgeFollowState("follow", followSpeed),
@@ -31,7 +31,7 @@ public abstract class StateBasedTeleop extends VelocityVortexRobotBase {
         stateMachine.step();
 
         if(stateMachine.getActiveStateName() != "teleop") {
-            if(gamepad1.a) stateMachine.setActiveState("teleop");
+            if(gamepad1.dpad_down) stateMachine.setActiveState("teleop");
         }
         else {
             if(gamepad1.dpad_up) stateMachine.setActiveState("follow");
