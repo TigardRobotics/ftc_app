@@ -32,8 +32,9 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new PushButtonState("push1", color),
 
                 // Throwing particles into vortex
-                new DriveState("reverse1", -driveSpeed),
                 new FlickParticleState("throw"),
+                new FlickParticleState("throw2"),
+                new DriveState("reverse1", -driveSpeed),
 
                 // Driving to second beacon
                 new DriveState("reverse2", -driveSpeed),
@@ -62,11 +63,12 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
-                new TimeElapsedTrans("push1", "reverse1", 1),
+                new TimeElapsedTrans("push1", "throw", 1),
 
                 // Throwing particles into vortex
-                new AboveRangeTrans("reverse1", "throw", rangeToShoot),
-                new TimeElapsedTrans("throw", "reverse2", throwDuration),
+                new TimeElapsedTrans("throw", "throw2", 1.0),
+                new TimeElapsedTrans("throw2", "reverse1", 2.0),
+                new AboveRangeTrans("reverse1", "reverse2", rangeToShoot),
 
                 // Driving to second beacon
                 new ProgressReachedTrans("reverse2", "turn2", cmToEnc(25.0)),  // was 20.0
@@ -80,7 +82,7 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
 
                 // Pushing the capball and parking
                 new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),
-                new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.14)),
+                new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.16)),
                 new ProgressReachedTrans("forward4", null, cmToEnc(120.0)),
         });
 

@@ -111,9 +111,9 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         particleCollector.setPower(PARTICLE_COLLECTOR_SPEED);
     }
 
-    public void reverseEnableCollector() {
+    /*public void reverseEnableCollector() {
         particleCollector.setPower(-PARTICLE_COLLECTOR_SPEED);
-    }
+    }*/
 
     public void disableCollector() {
         particleCollector.setPower(0.0);

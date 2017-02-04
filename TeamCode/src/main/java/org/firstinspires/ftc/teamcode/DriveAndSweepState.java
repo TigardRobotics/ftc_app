@@ -24,7 +24,7 @@ public class DriveAndSweepState extends VelocityVortexState {
     public void start() {
         initialEncoderPosition = getRobot().getDrivePosition();
         getRobot().setDrivePower(power);
-        getVelocityVortexRobotBase().reverseEnableCollector();
+        getVelocityVortexRobotBase().enableCollector();
     }
 
     @Override
