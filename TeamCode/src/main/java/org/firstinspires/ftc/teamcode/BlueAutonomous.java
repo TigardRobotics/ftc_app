@@ -50,7 +50,6 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new DriveState("reverse3", -driveSpeed),
                 new TurnState("turn4", turnSpeed),
                 new DriveAndSweepState("forward4", -driveSpeed),
-
         });
 
         // Adding transitions to state machine
