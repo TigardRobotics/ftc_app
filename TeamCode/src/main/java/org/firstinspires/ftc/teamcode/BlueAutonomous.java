@@ -58,7 +58,7 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new ProgressReachedTrans("forward1", "turn1", cmToEnc(55.0)),
                 new ProgressReachedTrans("turn1", "forward2", rotsToEnc(0.10)),
                 new ProgressReachedTrans("forward2", "turn1a", cmToEnc(92.0)),
-                new ProgressReachedTrans("turn1a", "follow1", rotsToEnc(0.15)),
+                new ProgressReachedTrans("turn1a", "follow1", rotsToEnc(0.16)),
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
@@ -81,7 +81,7 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
 
                 // Pushing the capball and parking
                 new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),
-                new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.16)),
+                new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.17)),
                 new ProgressReachedTrans("forward4", null, cmToEnc(120.0)),
         });
 

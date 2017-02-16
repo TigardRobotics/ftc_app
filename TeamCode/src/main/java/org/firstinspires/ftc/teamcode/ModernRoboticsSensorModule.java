@@ -31,16 +31,7 @@ public class ModernRoboticsSensorModule extends SensorModule {
         gyro = (ModernRoboticsI2cGyro) robot.hardwareMap.gyroSensor.get("gyro");
         frontColorSensor.enableLed(false);
         robot.telemetry.addLine("Calibrating Gyro, DO NOT MOVE!");
-        /*
-        try {
-            gyro.calibrate();
-            Thread.sleep(3300);
-        }
-        catch (InterruptedException e) {
-            throw new RuntimeException("Gyro Calibration Interrupted");
-        }
-        robot.telemetry.addLine("Gyro Calibrated");
-        */
+        gyro.calibrate();   //!! We need to have a way to wait for calibration to complete
         robot.telemetry.addLine("Sensor Module Initialized");
     }
 

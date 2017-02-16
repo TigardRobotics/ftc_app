@@ -77,7 +77,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 // Pushing the capball and parking
                 new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),
                 new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.11)),
-                new ProgressReachedTrans("forward4", null, cmToEnc(120.0)),
+                new ProgressReachedTrans("forward4", null, cmToEnc(125.0)),
         });
 
         // Setting Initial active state

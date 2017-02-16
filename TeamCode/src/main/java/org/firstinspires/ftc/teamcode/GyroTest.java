@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
 
 /**
  * Created by Derek Williams on 1/12/2017.
@@ -11,46 +12,62 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp(name = "Gyro test", group = "3965")
 public class GyroTest extends RobotBase {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
-    protected double drivePower = 0.5;
-    protected DcMotor motor;
-    protected int threshold = 2;
+    protected double maxPower = 0.6;
+    protected double minPower = 0.01;
+    protected double maxPowerThreshold = 0.5;
+    //protected DcMotor r_motor;
+    //protected DcMotor l_motor;
+    protected int threshold = 1;
+    protected int targetHeading = 0;
+
+    protected int iterationsWithinThresholdCount;
+    protected int requiredIterationsWithinThresholdForHeadingReached = 2;
 
     @Override
     public void init() {
-        //super.init();
+        super.init();
         sensorModule.init();
-        motor = hardwareMap.dcMotor.get("motor_r");
+        //r_motor = hardwareMap.dcMotor.get("motor_r");
+        //l_motor = hardwareMap.dcMotor.get("motor_l");
+    }
+
+    @Override
+    public void start() {
+        iterationsWithinThresholdCount = 0;
     }
 
     @Override
     public void loop() {
         telemetry.addData("Heading", sensorModule.getHeading());
 
-        if(Math.abs(sensorModule.getHeadingError(0)) < threshold) { // Exiting if heading within threshold
-            telemetry.addLine("Heading reached");
-            //stopDriveMotors();
-            motor.setPower(0.0);
-            return;
+        if(Math.abs(sensorModule.getHeadingError(targetHeading)) < threshold) { // Exiting if heading within threshold
+            iterationsWithinThresholdCount++;
+            telemetry.addLine("Within Threshold");
+            if(iterationsWithinThresholdCount >= requiredIterationsWithinThresholdForHeadingReached) {
+                telemetry.addLine("Heading Reached");
+                stopDriveMotors();
+                return;
+            }
+        }
+        else {
+            iterationsWithinThresholdCount = 0;
         }
 
-        double power = drivePower * (sensorModule.getHeadingError(0) / 180.0);
-        motor.setPower(power);
-    }
+        double error = (sensorModule.getHeadingError(targetHeading) / 180.0);
+        double power;
+        if (error > 0)
+        {
+            power = minPower + (maxPower-minPower)*(Math.min(error,maxPowerThreshold)/maxPowerThreshold);
+        }
+        else
+        {
+            power = - (minPower + (maxPower-minPower)*(Math.min(-error,maxPowerThreshold)/maxPowerThreshold));
+        }
 
-    @Override
-    public void stop() {
-        disableMotor();
-    }
+        telemetry.addData("Error", error);
+        telemetry.addData("Power", power);
 
-    public void enableMotor() {
-        motor.setPower(drivePower);
-    }
-
-    public void reverseEnableMotor() {
-        motor.setPower(-drivePower);
-    }
-
-    public void disableMotor() {
-        motor.setPower(0.0);
+        setRightDrivePower(-power);
+        setLeftDrivePower(power);
     }
 }

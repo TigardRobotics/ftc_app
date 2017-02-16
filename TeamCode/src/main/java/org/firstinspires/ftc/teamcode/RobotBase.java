@@ -28,6 +28,11 @@ public abstract class RobotBase extends OpMode {
         leftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
+    @Override
+    public void stop() {
+        stopDriveMotors();
+    }
+
     public void setDrivePower(double power){
         leftDriveMotor.setPower(power);
         rightDriveMotor.setPower(-power);
