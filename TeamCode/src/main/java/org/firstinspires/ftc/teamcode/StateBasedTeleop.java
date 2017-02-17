@@ -20,7 +20,7 @@ public abstract class StateBasedTeleop extends VelocityVortexRobotBase {
 
         stateMachine.add(new Transition[] {
                 new BelowRangeTrans("follow", "push", rangeToBeacon),
-                new TimeElapsedTrans("push", "teleop", 3),
+                new TimeElapsedTrans("push", "teleop", 1),
         });
 
         stateMachine.setActiveState("teleop");
