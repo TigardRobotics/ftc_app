@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode;
  * Created by Derek Williams of team 3965 on 2/16/2017.
  */
 
-public class PointToHeadingState extends VelocityVortexState {
+public class TurnToHeadingState extends VelocityVortexState {
     protected double maxPower = 0.6;
     protected double minPower = 0.01;
     protected double maxPowerThreshold = 0.5;
@@ -15,7 +15,7 @@ public class PointToHeadingState extends VelocityVortexState {
     protected int requiredIterationsWithinThresholdForHeadingReached = 2;
 
 
-    PointToHeadingState(String name, int targetHeading) {
+    TurnToHeadingState(String name, int targetHeading) {
         this.name = name;
         this.targetHeading = targetHeading;
     }
