@@ -35,7 +35,6 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
 
                 // Throwing particles into vortex
                 new FlickParticleState("throw"),
-                new FlickParticleState("throw2"),
                 new DriveWithHeadingState("reverse1", -driveSpeed, 90),
 
                 // Driving to second beacon
@@ -60,7 +59,7 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
                 new ProgressReachedTrans("forward1", "turn1", cmToEnc(55.0)),
                 new StateCompletedTrans("turn1", "forward2"),
                 new ProgressReachedTrans("forward2", "turn1a", cmToEnc(92.0)),
-                new ProgressReachedTrans("turn1a", "follow1", rotsToEnc(0.10)),
+                new ProgressReachedTrans("turn1a", "follow1", rotsToEnc(0.06)),
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
@@ -69,8 +68,7 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
                 //new StateCompletedTrans("align2", "throw"),
 
                 // Throwing particles into vortex
-                new TimeElapsedTrans("throw", "throw2", 1.0),
-                new TimeElapsedTrans("throw2", "reverse1", 2.0),
+                new TimeElapsedTrans("throw", "reverse1", throwDuration),
                 new ProgressReachedTrans("reverse1", "turn2", cmToEnc(30.0)),
 
                 // Driving to second beacon
@@ -78,7 +76,7 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
                 //new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.24)),
                 new StateCompletedTrans("turn2", "forward3"),
                 new ProgressReachedTrans("forward3", "turn3", cmToEnc(116.0)),
-                new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.30)),
+                new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.16)),
 
                 // Pressing second button
                 new BelowRangeTrans("follow2", "push2", rangeToBeacon),
@@ -93,16 +91,5 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
 
         // Setting Initial active state
         stateMachine.setActiveState("forward1");
-
-        /*
-        stateMachine.add(new State[]{
-                new DriveWithHeadingState("drive", driveSpeed, driveSpeed, 0),
-        });
-
-        stateMachine.add(new Transition[]{
-        });
-
-        stateMachine.setActiveState("drive");
-        */
     }
 }

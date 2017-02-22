@@ -53,6 +53,12 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
 
         retractLeftPusher();
         retractRightPusher();
+
+    }
+
+    @Override
+    public void init_loop() {
+        sensorModule.init_loop();
     }
 
     @Override

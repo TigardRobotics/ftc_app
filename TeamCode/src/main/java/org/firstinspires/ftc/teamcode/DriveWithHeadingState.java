@@ -15,7 +15,7 @@ public class DriveWithHeadingState extends VelocityVortexState {
     DriveWithHeadingState(String name, double drivePower, /*double turnPower,*/ int targetHeading) {
         this.name = name;
         this.drivePower = drivePower;
-        this.turnPower = drivePower;//Math.abs(drivePower);//turnPower;
+        this.turnPower = 2*drivePower;//turnPower;
         this.targetHeading = targetHeading;
     }
 

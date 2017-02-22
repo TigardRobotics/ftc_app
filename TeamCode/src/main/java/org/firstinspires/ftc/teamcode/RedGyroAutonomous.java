@@ -22,8 +22,8 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
         stateMachine.add(new State[]{
                 // Driving to first beacon
                 new DriveWithHeadingState("forward1", driveSpeed, 0),
-                new TurnToHeadingState("turn1", 40),
-                new DriveWithHeadingState("forward2", driveSpeed, 40),
+                new TurnToHeadingState("turn1", 320),
+                new DriveWithHeadingState("forward2", driveSpeed, 320),
 
                 // Pressing first button
                 new EdgeFollowState("follow1", followSpeed),
@@ -31,7 +31,7 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
 
                 // Throwing particles into vortex
                 new FlickParticleState("throw"),
-                new DriveWithHeadingState("reverse1", -driveSpeed, 90),
+                new DriveWithHeadingState("reverse1", -driveSpeed, 270),
 
                 // Driving to second beacon
                 new TurnToHeadingState("turn2", 0),
@@ -43,9 +43,9 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
                 new PushButtonState("push2", color),
 
                 // Pushing the capball and parking
-                new DriveWithHeadingState("reverse3", -driveSpeed, 90),
-                new TurnToHeadingState("turn4", 33),
-                new DriveWithHeadingAndSweepState("forward4", -driveSpeed, 33),
+                new DriveWithHeadingState("reverse3", -driveSpeed, 270),
+                new TurnToHeadingState("turn4", 327),
+                new DriveWithHeadingAndSweepState("forward4", -driveSpeed, 327),
         });
 
         // Adding transitions to state machine
@@ -66,7 +66,7 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
                 new ProgressReachedTrans("reverse1", "turn2", cmToEnc(30.0)),
                 new StateCompletedTrans("turn2", "forward3"),
                 new ProgressReachedTrans("forward3", "turn3", cmToEnc(116.0)),
-                new StateCompletedTrans("turn3", "follow2"),
+                new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.250)),
 
                 // Pressing second button
                 new BelowRangeTrans("follow2", "push2", rangeToBeacon),

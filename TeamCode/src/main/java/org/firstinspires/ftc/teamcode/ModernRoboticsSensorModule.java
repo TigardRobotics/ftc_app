@@ -4,6 +4,7 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -19,8 +20,13 @@ public class ModernRoboticsSensorModule extends SensorModule {
     protected ModernRoboticsI2cGyro gyro;
     protected static final double LINE_SENSOR_LIGHT_THRESHOLD = 0.2;
 
+    protected ElapsedTime gyroCalibrationTimer;
+    protected double gyroCalibrationTime = 4.0;
+    protected boolean gyroCalibrationComplete = false;
+
     ModernRoboticsSensorModule(RobotBase robot) {
         this.robot = robot;
+        gyroCalibrationTimer = new ElapsedTime();
     }
 
     @Override
@@ -30,9 +36,23 @@ public class ModernRoboticsSensorModule extends SensorModule {
         bottomLineSensor = robot.hardwareMap.opticalDistanceSensor.get("bottom_ods");
         gyro = (ModernRoboticsI2cGyro) robot.hardwareMap.gyroSensor.get("gyro");
         frontColorSensor.enableLed(false);
+        gyroCalibrationComplete = false;
         robot.telemetry.addLine("Calibrating Gyro, DO NOT MOVE!");
         gyro.calibrate();   //!! We need to have a way to wait for calibration to complete
+        gyroCalibrationTimer.reset();
         robot.telemetry.addLine("Sensor Module Initialized");
+    }
+
+    public boolean gyroCalibrated() {
+        return gyroCalibrationTimer.seconds() >= gyroCalibrationTime;
+    }
+
+    @Override
+    public void init_loop() {
+        if (gyroCalibrated() && !gyroCalibrationComplete) {
+            gyroCalibrationComplete = true;
+            robot.telemetry.addLine("Calibration COMPLETE!");
+        }
     }
 
     public void activateFrontColorSensor(boolean active) {
@@ -105,6 +125,6 @@ public class ModernRoboticsSensorModule extends SensorModule {
 
     @Override
     public int getHeadingError(int targetHeading) {
-        return (getHeading()-targetHeading+180)%360-180;
+        return (getHeading()-targetHeading+540)%360-180;
     }
 }
