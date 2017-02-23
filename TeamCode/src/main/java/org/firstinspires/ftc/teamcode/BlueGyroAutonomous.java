@@ -58,7 +58,7 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
                 // Driving to first beacon
                 new ProgressReachedTrans("forward1", "turn1", cmToEnc(55.0)),
                 new StateCompletedTrans("turn1", "forward2"),
-                new ProgressReachedTrans("forward2", "turn1a", cmToEnc(92.0)),
+                new ProgressReachedTrans("forward2", "turn1a", cmToEnc(105.0)),
                 new ProgressReachedTrans("turn1a", "follow1", rotsToEnc(0.06)),
 
                 // Pressing first button
@@ -75,7 +75,7 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
                 //new ProgressReachedTrans("reverse2", "turn2", cmToEnc(25.0)),  // was 20.0
                 //new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.24)),
                 new StateCompletedTrans("turn2", "forward3"),
-                new ProgressReachedTrans("forward3", "turn3", cmToEnc(116.0)),
+                new ProgressReachedTrans("forward3", "turn3", cmToEnc(120.0)),
                 new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.16)),
 
                 // Pressing second button
