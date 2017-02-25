@@ -21,9 +21,9 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
         // Adding states to state machine
         stateMachine.add(new State[]{
                 // Driving to first beacon
-                new DriveWithHeadingState("forward1", driveSpeed, 0),
+                new DriveWithHeadingState("forward1", gyroDriveSpeed, 0),
                 new TurnToHeadingState("turn1", 320),
-                new DriveWithHeadingState("forward2", driveSpeed, 320),
+                new DriveWithHeadingState("forward2", gyroDriveSpeed, 320),
 
                 // Pressing first button
                 new EdgeFollowState("follow1", followSpeed),
@@ -31,11 +31,11 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
 
                 // Throwing particles into vortex
                 new FlickParticleState("throw"),
-                new DriveWithHeadingState("reverse1", -driveSpeed, 270),
+                new DriveWithHeadingState("reverse1", -gyroDriveSpeed, 270),
 
                 // Driving to second beacon
                 new TurnToHeadingState("turn2", 0),
-                new DriveWithHeadingState("forward3", driveSpeed, 0),
+                new DriveWithHeadingState("forward3", gyroDriveSpeed, 0),
                 new TurnState("turn3", -turnSpeed),
 
                 // Pressing second beacon
@@ -43,9 +43,9 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
                 new PushButtonState("push2", color),
 
                 // Pushing the capball and parking
-                new DriveWithHeadingState("reverse3", -driveSpeed, 270),
+                new DriveWithHeadingState("reverse3", -gyroDriveSpeed, 270),
                 new TurnToHeadingState("turn4", 327),
-                new DriveWithHeadingAndSweepState("forward4", -driveSpeed, 327),
+                new DriveAndSweepState("forward4", -gyroDriveSpeed),
         });
 
         // Adding transitions to state machine

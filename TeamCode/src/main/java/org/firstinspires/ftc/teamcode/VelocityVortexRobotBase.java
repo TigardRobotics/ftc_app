@@ -18,6 +18,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     protected static final double COUNTS_PER_CENTIMETER = COUNTS_PER_ROTATION/CENTIMETERS_PER_ROTATION;
 
     protected double driveSpeed = 0.50;
+    protected double gyroDriveSpeed = 0.50;
     protected double turnSpeed = 0.25;
     protected double followSpeed = 0.25;
 

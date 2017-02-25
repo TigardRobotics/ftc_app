@@ -8,7 +8,7 @@ public class TurnToHeadingState extends VelocityVortexState {
     protected double maxPower = 0.5;
     protected double minPower = 0.01;
     protected double maxPowerThreshold = 0.5;
-    protected int threshold = 2;
+    protected int threshold = 3;
     protected int targetHeading = 0;
 
     protected int iterationsWithinThresholdCount;
