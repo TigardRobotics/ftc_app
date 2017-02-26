@@ -49,7 +49,7 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
 
                 // Pushing the capball and parking
                 new DriveWithHeadingState("reverse3", -gyroDriveSpeed, 90),
-                new TurnToHeadingState("turn4", 33),
+                new TurnToHeadingState("turn4", 30),
                 new DriveAndSweepState("forward4", -driveSpeed),
         });
 
@@ -59,7 +59,7 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
                 new ProgressReachedTrans("forward1", "turn1", cmToEnc(55.0)),
                 new StateCompletedTrans("turn1", "forward2"),
                 new ProgressReachedTrans("forward2", "turn1a", cmToEnc(100.0)),
-                new ProgressReachedTrans("turn1a", "follow1", rotsToEnc(0.16)),
+                new ProgressReachedTrans("turn1a", "follow1", rotsToEnc(0.18)),
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
@@ -76,7 +76,7 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
                 //new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.24)),
                 new StateCompletedTrans("turn2", "forward3"),
                 new ProgressReachedTrans("forward3", "turn3", cmToEnc(110.0)),
-                new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.25)),
+                new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.27)),
 
                 // Pressing second button
                 new BelowRangeTrans("follow2", "push2", rangeToBeacon),

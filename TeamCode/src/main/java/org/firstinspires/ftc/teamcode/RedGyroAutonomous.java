@@ -44,7 +44,7 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
 
                 // Pushing the capball and parking
                 new DriveWithHeadingState("reverse3", -gyroDriveSpeed, 270),
-                new TurnToHeadingState("turn4", 327),
+                new TurnToHeadingState("turn4", 320),
                 new DriveAndSweepState("forward4", -gyroDriveSpeed),
         });
 
