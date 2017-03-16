@@ -17,13 +17,11 @@ public class DriveWithHeadingAndSweepState extends DriveWithHeadingState {
     @Override
     public void start() {
         super.start();
-        getVelocityVortexRobotBase().enableCollector();
     }
 
     @Override
     public void stop() {
         super.stop();
-        getVelocityVortexRobotBase().disableCollector();
     }
 
 }

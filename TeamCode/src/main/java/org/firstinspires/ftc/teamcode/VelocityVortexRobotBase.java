@@ -30,26 +30,26 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
 
     protected DcMotor particleFlicker;
     protected DcMotor particleLifter;
-    protected DcMotor particleCollector;
+    protected DcMotor ballLift;
 
     // Hardware constants
     final static double RIGHT_BUTTON_PUSHER_EXTENDED = 0.563;
     final static double RIGHT_BUTTON_PUSHER_RETRACTED = 0.226;
     final static double LEFT_BUTTON_PUSHER_EXTENDED = 0.471;
     final static double LEFT_BUTTON_PUSHER_RETRACTED = 0.797;
-    final static double PARTICLE_FLICKER_SPEED = 0.7;
-    final static double PARTICLE_LIFTER_SPEED = -1.0;
-    final static double PARTICLE_COLLECTOR_SPEED = 0.8;
+    final static double PARTICLE_FLICKER_SPEED = 1.0;
+    final static double PARTICLE_LIFTER_SPEED = 1.0;
+    final static double BALL_LIFT_SPEED = 1.0;
 
     @Override
     public void init() {
         super.init();
         sensorModule.init();
-        rightButtonPusher = hardwareMap.servo.get("right_button_pusher");
-        leftButtonPusher = hardwareMap.servo.get("left_button_pusher");
-        particleFlicker = hardwareMap.dcMotor.get("particle_flicker");
-        particleLifter = hardwareMap.dcMotor.get("particle_lifter");
-        particleCollector = hardwareMap.dcMotor.get("particle_collector");
+        rightButtonPusher = hardwareMap.servo.get("r_pusher");
+        leftButtonPusher = hardwareMap.servo.get("l_pusher");
+        particleFlicker = hardwareMap.dcMotor.get("launch");
+        particleLifter = hardwareMap.dcMotor.get("belt");
+        ballLift = hardwareMap.dcMotor.get("liftMotor");
         telemetry.addLine("Velocity Vortex Base Initialized");
 
         retractLeftPusher();
@@ -99,7 +99,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     }
 
     public void enableFlicker() {
-        particleFlicker.setPower(PARTICLE_FLICKER_SPEED);
+        particleFlicker.setPower(-PARTICLE_FLICKER_SPEED);
     }
 
     public void disableFlicker() {
@@ -114,17 +114,11 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         particleLifter.setPower(0.0);
     }
 
-    public void enableCollector() {
-        particleCollector.setPower(PARTICLE_COLLECTOR_SPEED);
+    public void raiseBallLift() {
+        ballLift.setPower(BALL_LIFT_SPEED);
     }
-
-    /*public void reverseEnableCollector() {
-        particleCollector.setPower(-PARTICLE_COLLECTOR_SPEED);
-    }*/
-
-    public void disableCollector() {
-        particleCollector.setPower(0.0);
-    }
+    public void lowerBallLift() { ballLift.setPower(-BALL_LIFT_SPEED); }
+    public void disableBallLift() { ballLift.setPower(0.0); }
 
     protected double rotsToEnc (double rots) {
         return rots*FULL_TURN_ROTATION;

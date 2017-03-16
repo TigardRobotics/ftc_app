@@ -20,8 +20,8 @@ public abstract class RobotBase extends OpMode {
     @Override
     public void init() {
         telemetry.addLine("Basic Hardware Initialized");
-        leftDriveMotor = hardwareMap.dcMotor.get("motor_l");
-        rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
+        leftDriveMotor = hardwareMap.dcMotor.get("left_drive");
+        rightDriveMotor = hardwareMap.dcMotor.get("right_drive");
         leftDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

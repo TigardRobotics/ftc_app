@@ -69,11 +69,9 @@ public class TestTeleop extends VelocityVortexRobotBase {
          */
         if (gamepad1.left_bumper) {
             enableLifter();
-            enableCollector();
         }
         else {
             disableLifter();
-            disableCollector();
         }
 
         /**

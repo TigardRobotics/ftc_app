@@ -23,9 +23,9 @@ public class TeleOpState extends VelocityVortexState {
          * Drive motors
          */
        // if(robot.gamepad1.left_stick_button) robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y*stickPressedPowerFactor);
-         robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y);
+         robot.setSquareLeftDrivePower(-robot.gamepad1.left_stick_y);
        // if(robot.gamepad1.right_stick_button) robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y*stickPressedPowerFactor);
-         robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y);
+         robot.setSquareRightDrivePower(-robot.gamepad1.right_stick_y);
 
         /**
          * Button Pushers
@@ -62,7 +62,17 @@ public class TeleOpState extends VelocityVortexState {
         /**
          * Particle Flicker
          */
-        if(robot.gamepad1.right_bumper) {
+        if (robot.gamepad1.right_trigger > triggerActuationThreshold) {
+            robot.enableLifter();
+        }
+        else {
+            robot.disableLifter();
+        }
+
+        /**
+         * Particle Collector
+         */
+        if (robot.gamepad1.left_trigger > triggerActuationThreshold) {
             robot.enableFlicker();
         }
         else {
@@ -72,20 +82,22 @@ public class TeleOpState extends VelocityVortexState {
         /**
          * Particle Collector
          */
-        if (robot.gamepad1.right_trigger > triggerActuationThreshold) {
-            robot.enableLifter();
-            robot.enableCollector();
+        if (robot.gamepad1.dpad_up) {
+            robot.raiseBallLift();
         }
-        else {
-            robot.disableLifter();
-            robot.disableCollector();
+        else if (robot.gamepad1.dpad_down) {
+            robot.lowerBallLift();
         }
+        else{
+            robot.disableBallLift();
+        }
+
     }
 
     public void stop() {
         getRobot().stopDriveMotors();
         getVelocityVortexRobotBase().disableLifter();
-        getVelocityVortexRobotBase().disableCollector();
+        getVelocityVortexRobotBase().disableBallLift();
         getVelocityVortexRobotBase().disableFlicker();
     }
 }
