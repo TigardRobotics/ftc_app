@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Created by Derek Williams of team 3965 on 2/20/2017.
  */
 
-@Autonomous(name="AutoRed with Gyro", group="3965")
+//@Autonomous(name="AutoRed with Gyro", group="3965")
 public class RedGyroAutonomous extends VelocityVortexAutonomous {
     @Override
     public void init() {

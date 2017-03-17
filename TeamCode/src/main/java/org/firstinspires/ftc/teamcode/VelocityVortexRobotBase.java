@@ -14,12 +14,12 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     protected static final double DRIVE_DIAMETER = 35.56; // Centimeters
     protected static final double FULL_TURN_ROTATION = 4843; // Encoder counts
     private static final double COUNTS_PER_ROTATION = 1440.0;
-    private static final double CENTIMETERS_PER_ROTATION = 31.928;
+    private static final double CENTIMETERS_PER_ROTATION = 155.928;
     protected static final double COUNTS_PER_CENTIMETER = COUNTS_PER_ROTATION/CENTIMETERS_PER_ROTATION;
 
-    protected double driveSpeed = 0.50;
+    protected double driveSpeed = 0.30;
     protected double gyroDriveSpeed = 0.54;
-    protected double turnSpeed = 0.25;
+    protected double turnSpeed = 0.15;
     protected double followSpeed = 0.25;
 
     protected double rangeToBeacon = 5.0; // was 4.0 on 2/17

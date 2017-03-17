@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice;
  * This OpMode uses the 'sensor test' configuration
  */
 
-@TeleOp(name = "Gyro test", group = "3965")
+//@TeleOp(name = "Gyro test", group = "3965")
 public class GyroTest extends RobotBase {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
     protected double maxPower = 0.6;

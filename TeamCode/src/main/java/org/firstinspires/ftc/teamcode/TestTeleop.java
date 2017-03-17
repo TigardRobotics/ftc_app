@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Created by Derek Williams of team 3965 on 11/15/2016.
  */
 
-@TeleOp(name="Test Teleop", group="3965")
+//@TeleOp(name="Test Teleop", group="3965")
 public class TestTeleop extends VelocityVortexRobotBase {
 
     @Override
