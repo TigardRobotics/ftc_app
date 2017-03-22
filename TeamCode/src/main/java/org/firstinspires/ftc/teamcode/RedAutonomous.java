@@ -52,9 +52,9 @@ public class RedAutonomous extends VelocityVortexAutonomous {
         // Adding transitions to state machine
         stateMachine.add(new Transition[]{
                 // Driving to first beacon
-                new ProgressReachedTrans("forward1", "turn1", cmToEnc(45.0)),
-                new ProgressReachedTrans("turn1", "forward2", rotsToEnc(0.14)),  //0.135
-                new ProgressReachedTrans("forward2", "follow1", cmToEnc(92.0)),
+                new ProgressReachedTrans("forward1", "turn1", inToEnc(45.0)),
+                new ProgressReachedTrans("turn1", "forward2", degToEnc(0.14)),  //0.135
+                new ProgressReachedTrans("forward2", "follow1", inToEnc(92.0)),
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
@@ -65,10 +65,10 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 new AboveRangeTrans("reverse1", "reverse2", rangeToShoot),
 
                 // Driving to second beacon
-                new ProgressReachedTrans("reverse2", "turn2", cmToEnc(15.0)),  //20.0
-                new ProgressReachedTrans("turn2", "forward3", rotsToEnc(0.24)),
-                new ProgressReachedTrans("forward3", "turn3", cmToEnc(116.0)),
-                new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.250)),
+                new ProgressReachedTrans("reverse2", "turn2", inToEnc(15.0)),  //20.0
+                new ProgressReachedTrans("turn2", "forward3", degToEnc(0.24)),
+                new ProgressReachedTrans("forward3", "turn3", inToEnc(116.0)),
+                new ProgressReachedTrans("turn3", "follow2", degToEnc(0.250)),
 
                 // Pressing second button
                 new BelowRangeTrans("follow2", "push2", rangeToBeacon),
@@ -76,8 +76,8 @@ public class RedAutonomous extends VelocityVortexAutonomous {
 
                 // Pushing the capball and parking
                 new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),
-                new ProgressReachedTrans("turn4", "forward4", rotsToEnc(0.11)),
-                new ProgressReachedTrans("forward4", null, cmToEnc(125.0)),
+                new ProgressReachedTrans("turn4", "forward4", degToEnc(0.11)),
+                new ProgressReachedTrans("forward4", null, inToEnc(125.0)),
         });
 
         // Setting Initial active state

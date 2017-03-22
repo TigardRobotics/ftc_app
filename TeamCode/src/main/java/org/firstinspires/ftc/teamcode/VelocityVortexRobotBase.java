@@ -11,11 +11,10 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
     protected StateMachine stateMachine = new StateMachine(this);
 
-    protected static final double DRIVE_DIAMETER = 35.56; // Centimeters
-    protected static final double FULL_TURN_ROTATION = 4843; // Encoder counts
+    protected static final double FULL_TURN_ROTATION = 3200; // Encoder counts
     private static final double COUNTS_PER_ROTATION = 1440.0;
-    private static final double CENTIMETERS_PER_ROTATION = 155.928;
-    protected static final double COUNTS_PER_CENTIMETER = COUNTS_PER_ROTATION/CENTIMETERS_PER_ROTATION;
+    private static final double INCHES_PER_ROTATION = 31.0;
+    protected static final double COUNTS_PER_INCH = COUNTS_PER_ROTATION/INCHES_PER_ROTATION;
 
     protected double driveSpeed = 0.30;
     protected double gyroDriveSpeed = 0.54;
@@ -63,18 +62,8 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     }
 
     @Override
-    public double getDriveMotorDiameter () {
-        return DRIVE_DIAMETER;
-    }
-
-    @Override
     public SensorModule getSensorModule() {
         return sensorModule;
-    }
-
-    @Override
-    public double countsToCentimeters(double counts) {
-        return COUNTS_PER_CENTIMETER*counts;
     }
 
 
@@ -120,11 +109,11 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     public void lowerBallLift() { ballLift.setPower(-BALL_LIFT_SPEED); }
     public void disableBallLift() { ballLift.setPower(0.0); }
 
-    protected double rotsToEnc (double rots) {
-        return rots*FULL_TURN_ROTATION;
+    protected double degToEnc (double deg) {
+        return deg*FULL_TURN_ROTATION/360.0;
     }
 
-    protected double cmToEnc(double dist) {
-        return dist*COUNTS_PER_CENTIMETER;
+    protected double inToEnc(double dist) {
+        return dist*COUNTS_PER_INCH;
     }
 }

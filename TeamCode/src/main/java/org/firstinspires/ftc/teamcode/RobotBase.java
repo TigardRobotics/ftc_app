@@ -66,15 +66,7 @@ public abstract class RobotBase extends OpMode {
         return Math.max(leftDriveMotor.getCurrentPosition(), rightDriveMotor.getCurrentPosition());
     }
 
-    public double countsToCentimeters(double counts) {
-        return 0.0;
-    }
-
     protected double getDriveMotorDiameter() {
-        return 0.0;
-    }
-
-    protected double getFullRotation() {
         return 0.0;
     }
 

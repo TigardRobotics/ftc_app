@@ -49,23 +49,23 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new TimeElapsedTrans("throw", "forward1", 3),
 
                 // Driving to first beacon
-                new ProgressReachedTrans("forward1", "turn1", cmToEnc(20.0)),
-                new ProgressReachedTrans("turn1", "forward2", rotsToEnc(0.07)),
-                new ProgressReachedTrans("forward2", "turn2", cmToEnc(350.0)),
-                new ProgressReachedTrans("turn2", "reverse1", rotsToEnc(0.08)),
+                new ProgressReachedTrans("forward1", "turn1", inToEnc(20.0)),
+                new ProgressReachedTrans("turn1", "forward2", degToEnc(45.0)),
+                new ProgressReachedTrans("forward2", "turn2", inToEnc(350.0)),
+                new ProgressReachedTrans("turn2", "reverse1", degToEnc(50.0)),
 
                 // Pressing first button
 //!todo                new BelowRangeTrans("reverse1", "push1", rangeToBeacon),
-                new ProgressReachedTrans("reverse1", "push1", cmToEnc(53.0)),
+                new ProgressReachedTrans("reverse1", "push1", inToEnc(53.0)),
                 new TimeElapsedTrans("push1", "forward3", 1),
 
                 // Driving to second beacon
-                new ProgressReachedTrans("forward3", "push2", cmToEnc(116.0)),
+                new ProgressReachedTrans("forward3", "push2", inToEnc(116.0)),
                 new TimeElapsedTrans("push2", "turn3", 1),
 
                 // Pushing the capball and parking
-                new ProgressReachedTrans("turn3", "forward4", rotsToEnc(0.32)),
-                new ProgressReachedTrans("forward4", null, cmToEnc(125.0)),
+                new ProgressReachedTrans("turn3", "forward4", degToEnc(205.0)),
+                new ProgressReachedTrans("forward4", null, inToEnc(125.0)),
         });
 
         // Setting Initial active state
