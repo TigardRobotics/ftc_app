@@ -18,7 +18,7 @@ public class ModernRoboticsSensorModule extends SensorModule {
     protected ColorSensor frontColorSensor;
     protected OpticalDistanceSensor bottomLineSensor;
     protected ModernRoboticsI2cGyro gyro;
-    protected static final double LINE_SENSOR_LIGHT_THRESHOLD = 0.2;
+    protected static final double LINE_SENSOR_LIGHT_THRESHOLD = 1.0;
 
     protected ElapsedTime gyroCalibrationTimer;
     protected double gyroCalibrationTime = 4.0;

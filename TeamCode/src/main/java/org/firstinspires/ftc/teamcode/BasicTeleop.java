@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name="Basic Teleop", group="750")
 public class BasicTeleop extends RobotBase {
-
     @Override
     public void loop(){
         setLeftDrivePower(gamepad1.left_stick_y);

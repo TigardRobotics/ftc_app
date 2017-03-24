@@ -30,33 +30,18 @@ public class TeleOpState extends VelocityVortexState {
         /**
          * Button Pushers
          */
-        if (robot.gamepad1.b) {
-            //double rightButtonPos = RIGHT_BUTTON_PUSHER_EXTENDED;
-            //rightButtonPusher.setPosition(rightButtonPos);
-            //telemetry.addData("R OUT", rightButtonPos);
+        if (robot.gamepad1.dpad_right) {
             robot.extendRightPusher();
-        }
-        else {
-            //double rightButtonPos = RIGHT_BUTTON_PUSHER_RETRACTED;
-            //rightButtonPusher.setPosition(rightButtonPos);
-            //telemetry.addData("R IN", rightButtonPos);
-            robot.retractRightPusher();
-        }
-
-        if(robot.gamepad1.x) {
-            //double leftButtonPos = LEFT_BUTTON_PUSHER_EXTENDED;
-            //leftButtonPusher.setPosition(leftButtonPos);
-            //telemetry.addData("L OUT", leftButtonPos);
-            robot.extendLeftPusher();
-        }
-        else {
-            //double leftButtonPos = LEFT_BUTTON_PUSHER_RETRACTED;
-            //leftButtonPusher.setPosition(leftButtonPos);
-            //telemetry.addData("L IN", leftButtonPos);
             robot.retractLeftPusher();
         }
-        //telemetry.addData("Right pusher pos", rightButtonPusher.getPosition());
-        //telemetry.addData("Left pusher pos", leftButtonPusher.getPosition());
+        else if (robot.gamepad1.dpad_left){
+            robot.extendLeftPusher();
+            robot.retractRightPusher();
+        }
+        else {
+            robot.retractLeftPusher();
+            robot.retractRightPusher();
+        }
 
 
         /**
