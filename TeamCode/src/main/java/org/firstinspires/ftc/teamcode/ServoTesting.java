@@ -13,8 +13,8 @@ public class ServoTesting extends VelocityVortexRobotBase {
 
     @Override
     public void init(){
-        rightButtonPusher = hardwareMap.servo.get("right_button_pusher");
-        leftButtonPusher = hardwareMap.servo.get("left_button_pusher");
+        rightButtonPusher = hardwareMap.servo.get("r_pusher");
+        leftButtonPusher = hardwareMap.servo.get("l_pusher");
     }
 
     @Override
