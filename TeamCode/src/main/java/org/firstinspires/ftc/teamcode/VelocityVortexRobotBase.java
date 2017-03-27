@@ -32,10 +32,10 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     protected DcMotor ballLift;
 
     // Hardware constants
-    final static double RIGHT_BUTTON_PUSHER_EXTENDED = 0.563;
-    final static double RIGHT_BUTTON_PUSHER_RETRACTED = 0.226;
-    final static double LEFT_BUTTON_PUSHER_EXTENDED = 0.471;
-    final static double LEFT_BUTTON_PUSHER_RETRACTED = 0.797;
+    final static double RIGHT_BUTTON_PUSHER_EXTENDED = 0.0/128.0;
+    final static double RIGHT_BUTTON_PUSHER_RETRACTED = 50.0/128.0;
+    final static double LEFT_BUTTON_PUSHER_EXTENDED = 128.0/128.0;
+    final static double LEFT_BUTTON_PUSHER_RETRACTED = 20.0/128.0;
     final static double PARTICLE_FLICKER_SPEED = 1.0;
     final static double PARTICLE_LIFTER_SPEED = 1.0;
     final static double BALL_LIFT_SPEED = 1.0;
