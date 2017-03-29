@@ -30,6 +30,8 @@ public abstract class StateBasedTeleop extends VelocityVortexRobotBase {
     public void loop() {
         stateMachine.step();
 
+        getSensorModule().isLineDetected();
+
         if(stateMachine.getActiveStateName() != "teleop") {
             if(gamepad1.a) stateMachine.setActiveState("teleop");
         }
