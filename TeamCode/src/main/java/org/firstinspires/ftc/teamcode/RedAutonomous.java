@@ -20,6 +20,9 @@ public class RedAutonomous extends VelocityVortexAutonomous {
 
         // Adding states to state machine
         stateMachine.add(new State[]{
+                // Throwing particles into vortex
+                new FlickParticleState("throw"),
+
                 // Driving to first beacon
                 new DriveState("forward1", driveSpeed),
                 new TurnState("turn1", -turnSpeed),
@@ -29,11 +32,9 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 new EdgeFollowState("follow1", followSpeed),
                 new PushButtonState("push1", color),
 
-                // Throwing particles into vortex
-                new FlickParticleState("throw"),
-                new DriveState("reverse1", -driveSpeed),
 
                 // Driving to second beacon
+                new DriveState("reverse1", -driveSpeed),
                 new DriveState("reverse2", -driveSpeed),
                 new TurnState("turn2", turnSpeed),
                 new DriveState("forward3", driveSpeed),
@@ -51,6 +52,9 @@ public class RedAutonomous extends VelocityVortexAutonomous {
 
         // Adding transitions to state machine
         stateMachine.add(new Transition[]{
+                // Throwing particles into vortex
+                new TimeElapsedTrans("throw", "forward1", throwDuration),
+
                 // Driving to first beacon
                 new ProgressReachedTrans("forward1", "turn1", inToEnc(45.0)),
                 new ProgressReachedTrans("turn1", "forward2", degToEnc(0.14)),  //0.135
@@ -58,13 +62,11 @@ public class RedAutonomous extends VelocityVortexAutonomous {
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
-                new TimeElapsedTrans("push1", "throw", 1),
+                new TimeElapsedTrans("push1", "reverse1", 1),
 
-                // Throwing particles into vortex
-                new TimeElapsedTrans("throw", "reverse1", throwDuration),
-                new AboveRangeTrans("reverse1", "reverse2", rangeToShoot),
 
                 // Driving to second beacon
+                new AboveRangeTrans("reverse1", "reverse2", rangeToShoot),
                 new ProgressReachedTrans("reverse2", "turn2", inToEnc(15.0)),  //20.0
                 new ProgressReachedTrans("turn2", "forward3", degToEnc(0.24)),
                 new ProgressReachedTrans("forward3", "turn3", inToEnc(116.0)),
@@ -81,6 +83,6 @@ public class RedAutonomous extends VelocityVortexAutonomous {
         });
 
         // Setting Initial active state
-        stateMachine.setActiveState("forward1");
+        stateMachine.setActiveState("throw");
     }
 }
