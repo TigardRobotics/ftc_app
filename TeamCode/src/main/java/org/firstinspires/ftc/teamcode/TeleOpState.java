@@ -23,9 +23,9 @@ public class TeleOpState extends VelocityVortexState {
          * Drive motors
          */
        // if(robot.gamepad1.left_stick_button) robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y*stickPressedPowerFactor);
-         robot.setSquareLeftDrivePower(-robot.gamepad1.left_stick_y);
+         robot.setSquareLeftDrivePower(robot.gamepad1.left_stick_y);
        // if(robot.gamepad1.right_stick_button) robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y*stickPressedPowerFactor);
-         robot.setSquareRightDrivePower(-robot.gamepad1.right_stick_y);
+         robot.setSquareRightDrivePower(robot.gamepad1.right_stick_y);
 
         /**
          * Button Pushers
