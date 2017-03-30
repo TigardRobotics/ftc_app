@@ -40,8 +40,8 @@ public abstract class RobotBase extends OpMode {
     }
 
     public void setDrivePower(double power){
-        leftDriveMotor.setPower(-power);
-        rightDriveMotor.setPower(power);
+        leftDriveMotor.setPower(power);
+        rightDriveMotor.setPower(-power);
     }
 
     public void stopDriveMotors(){
@@ -51,7 +51,7 @@ public abstract class RobotBase extends OpMode {
     public void setLeftDrivePower(double power){
         DbgLog.msg(String.format("Enabling Left Motor w/ power: %f", power));
         telemetry.addLine(String.format("Enabling Left Motor w/ power: %f", power));
-        leftDriveMotor.setPower(-power);
+        leftDriveMotor.setPower(power);
 
         leds.setLed(Leds.BLUE, false);
         leds.setLed(Leds.RED, false);
@@ -62,7 +62,7 @@ public abstract class RobotBase extends OpMode {
     public void setRightDrivePower(double power){
         DbgLog.msg(String.format("Enabling Right Motor w/ power: %f", power));
         telemetry.addLine(String.format("Enabling Right Motor w/ power: %f", power));
-        rightDriveMotor.setPower(power);
+        rightDriveMotor.setPower(-power);
 
         leds.setLed(Leds.GREEN, false);
         leds.setLed(Leds.YELLOW, false);

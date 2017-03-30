@@ -23,13 +23,13 @@ public class EdgeFollowState extends State {
     @Override
     public void loop() {
         if (getSensorModule().isLineDetected()) {
-            getRobot().setLeftDrivePower(0.0);
-            getRobot().setRightDrivePower(power);
+            getRobot().setLeftDrivePower(power);
+            getRobot().setRightDrivePower(0.0);
             getRobot().telemetry.addLine("Detected: "+getSensorModule().getLastDetect()+" Looking for grey tile");
         }
         else {
-            getRobot().setLeftDrivePower(power);
-            getRobot().setRightDrivePower(0.0);
+            getRobot().setLeftDrivePower(0.0);
+            getRobot().setRightDrivePower(power);
             getRobot().telemetry.addLine("Detected: "+getSensorModule().getLastDetect()+" Looking for white line");
         }
         //getRobot().telemetry.addData("Power", power);

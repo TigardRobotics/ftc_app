@@ -20,8 +20,8 @@ public class TurnState extends State{
     @Override
     public void start() {
         initialEncoderPosition = getStateMachine().robot.getDrivePosition();
-        getStateMachine().robot.setRightDrivePower(power);
-        getStateMachine().robot.setLeftDrivePower(-power);
+        getStateMachine().robot.setRightDrivePower(-power);
+        getStateMachine().robot.setLeftDrivePower(power);
     }
 
     @Override
