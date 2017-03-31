@@ -13,8 +13,8 @@ public class FlickParticleState extends VelocityVortexState {
     @Override
     public void start() {
         super.start();
-        getVelocityVortexRobotBase().enableFlicker();
-        getVelocityVortexRobotBase().enableLifter();
+        getVelocityVortexRobotBase().forwardFlicker();
+        getVelocityVortexRobotBase().forwardCollecter();
     }
 
     @Override
@@ -25,6 +25,6 @@ public class FlickParticleState extends VelocityVortexState {
     @Override
     public void stop() {
         getVelocityVortexRobotBase().disableFlicker();
-        getVelocityVortexRobotBase().disableLifter();
+        getVelocityVortexRobotBase().disableCollecter();
     }
 }

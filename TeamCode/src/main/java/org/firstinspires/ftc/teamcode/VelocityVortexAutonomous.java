@@ -15,7 +15,6 @@ public abstract class VelocityVortexAutonomous extends VelocityVortexRobotBase {
     //protected double reverseSpeed = 0.35;
 
     protected double rangeFromBeacon = 30.0;
-    protected double rangeToShoot = rangeFromBeacon*0.2;
 
     protected double throwDuration = 3.0;
 

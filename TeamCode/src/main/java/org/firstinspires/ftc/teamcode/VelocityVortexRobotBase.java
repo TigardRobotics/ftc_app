@@ -11,7 +11,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
     protected StateMachine stateMachine = new StateMachine(this);
 
-    protected static final double FULL_TURN_ROTATION = 3200; // Encoder counts
+    protected static final double FULL_TURN_ROTATION = 3000; // Encoder counts
     private static final double COUNTS_PER_ROTATION = 1440.0;
     private static final double INCHES_PER_ROTATION = 31.0;
     protected static final double COUNTS_PER_INCH = COUNTS_PER_ROTATION/INCHES_PER_ROTATION;
@@ -19,7 +19,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     protected double driveSpeed = 0.30;
     protected double gyroDriveSpeed = 0.54;
     protected double turnSpeed = 0.15;
-    protected double followSpeed = 0.25;
+    protected double followSpeed = 0.15;
 
     protected double rangeToBeacon = 5.0; // was 4.0 on 2/17
 
@@ -28,7 +28,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     protected Servo leftButtonPusher;
 
     protected DcMotor particleFlicker;
-    protected DcMotor particleLifter;
+    protected DcMotor particleCollecter;
     protected DcMotor ballLift;
 
     // Hardware constants
@@ -47,7 +47,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         rightButtonPusher = hardwareMap.servo.get("r_pusher");
         leftButtonPusher = hardwareMap.servo.get("l_pusher");
         particleFlicker = hardwareMap.dcMotor.get("launch");
-        particleLifter = hardwareMap.dcMotor.get("belt");
+        particleCollecter = hardwareMap.dcMotor.get("belt");
         ballLift = hardwareMap.dcMotor.get("liftMotor");
         telemetry.addLine("Velocity Vortex Base Initialized");
 
@@ -87,20 +87,28 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         telemetry.addLine("Retracting Left Button Pusher");
     }
 
-    public void enableFlicker() {
+    public void forwardFlicker() {
         particleFlicker.setPower(-PARTICLE_FLICKER_SPEED);
+    }
+
+    public void reverseFlicker() {
+        particleFlicker.setPower(PARTICLE_LIFTER_SPEED);
     }
 
     public void disableFlicker() {
         particleFlicker.setPower(0.0);
     }
 
-    public void enableLifter() {
-        particleLifter.setPower(PARTICLE_LIFTER_SPEED);
+    public void forwardCollecter() {
+        particleCollecter.setPower(PARTICLE_LIFTER_SPEED);
     }
 
-    public void disableLifter() {
-        particleLifter.setPower(0.0);
+    public void reverseCollecter() {
+        particleCollecter.setPower(-PARTICLE_LIFTER_SPEED);
+    }
+
+    public void disableCollecter() {
+        particleCollecter.setPower(0.0);
     }
 
     public void raiseBallLift() {
@@ -109,7 +117,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     public void lowerBallLift() { ballLift.setPower(-BALL_LIFT_SPEED); }
     public void disableBallLift() { ballLift.setPower(0.0); }
 
-    protected double degToEnc (double deg) {
+    protected double degToEnc(double deg) {
         return deg*FULL_TURN_ROTATION/360.0;
     }
 

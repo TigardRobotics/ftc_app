@@ -45,27 +45,33 @@ public class TeleOpState extends VelocityVortexState {
 
 
         /**
-         * Particle Flicker
+         * Particle Collecter
          */
         if (robot.gamepad1.right_trigger > triggerActuationThreshold) {
-            robot.enableLifter();
+            robot.forwardCollecter();
+        }
+        else if(robot.gamepad1.right_bumper) {
+            robot.reverseCollecter();
         }
         else {
-            robot.disableLifter();
+            robot.disableCollecter();
         }
 
         /**
-         * Particle Collector
+         * Particle Launcher
          */
         if (robot.gamepad1.left_trigger > triggerActuationThreshold) {
-            robot.enableFlicker();
+            robot.forwardFlicker();
+        }
+        else if(robot.gamepad1.left_bumper) {
+            robot.reverseFlicker();
         }
         else {
             robot.disableFlicker();
         }
 
         /**
-         * Particle Collector
+         * Capball Lift
          */
         if (robot.gamepad1.dpad_up) {
             robot.raiseBallLift();
@@ -76,12 +82,11 @@ public class TeleOpState extends VelocityVortexState {
         else{
             robot.disableBallLift();
         }
-
     }
 
     public void stop() {
         getRobot().stopDriveMotors();
-        getVelocityVortexRobotBase().disableLifter();
+        getVelocityVortexRobotBase().disableCollecter();
         getVelocityVortexRobotBase().disableBallLift();
         getVelocityVortexRobotBase().disableFlicker();
     }
