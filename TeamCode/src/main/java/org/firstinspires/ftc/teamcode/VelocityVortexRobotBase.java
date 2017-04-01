@@ -11,17 +11,16 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
     protected StateMachine stateMachine = new StateMachine(this);
 
-    protected static final double FULL_TURN_ROTATION = 3000; // Encoder counts
+    protected static final double FULL_TURN_ROTATION = 6000; // Encoder counts
     private static final double COUNTS_PER_ROTATION = 1440.0;
-    private static final double INCHES_PER_ROTATION = 31.0;
+    private static final double INCHES_PER_ROTATION = 15.0;
     protected static final double COUNTS_PER_INCH = COUNTS_PER_ROTATION/INCHES_PER_ROTATION;
 
-    protected double driveSpeed = 0.30;
-    protected double gyroDriveSpeed = 0.54;
-    protected double turnSpeed = 0.15;
-    protected double followSpeed = 0.15;
+    protected double driveSpeed = 0.60;
+    protected double turnSpeed = 0.30;
+    protected double followSpeed = 0.25;
 
-    protected double rangeToBeacon = 5.0; // was 4.0 on 2/17
+    protected double rangeToBeacon = 2.0;
 
     // All hardware custom to velocity vortex defined here
     protected Servo rightButtonPusher;

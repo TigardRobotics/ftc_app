@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class BlueAutonomous extends VelocityVortexAutonomous {
     @Override
     public void init() {
-        super.init();
         turnSpeed = -turnSpeed;
         color = BLUE;
+        super.init();
     }
 
     @Override
@@ -56,10 +56,10 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new TimeElapsedTrans("throw", "forward1", throwDuration),
 
                 // Driving to first beacon
-                new ProgressReachedTrans("forward1", "turn1", inToEnc(37.0)),
-                new ProgressReachedTrans("turn1", "forward2", degToEnc(36.0)),
-                new ProgressReachedTrans("forward2", "turn1a", inToEnc(36.0)),
-                new ProgressReachedTrans("turn1a", "follow1", degToEnc(50.0)),
+                new ProgressReachedTrans("forward1", "turn1", inToEnc(32.0)),
+                new ProgressReachedTrans("turn1", "forward2", degToEnc(38.0)),
+                new ProgressReachedTrans("forward2", "turn1a", inToEnc(38.0)),
+                new ProgressReachedTrans("turn1a", "follow1", degToEnc(52.0)),
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
@@ -68,8 +68,8 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
 
                 // Driving to second beacon
                 new AboveRangeTrans("reverse1", "turn2", rangeFromBeacon),
-                new ProgressReachedTrans("turn2", "forward3", degToEnc(86.4)),
-                new ProgressReachedTrans("forward3", "turn3", inToEnc(45.7)),
+                new ProgressReachedTrans("turn2", "forward3", degToEnc(90.0)),
+                new ProgressReachedTrans("forward3", "turn3", inToEnc(50.0)),
                 new ProgressReachedTrans("turn3", "follow2", degToEnc(90.0)),
 
                 // Pressing second button
