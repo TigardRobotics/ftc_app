@@ -12,13 +12,17 @@ public abstract class VelocityVortexAutonomous extends VelocityVortexRobotBase {
     //protected int directionMultiplier;  // Multiply turn power by this
     protected String color = NO_COLOR;  // Pass this into the button pusher state
 
-    //protected double reverseSpeed = 0.35;
-
-    protected double rangeFromBeacon = 30.0;
+    protected double rangeFromBeacon = 20.0;
 
     protected double throwDuration = 3.0;
 
     private ElapsedTime timeElapsed;
+
+    @Override
+    public void init() {
+        super.init();   //Must call first to setup hardware
+        leds.setLed(color, true);
+    }
 
     @Override
     public void start() {

@@ -52,23 +52,13 @@ public abstract class RobotBase extends OpMode {
         DbgLog.msg(String.format("Enabling Left Motor w/ power: %f", power));
         telemetry.addLine(String.format("Enabling Left Motor w/ power: %f", power));
         leftDriveMotor.setPower(power);
-
-        leds.setLed(Leds.BLUE, false);
-        leds.setLed(Leds.RED, false);
-        if(power > 0) leds.setLed(Leds.BLUE, true);
-        else if(power < 0) leds.setLed(Leds.RED, true);
     }
 
     public void setRightDrivePower(double power){
         DbgLog.msg(String.format("Enabling Right Motor w/ power: %f", power));
         telemetry.addLine(String.format("Enabling Right Motor w/ power: %f", power));
         rightDriveMotor.setPower(-power);
-
-        leds.setLed(Leds.GREEN, false);
-        leds.setLed(Leds.YELLOW, false);
-        if(power > 0) leds.setLed(Leds.GREEN, true);
-        else if(power < 0) leds.setLed(Leds.YELLOW, true);
-    }
+}
 
     public void setSquareLeftDrivePower(double power) {
         setLeftDrivePower(power*Math.abs(power));
