@@ -43,6 +43,15 @@ public class TeleOpState extends VelocityVortexState {
             robot.retractRightPusher();
         }
 
+        if (robot.gamepad1.x) {
+            robot.openBallGripper();
+        }
+        else if (robot.gamepad1.b){
+            robot.closeBallGripper();
+        }
+        else {
+            robot.stopBallGripper();
+        }
 
         /**
          * Particle Collecter

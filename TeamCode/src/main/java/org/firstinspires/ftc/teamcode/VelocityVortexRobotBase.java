@@ -28,7 +28,9 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
 
     protected DcMotor particleFlicker;
     protected DcMotor particleCollecter;
+
     protected DcMotor ballLift;
+    protected Servo ballGripper;
 
     // Hardware constants
     final static double RIGHT_BUTTON_PUSHER_EXTENDED = 0.0/128.0;
@@ -39,6 +41,10 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     final static double PARTICLE_LIFTER_SPEED = 1.0;
     final static double BALL_LIFT_SPEED = 1.0;
 
+    final static double BALL_GRIPPER_OPEN = 1.0;
+    final static double BALL_GRIPPER_CLOSE = 0.0;
+    final static double BALL_GRIPPER_STOP = 0.5;
+
     @Override
     public void init() {
         super.init();
@@ -48,8 +54,11 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         particleFlicker = hardwareMap.dcMotor.get("launch");
         particleCollecter = hardwareMap.dcMotor.get("belt");
         ballLift = hardwareMap.dcMotor.get("liftMotor");
+        ballGripper = hardwareMap.servo.get("spreader");
+
         telemetry.addLine("Velocity Vortex Base Initialized");
 
+        stopBallGripper();
         retractLeftPusher();
         retractRightPusher();
 
@@ -110,11 +119,15 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         particleCollecter.setPower(0.0);
     }
 
-    public void raiseBallLift() {
-        ballLift.setPower(BALL_LIFT_SPEED);
-    }
+    public void raiseBallLift() { ballLift.setPower(BALL_LIFT_SPEED); }
     public void lowerBallLift() { ballLift.setPower(-BALL_LIFT_SPEED); }
     public void disableBallLift() { ballLift.setPower(0.0); }
+
+    public void openBallGripper() {
+        ballGripper.setPosition(BALL_GRIPPER_OPEN);
+    }
+    public void closeBallGripper() { ballGripper.setPosition(BALL_GRIPPER_CLOSE); }
+    public void stopBallGripper() { ballGripper.setPosition(BALL_GRIPPER_STOP); }
 
     protected double degToEnc(double deg) {
         return deg*FULL_TURN_ROTATION/360.0;
