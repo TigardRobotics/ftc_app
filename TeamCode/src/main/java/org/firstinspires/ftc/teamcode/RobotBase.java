@@ -69,7 +69,17 @@ public abstract class RobotBase extends OpMode {
     }
 
     public double getDrivePosition() {
-        return Math.max(leftDriveMotor.getCurrentPosition(), rightDriveMotor.getCurrentPosition());
+        int lPos = leftDriveMotor.getCurrentPosition();
+        int rPos = -rightDriveMotor.getCurrentPosition();
+        DbgLog.msg("DrivePos: Left Encoder="+lPos+" Right Encoder="+rPos);
+        return Math.max(lPos,rPos);
+    }
+
+    public double getTurnPosition() {
+        int lPos = leftDriveMotor.getCurrentPosition();
+        int rPos = -rightDriveMotor.getCurrentPosition();
+        DbgLog.msg("TurnPos: Left Encoder="+lPos+" Right Encoder="+rPos);
+        return lPos-rPos;
     }
 
     protected double getDriveMotorDiameter() {

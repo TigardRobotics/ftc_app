@@ -29,7 +29,6 @@ public class DriveAndSweepState extends VelocityVortexState {
     @Override
     public void loop() {
         getRobot().telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
-        DbgLog.msg(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override

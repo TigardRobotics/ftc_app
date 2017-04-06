@@ -14,12 +14,12 @@ public class TurnState extends State{
     }
 
     public double getProgress() {
-        return Math.abs(getStateMachine().robot.getDrivePosition() - initialEncoderPosition);
+        return Math.abs(getStateMachine().robot.getTurnPosition() - initialEncoderPosition)/2.0;
     }
 
     @Override
     public void start() {
-        initialEncoderPosition = getStateMachine().robot.getDrivePosition();
+        initialEncoderPosition = getStateMachine().robot.getTurnPosition();
         getStateMachine().robot.setRightDrivePower(-power);
         getStateMachine().robot.setLeftDrivePower(power);
     }

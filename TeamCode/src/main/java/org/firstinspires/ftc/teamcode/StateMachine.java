@@ -94,12 +94,12 @@ class StateMachine {
 				possibleTransitions.add(transition);
 			}
 		}
-		DbgLog.msg(String.format("%d transitions detected for "+activeState.name, possibleTransitions.toArray().length));
 		return possibleTransitions;
 	}
 
 	public Transition getTransitionToTrigger() {
 		for(Transition transition : getPossibleTransitions()) {
+			transition.log();
 			if(transition.test()){
 				return transition;
 			}
@@ -129,6 +129,7 @@ class StateMachine {
 	private void handleLooping() {
 		if(isActive()) {
 			activeState.loop();
+			activeState.log();
 		}
 	}
 
@@ -194,6 +195,8 @@ abstract class StateMachineComponent {
 		}
 		throw new RuntimeException("State attempting to access robot before addition to state machine");
 	}
+
+	public abstract void log();
 }
 
 abstract class State extends StateMachineComponent {
@@ -233,6 +236,11 @@ abstract class State extends StateMachineComponent {
 	protected void makeComplete() {
 		complete = true;
 	}
+
+	@Override
+	public void log() {
+		DbgLog.msg("state="+name+", progress="+getProgress());
+	}
 }
 
 abstract class Transition extends StateMachineComponent{
@@ -248,4 +256,9 @@ abstract class Transition extends StateMachineComponent{
 	}
 
 	abstract public boolean test();
+
+	@Override
+	public void log() {
+		//DbgLog.msg();
+	}
 }
