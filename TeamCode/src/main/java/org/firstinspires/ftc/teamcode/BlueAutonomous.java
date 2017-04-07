@@ -78,8 +78,8 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
 
                 // Pushing the capball and parking
                 new ProgressReachedTrans("reverse2", "turn4", inToEnc(14.0)),
-                new ProgressReachedTrans("turn4", "forward4", degToEnc(48.0)),
-                new ProgressReachedTrans("forward4", null, inToEnc(50.0)),
+                new ProgressReachedTrans("turn4", "forward4", degToEnc(55.0)),
+                new ProgressReachedTrans("forward4", null, inToEnc(60.0)),
         });
 
         // Setting Initial active state

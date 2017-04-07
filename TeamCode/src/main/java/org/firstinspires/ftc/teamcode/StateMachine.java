@@ -131,6 +131,10 @@ class StateMachine {
 			activeState.loop();
 			activeState.log();
 		}
+		else
+		{
+			robot.requestOpModeStop();
+		}
 	}
 
 	private void handleTransitions() {
