@@ -56,9 +56,9 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new TimeElapsedTrans("throw", "forward1", throwDuration),
 
                 // Driving to first beacon
-                new ProgressReachedTrans("forward1", "turn1", inToEnc(32.0)),
+                new ProgressReachedTrans("forward1", "turn1", inToEnc(25.0)),   //17 //32
                 new ProgressReachedTrans("turn1", "forward2", degToEnc(38.0)),
-                new ProgressReachedTrans("forward2", "turn1a", inToEnc(38.0)),
+                new ProgressReachedTrans("forward2", "turn1a", inToEnc(47.0)),  //57 //38
                 new ProgressReachedTrans("turn1a", "follow1", degToEnc(52.0)),
 
                 // Pressing first button
@@ -67,19 +67,19 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
 
 
                 // Driving to second beacon
-                new AboveRangeTrans("reverse1", "turn2", rangeFromBeacon),
-                new ProgressReachedTrans("turn2", "forward3", degToEnc(90.0)),
-                new ProgressReachedTrans("forward3", "turn3", inToEnc(50.0)),
-                new ProgressReachedTrans("turn3", "follow2", degToEnc(90.0)),
+                new ProgressReachedTrans("reverse1", "turn2", inToEnc(36.0)),
+                new ProgressReachedTrans("turn2", "forward3", degToEnc(60.0)),
+                new ProgressReachedTrans("forward3", "turn3", inToEnc(60.0)),
+                new ProgressReachedTrans("turn3", "follow2", degToEnc(54.0)),
 
                 // Pressing second button
                 new BelowRangeTrans("follow2", "push2", rangeToBeacon),
                 new TimeElapsedTrans("push2", "reverse2", 1),
 
                 // Pushing the capball and parking
-                new AboveRangeTrans("reverse2", "turn4", rangeFromBeacon),
-                new ProgressReachedTrans("turn4", "forward4", degToEnc(61.2)),
-                new ProgressReachedTrans("forward4", null, inToEnc(47.2)),
+                new ProgressReachedTrans("reverse2", "turn4", inToEnc(14.0)),
+                new ProgressReachedTrans("turn4", "forward4", degToEnc(48.0)),
+                new ProgressReachedTrans("forward4", null, inToEnc(50.0)),
         });
 
         // Setting Initial active state
