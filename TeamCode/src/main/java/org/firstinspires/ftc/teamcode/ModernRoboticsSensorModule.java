@@ -115,9 +115,9 @@ public class ModernRoboticsSensorModule extends SensorModule {
 
     @Override
     public boolean isLineDetected() {
-        boolean dectected = getLineDetectorLightLevel() > LINE_SENSOR_LIGHT_THRESHOLD;
-        robot.leds.setLed(Leds.WHITE, dectected);
-        return dectected;
+        boolean detected = getLineDetectorLightLevel() > LINE_SENSOR_LIGHT_THRESHOLD;
+        robot.leds.setLed(Leds.WHITE, detected);
+        return detected;
     }
 
     @Override
