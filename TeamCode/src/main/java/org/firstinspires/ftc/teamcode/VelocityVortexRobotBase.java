@@ -20,7 +20,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     protected double turnSpeed = 0.20;
     protected double followSpeed = 0.25;
 
-    protected double rangeToBeacon = 2.0;
+    protected double rangeToBeacon = 6.0; //2.0
 
     // All hardware custom to velocity vortex defined here
     protected Servo rightButtonPusher;
