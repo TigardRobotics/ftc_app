@@ -25,7 +25,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
 
                 // Driving to first beacon
                 new DriveState("forward1", driveSpeed),
-                new TurnState("turn1", turnSpeed),
+                new TurnState("turn1", -turnSpeed),
                 new DriveState("forward2", driveSpeed),
 
                 // Pressing first button
@@ -34,7 +34,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
 
                 // Driving to second beacon
                 new DriveState("reverse1", -driveSpeed*0.7),
-                new TurnState("turn2", -turnSpeed*0.7),
+                new TurnState("turn2", turnSpeed*0.7),
                 new DriveState("forward3", driveSpeed),
 
                 // Pressing second beacon
@@ -43,7 +43,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
 
                 // Pushing the capball and parking
                 new DriveState("reverse2", -driveSpeed),
-                new TurnState("turn4", -turnSpeed),
+                new TurnState("turn4", turnSpeed),
                 new DriveState("forward4", -driveSpeed),
         });
 
