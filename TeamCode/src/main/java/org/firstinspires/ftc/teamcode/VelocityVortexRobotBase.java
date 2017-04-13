@@ -16,11 +16,11 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     private static final double INCHES_PER_ROTATION = 15.0;
     protected static final double COUNTS_PER_INCH = COUNTS_PER_ROTATION/INCHES_PER_ROTATION;
 
-    protected double driveSpeed = 0.70;
-    protected double turnSpeed = 0.20;
+    protected double driveSpeed = 0.75;     //0.70
+    protected double turnSpeed = 0.25;      //0.20
     protected double followSpeed = 0.25;
 
-    protected double rangeToBeacon = 6.0; //2.0
+    protected double rangeToBeacon = 4.5; //2.0  //6.0
 
     // All hardware custom to velocity vortex defined here
     protected Servo rightButtonPusher;
