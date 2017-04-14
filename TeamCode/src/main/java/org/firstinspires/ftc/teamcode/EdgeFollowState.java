@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.ftccommon.DbgLog;
+
 /**
  * Created by Derek Williams of team 3965 on 11/19/2016.
  */
@@ -25,12 +27,16 @@ public class EdgeFollowState extends State {
         if (getSensorModule().isLineDetected()) {
             getRobot().setLeftDrivePower(power);
             getRobot().setRightDrivePower(0.0);
-            getRobot().telemetry.addLine("Detected: "+getSensorModule().getLastDetect()+" Looking for grey tile");
+            String msg = "Detected: "+getSensorModule().getLastDetect()+" Looking for grey tile";
+            getRobot().telemetry.addLine(msg);
+            DbgLog.msg(msg);
         }
         else {
             getRobot().setLeftDrivePower(0.0);
             getRobot().setRightDrivePower(power);
-            getRobot().telemetry.addLine("Detected: "+getSensorModule().getLastDetect()+" Looking for white line");
+            String msg = "Detected: "+getSensorModule().getLastDetect()+" Looking for white tile";
+            getRobot().telemetry.addLine(msg);
+            DbgLog.msg(msg);
         }
         //getRobot().telemetry.addData("Power", power);
     }

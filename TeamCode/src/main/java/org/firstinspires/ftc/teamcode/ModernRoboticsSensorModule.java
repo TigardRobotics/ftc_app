@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -115,6 +116,7 @@ public class ModernRoboticsSensorModule extends SensorModule {
 
     @Override
     public boolean isLineDetected() {
+
         boolean detected = getLineDetectorLightLevel() > LINE_SENSOR_LIGHT_THRESHOLD;
         robot.leds.setLed(Leds.WHITE, detected);
         return detected;

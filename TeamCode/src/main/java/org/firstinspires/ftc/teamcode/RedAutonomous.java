@@ -54,7 +54,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
 
                 // Driving to first beacon
                 new ProgressReachedTrans("forward1", "turn1", inToEnc(25.0)),
-                new ProgressReachedTrans("turn1", "forward2", degToEnc(38.0)),
+                new ProgressReachedTrans("turn1", "forward2", degToEnc(45.0)),  //38
                 new ProgressReachedTrans("forward2", "follow1", inToEnc(47.0)),
 
                 // Pressing first button

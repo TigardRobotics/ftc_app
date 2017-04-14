@@ -46,7 +46,7 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 // Pushing the capball and parking
                 new DriveState("reverse2", -driveSpeed),
                 new TurnState("turn4", -turnSpeed),
-                new DriveState("forward4", -driveSpeed),
+                new DriveState("forward4", -1.0),   //Warp drive to the center
         });
 
         // Adding transitions to state machine
@@ -55,7 +55,7 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 new TimeElapsedTrans("throw", "forward1", throwDuration),
 
                 // Driving to first beacon
-                new ProgressReachedTrans("forward1", "turn1", inToEnc(25.0)),
+                new ProgressReachedTrans("forward1", "turn1", inToEnc(28.0)),
                 new ProgressReachedTrans("turn1", "forward2", degToEnc(40.0)),      //38
                 new ProgressReachedTrans("forward2", "turn1a", inToEnc(47.0)),
                 new ProgressReachedTrans("turn1a", "follow1", degToEnc(56.0)),      //52
@@ -68,7 +68,7 @@ public class BlueAutonomous extends VelocityVortexAutonomous {
                 // Driving to second beacon
                 new ProgressReachedTrans("reverse1", "turn2", inToEnc(36.0)), //36 //34  //40
                 new ProgressReachedTrans("turn2", "forward3", degToEnc(64.0)), //60 //62
-                new ProgressReachedTrans("forward3", "turn3", inToEnc(52.0)),   //60    //56    //54
+                new ProgressReachedTrans("forward3", "turn3", inToEnc(55.0)),  //52  //60    //56    //54
                 new ProgressReachedTrans("turn3", "follow2", degToEnc(82.0)), //58 //54 //78
 
                 // Pressing second button
