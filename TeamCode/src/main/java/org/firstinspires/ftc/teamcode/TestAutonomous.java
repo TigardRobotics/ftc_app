@@ -22,7 +22,7 @@ public class TestAutonomous extends VelocityVortexRobotBase {
         // Adding transitions to state machine
         stateMachine.add(new Transition[]{
             new BelowRangeTrans("forward", "push", 4),
-            //new ProgressReachedTrans("align", "push", 50),
+            //new ProgressTrans("align", "push", 50),
             new TimeElapsedTrans("push", null, 10)
         });
 
