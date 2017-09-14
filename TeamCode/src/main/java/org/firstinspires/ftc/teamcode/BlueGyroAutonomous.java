@@ -64,11 +64,11 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
                 //new StateCompletedTrans("align1", "push1"),
-                new TimeElapsedTrans("push1", "throw", 1),
+                new TimeTrans("push1", "throw", 1),
                 //new StateCompletedTrans("align2", "throw"),
 
                 // Throwing particles into vortex
-                new TimeElapsedTrans("throw", "reverse1", throwDuration),
+                new TimeTrans("throw", "reverse1", throwDuration),
                 new ProgressTrans("reverse1", "turn2", cmToEnc(30.0)),
 
                 // Driving to second beacon
@@ -81,7 +81,7 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
                 // Pressing second button
                 new BelowRangeTrans("follow2", "push2", rangeToBeacon),
                 //new StateCompletedTrans("align3", "push2"),
-                new TimeElapsedTrans("push2", "reverse3", 1),
+                new TimeTrans("push2", "reverse3", 1),
 
                 // Pushing the capball and parking
                 new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),

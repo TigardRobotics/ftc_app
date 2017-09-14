@@ -5,7 +5,7 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public final class Tools {
-    static int getSignFactor(int x) {
+    static int sign(int x) {
         return x / Math.abs(x);
     }
 }

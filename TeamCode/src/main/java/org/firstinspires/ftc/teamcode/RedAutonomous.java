@@ -58,10 +58,10 @@ public class RedAutonomous extends VelocityVortexAutonomous {
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
-                new TimeElapsedTrans("push1", "throw", 1),
+                new TimeTrans("push1", "throw", 1),
 
                 // Throwing particles into vortex
-                new TimeElapsedTrans("throw", "reverse1", throwDuration),
+                new TimeTrans("throw", "reverse1", throwDuration),
                 new AboveRangeTrans("reverse1", "reverse2", rangeToShoot),
 
                 // Driving to second beacon
@@ -72,7 +72,7 @@ public class RedAutonomous extends VelocityVortexAutonomous {
 
                 // Pressing second button
                 new BelowRangeTrans("follow2", "push2", rangeToBeacon),
-                new TimeElapsedTrans("push2", "reverse3", 1),
+                new TimeTrans("push2", "reverse3", 1),
 
                 // Pushing the capball and parking
                 new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),
