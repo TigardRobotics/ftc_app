@@ -22,13 +22,13 @@ public class TurnToHeadingState extends VelocityVortexState {
 
 
     @Override
-    public void start() {
-        super.start();
+    public void onEntry() {
+        super.onEntry();
         iterationsWithinThresholdCount = 0;
     }
 
     @Override
-    public void loop() {
+    public void doState() {
         getRobot().telemetry.addData("Heading", getSensorModule().getHeading());
 
         if(Math.abs(getSensorModule().getHeadingError(targetHeading)) < threshold) { // Exiting if heading within threshold
@@ -63,8 +63,8 @@ public class TurnToHeadingState extends VelocityVortexState {
     }
 
     @Override
-    public void stop() {
-        super.stop();
+    public void onExit() {
+        super.onExit();
         getRobot().stopDriveMotors();
     }
 }

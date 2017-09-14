@@ -21,20 +21,20 @@ public class DriveAndSweepState extends VelocityVortexState {
     }
 
     @Override
-    public void start() {
+    public void onEntry() {
         initialEncoderPosition = getRobot().getDrivePosition();
         getRobot().setDrivePower(power);
         getVelocityVortexRobotBase().enableCollector();
     }
 
     @Override
-    public void loop() {
+    public void doState() {
         getRobot().telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
         RobotLog.i(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override
-    public void stop() {
+    public void onExit() {
         getRobot().stopDriveMotors();
         getVelocityVortexRobotBase().disableCollector();
     }

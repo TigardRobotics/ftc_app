@@ -25,13 +25,13 @@ public class DriveWithHeadingState extends VelocityVortexState {
     }
 
     @Override
-    public void start() {
-        super.start();
+    public void onEntry() {
+        super.onEntry();
         initialEncoderPosition = getRobot().getDrivePosition();
     }
 
     @Override
-    public void loop() {
+    public void doState() {
         getRobot().telemetry.addData("Heading", getSensorModule().getHeading());
 
 
@@ -44,8 +44,8 @@ public class DriveWithHeadingState extends VelocityVortexState {
     }
 
     @Override
-    public void stop() {
-        super.stop();
+    public void onExit() {
+        super.onExit();
         getRobot().stopDriveMotors();
     }
 }

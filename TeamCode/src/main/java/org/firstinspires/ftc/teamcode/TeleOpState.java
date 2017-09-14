@@ -12,11 +12,11 @@ public class TeleOpState extends VelocityVortexState {
         this.name = name;
     }
 
-    public void start() {
+    public void onEntry() {
         getRobot().stopDriveMotors();
     }
 
-    public void loop() {
+    public void doState() {
         VelocityVortexRobotBase robot = getVelocityVortexRobotBase();
 
         /**
@@ -82,7 +82,7 @@ public class TeleOpState extends VelocityVortexState {
         }
     }
 
-    public void stop() {
+    public void onExit() {
         getRobot().stopDriveMotors();
         getVelocityVortexRobotBase().disableLifter();
         getVelocityVortexRobotBase().disableCollector();

@@ -15,13 +15,13 @@ public class EdgeFollowState extends State {
         }
     }
     @Override
-    public void start() {
-        super.start();
+    public void onEntry() {
+        super.onEntry();
         getRobot().telemetry.addLine("Starting Edge Detect");
     }
 
     @Override
-    public void loop() {
+    public void doState() {
         if (getSensorModule().isLineDetected()) {
             getRobot().setLeftDrivePower(0.0);
             getRobot().setRightDrivePower(power);
@@ -36,7 +36,7 @@ public class EdgeFollowState extends State {
     }
 
     @Override
-    public void stop() {
+    public void onExit() {
         getRobot().stopDriveMotors();
         getRobot().telemetry.addLine("Stopping Edge Detect");
     }

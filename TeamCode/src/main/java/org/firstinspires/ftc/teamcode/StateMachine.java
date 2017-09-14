@@ -39,7 +39,7 @@ class StateMachine {
 
 	public void stop() {
 		if (activeState != null) {
-			activeState.stop();
+			activeState.onExit();
 		}
 	}
 	
@@ -53,7 +53,7 @@ class StateMachine {
 	}
 
 	public void deactivate() {
-		activeState.stop();
+		activeState.onExit();
 		activeState = null;
 	}
 
@@ -121,14 +121,14 @@ class StateMachine {
 		if(isActive() && !stateHasStarted) {
 			RobotLog.i("Entering "+ activeState.name +" State");
 			robot.telemetry.addLine("Entering "+ activeState.name +" State");
-			activeState.start();
+			activeState.onEntry();
 			stateHasStarted = true;
 		}
 	}
 
 	private void handleLooping() {
 		if(isActive()) {
-			activeState.loop();
+			activeState.doState();
 		}
 	}
 
@@ -136,7 +136,7 @@ class StateMachine {
 		Transition transitionToTrigger = getTransitionToTrigger();
 		if(transitionToTrigger != null) {
 			RobotLog.i("Leaving "+ activeState.name +" State");
-			activeState.stop();
+			activeState.onExit();
 			triggerTransition(transitionToTrigger);
 		}
 	}
@@ -215,14 +215,14 @@ abstract class State extends StateMachineComponent {
 		return 0.0;
 	}
 	
-	public void start() {
+	public void onEntry() {
 		runtime.reset();
 		complete = false;
 	}
 	
-	public abstract void loop();
+	public abstract void doState();
 	
-	public void stop() {
+	public void onExit() {
 		complete = false;
 	}
 

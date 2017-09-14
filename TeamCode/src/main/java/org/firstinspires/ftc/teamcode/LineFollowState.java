@@ -20,8 +20,8 @@ public class LineFollowState extends State {
     }
 
     @Override
-    public void start() {
-        super.start();
+    public void onEntry() {
+        super.onEntry();
 
         // Adding states to state machine
         lineFollowStateMachine.add(new State[]{
@@ -40,12 +40,12 @@ public class LineFollowState extends State {
     }
 
     @Override
-    public void loop() {
+    public void doState() {
         lineFollowStateMachine.step();
     }
 
     @Override
-    public void stop() {
+    public void onExit() {
         lineFollowStateMachine.stop();
     }
 }

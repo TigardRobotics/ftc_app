@@ -56,12 +56,12 @@ class WaitState extends State {
     }
 
     @Override
-    public void loop() {
+    public void doState() {
         getRobot().telemetry.addData(name, "waiting . . .");
     }
 
     @Override
-    public void stop() {}
+    public void onExit() {}
 }
 
 

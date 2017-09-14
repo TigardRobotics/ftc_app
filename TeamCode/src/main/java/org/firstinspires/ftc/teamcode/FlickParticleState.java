@@ -11,19 +11,19 @@ public class FlickParticleState extends VelocityVortexState {
 
 
     @Override
-    public void start() {
-        super.start();
+    public void onEntry() {
+        super.onEntry();
         getVelocityVortexRobotBase().enableFlicker();
         getVelocityVortexRobotBase().enableLifter();
     }
 
     @Override
-    public void loop() {
+    public void doState() {
         //getRobot().telemetry.addLine();
     }
 
     @Override
-    public void stop() {
+    public void onExit() {
         getVelocityVortexRobotBase().disableFlicker();
         getVelocityVortexRobotBase().disableLifter();
     }

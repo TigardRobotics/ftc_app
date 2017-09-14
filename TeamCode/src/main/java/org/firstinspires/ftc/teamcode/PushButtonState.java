@@ -17,8 +17,8 @@ public class PushButtonState extends VelocityVortexState {
     }
 
     @Override
-    public void start() {
-        super.start();
+    public void onEntry() {
+        super.onEntry();
         if(getSensorModule().getFrontColor() == buttonToPress) {
             // Push left button
             getVelocityVortexRobotBase().retractRightPusher();
@@ -35,12 +35,12 @@ public class PushButtonState extends VelocityVortexState {
     }
 
     @Override
-    public void loop() {
+    public void doState() {
         //getStateMachine().robot.telemetry.addData(name+" runtime:", runtime);
     }
 
     @Override
-    public void stop() {
+    public void onExit() {
         getVelocityVortexRobotBase().retractLeftPusher();
         getVelocityVortexRobotBase().retractRightPusher();
     }

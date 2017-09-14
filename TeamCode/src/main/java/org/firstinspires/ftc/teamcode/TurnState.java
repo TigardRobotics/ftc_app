@@ -18,19 +18,19 @@ public class TurnState extends State{
     }
 
     @Override
-    public void start() {
+    public void onEntry() {
         initialEncoderPosition = getStateMachine().robot.getDrivePosition();
         getStateMachine().robot.setRightDrivePower(power);
         getStateMachine().robot.setLeftDrivePower(-power);
     }
 
     @Override
-    public void loop() {
+    public void doState() {
         getStateMachine().robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override
-    public void stop() {
+    public void onExit() {
         getStateMachine().robot.stopDriveMotors();
     }
 }

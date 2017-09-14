@@ -11,7 +11,7 @@ public class WaddleLeftState extends DriveState {
     }
 
     @Override
-    public void start() {
+    public void onEntry() {
         getRobot().setLeftDrivePower(power);
         getRobot().setRightDrivePower(0.0);
     }

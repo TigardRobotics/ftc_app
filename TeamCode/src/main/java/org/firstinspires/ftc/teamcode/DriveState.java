@@ -21,19 +21,19 @@ public class DriveState extends State{
     }
 
     @Override
-    public void start() {
+    public void onEntry() {
         initialEncoderPosition = getRobot().getDrivePosition();
         getRobot().setDrivePower(power);
     }
 
     @Override
-    public void loop() {
+    public void doState() {
         getRobot().telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
         RobotLog.i(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override
-    public void stop() {
+    public void onExit() {
         getRobot().stopDriveMotors();
     }
 }
