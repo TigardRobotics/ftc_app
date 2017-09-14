@@ -80,7 +80,7 @@ public class TestTeleop extends VelocityVortexRobotBase {
          * Line follow
          *
         if(gamepad1.dpad_up && (!stateMachine.isActive())) {
-            stateMachine.setActiveState("follow");
+            stateMachine.setCurrentState("follow");
         }
         if (gamepad1.dpad_down && stateMachine.isActive()) {
             stateMachine.deactivate();

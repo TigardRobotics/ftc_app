@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.RobotLog;
  */
 
 class StateMachine {
-	private State activeState = null;
+	private State currentState = null;
 	private boolean stateHasStarted = false;
 	public RobotBase robot;
 	private ArrayList<State> states = new ArrayList<State>();
@@ -20,11 +20,11 @@ class StateMachine {
 	}
 
 	public boolean isActive(){
-		return activeState != null;
+		return currentState != null;
 	}
 
 	public String getActiveStateName() {
-		return activeState.name;
+		return currentState.name;
 	}
 
 	public State getState(String name) {
@@ -38,23 +38,23 @@ class StateMachine {
 	}
 
 	public void stop() {
-		if (activeState != null) {
-			activeState.onExit();
+		if (currentState != null) {
+			currentState.onExit();
 		}
 	}
 	
-	public void setActiveState(State state) {
-		activeState = state;
+	public void setCurrentState(State state) {
+		currentState = state;
 		stateHasStarted = false;
 	}
 	
 	public void setActiveState(String name) {
-		setActiveState(getState(name));
+		setCurrentState(getState(name));
 	}
 
 	public void deactivate() {
-		activeState.onExit();
-		activeState = null;
+		currentState.onExit();
+		currentState = null;
 	}
 
 	/**
@@ -90,11 +90,11 @@ class StateMachine {
 	public ArrayList<Transition> getPossibleTransitions() {
 		ArrayList<Transition> possibleTransitions = new ArrayList<Transition>();
 		for(Transition transition : transitions) {
-			if(activeState == transition.getFromState()) {
+			if(currentState == transition.getFromState()) {
 				possibleTransitions.add(transition);
 			}
 		}
-		RobotLog.i(String.format("%d transitions detected for "+activeState.name, possibleTransitions.toArray().length));
+		RobotLog.i(String.format("%d transitions detected for "+ currentState.name, possibleTransitions.toArray().length));
 		return possibleTransitions;
 	}
 
@@ -108,7 +108,7 @@ class StateMachine {
 	}
 
 	public void triggerTransition(Transition transition) {
-		setActiveState(transition.getToState());
+		setCurrentState(transition.getToState());
 		if (isActive()) {
 			stateHasStarted = false;
 		}
@@ -119,24 +119,24 @@ class StateMachine {
 	 */
 	private void handleStartingStates() {
 		if(isActive() && !stateHasStarted) {
-			RobotLog.i("Entering "+ activeState.name +" State");
-			robot.telemetry.addLine("Entering "+ activeState.name +" State");
-			activeState.onEntry();
+			RobotLog.i("Entering "+ currentState.name +" State");
+			robot.telemetry.addLine("Entering "+ currentState.name +" State");
+			currentState.onEntry();
 			stateHasStarted = true;
 		}
 	}
 
 	private void handleLooping() {
 		if(isActive()) {
-			activeState.doState();
+			currentState.doState();
 		}
 	}
 
 	private void handleTransitions() {
 		Transition transitionToTrigger = getTransitionToTrigger();
 		if(transitionToTrigger != null) {
-			RobotLog.i("Leaving "+ activeState.name +" State");
-			activeState.onExit();
+			RobotLog.i("Leaving "+ currentState.name +" State");
+			currentState.onExit();
 			triggerTransition(transitionToTrigger);
 		}
 	}
