@@ -190,7 +190,7 @@ abstract class StateMachineComponent {
 
 	public SensorModule getSensorModule() {
 		if (stateMachineInitialized) {
-			return getStateMachine().robot.getSensorModule();
+			return getStateMachine().robot.Sensors();
 		}
 		throw new RuntimeException("State attempting to access robot before addition to state machine");
 	}
