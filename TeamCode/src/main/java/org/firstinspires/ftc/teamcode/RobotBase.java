@@ -82,7 +82,7 @@ public abstract class RobotBase extends OpMode {
         return Math.PI*getDriveMotorDiameter();
     }
 
-    public SensorModule getSensorModule() {
+    public SensorModule Sensors() {
         throw new RuntimeException("Sensor Module does not Exist");
     }
 }

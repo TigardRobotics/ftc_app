@@ -68,7 +68,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     }
 
     @Override
-    public SensorModule getSensorModule() {
+    public SensorModule Sensors() {
         return sensorModule;
     }
 
