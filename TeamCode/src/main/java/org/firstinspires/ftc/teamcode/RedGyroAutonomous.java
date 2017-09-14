@@ -51,9 +51,9 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
         // Adding transitions to state machine
         stateMachine.add(new Transition[]{
                 // Driving to first beacon
-                new ProgressReachedTrans("forward1", "turn1", cmToEnc(45.0)),
+                new ProgressTrans("forward1", "turn1", cmToEnc(45.0)),
                 new StateCompletedTrans("turn1", "forward2"),
-                new ProgressReachedTrans("forward2", "follow1", cmToEnc(92.0)),
+                new ProgressTrans("forward2", "follow1", cmToEnc(92.0)),
 
                 // Pressing first button
                 new BelowRangeTrans("follow1", "push1", rangeToBeacon),
@@ -63,10 +63,10 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
                 new TimeElapsedTrans("throw", "reverse1", throwDuration),
 
                 // Driving to second beacon
-                new ProgressReachedTrans("reverse1", "turn2", cmToEnc(30.0)),
+                new ProgressTrans("reverse1", "turn2", cmToEnc(30.0)),
                 new StateCompletedTrans("turn2", "forward3"),
-                new ProgressReachedTrans("forward3", "turn3", cmToEnc(116.0)),
-                new ProgressReachedTrans("turn3", "follow2", rotsToEnc(0.250)),
+                new ProgressTrans("forward3", "turn3", cmToEnc(116.0)),
+                new ProgressTrans("turn3", "follow2", rotsToEnc(0.250)),
 
                 // Pressing second button
                 new BelowRangeTrans("follow2", "push2", rangeToBeacon),
@@ -75,7 +75,7 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
                 // Pushing the capball and parking
                 new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),
                 new StateCompletedTrans("turn4", "forward4"),
-                new ProgressReachedTrans("forward4", null, cmToEnc(125.0)),
+                new ProgressTrans("forward4", null, cmToEnc(125.0)),
         });
 
         // Setting Initial active state

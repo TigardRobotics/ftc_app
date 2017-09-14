@@ -24,10 +24,10 @@ public class RedAutonomous2 extends VelocityVortexAutonomous {
 
         // Adding transitions to state machine
         stateMachine.add(new Transition[]{
-                new ProgressReachedTrans("forward", "turnaround",cmToEnc(60.96)),
-                new ProgressReachedTrans("turnaround", "throw", rotsToEnc(0.625)),
+                new ProgressTrans("forward", "turnaround",cmToEnc(60.96)),
+                new ProgressTrans("turnaround", "throw", rotsToEnc(0.625)),
                 new TimeElapsedTrans("throw", "forward", 4),
-                new ProgressReachedTrans("forward", null, cmToEnc(137.16)),
+                new ProgressTrans("forward", null, cmToEnc(137.16)),
         });
     }
 }
