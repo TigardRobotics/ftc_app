@@ -10,9 +10,8 @@ public class DriveState extends State{
     protected double power;
     protected double initialEncoderPosition;
 
-    DriveState(String name, double power){
-        this.name = name;
-        this.power = power;
+    DriveState(String name, double power, Transition... transitions){
+        super(name, transitions);
     }
 
     @Override

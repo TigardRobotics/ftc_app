@@ -12,8 +12,8 @@ public class DriveWithHeadingState extends VelocityVortexState {
 
     protected double initialEncoderPosition;
 
-    DriveWithHeadingState(String name, double drivePower, /*double turnPower,*/ int targetHeading) {
-        this.name = name;
+    DriveWithHeadingState(String name, double drivePower, /*double turnPower,*/ int targetHeading, Transition... transitions) {
+        super(name, transitions);
         this.drivePower = drivePower;
         this.turnPower = 2*drivePower;//turnPower;
         this.targetHeading = targetHeading;

@@ -6,8 +6,8 @@ package org.firstinspires.ftc.teamcode;
 
 public class WaddleLeftState extends DriveState {
 
-    WaddleLeftState (String name, double power) {
-        super(name, power);
+    WaddleLeftState (String name, double power, Transition... transitions) {
+        super(name, power, transitions);
     }
 
     @Override

@@ -8,8 +8,8 @@ public class TurnState extends State{
     protected double power;
     protected double initialEncoderPosition;
 
-    TurnState(String name, double power){
-        this.name = name;
+    TurnState(String name, double power, Transition... transitions){
+        super(name, transitions);
         this.power = power;
     }
 

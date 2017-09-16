@@ -10,8 +10,8 @@ public class DriveAndSweepState extends VelocityVortexState {
     protected double power;
     protected double initialEncoderPosition;
 
-    DriveAndSweepState(String name, double power){
-        this.name = name;
+    DriveAndSweepState(String name, double power, Transition... transitions){
+        super(name, transitions);
         this.power = power;
     }
 

@@ -15,8 +15,8 @@ public class TurnToHeadingState extends VelocityVortexState {
     protected int requiredIterationsWithinThresholdForHeadingReached = 2;
 
 
-    TurnToHeadingState(String name, int targetHeading) {
-        this.name = name;
+    TurnToHeadingState(String name, int targetHeading, Transition... transitions) {
+        super(name, transitions);
         this.targetHeading = targetHeading;
     }
 

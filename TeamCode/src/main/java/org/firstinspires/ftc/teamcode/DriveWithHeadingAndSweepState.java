@@ -8,8 +8,8 @@ public class DriveWithHeadingAndSweepState extends DriveWithHeadingState {
     protected double power;
     protected double initialEncoderPosition;
 
-    DriveWithHeadingAndSweepState(String name, double drivePower, /*double turnPower,*/ int targetHeading) {
-        super(name, drivePower, targetHeading);
+    DriveWithHeadingAndSweepState(String name, double drivePower, /*double turnPower,*/ int targetHeading, Transition... transitions) {
+        super(name, drivePower, targetHeading, transitions);
     }
 
     @Override

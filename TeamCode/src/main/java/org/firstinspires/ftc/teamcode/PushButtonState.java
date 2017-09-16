@@ -8,8 +8,8 @@ public class PushButtonState extends VelocityVortexState {
     protected String buttonToPress;
     protected String sensorColor;
 
-    PushButtonState(String name, String color) {
-        this.name = name;
+    PushButtonState(String name, String color, Transition... transitions) {
+        super(name, transitions);
         this.buttonToPress = color;
         if (buttonToPress != RobotBase.BLUE && buttonToPress != RobotBase.RED) {
             throw new RuntimeException("Color given for button state neither red nor blue");

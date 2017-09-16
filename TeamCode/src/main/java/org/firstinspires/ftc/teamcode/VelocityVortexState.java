@@ -7,6 +7,10 @@ package org.firstinspires.ftc.teamcode;
 public abstract class VelocityVortexState extends State {
     private VelocityVortexRobotBase velocityVortexRobotBase;
 
+    VelocityVortexState(String name, Transition... transitions) {
+        super(name, transitions);
+    }
+
     @Override
     public void onAddition(StateMachine stateMachine) {
         super.onAddition(stateMachine);

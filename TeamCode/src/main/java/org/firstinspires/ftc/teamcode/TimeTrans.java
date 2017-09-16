@@ -8,8 +8,8 @@ public class TimeTrans extends Transition {
     double triggerAtTime;
 
     TimeTrans(String from_state_name, String to_state_name, double time) {
-        fromStateName = from_state_name;
-        toStateName = to_state_name;
+        source = from_state_name;
+        destination = to_state_name;
         triggerAtTime = time;
     }
 

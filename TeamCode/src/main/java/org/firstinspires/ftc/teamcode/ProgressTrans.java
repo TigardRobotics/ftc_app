@@ -8,12 +8,12 @@ public class ProgressTrans extends Transition {
     protected double progress;
 
     ProgressTrans(String fromStateName, String toStateName, double progress) {
-        this.fromStateName = fromStateName;
-        this.toStateName = toStateName;
+        this.source = fromStateName;
+        this.destination = toStateName;
         this.progress = progress;
     }
 
     public boolean test() {
-        return getStateMachine().getState(fromStateName).getProgress() >= progress;
+        return getStateMachine().getState(source).getProgress() >= progress;
     }
 }

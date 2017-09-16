@@ -7,8 +7,8 @@ package org.firstinspires.ftc.teamcode;
 public class StateCompletedTrans extends Transition {
 
     StateCompletedTrans(String fromStateName, String toStateName) {
-        this.fromStateName = fromStateName;
-        this.toStateName = toStateName;
+        this.source = fromStateName;
+        this.destination = toStateName;
     }
 
     @Override

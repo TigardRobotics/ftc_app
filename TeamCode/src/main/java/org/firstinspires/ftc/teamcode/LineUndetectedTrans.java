@@ -6,8 +6,8 @@ package org.firstinspires.ftc.teamcode;
 
 public class LineUndetectedTrans extends SensorTrans {
     LineUndetectedTrans (String fromStateName, String toStateName) {
-        this.fromStateName = fromStateName;
-        this.toStateName = toStateName;
+        this.source = fromStateName;
+        this.destination = toStateName;
     }
 
     @Override

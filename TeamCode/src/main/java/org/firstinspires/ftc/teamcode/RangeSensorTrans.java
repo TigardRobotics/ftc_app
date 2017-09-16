@@ -8,8 +8,8 @@ public class RangeSensorTrans extends SensorTrans {
     protected double range;
 
     RangeSensorTrans (String fromStateName, String toStateName, double range) {
-        this.fromStateName = fromStateName;
-        this.toStateName = toStateName;
+        this.source = fromStateName;
+        this.destination = toStateName;
         this.range = range;
     }
 

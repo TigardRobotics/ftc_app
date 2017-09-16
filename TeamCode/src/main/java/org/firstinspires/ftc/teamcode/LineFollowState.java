@@ -8,8 +8,8 @@ public class LineFollowState extends State {
     protected StateMachine lineFollowStateMachine;
     protected double power;
 
-    LineFollowState(String name, double power) {
-        this.name = name;
+    LineFollowState(String name, double power, Transition... transitions) {
+        super(name, transitions);
         this.power = power;
     }
 

@@ -7,8 +7,8 @@ package org.firstinspires.ftc.teamcode;
 public class EdgeFollowState extends State {
     protected double power;
 
-    EdgeFollowState (String name, double power) {
-        this.name = name;
+    EdgeFollowState (String name, double power, Transition... transitions) {
+        super(name, transitions);
         this.power = power;
         if (power < -1 || power > 1) {
             throw new RuntimeException("Setting drive motors power outside of acceptable range in "+name);

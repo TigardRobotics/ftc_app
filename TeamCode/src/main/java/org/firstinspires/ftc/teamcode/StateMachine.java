@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
@@ -9,11 +12,10 @@ import com.qualcomm.robotcore.util.RobotLog;
  */
 
 class StateMachine {
-	private State currentState = null;
+	private State currentState;
 	private boolean stateHasStarted = false;
 	public RobotBase robot;
 	private ArrayList<State> states = new ArrayList<State>();
-	private ArrayList<Transition> transitions = new ArrayList<Transition>();
 
 	StateMachine(RobotBase robot) {
 		this.robot = robot;
@@ -94,6 +96,9 @@ class StateMachine {
 				possibleTransitions.add(transition);
 			}
 		}
+
+
+
 		RobotLog.i(String.format("%d transitions detected for "+ currentState.name, possibleTransitions.toArray().length));
 		return possibleTransitions;
 	}
@@ -197,9 +202,15 @@ abstract class StateMachineComponent {
 }
 
 abstract class State extends StateMachineComponent {
+	private List<Transition> transitions;
 	private boolean complete = false;
-	protected String name = null;
+	protected String name;
 	protected ElapsedTime runtime = new ElapsedTime();
+
+	State(String name, Transition... transitions){
+		this.name = name;
+		this.transitions = Arrays.asList(transitions);
+	}
 
 	@Override
 	public void onAddition(StateMachine stateMachine) {
@@ -226,6 +237,13 @@ abstract class State extends StateMachineComponent {
 		complete = false;
 	}
 
+	public String checkTransitions() {
+		for(Transition transition : transitions) {
+			if(transition.test()) return transition.getDestination();
+		}
+		return "";
+	}
+
 	public final boolean isComplete() {
 		return complete;
 	}
@@ -236,15 +254,15 @@ abstract class State extends StateMachineComponent {
 }
 
 abstract class Transition extends StateMachineComponent{
-	protected String fromStateName;
-	protected String toStateName;
+	protected String source;
+	protected String destination;
 
-	public final State getFromState() {
-		return getStateMachine().getState(fromStateName);
+	public final String getSource() {
+		return source;
 	}
 
-	public final State getToState() {
-		return getStateMachine().getState(toStateName);
+	public final String getDestination() {
+		return destination;
 	}
 
 	abstract public boolean test();

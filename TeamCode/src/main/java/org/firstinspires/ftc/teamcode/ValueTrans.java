@@ -8,8 +8,8 @@ public class ValueTrans extends Transition {
     public boolean value = false;
 
     ValueTrans(String toStateName, String fromStateName){
-        this.toStateName = toStateName;
-        this.fromStateName = fromStateName;
+        this.destination = toStateName;
+        this.source = fromStateName;
     }
 
     public void setValue(boolean value) {

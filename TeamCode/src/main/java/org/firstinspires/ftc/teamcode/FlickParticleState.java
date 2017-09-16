@@ -5,8 +5,8 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public class FlickParticleState extends VelocityVortexState {
-     FlickParticleState(String name) {
-         this.name = name;
+     FlickParticleState(String name, Transition... transitions) {
+         super(name, transitions);
      }
 
 

@@ -8,8 +8,8 @@ public class TeleOpState extends VelocityVortexState {
     protected double stickPressedPowerFactor = 0.3;
     protected double triggerActuationThreshold = 0.5;
 
-    TeleOpState(String name) {
-        this.name = name;
+    TeleOpState(String name, Transition... transitions) {
+        super(name, transitions);
     }
 
     public void onEntry() {
