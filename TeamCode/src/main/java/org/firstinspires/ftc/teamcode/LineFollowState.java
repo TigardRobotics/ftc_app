@@ -31,8 +31,8 @@ public class LineFollowState extends State {
 
         // Adding transitions to state machine
         lineFollowStateMachine.add(new Transition[]{
-            new LineDetectedTrans("waddle_right", "waddle_left"),
-            new LineUndetectedTrans("waddle_left", "waddle_right"),
+            //new LineDetectedTrans("waddle_right", "waddle_left"),
+            //new LineUndetectedTrans("waddle_left", "waddle_right"),
         });
 
         // Setting initial state for line follow state machine

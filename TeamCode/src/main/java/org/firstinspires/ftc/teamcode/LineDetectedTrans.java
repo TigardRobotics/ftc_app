@@ -5,9 +5,8 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public class LineDetectedTrans extends SensorTrans {
-    LineDetectedTrans (String fromStateName, String toStateName) {
-        this.source = fromStateName;
-        this.destination = toStateName;
+    public LineDetectedTrans (String destination) {
+        super(destination);
     }
 
     @Override

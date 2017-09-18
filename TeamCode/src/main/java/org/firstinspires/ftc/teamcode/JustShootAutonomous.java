@@ -18,7 +18,7 @@ public class JustShootAutonomous extends VelocityVortexAutonomous {
 
         // Adding transitions to state machine
         stateMachine.add(new Transition[]{
-                new TimeTrans("throw", null, throwDuration),
+                //new TimeTrans("throw", null, throwDuration),
         });
 
         // Setting Initial active state

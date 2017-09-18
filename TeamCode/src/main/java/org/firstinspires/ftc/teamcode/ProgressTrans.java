@@ -7,13 +7,13 @@ package org.firstinspires.ftc.teamcode;
 public class ProgressTrans extends Transition {
     protected double progress;
 
-    ProgressTrans(String fromStateName, String toStateName, double progress) {
-        this.source = fromStateName;
-        this.destination = toStateName;
+    public ProgressTrans(String destination, double progress) {
+        super(destination);
         this.progress = progress;
     }
 
     public boolean test() {
-        return getStateMachine().getState(source).getProgress() >= progress;
+        //return getStateMachine().getState(source).getProgress() >= progress;
+        return getSource().getProgress() >= progress;
     }
 }

@@ -12,7 +12,7 @@ public class VelocityVortexTeleOp extends VelocityVortexRobotBase {
     @Override
     public void start(){
         stateMachine.add(new EdgeFollowState("follow", followSpeed));
-        stateMachine.add(new BelowRangeTrans("follow", null, rangeToBeacon));
+        //stateMachine.add(new BelowRangeTrans("follow", null, rangeToBeacon));
     }
 
     @Override

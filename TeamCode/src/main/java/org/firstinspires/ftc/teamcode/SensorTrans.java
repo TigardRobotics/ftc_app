@@ -5,5 +5,7 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public abstract class SensorTrans extends Transition {
-
+    public SensorTrans(String destination) {
+        super(destination);
+    }
 }

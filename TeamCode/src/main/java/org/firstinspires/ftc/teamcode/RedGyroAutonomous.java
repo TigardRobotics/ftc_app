@@ -49,6 +49,7 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
         });
 
         // Adding transitions to state machine
+        /*
         stateMachine.add(new Transition[]{
                 // Driving to first beacon
                 new ProgressTrans("forward1", "turn1", cmToEnc(45.0)),
@@ -77,6 +78,7 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
                 new StateCompletedTrans("turn4", "forward4"),
                 new ProgressTrans("forward4", null, cmToEnc(125.0)),
         });
+        */
 
         // Setting Initial active state
         stateMachine.setActiveState("forward1");

@@ -6,13 +6,12 @@ package org.firstinspires.ftc.teamcode;
 
 public class StateCompletedTrans extends Transition {
 
-    StateCompletedTrans(String fromStateName, String toStateName) {
-        this.source = fromStateName;
-        this.destination = toStateName;
+    StateCompletedTrans(String destination) {
+        super(destination);
     }
 
     @Override
     public boolean test() {
-        return getFromState().isComplete();
+        return getSource().isComplete();
     }
 }

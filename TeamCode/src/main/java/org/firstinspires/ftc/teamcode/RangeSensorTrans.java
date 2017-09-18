@@ -7,9 +7,8 @@ package org.firstinspires.ftc.teamcode;
 public class RangeSensorTrans extends SensorTrans {
     protected double range;
 
-    RangeSensorTrans (String fromStateName, String toStateName, double range) {
-        this.source = fromStateName;
-        this.destination = toStateName;
+    public RangeSensorTrans (String destination, double range) {
+        super(destination);
         this.range = range;
     }
 
@@ -21,8 +20,8 @@ public class RangeSensorTrans extends SensorTrans {
 
 class BelowRangeTrans extends RangeSensorTrans {
 
-    BelowRangeTrans (String fromStateName, String toStateName, double range) {
-        super(fromStateName, toStateName, range);
+    BelowRangeTrans (String destination, double range) {
+        super(destination, range);
     }
 
     @Override
@@ -33,8 +32,8 @@ class BelowRangeTrans extends RangeSensorTrans {
 
 class AboveRangeTrans extends RangeSensorTrans {
 
-    AboveRangeTrans (String fromStateName, String toStateName, double range) {
-        super(fromStateName, toStateName, range);
+    AboveRangeTrans (String destination, double range) {
+        super(destination, range);
     }
 
     @Override

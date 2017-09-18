@@ -74,49 +74,13 @@ class StateMachine {
 		}
 	}
 
+	//!! REMOVE THESE TRANSITION METHODS
 	public void add(Transition transition) {
-		transition.onAddition(this);
-		transitions.add(transition);
+
 	}
 
 	public void add(Transition[] transitions) {
-		robot.telemetry.addLine("Adding transitions to state machine");
-		for(Transition transition : transitions) {
-			add(transition);
-		}
-	}
 
-	/**
-	 * Methods that handle transitions
-     */
-	public ArrayList<Transition> getPossibleTransitions() {
-		ArrayList<Transition> possibleTransitions = new ArrayList<Transition>();
-		for(Transition transition : transitions) {
-			if(currentState == transition.getFromState()) {
-				possibleTransitions.add(transition);
-			}
-		}
-
-
-
-		RobotLog.i(String.format("%d transitions detected for "+ currentState.name, possibleTransitions.toArray().length));
-		return possibleTransitions;
-	}
-
-	public Transition getTransitionToTrigger() {
-		for(Transition transition : getPossibleTransitions()) {
-			if(transition.test()){
-				return transition;
-			}
-		}
-		return null;
-	}
-
-	public void triggerTransition(Transition transition) {
-		setCurrentState(transition.getToState());
-		if (isActive()) {
-			stateHasStarted = false;
-		}
 	}
 
 	/**
@@ -137,14 +101,6 @@ class StateMachine {
 		}
 	}
 
-	private void handleTransitions() {
-		Transition transitionToTrigger = getTransitionToTrigger();
-		if(transitionToTrigger != null) {
-			RobotLog.i("Leaving "+ currentState.name +" State");
-			currentState.onExit();
-			triggerTransition(transitionToTrigger);
-		}
-	}
 
 	public void handleBecomingInactive() {
 		if(!isActive()) {
@@ -152,16 +108,12 @@ class StateMachine {
 		}
 	}
 
+
 	/*
 	* Step Method is periodically called
 	 */
 	public void step(){
-		if (isActive()) {
-			handleStartingStates();
-			handleLooping();
-			handleTransitions();
-			handleBecomingInactive();
-		}
+
 	}
 }
 
@@ -222,6 +174,10 @@ abstract class State extends StateMachineComponent {
 		this.name = name;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public double getProgress() {
 		return 0.0;
 	}
@@ -254,10 +210,24 @@ abstract class State extends StateMachineComponent {
 }
 
 abstract class Transition extends StateMachineComponent{
-	protected String source;
+	protected State source;
 	protected String destination;
+	private boolean initialized = false;
 
-	public final String getSource() {
+	public Transition(String destination) {
+		this.destination = destination;
+	}
+
+	public void setSource(State source) {
+		this.source = source;
+		this.initialized = true;
+	}
+
+	public final String getSourceName() {
+		return source.getName();
+	}
+
+	public final State getSource() {
 		return source;
 	}
 
@@ -265,5 +235,12 @@ abstract class Transition extends StateMachineComponent{
 		return destination;
 	}
 
-	abstract public boolean test();
+	public boolean check() {
+		if(initialized) {
+			return test();
+		}
+		else throw new RuntimeException("Transition from "+source.getName()+" to "+destination+" is being checked before it's initialized");
+	}
+
+	abstract protected boolean test();
 }

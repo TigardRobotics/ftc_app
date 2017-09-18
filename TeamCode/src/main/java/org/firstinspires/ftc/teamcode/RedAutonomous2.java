@@ -23,11 +23,13 @@ public class RedAutonomous2 extends VelocityVortexAutonomous {
 
 
         // Adding transitions to state machine
+        /*
         stateMachine.add(new Transition[]{
                 new ProgressTrans("forward", "turnaround",cmToEnc(60.96)),
                 new ProgressTrans("turnaround", "throw", rotsToEnc(0.625)),
                 new TimeTrans("throw", "forward", 4),
                 new ProgressTrans("forward", null, cmToEnc(137.16)),
         });
+        */
     }
 }

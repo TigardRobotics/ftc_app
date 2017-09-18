@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode;
 
 public class ToggleButton {
     StateMachine stateMachine;
-    ValueTrans[] transitions;
+    //ValueTrans[] transitions;
 
     ToggleButton (RobotBase robot, State firstState, State secondState) {
         this.stateMachine = new StateMachine(robot);
@@ -25,25 +25,27 @@ public class ToggleButton {
         });
 
         // Initializing button pressed transitions
+        /*
         transitions = new ValueTrans[]{
             new ValueTrans("second", "wait_before_first"),
             new ValueTrans("wait_before_first", "first"),
             new ValueTrans("first", "wait_before_second"),
             new ValueTrans("wait_before_second", "second"),
         };
+        */
 
         // Adding Transitions to state machine
-        stateMachine.add(transitions);
+        //stateMachine.add(transitions);
 
         // Setting initial state
         stateMachine.setActiveState("first");
     }
 
     public void step(boolean button) {
-        transitions[0].setValue(button);
-        transitions[1].setValue(!button);
-        transitions[2].setValue(button);
-        transitions[3].setValue(!button);
+        //transitions[0].setValue(button);
+        //transitions[1].setValue(!button);
+        //transitions[2].setValue(button);
+        //transitions[3].setValue(!button);
         stateMachine.step();
     }
 }
@@ -51,8 +53,8 @@ public class ToggleButton {
 
 class WaitState extends State {
 
-    WaitState (String name) {
-        this.name = name;
+    public WaitState (String name, Transition... transitions) {
+        super(name, transitions);
     }
 
     @Override
