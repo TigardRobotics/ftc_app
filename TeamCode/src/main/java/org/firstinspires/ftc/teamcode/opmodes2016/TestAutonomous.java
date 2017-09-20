@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+//import org.firstinspires.ftc.teamcode.StateMachine;
 
 /**
  * Created by Derek Williams of team 3965 on 11/9/2016.
@@ -8,10 +10,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name="Test Auto", group="3965")
 public class TestAutonomous extends VelocityVortexRobotBase {
-    protected StateMachine stateMachine = new StateMachine(this);
+    //protected StateMachine stateMachine = new StateMachine(this);
 
     @Override
-    public void start(){
+    public void start() {
+        /*
         // Adding states to state machine
         stateMachine.add(new State[]{
             new DriveState("forward", 0.8),
@@ -29,18 +32,22 @@ public class TestAutonomous extends VelocityVortexRobotBase {
         */
 
         // Setting initial active state
-        stateMachine.setActiveState("forward");
+        //stateMachine.setActiveState("forward");
+        /*
+
+         */
     }
 
     @Override
     public void loop(){
-        stateMachine.step();
+        //stateMachine.step();
         //telemetry.addData("ods value", getSensorModule().getLineDetectorLightLevel());
         //telemetry.addLine(getSensorModule().getFrontColor() + " detected");
     }
 
+
     @Override
     public void stop(){
-        stateMachine.stop();
+        //stateMachine.stop();
     }
 }

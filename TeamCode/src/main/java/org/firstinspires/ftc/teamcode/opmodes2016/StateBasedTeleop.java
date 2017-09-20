@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode;
-
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+package org.firstinspires.ftc.teamcode.opmodes2016;
 
 /**
  * Created by Derek Williams of team 3965 on 1/31/2017.
@@ -12,6 +10,7 @@ public abstract class StateBasedTeleop extends VelocityVortexRobotBase {
 
     @Override
     public void start() {
+        /*
         stateMachine.add(new State[]{
                 new TeleOpState("teleop"),
                 new EdgeFollowState("follow", followSpeed),
@@ -24,10 +23,13 @@ public abstract class StateBasedTeleop extends VelocityVortexRobotBase {
         });
 
         stateMachine.setActiveState("teleop");
+        */
     }
 
     @Override
     public void loop() {
+        /*
+    }
         stateMachine.step();
 
         if(stateMachine.getActiveStateName() != "teleop") {
@@ -36,10 +38,12 @@ public abstract class StateBasedTeleop extends VelocityVortexRobotBase {
         else {
             if(gamepad1.dpad_up) stateMachine.setActiveState("follow");
         }
+        */
     }
 
     @Override
     public void stop() {
-        stateMachine.stop();
+        //stateMachine.stop();
     }
+
 }

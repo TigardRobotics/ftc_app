@@ -1,6 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.util.RobotLog;
+
+import org.firstinspires.ftc.teamcode.Transition;
+import org.firstinspires.ftc.teamcode.opmodes2016.VelocityVortexState;
 
 /**
  * Created by Derek Williams of team 3965 on 2/1/2017.
@@ -15,27 +18,29 @@ public class DriveAndSweepState extends VelocityVortexState {
         this.power = power;
     }
 
+    /*
     @Override
     public double getProgress() {
-        return Math.abs(getRobot().getDrivePosition() - initialEncoderPosition);
+        return Math.abs(getRobot().getDrivePosition() - initialPos);
     }
+    */
 
     @Override
     public void onEntry() {
-        initialEncoderPosition = getRobot().getDrivePosition();
-        getRobot().setDrivePower(power);
-        getVelocityVortexRobotBase().enableCollector();
+        //initialPos = getRobot().getDrivePosition();
+        //getRobot().setDrivePower(speed);
+        //getVelocityVortexRobotBase().enableCollector();
     }
 
     @Override
     public void doState() {
-        getRobot().telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
+        //getRobot().telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
         RobotLog.i(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override
     public void onExit() {
-        getRobot().stopDriveMotors();
+        //getRobot().stopDriveMotors();
         getVelocityVortexRobotBase().disableCollector();
     }
 }

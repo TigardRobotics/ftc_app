@@ -5,12 +5,12 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public class LineDetectedTrans extends SensorTrans {
-    public LineDetectedTrans (String destination) {
-        super(destination);
+    public LineDetectedTrans (String destination, SensorModule sensors) {
+        super(destination, sensors);
     }
 
     @Override
     public boolean test() {
-        return getSensorModule().isLineDetected();
+        return sensors.isLineDetected();
     }
 }

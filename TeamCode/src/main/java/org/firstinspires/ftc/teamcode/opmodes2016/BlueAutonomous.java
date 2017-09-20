@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -6,24 +6,26 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Created by Derek Williams on 10/11/2016.
  */
 
-@Autonomous(name="AutoRed", group="3965")
-public class RedAutonomous extends VelocityVortexAutonomous {
+@Autonomous(name="AutoBlue", group="3965")
+public class BlueAutonomous extends VelocityVortexAutonomous {
     @Override
     public void init() {
         super.init();
-        color = RED;
+        turnSpeed = -turnSpeed;
+        color = BLUE;
     }
 
     @Override
     public void start(){
         super.start();
-
+        /*
         // Adding states to state machine
         stateMachine.add(new State[]{
                 // Driving to first beacon
                 new DriveState("forward1", driveSpeed),
                 new TurnState("turn1", -turnSpeed),
                 new DriveState("forward2", driveSpeed),
+                new TurnState("turn1a", -turnSpeed),
 
                 // Pressing first button
                 new EdgeFollowState("follow1", followSpeed),
@@ -50,12 +52,12 @@ public class RedAutonomous extends VelocityVortexAutonomous {
         });
 
         // Adding transitions to state machine
-        /*
         stateMachine.add(new Transition[]{
                 // Driving to first beacon
-                //new ProgressTrans("forward1", "turn1", cmToEnc(45.0)),
-                //new ProgressTrans("turn1", "forward2", rotsToEnc(0.14)),  //0.135
-                //new ProgressTrans("forward2", "follow1", cmToEnc(92.0)),
+                //new ProgressTrans("forward1", "turn1", cmToEnc(55.0)),
+                //new ProgressTrans("turn1", "forward2", rotsToEnc(0.10)),
+                //new ProgressTrans("forward2", "turn1a", cmToEnc(92.0)),
+                //new ProgressTrans("turn1a", "follow1", rotsToEnc(0.16)),
 
                 // Pressing first button
                 //new BelowRangeTrans("follow1", "push1", rangeToBeacon),
@@ -66,23 +68,23 @@ public class RedAutonomous extends VelocityVortexAutonomous {
                 //new AboveRangeTrans("reverse1", "reverse2", rangeToShoot),
 
                 // Driving to second beacon
-                //new ProgressTrans("reverse2", "turn2", cmToEnc(15.0)),  //20.0
-                new ProgressTrans("turn2", "forward3", rotsToEnc(0.24)),
-                new ProgressTrans("forward3", "turn3", cmToEnc(116.0)),
-                new ProgressTrans("turn3", "follow2", rotsToEnc(0.250)),
+                //new ProgressTrans("reverse2", "turn2", cmToEnc(25.0)),  // was 20.0
+                //new ProgressTrans("turn2", "forward3", rotsToEnc(0.24)),
+                //new ProgressTrans("forward3", "turn3", cmToEnc(116.0)),
+                //new ProgressTrans("turn3", "follow2", rotsToEnc(0.25)),
 
                 // Pressing second button
-                new BelowRangeTrans("follow2", "push2", rangeToBeacon),
-                new TimeTrans("push2", "reverse3", 1),
+                //new BelowRangeTrans("follow2", "push2", rangeToBeacon),
+                //new TimeTrans("push2", "reverse3", 1),
 
                 // Pushing the capball and parking
-                new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),
-                new ProgressTrans("turn4", "forward4", rotsToEnc(0.11)),
-                new ProgressTrans("forward4", null, cmToEnc(125.0)),
+                //new AboveRangeTrans("reverse3", "turn4", rangeFromBeacon),
+                //new ProgressTrans("turn4", "forward4", rotsToEnc(0.17)),
+                //new ProgressTrans("forward4", null, cmToEnc(120.0)),
         });
-        */
 
         // Setting Initial active state
         stateMachine.setActiveState("forward1");
+        */
     }
 }

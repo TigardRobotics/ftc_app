@@ -1,4 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
+
+import org.firstinspires.ftc.teamcode.Transition;
+import org.firstinspires.ftc.teamcode.opmodes2016.VelocityVortexState;
 
 /**
  * Created by Derek Williams of team 3965 on 2/18/2017.
@@ -21,31 +24,32 @@ public class DriveWithHeadingState extends VelocityVortexState {
 
     @Override
     public double getProgress() {
-        return Math.abs(getRobot().getDrivePosition() - initialEncoderPosition);
+        //return Math.abs(getRobot().getDrivePosition() - initialEncoderPosition);
+        return 0.0;
     }
 
     @Override
     public void onEntry() {
         super.onEntry();
-        initialEncoderPosition = getRobot().getDrivePosition();
+        //initialEncoderPosition = getRobot().getDrivePosition();
     }
 
     @Override
     public void doState() {
-        getRobot().telemetry.addData("Heading", getSensorModule().getHeading());
+        //getRobot().telemetry.addData("Heading", getSensorModule().getHeading());
 
 
-        double error = (getSensorModule().getHeadingError(targetHeading) / 180.0);
+        //double error = (getSensorModule().getHeadingError(targetHeading) / 180.0);
 
-        getRobot().telemetry.addData("Error", error);
+        //getRobot().telemetry.addData("Error", error);
 
-        getRobot().setRightDrivePower(drivePower-turnPower*error);
-        getRobot().setLeftDrivePower(drivePower+turnPower*error);
+        //getRobot().setRightDrivePower(drivePower-turnPower*error);
+        //getRobot().setLeftDrivePower(drivePower+turnPower*error);
     }
 
     @Override
     public void onExit() {
         super.onExit();
-        getRobot().stopDriveMotors();
+        //getRobot().stopDriveMotors();
     }
 }

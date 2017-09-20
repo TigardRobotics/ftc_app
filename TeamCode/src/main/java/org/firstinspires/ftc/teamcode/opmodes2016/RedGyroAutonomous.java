@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+import org.firstinspires.ftc.teamcode.RobotBase;
 
 /**
  * Created by Derek Williams of team 3965 on 2/20/2017.
@@ -11,13 +13,13 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
     @Override
     public void init() {
         super.init();
-        color = RED;
+        color = RobotBase.RED;
     }
 
     @Override
     public void start(){
         super.start();
-
+        /*
         // Adding states to state machine
         stateMachine.add(new State[]{
                 // Driving to first beacon
@@ -78,9 +80,10 @@ public class RedGyroAutonomous extends VelocityVortexAutonomous {
                 new StateCompletedTrans("turn4", "forward4"),
                 new ProgressTrans("forward4", null, cmToEnc(125.0)),
         });
-        */
+
 
         // Setting Initial active state
         stateMachine.setActiveState("forward1");
+        */
     }
 }

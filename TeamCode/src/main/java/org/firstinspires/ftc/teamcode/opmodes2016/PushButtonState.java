@@ -1,4 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
+
+import org.firstinspires.ftc.teamcode.RobotBase;
+import org.firstinspires.ftc.teamcode.Transition;
+import org.firstinspires.ftc.teamcode.opmodes2016.VelocityVortexState;
 
 /**
  * Created by Derek Williams of team 3965 on 11/13/2016.
@@ -8,7 +12,7 @@ public class PushButtonState extends VelocityVortexState {
     protected String buttonToPress;
     protected String sensorColor;
 
-    PushButtonState(String name, String color, Transition... transitions) {
+    public PushButtonState(String name, String color, Transition... transitions) {
         super(name, transitions);
         this.buttonToPress = color;
         if (buttonToPress != RobotBase.BLUE && buttonToPress != RobotBase.RED) {
@@ -18,6 +22,7 @@ public class PushButtonState extends VelocityVortexState {
 
     @Override
     public void onEntry() {
+        /*
         super.onEntry();
         if(getSensorModule().getFrontColor() == buttonToPress) {
             // Push left button
@@ -32,6 +37,7 @@ public class PushButtonState extends VelocityVortexState {
             getVelocityVortexRobotBase().extendRightPusher();
             getRobot().telemetry.addLine("pushing left button");
         }
+        */
     }
 
     @Override

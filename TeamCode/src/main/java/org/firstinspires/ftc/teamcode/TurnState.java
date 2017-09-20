@@ -4,33 +4,32 @@ package org.firstinspires.ftc.teamcode;
  * Created by Derek Williams on 10/12/2016.
  */
 
-public class TurnState extends State{
+public class TurnState extends MoveState {
     protected double power;
     protected double initialEncoderPosition;
 
-    TurnState(String name, double power, Transition... transitions){
-        super(name, transitions);
-        this.power = power;
+    TurnState(String name, double power, SensorModule sensors, Transition... transitions){
+        super(name, power, sensors, transitions);
     }
 
     public double getProgress() {
-        return Math.abs(getStateMachine().robot.getDrivePosition() - initialEncoderPosition);
+        return Math.abs(driveSys.getPos() - initialEncoderPosition);
     }
 
     @Override
     public void onEntry() {
-        initialEncoderPosition = getStateMachine().robot.getDrivePosition();
-        getStateMachine().robot.setRightDrivePower(power);
-        getStateMachine().robot.setLeftDrivePower(-power);
+        initialEncoderPosition = driveSys.getPos();
+        driveSys.setSpeed(power);
+        driveSys.setSpeed(-power);
     }
 
     @Override
     public void doState() {
-        getStateMachine().robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
+        //telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override
     public void onExit() {
-        getStateMachine().robot.stopDriveMotors();
+        driveSys.stop();
     }
 }

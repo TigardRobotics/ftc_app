@@ -1,15 +1,20 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.ModernRoboticsSensorModule;
+import org.firstinspires.ftc.teamcode.RobotBase;
+import org.firstinspires.ftc.teamcode.SensorModule;
+//import org.firstinspires.ftc.teamcode.StateMachine;
 
 /**
  * Created by Derek Williams of team 3965 on 10/11/2016.
  */
 
 public abstract class VelocityVortexRobotBase extends RobotBase {
-    private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
-    protected StateMachine stateMachine = new StateMachine(this);
+    //private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
+    //protected StateMachine stateMachine = new StateMachine(this);
 
     protected static final double DRIVE_DIAMETER = 35.56; // Centimeters
     protected static final double FULL_TURN_ROTATION = 4843; // Encoder counts
@@ -44,7 +49,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     @Override
     public void init() {
         super.init();
-        sensorModule.init();
+        //sensorModule.init();
         rightButtonPusher = hardwareMap.servo.get("right_button_pusher");
         leftButtonPusher = hardwareMap.servo.get("left_button_pusher");
         particleFlicker = hardwareMap.dcMotor.get("particle_flicker");
@@ -59,7 +64,7 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
 
     @Override
     public void init_loop() {
-        sensorModule.init_loop();
+        //sensorModule.init_loop();
     }
 
     @Override
@@ -67,10 +72,12 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         return DRIVE_DIAMETER;
     }
 
+    /*
     @Override
     public SensorModule Sensors() {
         return sensorModule;
     }
+    */
 
     @Override
     public double countsToCentimeters(double counts) {

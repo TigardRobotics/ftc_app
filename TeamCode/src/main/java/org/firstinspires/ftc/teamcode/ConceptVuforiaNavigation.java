@@ -102,7 +102,7 @@ public class ConceptVuforiaNavigation extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
-        // OR...  Do Not Activate the Camera Monitor View, to save power
+        // OR...  Do Not Activate the Camera Monitor View, to save speed
         // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         /*

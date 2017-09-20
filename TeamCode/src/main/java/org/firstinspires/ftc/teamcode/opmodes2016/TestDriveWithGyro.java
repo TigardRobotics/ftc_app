@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -11,6 +11,7 @@ public class TestDriveWithGyro extends VelocityVortexAutonomous {
 
     @Override
     public void start() {
+        /*
         super.start();
         stateMachine.add(new State[]{
                 new DriveWithHeadingState("drive", driveSpeed, 0),
@@ -20,5 +21,6 @@ public class TestDriveWithGyro extends VelocityVortexAutonomous {
         });
 
         stateMachine.setActiveState("drive");
+        */
     }
 }

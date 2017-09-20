@@ -14,15 +14,9 @@ public class LineFollowState extends State {
     }
 
     @Override
-    public void onAddition (StateMachine stateMachine) {
-        super.onAddition(stateMachine);
-        lineFollowStateMachine = new StateMachine(getStateMachine().robot);
-    }
-
-    @Override
     public void onEntry() {
         super.onEntry();
-
+        /*
         // Adding states to state machine
         lineFollowStateMachine.add(new State[]{
             new WaddleRightState("waddle_right", power),
@@ -37,6 +31,7 @@ public class LineFollowState extends State {
 
         // Setting initial state for line follow state machine
         lineFollowStateMachine.setActiveState("waddle_right");
+        */
     }
 
     @Override

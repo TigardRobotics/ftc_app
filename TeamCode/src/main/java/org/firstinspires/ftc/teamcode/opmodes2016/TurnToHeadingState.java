@@ -1,4 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
+
+import org.firstinspires.ftc.teamcode.Transition;
+import org.firstinspires.ftc.teamcode.opmodes2016.VelocityVortexState;
 
 /**
  * Created by Derek Williams of team 3965 on 2/16/2017.
@@ -29,6 +32,7 @@ public class TurnToHeadingState extends VelocityVortexState {
 
     @Override
     public void doState() {
+        /*
         getRobot().telemetry.addData("Heading", getSensorModule().getHeading());
 
         if(Math.abs(getSensorModule().getHeadingError(targetHeading)) < threshold) { // Exiting if heading within threshold
@@ -60,11 +64,12 @@ public class TurnToHeadingState extends VelocityVortexState {
 
         getRobot().setRightDrivePower(-power);
         getRobot().setLeftDrivePower(power);
+        */
     }
 
     @Override
     public void onExit() {
         super.onExit();
-        getRobot().stopDriveMotors();
+        //getRobot().stopDriveMotors();
     }
 }

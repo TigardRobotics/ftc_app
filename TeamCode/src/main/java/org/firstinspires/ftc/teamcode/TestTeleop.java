@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.opmodes2016.VelocityVortexRobotBase;
+
 /**
  * Created by Derek Williams of team 3965 on 11/15/2016.
  */

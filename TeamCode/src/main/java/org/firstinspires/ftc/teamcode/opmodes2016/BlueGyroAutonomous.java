@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -18,7 +18,7 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
     @Override
     public void start(){
         super.start();
-
+        /*
         // Adding states to state machine
         stateMachine.add(new State[]{
                 // Driving to first beacon
@@ -91,5 +91,6 @@ public class BlueGyroAutonomous extends VelocityVortexAutonomous {
 
         // Setting Initial active state
         stateMachine.setActiveState("forward1");
+        */
     }
 }

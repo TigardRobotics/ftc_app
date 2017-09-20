@@ -1,4 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
+
+import org.firstinspires.ftc.teamcode.Transition;
+import org.firstinspires.ftc.teamcode.opmodes2016.VelocityVortexRobotBase;
+import org.firstinspires.ftc.teamcode.opmodes2016.VelocityVortexState;
 
 /**
  * Created by Derek Williams of team 3965 on 1/31/2017.
@@ -13,7 +17,7 @@ public class TeleOpState extends VelocityVortexState {
     }
 
     public void onEntry() {
-        getRobot().stopDriveMotors();
+        //getRobot().stopDriveMotors();
     }
 
     public void doState() {
@@ -83,7 +87,7 @@ public class TeleOpState extends VelocityVortexState {
     }
 
     public void onExit() {
-        getRobot().stopDriveMotors();
+        //getRobot().stopDriveMotors();
         getVelocityVortexRobotBase().disableLifter();
         getVelocityVortexRobotBase().disableCollector();
         getVelocityVortexRobotBase().disableFlicker();

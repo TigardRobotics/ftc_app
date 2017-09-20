@@ -7,38 +7,38 @@ package org.firstinspires.ftc.teamcode;
 public class RangeSensorTrans extends SensorTrans {
     protected double range;
 
-    public RangeSensorTrans (String destination, double range) {
-        super(destination);
+    public RangeSensorTrans (String destination, SensorModule sensors, double range) {
+        super(destination, sensors);
         this.range = range;
     }
 
     @Override
     public boolean test() {
-        return getSensorModule().getRangeCm() == range;
+        return sensors.getRangeCm() == range;
     }
 }
 
 class BelowRangeTrans extends RangeSensorTrans {
 
-    BelowRangeTrans (String destination, double range) {
-        super(destination, range);
+    BelowRangeTrans (String destination, SensorModule sensors, double range) {
+        super(destination, sensors, range);
     }
 
     @Override
     public boolean test() {
-        return getSensorModule().getRangeCm() < range;
+        return sensors.getRangeCm() < range;
     }
 }
 
 class AboveRangeTrans extends RangeSensorTrans {
 
-    AboveRangeTrans (String destination, double range) {
-        super(destination, range);
+    AboveRangeTrans (String destination, SensorModule sensors, double range) {
+        super(destination, sensors, range);
     }
 
     @Override
     public boolean test() {
-        return getSensorModule().getRangeCm() > range;
+        return sensors.getRangeCm() > range;
     }
 }
 

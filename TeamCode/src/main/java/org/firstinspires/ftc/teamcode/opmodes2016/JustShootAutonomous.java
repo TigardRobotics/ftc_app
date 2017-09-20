@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -11,7 +11,7 @@ public class JustShootAutonomous extends VelocityVortexAutonomous {
     @Override
     public void start(){
         super.start();
-
+        /*
         stateMachine.add(new State[]{
                 new FlickParticleState("throw"),
         });
@@ -23,5 +23,6 @@ public class JustShootAutonomous extends VelocityVortexAutonomous {
 
         // Setting Initial active state
         stateMachine.setActiveState("throw");
+        */
     }
 }

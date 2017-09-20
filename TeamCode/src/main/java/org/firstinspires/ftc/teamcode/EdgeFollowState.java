@@ -11,17 +11,18 @@ public class EdgeFollowState extends State {
         super(name, transitions);
         this.power = power;
         if (power < -1 || power > 1) {
-            throw new RuntimeException("Setting drive motors power outside of acceptable range in "+name);
+            throw new RuntimeException("Setting drive motors speed outside of acceptable range in "+name);
         }
     }
     @Override
     public void onEntry() {
         super.onEntry();
-        getRobot().telemetry.addLine("Starting Edge Detect");
+        //getRobot().telemetry.addLine("Starting Edge Detect");
     }
 
     @Override
     public void doState() {
+        /*
         if (getSensorModule().isLineDetected()) {
             getRobot().setLeftDrivePower(0.0);
             getRobot().setRightDrivePower(power);
@@ -32,12 +33,13 @@ public class EdgeFollowState extends State {
             getRobot().setRightDrivePower(0.0);
             getRobot().telemetry.addLine("Detected: "+getSensorModule().getLastDetect()+" Looking for white line");
         }
-        //getRobot().telemetry.addData("Power", power);
+        //getRobot().telemetry.addData("Power", speed);
+        */
     }
 
     @Override
     public void onExit() {
-        getRobot().stopDriveMotors();
-        getRobot().telemetry.addLine("Stopping Edge Detect");
+        //getRobot().stopDriveMotors();
+        //getRobot().telemetry.addLine("Stopping Edge Detect");
     }
 }
