@@ -31,7 +31,8 @@ public class ModernRoboticsSensorModule extends SensorModule {
 
     @Override
     public void init() {
-        frontRangeSensor = robot.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "front_range");
+        frontRangeSensor = robot.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, Names.range);
+        /*
         frontColorSensor = robot.hardwareMap.colorSensor.get("front_color");
         bottomLineSensor = robot.hardwareMap.opticalDistanceSensor.get("bottom_ods");
         gyro = (ModernRoboticsI2cGyro) robot.hardwareMap.gyroSensor.get("gyro");
@@ -40,6 +41,7 @@ public class ModernRoboticsSensorModule extends SensorModule {
         robot.telemetry.addLine("Calibrating Gyro, DO NOT MOVE!");
         gyro.calibrate();   //!! We need to have a way to wait for calibration to complete
         gyroCalibrationTimer.reset();
+        */
         robot.telemetry.addLine("Sensor Module Initialized");
     }
 
