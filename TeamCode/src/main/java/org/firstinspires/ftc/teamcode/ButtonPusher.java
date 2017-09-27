@@ -21,7 +21,7 @@ public class ButtonPusher {
     public static final String RIGHT = "RIGHT";
     public static final String LEFT = "LEFT";
 
-    ButtonPusher(Servo servo, String side) {
+    public ButtonPusher(Servo servo, String side) {
         this.side = side;
         this.servo = servo;
 

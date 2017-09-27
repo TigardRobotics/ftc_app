@@ -1,8 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.statemachines;
 
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.SensorModule;
 
 /**
  * Created by Derek Williams on 10/12/2016.
@@ -14,7 +15,7 @@ public class DriveState extends MoveState {
 
     protected Telemetry telemetry; //!! needs to be initialized
 
-    DriveState(String name, double speed, SensorModule sensors, Transition... transitions) {
+    public DriveState(String name, double speed, SensorModule sensors, Transition... transitions) {
         super(name, speed, sensors, transitions);
     }
 

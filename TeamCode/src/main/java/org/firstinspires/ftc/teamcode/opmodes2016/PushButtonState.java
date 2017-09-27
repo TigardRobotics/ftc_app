@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import org.firstinspires.ftc.teamcode.RobotBase;
-import org.firstinspires.ftc.teamcode.Transition;
-import org.firstinspires.ftc.teamcode.opmodes2016.VelocityVortexState;
+import org.firstinspires.ftc.teamcode.statemachines.Transition;
 
 /**
  * Created by Derek Williams of team 3965 on 11/13/2016.

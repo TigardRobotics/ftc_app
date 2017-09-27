@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes2016;
 
-import org.firstinspires.ftc.teamcode.State;
-import org.firstinspires.ftc.teamcode.Transition;
+import org.firstinspires.ftc.teamcode.statemachines.State;
+import org.firstinspires.ftc.teamcode.statemachines.Transition;
 
 /**
  * Created by Derek Williams of team 3965 on 11/19/2016.

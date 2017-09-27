@@ -1,6 +1,15 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+import org.firstinspires.ftc.teamcode.statemachines.DriveState;
+import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
+import org.firstinspires.ftc.teamcode.ModernRoboticsSensorModule;
+import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
+import org.firstinspires.ftc.teamcode.RobotBase;
+import org.firstinspires.ftc.teamcode.SensorModule;
+import org.firstinspires.ftc.teamcode.statemachines.TurnState;
+import org.firstinspires.ftc.teamcode.statemachines.BelowRangeTrans;
 
 /**
  * Created by Derek Williams on 10/12/2016.
@@ -23,7 +32,6 @@ public class BasicAutonomous extends RobotBase {
                 new DriveState("forward", -100.0, sensors, new BelowRangeTrans("turnaround", sensors, 30)),
                 new TurnState("turnaround", 100, sensors, new ProgressTrans("forward", 7660/2))
         );
-
     }
 
     @Override

@@ -1,17 +1,13 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.statemachines;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
-
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.RobotLog;
 
 /**
  * Created by Derek Williams of team 3965 on 10/9/2016.
  */
 
-class StateMachine {
+public class StateMachine {
 	private State currentState;
 	private List<State> states;
 	private boolean firstUse;

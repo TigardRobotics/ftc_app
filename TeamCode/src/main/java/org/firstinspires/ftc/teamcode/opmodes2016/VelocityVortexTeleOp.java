@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Transition;
+import org.firstinspires.ftc.teamcode.statemachines.Transition;
 
 /**
  * Created by Derek Williams on 10/11/2016.

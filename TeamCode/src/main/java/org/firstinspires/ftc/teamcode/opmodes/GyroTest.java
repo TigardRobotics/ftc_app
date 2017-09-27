@@ -1,8 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
+
+import org.firstinspires.ftc.teamcode.ModernRoboticsSensorModule;
+import org.firstinspires.ftc.teamcode.RobotBase;
 
 /**
  * Created by Derek Williams on 1/12/2017.

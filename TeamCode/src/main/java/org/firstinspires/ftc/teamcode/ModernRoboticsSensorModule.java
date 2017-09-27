@@ -24,7 +24,7 @@ public class ModernRoboticsSensorModule extends SensorModule {
     protected double gyroCalibrationTime = 4.0;
     protected boolean gyroCalibrationComplete = false;
 
-    ModernRoboticsSensorModule(RobotBase robot) {
+    public ModernRoboticsSensorModule(RobotBase robot) {
         this.robot = robot;
         gyroCalibrationTimer = new ElapsedTime();
     }
