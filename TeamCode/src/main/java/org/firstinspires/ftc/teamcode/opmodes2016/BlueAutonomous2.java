@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode.opmodes2016;
  * Created by Derek Williams of team 3965 on 12/10/2016.
  */
 
-public class BlueAutonomous2 extends VelocityVortexAutonomous {
+public class BlueAutonomous2 extends VelocityVortexAuto {
     @Override
     public void init() {
         super.init();

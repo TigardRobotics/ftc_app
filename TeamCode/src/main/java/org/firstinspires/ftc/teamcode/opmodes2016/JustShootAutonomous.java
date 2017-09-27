@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 @Autonomous(name="Just Shoot It", group="3965")
-public class JustShootAutonomous extends VelocityVortexAutonomous {
+public class JustShootAutonomous extends VelocityVortexAuto {
     @Override
     public void start(){
         super.start();

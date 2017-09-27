@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 @Autonomous(name="Test Gyro Drive", group="3965")
-public class TestDriveWithGyro extends VelocityVortexAutonomous {
+public class TestDriveWithGyro extends VelocityVortexAuto {
 
     @Override
     public void start() {

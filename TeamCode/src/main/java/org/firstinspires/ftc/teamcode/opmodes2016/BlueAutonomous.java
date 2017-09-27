@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 @Autonomous(name="AutoBlue", group="3965")
-public class BlueAutonomous extends VelocityVortexAutonomous {
+public class BlueAutonomous extends VelocityVortexAuto {
     @Override
     public void init() {
         super.init();

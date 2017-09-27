@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.RobotBase;
  */
 
 @Autonomous(name="AutoRed", group="3965")
-public class RedAutonomous extends VelocityVortexAutonomous {
+public class RedAutonomous extends VelocityVortexAuto {
     @Override
     public void init() {
         super.init();

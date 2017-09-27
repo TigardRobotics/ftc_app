@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.RobotBase;
  * Created by Derek Williams of team 3965 on 12/10/2016.
  */
 
-public class RedAutonomous2 extends VelocityVortexAutonomous {
+public class RedAutonomous2 extends VelocityVortexAuto {
     @Override
     public void init() {
         super.init();
