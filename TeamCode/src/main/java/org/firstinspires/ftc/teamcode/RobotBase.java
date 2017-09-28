@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.RobotLog;
-
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
+import java.util.HashMap;
+import java.util.Map;
 /**
  * Created by Derek Williams of team 3965 on 10/9/2016.
  */
@@ -16,9 +18,23 @@ public abstract class RobotBase extends OpMode {
 
     private DcMotor leftDriveMotor;
     private DcMotor rightDriveMotor;
+    private DeviceInterfaceModule io;
+
+    public IColorIndicator Leds;
+    private static Map<String, Byte> LedIoMap = new HashMap<String, Byte>(){{
+        put(LedController.ALL_COLORS, (byte)0x1F);
+        put(LedController.NO_COLOR, (byte)0x00);
+        put(LedController.RED, (byte)0x01);   //D0
+        put(LedController.WHITE, (byte)0x02); //D1
+        put(LedController.BLUE, (byte)0x04);  //D2
+        put(LedController.GREEN, (byte)0x08); //D3
+        put(LedController.YELLOW, (byte)0x10);//D4
+    }};
 
     @Override
     public void init() {
+        io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
+        Leds = new LedController(this, io, LedIoMap);
         telemetry.addLine("Basic Hardware Initialized");
         leftDriveMotor = hardwareMap.dcMotor.get("motor_l");
         rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
