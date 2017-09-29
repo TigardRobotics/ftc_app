@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.RobotBase;
 
@@ -9,6 +10,8 @@ import org.firstinspires.ftc.teamcode.RobotBase;
  */
 
 @Autonomous(name="AutoRed with Gyro", group="3965")
+@Disabled
+
 public class RedGyroAutonomous extends VelocityVortexAuto {
     @Override
     public void init() {

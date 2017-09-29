@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode.opmodes2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
  * Created by Derek Williams on 2/16/2017.
  */
 
 @Autonomous(name="AutoBlue with Gyro", group="3965")
+@Disabled
+
 public class BlueGyroAutonomous extends VelocityVortexAuto {
     @Override
     public void init() {

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
@@ -16,6 +17,8 @@ import org.firstinspires.ftc.teamcode.statemachines.BelowRangeTrans;
  */
 
 @Autonomous(name="Basic Autonomous", group="3965")
+//@Disabled
+
 public class BasicAutonomous extends RobotBase {
     private StateMachine machine; //= new StateMachine(this);
     private ModernRoboticsSensorModule sensors = new ModernRoboticsSensorModule(this);

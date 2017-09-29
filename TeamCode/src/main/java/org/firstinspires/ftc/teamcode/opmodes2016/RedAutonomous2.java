@@ -1,10 +1,16 @@
 package org.firstinspires.ftc.teamcode.opmodes2016;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import org.firstinspires.ftc.teamcode.RobotBase;
 
 /**
  * Created by Derek Williams of team 3965 on 12/10/2016.
  */
+
+@Autonomous(name="AutoRed2", group="3965")
+@Disabled
 
 public class RedAutonomous2 extends VelocityVortexAuto {
     @Override
