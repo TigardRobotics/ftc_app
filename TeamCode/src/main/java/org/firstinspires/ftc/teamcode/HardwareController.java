@@ -10,7 +10,7 @@ public abstract class HardwareController {
 
     protected OpMode Robot;
 
-    public HardwareController( OpMode robot)
+    public HardwareController(OpMode robot)
     {
         Robot = robot;
     }
@@ -20,14 +20,15 @@ public abstract class HardwareController {
      * <p>
      * This method will be called once when the INIT button is pressed.
      */
-    public void init() {};
+    public void init() {}
+
     /**
      * User defined init_loop method
      * <p>
      * This method will be called repeatedly when the INIT button is pressed.
      * This method is optional. By default this method takes no action.
      */
-    public void init_loop() {};
+    public void init_loop() {}
 
     /**
      * User defined start method.
@@ -37,14 +38,14 @@ public abstract class HardwareController {
      * Example usage: Starting another thread.
      *
      */
-    public void start() {};
+    public void start() {}
 
     /**
      * User defined loop method
      * <p>
      * This method will be called repeatedly in a loop while this op mode is running
      */
-    public void loop() {};
+    public void loop() {}
 
     /**
      * User defined stop method
@@ -53,6 +54,6 @@ public abstract class HardwareController {
      *
      * The stop method is optional. By default this method takes no action.
      */
-    public void stop() {};
+    public void stop() {}
 
 }
