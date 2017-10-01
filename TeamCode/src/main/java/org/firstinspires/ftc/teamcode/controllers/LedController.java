@@ -34,8 +34,7 @@ public class LedController extends HardwareController implements IColorIndicator
     private DeviceInterfaceModule io;
     private byte colorData = 0x00;
 
-    public LedController(OpMode robot, DeviceInterfaceModule LedIo, Map<String, Byte> ioMap) {
-        super(robot);
+    public LedController(DeviceInterfaceModule LedIo, Map<String, Byte> ioMap) {
         this.io = LedIo;
         colorData = 0x00;
         LedIo.setDigitalIOControlByte((byte)ioMap.get(ALL_COLORS)); //Set color bits as outputs

@@ -47,7 +47,7 @@ public abstract class RobotBase extends OpMode {
         HardwareController.Robot = this;
         State.Robot = this;
         io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
-        Leds = new LedController(this, io, LedIoMap);
+        Leds = new LedController(io, LedIoMap);
         leftDriveMotor = hardwareMap.dcMotor.get("motor_l");
         rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
         Drive = new TankDrive(rightDriveMotor,leftDriveMotor);
