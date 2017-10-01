@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.VV_2016;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.RobotBase;
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 //import org.firstinspires.ftc.teamcode.StateMachine;
 
 /**
@@ -14,8 +14,8 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     //private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
     //protected StateMachine stateMachine = new StateMachine(this);
 
-    protected static final double DRIVE_DIAMETER = 35.56; // Centimeters
     protected static final double FULL_TURN_ROTATION = 4843; // Encoder counts
+    protected static final double COUNTS_PER_DEGREE = FULL_TURN_ROTATION/360.0;
     private static final double COUNTS_PER_ROTATION = 1440.0;
     private static final double CENTIMETERS_PER_ROTATION = 31.928;
     protected static final double COUNTS_PER_CENTIMETER = COUNTS_PER_ROTATION/CENTIMETERS_PER_ROTATION;
@@ -58,30 +58,14 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
         retractLeftPusher();
         retractRightPusher();
 
+        Drive.setCountsPerCentimeter(COUNTS_PER_CENTIMETER);
+        Drive.setCountsPerDegree(COUNTS_PER_DEGREE);
     }
 
     @Override
     public void init_loop() {
         //sensorModule.init_loop();
     }
-
-    @Override
-    public double getDriveMotorDiameter () {
-        return DRIVE_DIAMETER;
-    }
-
-    /*
-    @Override
-    public SensorModule Sensors() {
-        return sensorModule;
-    }
-    */
-
-    @Override
-    public double countsToCentimeters(double counts) {
-        return COUNTS_PER_CENTIMETER*counts;
-    }
-
 
     public void extendRightPusher() {
         rightButtonPusher.setPosition(RIGHT_BUTTON_PUSHER_EXTENDED);
@@ -138,6 +122,15 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
     protected double cmToEnc(double dist) {
         return dist*COUNTS_PER_CENTIMETER;
     }
+
+    public void setSquareLeftDrivePower(double power) {
+        Drive.setLeftDrivePower(power*Math.abs(power));
+    }
+
+    public void setSquareRightDrivePower(double power) {
+        Drive.setRightDrivePower(power*Math.abs(power));
+    }
+
 
     /**
      * Created by Derek Williams of team 3965 on 12/13/2016.

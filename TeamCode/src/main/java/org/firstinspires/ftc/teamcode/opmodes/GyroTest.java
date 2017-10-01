@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareDevice;
 
-import org.firstinspires.ftc.teamcode.ModernRoboticsSensorModule;
-import org.firstinspires.ftc.teamcode.RobotBase;
+import org.firstinspires.ftc.teamcode.controllers.ModernRoboticsSensorModule;
 
 /**
  * Created by Derek Williams on 1/12/2017.
@@ -48,7 +45,7 @@ public class GyroTest extends RobotBase {
             telemetry.addLine("Within Threshold");
             if(iterationsWithinThresholdCount >= requiredIterationsWithinThresholdForHeadingReached) {
                 telemetry.addLine("Heading Reached");
-                stopDriveMotors();
+                Drive.stopDriveMotors();
                 return;
             }
         }
@@ -70,7 +67,7 @@ public class GyroTest extends RobotBase {
         telemetry.addData("Error", error);
         telemetry.addData("Power", power);
 
-        setRightDrivePower(-power);
-        setLeftDrivePower(power);
+        Drive.setRightDrivePower(-power);
+        Drive.setLeftDrivePower(power);
     }
 }

@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.ModernRoboticsSensorModule;
-import org.firstinspires.ftc.teamcode.RobotBase;
-import org.firstinspires.ftc.teamcode.SensorModule;
+import org.firstinspires.ftc.teamcode.controllers.ModernRoboticsSensorModule;
+import org.firstinspires.ftc.teamcode.controllers.SensorModule;
 
 /**
  * Created by Derek Williams of team 3965 on 10/23/2016.

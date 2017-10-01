@@ -89,6 +89,13 @@ public class VelocityVortexTeleOp extends VelocityVortexRobotBase {
     public void stop() {
         //stateMachine.stop();
     }
+    public void setSquareLeftDrivePower(double power) {
+        Drive.setLeftDrivePower(power*Math.abs(power));
+    }
+
+    public void setSquareRightDrivePower(double power) {
+        Drive.setRightDrivePower(power*Math.abs(power));
+    }
 
     /**
      * Created by Derek Williams on 2/18/2017.

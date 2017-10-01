@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.controllers;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
  * Created by Mark on 9/27/2017.
@@ -8,12 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public abstract class HardwareController {
 
-    protected OpMode Robot;
-
-    public HardwareController(OpMode robot)
-    {
-        Robot = robot;
-    }
+    static public RobotBase Robot;
 
     /**
      * User defined init method

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.statemachines;
 
-import org.firstinspires.ftc.teamcode.SensorModule;
-import org.firstinspires.ftc.teamcode.iEncDrive;
+import org.firstinspires.ftc.teamcode.controllers.SensorModule;
 
 /**
  * Created by Derek on 9/19/17.
@@ -9,7 +8,6 @@ import org.firstinspires.ftc.teamcode.iEncDrive;
 
 public abstract class MoveState extends State {
     protected SensorModule sensors;
-    protected iEncDrive driveSys;
     protected double speed;
     protected double power;
 

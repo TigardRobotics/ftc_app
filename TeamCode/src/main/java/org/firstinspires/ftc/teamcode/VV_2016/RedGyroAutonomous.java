@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.VV_2016;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.teamcode.RobotBase;
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
  * Created by Derek Williams of team 3965 on 2/20/2017.

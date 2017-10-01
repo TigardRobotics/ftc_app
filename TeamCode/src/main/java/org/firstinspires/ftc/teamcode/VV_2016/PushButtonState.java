@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.VV_2016;
 
-import org.firstinspires.ftc.teamcode.RobotBase;
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 import org.firstinspires.ftc.teamcode.statemachines.Transition;
 
 /**

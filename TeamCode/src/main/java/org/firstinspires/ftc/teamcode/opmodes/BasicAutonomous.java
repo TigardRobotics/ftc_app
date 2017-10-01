@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
-import org.firstinspires.ftc.teamcode.ModernRoboticsSensorModule;
+import org.firstinspires.ftc.teamcode.controllers.ModernRoboticsSensorModule;
 import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
-import org.firstinspires.ftc.teamcode.RobotBase;
-import org.firstinspires.ftc.teamcode.SensorModule;
+import org.firstinspires.ftc.teamcode.controllers.SensorModule;
 import org.firstinspires.ftc.teamcode.statemachines.TurnState;
 import org.firstinspires.ftc.teamcode.statemachines.BelowRangeTrans;
 

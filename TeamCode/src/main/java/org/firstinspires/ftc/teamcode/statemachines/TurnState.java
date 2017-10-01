@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.statemachines;
 
-import org.firstinspires.ftc.teamcode.SensorModule;
+import org.firstinspires.ftc.teamcode.controllers.SensorModule;
 
 /**
  * Created by Derek Williams on 10/12/2016.
@@ -15,14 +15,13 @@ public class TurnState extends MoveState {
     }
 
     public double getProgress() {
-        return Math.abs(driveSys.getPos() - initialEncoderPosition);
+        return Math.abs(Robot.Drive.getRotationPosition() - initialEncoderPosition);
     }
 
     @Override
     public void onEntry() {
-        initialEncoderPosition = driveSys.getPos();
-        driveSys.setSpeed(power);
-        driveSys.setSpeed(-power);
+        initialEncoderPosition = Robot.Drive.getRotationPosition();
+        Robot.Drive.setRotationPower(power);
     }
 
     @Override
@@ -32,6 +31,6 @@ public class TurnState extends MoveState {
 
     @Override
     public void onExit() {
-        driveSys.stop();
+        Robot.Drive.stop();
     }
 }

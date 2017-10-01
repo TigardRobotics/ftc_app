@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.statemachines;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import java.util.List;
  */
 
 public abstract class State /*extends StateMachineComponent*/ {
+    public static RobotBase Robot;
     private List<Transition> transitions;
     //private boolean complete = false;
     protected String name;
