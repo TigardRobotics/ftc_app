@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
+import java.util.List;
+
 /**
  * Created by Mark on 9/27/2017.
  */
@@ -53,4 +55,20 @@ public abstract class HardwareController {
      */
     public void stop() {}
 
+    /**
+     * This method checks to see if the desired interface is implemented
+     */
+    public Boolean implementsInterface(Class interf){
+        return interf.isInstance(this);
+    }
+
+    /**
+     * This method searches a list for a HardwareController with the desired interface
+     */
+    public static HardwareController Find(List<HardwareController> list,Class interf){
+        for(HardwareController entry : list){
+            if(entry.implementsInterface(interf)) return entry;
+        }
+        return null;
+    }
 }
