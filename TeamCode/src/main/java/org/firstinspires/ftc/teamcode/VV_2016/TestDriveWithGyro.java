@@ -1,12 +1,14 @@
-package org.firstinspires.ftc.teamcode.opmodes2016;
+package org.firstinspires.ftc.teamcode.VV_2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
  * Created by Robotics on 2/21/2017.
  */
 
 @Autonomous(name="Test Gyro Drive", group="3965")
+@Disabled
 public class TestDriveWithGyro extends VelocityVortexAuto {
 
     @Override

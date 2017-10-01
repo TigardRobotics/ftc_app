@@ -1,23 +1,23 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import org.firstinspires.ftc.teamcode.ButtonPusher;
 import org.firstinspires.ftc.teamcode.RobotBase;
+import org.firstinspires.ftc.teamcode.VV_2016.VelocityVortexRobotBase;
 
 /**
  * Created by Derek Williams of team 3965 on 12/13/2016.
  */
 
 public class ToggleTest extends RobotBase {
-    protected ButtonPusher rightButtonPusher;
-    protected ButtonPusher leftButtonPusher;
+    protected VelocityVortexRobotBase.ButtonPusher rightButtonPusher;
+    protected VelocityVortexRobotBase.ButtonPusher leftButtonPusher;
 
     protected boolean previousX;
     protected boolean previousB;
 
     @Override
     public void start(){
-        rightButtonPusher = new ButtonPusher(hardwareMap.servo.get("right_button_pusher"), ButtonPusher.RIGHT);
-        leftButtonPusher = new ButtonPusher(hardwareMap.servo.get("left_button_pusher"), ButtonPusher.LEFT);
+        rightButtonPusher = new VelocityVortexRobotBase.ButtonPusher(hardwareMap.servo.get("right_button_pusher"), VelocityVortexRobotBase.ButtonPusher.RIGHT);
+        leftButtonPusher = new VelocityVortexRobotBase.ButtonPusher(hardwareMap.servo.get("left_button_pusher"), VelocityVortexRobotBase.ButtonPusher.LEFT);
     }
 
     @Override

@@ -1,11 +1,9 @@
-package org.firstinspires.ftc.teamcode.opmodes2016;
+package org.firstinspires.ftc.teamcode.VV_2016;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.ModernRoboticsSensorModule;
 import org.firstinspires.ftc.teamcode.RobotBase;
-import org.firstinspires.ftc.teamcode.SensorModule;
 //import org.firstinspires.ftc.teamcode.StateMachine;
 
 /**
@@ -139,5 +137,69 @@ public abstract class VelocityVortexRobotBase extends RobotBase {
 
     protected double cmToEnc(double dist) {
         return dist*COUNTS_PER_CENTIMETER;
+    }
+
+    /**
+     * Created by Derek Williams of team 3965 on 12/13/2016.
+     */
+
+    public static class ButtonPusher {
+        private Servo servo;
+        private String side;
+        private boolean isExtended;
+
+        // Positions
+        private final static double RIGHT_BUTTON_PUSHER_EXTENDED = 0.99;
+        private final static double RIGHT_BUTTON_PUSHER_RETRACTED = 0.6;
+        private final static double LEFT_BUTTON_PUSHER_EXTENDED = 0.6;
+        private final static double LEFT_BUTTON_PUSHER_RETRACTED = 0.98;
+
+        // Sides
+        public static final String RIGHT = "RIGHT";
+        public static final String LEFT = "LEFT";
+
+        public ButtonPusher(Servo servo, String side) {
+            this.side = side;
+            this.servo = servo;
+
+            if (this.side != LEFT && this.side != RIGHT) {
+                throw new RuntimeException("Button Pusher side not initiated correctly");
+            }
+        }
+
+        public void extend() {
+            isExtended = true;
+            if (side == RIGHT) {
+                servo.setPosition(RIGHT_BUTTON_PUSHER_EXTENDED);
+            }
+            else if (side == LEFT) {
+                servo.setPosition(LEFT_BUTTON_PUSHER_EXTENDED);
+            }
+            else {
+                throw new RuntimeException("Button Pusher side not initiated correctly");
+            }
+        }
+
+        public void retract() {
+            isExtended = false;
+            if (side == RIGHT) {
+                servo.setPosition(RIGHT_BUTTON_PUSHER_RETRACTED);
+            }
+            else if (side == LEFT) {
+                servo.setPosition(LEFT_BUTTON_PUSHER_RETRACTED);
+            }
+            else {
+                throw new RuntimeException("Button Pusher side not initiated correctly");
+            }
+        }
+
+        public void toggle() {
+            if(isExtended) {
+                retract();
+            }
+            else {
+                extend();
+            }
+        }
     }
 }

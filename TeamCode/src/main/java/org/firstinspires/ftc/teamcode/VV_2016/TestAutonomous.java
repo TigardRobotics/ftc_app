@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.opmodes2016;
+package org.firstinspires.ftc.teamcode.VV_2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 //import org.firstinspires.ftc.teamcode.StateMachine;
 
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 @Autonomous(name="Test Auto", group="3965")
+@Disabled
 public class TestAutonomous extends VelocityVortexRobotBase {
     //protected StateMachine stateMachine = new StateMachine(this);
 
