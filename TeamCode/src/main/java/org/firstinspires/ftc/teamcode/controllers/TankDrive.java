@@ -11,6 +11,10 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 public class TankDrive extends HardwareController implements IDrive{
 
+    private static final double COUNTS_PER_WHEEL_ROTATION = 1440;         //Tetrix Encoder
+    private static final double CM_PER_WHEEL_ROTATION = 4.0*Math.PI*2.54; //4" Tetrix Wheel
+    private static final double CM_PER_ROBOT_TURN = 17.0*Math.PI*2.54;    //17" Turn Radius
+
     private DcMotor leftDriveMotor;
     private DcMotor rightDriveMotor;
 
@@ -53,7 +57,7 @@ public class TankDrive extends HardwareController implements IDrive{
         return Math.max(leftDriveMotor.getCurrentPosition(), rightDriveMotor.getCurrentPosition()); //Max is used to account for slippage
     }
 
-    private double countsPerCentimeter;
+    private double countsPerCentimeter = COUNTS_PER_WHEEL_ROTATION / CM_PER_WHEEL_ROTATION;     //Simple default
     public void setCountsPerCentimeter( double cpc) {countsPerCentimeter=cpc;};
     public double PositionToCentimeters(double counts) { return counts/countsPerCentimeter;};
 
@@ -62,7 +66,7 @@ public class TankDrive extends HardwareController implements IDrive{
         return leftDriveMotor.getCurrentPosition() - rightDriveMotor.getCurrentPosition();
     }
 
-    private double countsPerDegree;
+    private double countsPerDegree = countsPerCentimeter * CM_PER_ROBOT_TURN / 360;     //Simple default
     public void setCountsPerDegree( double cpd) {countsPerDegree=cpd;};
     public double RotationToDegrees(double counts) { return counts/countsPerDegree;};
 
