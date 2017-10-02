@@ -8,13 +8,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by derek on 9/18/17.
+ * Created by Derek on 9/18/17.
  */
 
-public abstract class State /*extends StateMachineComponent*/ {
+public abstract class State {
     public static RobotBase Robot;
     private List<Transition> transitions;
-    //private boolean complete = false;
+    //private boolean complete = false;  //! Should be removed
     protected String name;
     protected ElapsedTime runtime = new ElapsedTime();
 

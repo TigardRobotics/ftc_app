@@ -12,12 +12,12 @@ public abstract class MoveState extends State {
     protected SensorModule sensors;
     protected double speed;
     protected double power;
-    protected IDrive Drive;
+    protected IDrive drive;
 
     public MoveState(String name, double power, SensorModule sensors, Transition... transitions){
         super(name, transitions);
         this.sensors = sensors;
         this.power = power;
-        Drive = (IDrive)(HardwareController.find(Robot.Controllers,IDrive.class));
+        drive = (IDrive)(HardwareController.find(Robot.Controllers,IDrive.class));
     }
 }

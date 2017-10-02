@@ -15,13 +15,13 @@ public class TurnState extends MoveState {
     }
 
     public double getProgress() {
-        return Math.abs(Drive.getRotationPosition() - initialEncoderPosition);
+        return Math.abs(drive.getRotationPosition() - initialEncoderPosition);
     }
 
     @Override
     public void onEntry() {
-        initialEncoderPosition = Drive.getRotationPosition();
-        Drive.setRotationPower(power);
+        initialEncoderPosition = drive.getRotationPosition();
+        drive.setRotationPower(power);
     }
 
     @Override
@@ -31,6 +31,6 @@ public class TurnState extends MoveState {
 
     @Override
     public void onExit() {
-        Drive.stopDriveMotors();
+        drive.stopDriveMotors();
     }
 }
