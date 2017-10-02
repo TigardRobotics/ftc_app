@@ -18,6 +18,6 @@ public abstract class MoveState extends State {
         super(name, transitions);
         this.sensors = sensors;
         this.power = power;
-        Drive = (IDrive)(HardwareController.Find(Robot.Controllers,IDrive.class));
+        Drive = (IDrive)(HardwareController.find(Robot.Controllers,IDrive.class));
     }
 }

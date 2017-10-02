@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.IDrive;
-import org.firstinspires.ftc.teamcode.controllers.LedController;
 import org.firstinspires.ftc.teamcode.controllers.TankDrive;
 
 /**
@@ -24,7 +22,7 @@ public abstract class TankBot extends RobotBase {
         rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
         Controllers.add(new TankDrive(rightDriveMotor, leftDriveMotor));
 
-        Drive = (IDrive)(HardwareController.Find(Controllers,IDrive.class));
+        Drive = (IDrive)(HardwareController.find(Controllers,IDrive.class));
     }
 
     @Override
