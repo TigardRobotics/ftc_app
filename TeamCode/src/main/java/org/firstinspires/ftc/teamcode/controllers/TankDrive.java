@@ -22,10 +22,10 @@ public class TankDrive extends HardwareController implements IDrive{
     {
         leftDriveMotor = left;
         rightDriveMotor = right;
-        //leftDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //rightDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //rightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //leftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void setDrivePower(double power){
