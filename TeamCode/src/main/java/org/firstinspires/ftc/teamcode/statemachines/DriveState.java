@@ -19,13 +19,13 @@ public class DriveState extends MoveState {
 
     @Override
     public double getProgress() {
-        return Math.abs(Robot.Drive.getDrivePosition() - initialPos);
+        return Math.abs(Drive.getDrivePosition() - initialPos);
     }
 
     @Override
     public void onEntry() {
-        initialPos = Robot.Drive.getDrivePosition();
-        Robot.Drive.setDrivePower(speed);
+        initialPos = Drive.getDrivePosition();
+        Drive.setDrivePower(speed);
     }
 
     @Override
@@ -37,6 +37,6 @@ public class DriveState extends MoveState {
     @Override
     public void onExit() {
         super.onExit();
-        Robot.Drive.stop();
+        Drive.stopDriveMotors();
     }
 }

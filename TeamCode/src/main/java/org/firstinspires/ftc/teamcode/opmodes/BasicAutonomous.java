@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.statemachines.BelowRangeTrans;
 @Autonomous(name="Basic Autonomous", group="3965")
 //@Disabled
 
-public class BasicAutonomous extends RobotBase {
+public class BasicAutonomous extends TankBot {
     private StateMachine machine; //= new StateMachine(this);
     private ModernRoboticsSensorModule sensors = new ModernRoboticsSensorModule(this);
 
@@ -29,6 +29,7 @@ public class BasicAutonomous extends RobotBase {
 
     @Override
     public void start(){
+        super.start();
         machine = new StateMachine(
                 new DriveState("forward", -100.0, sensors, new BelowRangeTrans("turnaround", sensors, 30)),
                 new TurnState("turnaround", 100, sensors, new ProgressTrans("forward", 7660/2))
@@ -42,6 +43,7 @@ public class BasicAutonomous extends RobotBase {
 
     @Override
     public void stop(){
+        super.stop();
         machine.stop();
     }
 

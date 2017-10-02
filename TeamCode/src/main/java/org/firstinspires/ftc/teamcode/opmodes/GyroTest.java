@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.controllers.ModernRoboticsSensorModule;
  */
 
 @TeleOp(name = "Gyro test", group = "3965")
-public class GyroTest extends RobotBase {
+public class GyroTest extends TankBot {
     private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
     protected double maxPower = 0.6;
     protected double minPower = 0.01;

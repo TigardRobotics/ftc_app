@@ -59,7 +59,7 @@ public abstract class HardwareController {
      * This method checks to see if the desired interface is implemented
      */
     public Boolean implementsInterface(Class interf){
-        return interf.isInstance(this);
+        return interf.isAssignableFrom(this.getClass());
     }
 
     /**

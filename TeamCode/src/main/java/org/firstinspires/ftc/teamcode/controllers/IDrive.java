@@ -11,7 +11,9 @@ public interface IDrive {
     void setLeftDrivePower(double power);
     void setRightDrivePower(double power);
     double getDrivePosition();
+    void setCountsPerCentimeter(double cpc);
     double PositionToCentimeters( double position );
     double getRotationPosition();
+    void setCountsPerDegree(double cpd);
     double RotationToDegrees( double position );
 }

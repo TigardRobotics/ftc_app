@@ -4,13 +4,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
+import org.firstinspires.ftc.teamcode.opmodes.TankBot;
 //import org.firstinspires.ftc.teamcode.StateMachine;
 
 /**
  * Created by Derek Williams of team 3965 on 10/11/2016.
  */
 
-public abstract class VelocityVortexRobotBase extends RobotBase {
+public abstract class VelocityVortexRobotBase extends TankBot {
     //private ModernRoboticsSensorModule sensorModule = new ModernRoboticsSensorModule(this);
     //protected StateMachine stateMachine = new StateMachine(this);
 
