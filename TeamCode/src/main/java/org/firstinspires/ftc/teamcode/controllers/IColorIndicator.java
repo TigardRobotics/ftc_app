@@ -1,12 +1,22 @@
 package org.firstinspires.ftc.teamcode.controllers;
 
 /**
- * Created by Mark on 9/27/2017.
+ * LED Display Interface
  */
 
 public interface IColorIndicator {
 
+    /**
+     * Turn discrete LED on/off
+     * @param color
+     * @param on
+     */
     public void setLed(String color, Boolean on);
 
+    /**
+     * Turn DeviceInterfaceModule on/off
+     * @param color
+     * @param on
+     */
     public void setModuleLed(String color, Boolean on);
 }

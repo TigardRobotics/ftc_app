@@ -8,10 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Mark Hancock and Derek Williams on 3/26/2017 and 3/28/2017.
- * LED control
+ * LED controler
  */
-
 public class LedController extends HardwareController implements IColorIndicator{
     public static final String RED = "red";
     public static final String WHITE = "white";
@@ -21,27 +19,26 @@ public class LedController extends HardwareController implements IColorIndicator
     public static final String NO_COLOR = "NONE";
     public static final String ALL_COLORS = "ALL";
 
-    private static Map<String, Byte> ioMap = new HashMap<String, Byte>(){{
-        put(ALL_COLORS, (byte)0x1F);
-        put(NO_COLOR, (byte)0x00);
-        put(RED, (byte)0x01);   //D0
-        put(WHITE, (byte)0x02); //D1
-        put(BLUE, (byte)0x04);  //D2
-        put(GREEN, (byte)0x08); //D3
-        put(YELLOW, (byte)0x10);//D4
-    }};
+    private static Map<String, Byte> ioMap; //Maps Color Name to byte to write to DeviceInterfaceModule
 
-    private DeviceInterfaceModule io;
+    private DeviceInterfaceModule io;   //Where LEDs are connected to
     private byte colorData = 0x00;
 
-    public LedController(DeviceInterfaceModule LedIo, Map<String, Byte> ioMap) {
-        this.io = LedIo;
+    /**
+     * LED controler
+     * @param ledIo DeviceInterfaceModule
+     * @param ledIoMap Maps Color Name to byte to write to DeviceInterfaceModule
+     */
+    public LedController(DeviceInterfaceModule ledIo, Map<String, Byte> ledIoMap) {
+        this.io = ledIo;
+        this.ioMap = ledIoMap;
         colorData = 0x00;
-        //LedIo.setDigitalIOControlByte((byte)ioMap.get(ALL_COLORS)); //Set color bits as outputs
     }
 
-    /**
-     * Turn LED on/off
+     /**
+     * Turn discrete LED on/off
+     * @param color
+     * @param on
      */
     public void setLed(String color, Boolean on) {
         byte bits = ioMap.get(color);
@@ -50,6 +47,11 @@ public class LedController extends HardwareController implements IColorIndicator
         colorData = next;
     }
 
+    /**
+     * Turn DeviceInterfaceModule on/off
+     * @param color
+     * @param on
+     */
     public void setModuleLed(String color, Boolean on) {
         switch(color) {
             case BLUE:
