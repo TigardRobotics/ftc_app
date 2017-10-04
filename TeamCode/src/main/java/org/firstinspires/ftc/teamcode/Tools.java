@@ -5,7 +5,11 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public final class Tools {
-    static int sign(int x) {
+    public static int sign(int x) {
         return x / Math.abs(x);
+    }
+
+    public static double sqr(double x) {
+        return Math.pow(x, 2);
     }
 }

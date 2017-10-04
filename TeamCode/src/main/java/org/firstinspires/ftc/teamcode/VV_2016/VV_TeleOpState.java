@@ -6,11 +6,11 @@ import org.firstinspires.ftc.teamcode.statemachines.Transition;
  * Created by Derek Williams of team 3965 on 1/31/2017.
  */
 
-public class TeleOpState extends VelocityVortexState {
+public class VV_TeleOpState extends VelocityVortexState {
     protected double stickPressedPowerFactor = 0.3;
     protected double triggerActuationThreshold = 0.5;
 
-    TeleOpState(String name, Transition... transitions) {
+    VV_TeleOpState(String name, Transition... transitions) {
         super(name, transitions);
     }
 

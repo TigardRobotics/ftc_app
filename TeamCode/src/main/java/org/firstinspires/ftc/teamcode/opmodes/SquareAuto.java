@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.statemachines.TurnState;
  * Test driving in a square.
  */
 
-@Autonomous(name="LedController_Test", group="test")
+@Autonomous(name="Square", group="test")
 public class SquareAuto extends TankBot {
     private ModernRoboticsSensorModule sensors = new ModernRoboticsSensorModule(this);
 

@@ -12,7 +12,7 @@ public abstract class StateBasedTeleop extends VelocityVortexRobotBase {
     public void start() {
         /*
         stateMachine.add(new State[]{
-                new TeleOpState("teleop"),
+                new VV_TeleOpState("teleop"),
                 new EdgeFollowState("follow", followSpeed),
                 new PushButtonState("push", color),
         });
