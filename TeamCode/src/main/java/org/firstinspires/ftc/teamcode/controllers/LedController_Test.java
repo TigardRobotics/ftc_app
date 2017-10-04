@@ -86,8 +86,7 @@ public class LedController_Test extends RobotBase {
             }
             telemetry.addLine("COLOR="+light);
         }
-        else
-        {
+        else {
             leds.setLed(light, true);
         }
     }

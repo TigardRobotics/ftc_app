@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.controllers.LedController;
 import org.firstinspires.ftc.teamcode.controllers.SensorModule;
 import org.firstinspires.ftc.teamcode.controllers.TankDrive;
 import org.firstinspires.ftc.teamcode.statemachines.State;
+import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 /**
  * Created by Derek Williams of team 3965 on 10/9/2016.
+ * Superclass for all opmodes
  */
 
 public abstract class RobotBase extends OpMode {
@@ -30,10 +32,23 @@ public abstract class RobotBase extends OpMode {
     //* List of supported Hardware Controllers */
     public List<HardwareController> Controllers = new ArrayList<HardwareController>();
 
+    protected StateMachine stateMachine = null;
+
     @Override
     public void init() {
         HardwareController.Robot = this;
         State.Robot = this;
+    }
+
+    @Override
+    public void loop() {
+        if(stateMachine == null) throw new RuntimeException("State Machine is never constructed!");
+        stateMachine.step();
+    }
+
+    @Override
+    public void stop() {
+        stateMachine.stop();
     }
 
     //!TODO: Move to Controllers
