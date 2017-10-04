@@ -14,16 +14,16 @@ public class ServoTesting extends VelocityVortexRobotBase {
     double leftButtonPusherPos = 0.5;
 
     @Override
-    public void init(){
+    public void init() {
         rightButtonPusher = hardwareMap.servo.get("right_button_pusher");
         leftButtonPusher = hardwareMap.servo.get("left_button_pusher");
     }
 
     @Override
-    public void start(){}
+    public void start() {}
 
     @Override
-    public void loop(){
+    public void loop() {
         rightButtonPusherPos += (-gamepad1.left_stick_y)/100;
         leftButtonPusherPos += (-gamepad1.right_stick_y)/100;
         leftButtonPusher.setPosition(leftButtonPusherPos);
@@ -33,5 +33,5 @@ public class ServoTesting extends VelocityVortexRobotBase {
     }
 
     @Override
-    public void stop(){}
+    public void stop() {}
 }

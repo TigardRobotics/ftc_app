@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.RobotLog;
  * Created by Mark on 10/1/2017.
  */
 
-public class TankDrive extends HardwareController implements IDrive{
+public class TankDrive extends HardwareController implements IDrive {
 
     private static final double COUNTS_PER_WHEEL_ROTATION = 1440;         //Tetrix Encoder
     private static final double CM_PER_WHEEL_ROTATION = 4.0*Math.PI*2.54; //4" Tetrix Wheel
@@ -18,8 +18,7 @@ public class TankDrive extends HardwareController implements IDrive{
     private DcMotor leftDriveMotor;
     private DcMotor rightDriveMotor;
 
-    public TankDrive(DcMotor right, DcMotor left)
-    {
+    public TankDrive(DcMotor right, DcMotor left) {
         leftDriveMotor = left;
         rightDriveMotor = right;
         leftDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -28,7 +27,7 @@ public class TankDrive extends HardwareController implements IDrive{
         leftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setDrivePower(double power){
+    public void setDrivePower(double power) {
         leftDriveMotor.setPower(power);
         rightDriveMotor.setPower(power);
     }
@@ -37,17 +36,17 @@ public class TankDrive extends HardwareController implements IDrive{
         setDrivePower(0.0);
     }
 
-    public void setRotationPower(double power){
+    public void setRotationPower(double power) {
         leftDriveMotor.setPower(power);
         rightDriveMotor.setPower(-power);
     }
-    public void setLeftDrivePower(double power){
+    public void setLeftDrivePower(double power) {
         RobotLog.i(String.format("Enabling Left Motor w/ speed: %f", power));
         Robot.telemetry.addLine(String.format("Enabling Left Motor w/ speed: %f", power));
         leftDriveMotor.setPower(power);
     }
 
-    public void setRightDrivePower(double power){
+    public void setRightDrivePower(double power) {
         RobotLog.i(String.format("Enabling Right Motor w/ speed: %f", power));
         Robot.telemetry.addLine(String.format("Enabling Right Motor w/ speed: %f", power));
         rightDriveMotor.setPower(-power);
