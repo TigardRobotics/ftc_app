@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.statemachines;
 
+import com.qualcomm.robotcore.util.RobotLog;
+
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
+
 import java.util.List;
 import java.util.Arrays;
 
@@ -21,6 +25,7 @@ public class StateMachine {
 	public void stop() {
 		if (currentState != null) {
 			currentState.onExit();
+			RobotBase.instance.telemetry.addData("Exiting state", currentState.getName());
 		}
 	}
 
@@ -28,7 +33,11 @@ public class StateMachine {
 	* Step Method is periodically called
 	 */
 	public void step(){
-		if(firstUse) currentState.onEntry();
+		if(firstUse) {
+			currentState.onEntry();
+			RobotBase.instance.telemetry.addData("Entering state", currentState.getName());
+			firstUse = false;
+		}
 		boolean transitioned;
 		do {
 			currentState.doState();
@@ -37,11 +46,13 @@ public class StateMachine {
 				boolean nextExists = false;
 				transitioned = true;
 				currentState.onExit();
+				RobotBase.instance.telemetry.addData("Exiting state", currentState.getName());
 				for(State state : this.states) {
 					if(state.getName() == next) {
 						currentState = state;
 						nextExists = true;
 						currentState.onEntry();
+						RobotBase.instance.telemetry.addData("Entering state", currentState.getName());
 					}
 				}
 				if(!nextExists) {

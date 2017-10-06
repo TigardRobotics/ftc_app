@@ -14,6 +14,7 @@ public class TeleOpState extends State {
     protected double triggerActuationThreshold = 0.5;
     protected IDrive drive;
 
+
     public TeleOpState(String name, Transition... transitions) {
         super(name, transitions);
         drive = (IDrive)(HardwareController.find(Robot.Controllers, IDrive.class));
@@ -24,8 +25,8 @@ public class TeleOpState extends State {
     }
 
     public void doState() {
-        drive.setLeftDrivePower(Tools.sqr(Robot.gamepad1.left_stick_y));
-        drive.setRightDrivePower(Tools.sqr(Robot.gamepad1.right_stick_y));
+        drive.setLeftDrivePower(Tools.timesabs(Robot.gamepad1.left_stick_y));
+        drive.setRightDrivePower(Tools.timesabs(Robot.gamepad1.right_stick_y));
     }
 
     public void onExit() {

@@ -12,4 +12,8 @@ public final class Tools {
     public static double sqr(double x) {
         return Math.pow(x, 2);
     }
+
+    public static double timesabs(double x) {
+        return x*Math.abs(x);
+    }
 }

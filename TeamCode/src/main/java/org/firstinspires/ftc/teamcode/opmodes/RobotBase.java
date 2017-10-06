@@ -34,8 +34,11 @@ public abstract class RobotBase extends OpMode {
 
     protected StateMachine stateMachine = null;
 
+    public static RobotBase instance;
+
     @Override
     public void init() {
+        instance = this;
         HardwareController.Robot = this;
         State.Robot = this;
     }

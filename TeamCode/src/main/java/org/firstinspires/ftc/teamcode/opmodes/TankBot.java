@@ -22,7 +22,7 @@ public abstract class TankBot extends RobotBase {
         rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
         Controllers.add(new TankDrive(rightDriveMotor, leftDriveMotor));
 
-        Drive = (IDrive)(HardwareController.find(Controllers,IDrive.class));
+        Drive = (IDrive)(HardwareController.find(Controllers, IDrive.class));
     }
 
     @Override
