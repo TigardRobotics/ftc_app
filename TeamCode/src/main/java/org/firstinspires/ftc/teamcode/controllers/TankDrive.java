@@ -28,8 +28,8 @@ public class TankDrive extends HardwareController implements IDrive {
     }
 
     public void setDrivePower(double power) {
-        leftDriveMotor.setPower(power);
-        rightDriveMotor.setPower(power);
+        setLeftDrivePower(power);
+        setRightDrivePower(power);
     }
 
     public void stopDriveMotors(){
@@ -37,9 +37,10 @@ public class TankDrive extends HardwareController implements IDrive {
     }
 
     public void setRotationPower(double power) {
-        leftDriveMotor.setPower(power);
-        rightDriveMotor.setPower(-power);
+        setLeftDrivePower(power);
+        setRightDrivePower(-power);
     }
+
     public void setLeftDrivePower(double power) {
         RobotLog.i(String.format("Enabling Left Motor w/ speed: %f", power));
         Robot.telemetry.addLine(String.format("Enabling Left Motor w/ speed: %f", power));
