@@ -47,6 +47,7 @@ public abstract class RobotBase extends OpMode {
     public void loop() {
         if(stateMachine == null) throw new RuntimeException("State Machine is never constructed!");
         stateMachine.step();
+        for (HardwareController control : Controllers ) control.loop();
     }
 
     @Override

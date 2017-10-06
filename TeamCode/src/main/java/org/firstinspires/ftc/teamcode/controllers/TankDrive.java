@@ -18,6 +18,9 @@ public class TankDrive extends HardwareController implements IDrive {
     private DcMotor leftDriveMotor;
     private DcMotor rightDriveMotor;
 
+    protected double leftDrivePower;
+    protected double rightDrivePower;
+
     public TankDrive(DcMotor right, DcMotor left) {
         leftDriveMotor = left;
         rightDriveMotor = right;
