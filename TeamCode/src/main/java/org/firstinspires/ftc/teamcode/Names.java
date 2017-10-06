@@ -5,7 +5,7 @@ package org.firstinspires.ftc.teamcode;
  */
 
 public final class Names {
-    public static String ldrive = "ldrive";
-    public static String rdrive = "rdrive";
+    public static String ldrive = "motor_l";
+    public static String rdrive = "motor_r";
     public static String range = "range";
 }

@@ -24,12 +24,14 @@ public class DriveState extends MoveState {
 
     @Override
     public void onEntry() {
+        super.onEntry();
         initialPos = drive.getDrivePosition();
         drive.setDrivePower(speed);
     }
 
     @Override
     public void doState() {
+        drive.setDrivePower(speed);
         Robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
         RobotLog.i(name, String.format("Driven %f encoder counts", getProgress()));
     }

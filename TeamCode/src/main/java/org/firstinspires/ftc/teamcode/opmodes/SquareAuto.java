@@ -32,8 +32,8 @@ public class SquareAuto extends TankBot {
     public void start(){
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("drive", -100.0, sensors, new ProgressTrans("turn", sqrSideLen)),
-                new TurnState("turn", 100, sensors, new ProgressTrans("drive", turnAmount))
+                new DriveState("drive", -1.0, sensors, new ProgressTrans("turn", sqrSideLen)),
+                new TurnState("turn", 1.0, sensors, new ProgressTrans("drive", turnAmount))
         );
     }
 
