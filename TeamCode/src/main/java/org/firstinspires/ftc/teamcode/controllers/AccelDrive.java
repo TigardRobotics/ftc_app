@@ -53,5 +53,6 @@ public class AccelDrive extends TankDrive {
         {
             super.setRightDrivePower(rightDrivePower - Accel);
         }
+        super.loop();
     }
 }
