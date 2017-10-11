@@ -43,8 +43,7 @@ public class AccelDrive extends TankDrive {
         if(Math.abs(targetLeftPower-leftDrivePower)<=power_change) {
             super.setLeftDrivePower(targetLeftPower);
         }
-        else if (leftDrivePower < targetLeftPower)
-        {
+        else if (leftDrivePower < targetLeftPower) {
             super.setLeftDrivePower(leftDrivePower + power_change);
         }
         else
@@ -56,12 +55,10 @@ public class AccelDrive extends TankDrive {
         if(Math.abs(targetRightPower-rightDrivePower)<=power_change) {
             super.setRightDrivePower(targetRightPower);
         }
-        else if (rightDrivePower < targetRightPower)
-        {
+        else if (rightDrivePower < targetRightPower) {
             super.setRightDrivePower(rightDrivePower + power_change);
         }
-        else
-        {
+        else {
             super.setRightDrivePower(rightDrivePower - power_change);
         }
         super.loop();

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.statemachines;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.IDrive;
 import org.firstinspires.ftc.teamcode.controllers.SensorModule;
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
  * Created by Derek on 9/19/17.
@@ -18,6 +19,6 @@ public abstract class MoveState extends State {
         super(name, transitions);
         this.sensors = sensors;
         this.power = power;
-        drive = (IDrive)(HardwareController.find(Robot.Controllers,IDrive.class));
+        drive = (IDrive)(RobotBase.findController(IDrive.class));
     }
 }

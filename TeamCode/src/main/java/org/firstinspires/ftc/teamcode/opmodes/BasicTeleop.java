@@ -33,9 +33,9 @@ public class BasicTeleop extends TankBot {
     public void init() {
         super.init();
         io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
-        Controllers.add(new LedController(io, LedIoMap));
+        addControllers(new LedController(io, LedIoMap));
 
-        Leds = (LedController)(HardwareController.find(Controllers, LedController.class));
+        Leds = (LedController)(findController(LedController.class));
 
         telemetry.addLine("Basic Hardware Initialized");
         Leds.setLed(LedController.BLUE, true);

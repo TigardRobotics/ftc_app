@@ -20,9 +20,9 @@ public abstract class TankBot extends RobotBase {
         super.init();
         leftDriveMotor = hardwareMap.dcMotor.get("motor_l");
         rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
-        Controllers.add(new TankDrive(rightDriveMotor, leftDriveMotor));
+        addControllers(new TankDrive(rightDriveMotor, leftDriveMotor));
 
-        Drive = (IDrive)(HardwareController.find(Controllers, IDrive.class));
+        Drive = (IDrive)(findController(IDrive.class));
     }
 
     @Override

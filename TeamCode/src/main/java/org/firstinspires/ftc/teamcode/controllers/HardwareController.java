@@ -61,14 +61,4 @@ public abstract class HardwareController {
     public boolean implementsInterface(Class interf){
         return interf.isAssignableFrom(this.getClass());
     }
-
-    /**
-     * This method searches a list for a HardwareController with the desired interface
-     */
-    public static HardwareController find(List<HardwareController> list, Class interf){
-        for(HardwareController entry : list){
-            if(entry.implementsInterface(interf)) return entry;
-        }
-        return null;
-    }
 }

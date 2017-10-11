@@ -1,13 +1,9 @@
 package org.firstinspires.ftc.teamcode.controllers;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.controllers.HardwareController;
-import org.firstinspires.ftc.teamcode.controllers.IColorIndicator;
-import org.firstinspires.ftc.teamcode.controllers.LedController;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 import java.util.HashMap;
@@ -40,9 +36,9 @@ public class LedController_Test extends RobotBase {
     public void init() {
         super.init();
         io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
-        Controllers.add(new LedController(io, LED_IO_MAP));
+        addControllers(new LedController(io, LED_IO_MAP));
 
-        leds = (IColorIndicator)(HardwareController.find(Controllers,IColorIndicator.class));
+        leds = (IColorIndicator)(findController(IColorIndicator.class));
 
         telemetry.addLine("Basic Hardware Initialized");
 
