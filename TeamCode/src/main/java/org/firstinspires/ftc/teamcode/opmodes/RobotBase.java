@@ -31,7 +31,7 @@ public abstract class RobotBase extends OpMode {
         for(HardwareController entry : instance.controllers){
             if(entry.implementsInterface(interf)) return entry;
         }
-        throw new RuntimeException("Hardware controller with this interface does not exist.");
+        throw new RuntimeException("Hardware controller with the "+interf.getName()+" interface does not exist.");
     }
 
     /**
