@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.SensorModule;
@@ -40,6 +41,10 @@ public abstract class RobotBase extends OpMode {
     protected static void addControllers(HardwareController... controllers) {
         for(HardwareController controller : controllers) controller.init();
         instance.controllers.addAll(Arrays.asList(controllers));
+    }
+
+    public static void log(String msg) {
+        RobotLog.i("<TM>: "+msg);
     }
 
     protected StateMachine stateMachine = null;

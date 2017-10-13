@@ -32,7 +32,7 @@ public class StateMachine {
 	/*
 	* Step Method is periodically called
 	 */
-	public void step(){
+	public void step() {
 		if(firstUse) {
 			currentState.onEntry();
 			RobotBase.instance.telemetry.addData("Entering state", currentState.getName());
