@@ -68,7 +68,7 @@ public class TankDrive extends HardwareController implements IDrive {
 
 //!! This probably doesn't work.  Need to find math from last year
     public double getRotationPosition() {
-        return leftDriveMotor.getCurrentPosition() - rightDriveMotor.getCurrentPosition();
+        return leftDriveMotor.getCurrentPosition() + rightDriveMotor.getCurrentPosition();  //have to add because motors are going in the opposite direction
     }
 
     private double countsPerDegree = countsPerCentimeter * CM_PER_ROBOT_TURN / 360;     //Simple default
