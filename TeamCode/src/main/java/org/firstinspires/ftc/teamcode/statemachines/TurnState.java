@@ -7,11 +7,10 @@ import org.firstinspires.ftc.teamcode.controllers.SensorModule;
  */
 
 public class TurnState extends MoveState {
-    protected double power;
     protected double initialEncoderPosition;
 
-    public TurnState(String name, double power, SensorModule sensors, Transition... transitions){
-        super(name, power, sensors, transitions);
+    public TurnState(String name, double speed, SensorModule sensors, Transition... transitions){
+        super(name, speed, sensors, transitions);
     }
 
     public double getProgress() {
@@ -21,7 +20,7 @@ public class TurnState extends MoveState {
     @Override
     public void onEntry() {
         initialEncoderPosition = drive.getRotationPosition();
-        drive.setRotationPower(power);
+        drive.setRotationPower(speed);
     }
 
     @Override

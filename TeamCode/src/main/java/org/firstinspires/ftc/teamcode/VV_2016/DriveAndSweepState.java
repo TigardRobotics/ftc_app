@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.VV_2016;
 
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 import org.firstinspires.ftc.teamcode.statemachines.Transition;
 
 /**
@@ -34,7 +35,7 @@ public class DriveAndSweepState extends VelocityVortexState {
     @Override
     public void doState() {
         //getRobot().telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
-        RobotLog.i(name, String.format("Driven %f encoder counts", getProgress()));
+       RobotBase.log(name+String.format(" Driven %f encoder counts", getProgress()));
     }
 
     @Override

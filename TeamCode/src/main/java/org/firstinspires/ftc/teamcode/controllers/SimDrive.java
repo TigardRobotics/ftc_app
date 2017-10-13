@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
+
 /**
  * Created by Mark on 10/1/2017.
  */
@@ -61,7 +63,7 @@ public class SimDrive extends HardwareController implements IDrive {
             rightPosition += (cmPerSecond*countsPerCentimeter)*rightPower;
 
             String msg = String.format("Pwr,Pos Left=%f,%f Right=%f,%f ", leftPower,leftPosition,rightPower,rightPosition);
-            RobotLog.i(msg);
+            RobotBase.log(msg);
             Robot.telemetry.addLine(msg);
         }
     }

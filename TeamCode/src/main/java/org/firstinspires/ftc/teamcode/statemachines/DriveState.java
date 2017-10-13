@@ -4,13 +4,13 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.controllers.SensorModule;
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
  * Created by Derek Williams on 10/12/2016.
  */
 
 public class DriveState extends MoveState {
-    protected double speed;
     protected double initialPos;
 
     public DriveState(String name, double speed, SensorModule sensors, Transition... transitions) {
@@ -31,9 +31,8 @@ public class DriveState extends MoveState {
 
     @Override
     public void doState() {
-        drive.setDrivePower(speed);
         Robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
-        RobotLog.i(name, String.format("Driven %f encoder counts", getProgress()));
+        RobotBase.log(name+String.format("Driven %f encoder counts", getProgress()));
     }
 
     @Override

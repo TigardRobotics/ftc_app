@@ -12,13 +12,12 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 public abstract class MoveState extends State {
     protected SensorModule sensors;
     protected double speed;
-    protected double power;
     protected IDrive drive;
 
-    public MoveState(String name, double power, SensorModule sensors, Transition... transitions){
+    public MoveState(String name, double speed, SensorModule sensors, Transition... transitions){
         super(name, transitions);
         this.sensors = sensors;
-        this.power = power;
+        this.speed = speed;
         drive = (IDrive)(RobotBase.findController(IDrive.class));
     }
 }

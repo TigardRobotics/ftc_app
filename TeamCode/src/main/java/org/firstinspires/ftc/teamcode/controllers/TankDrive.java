@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
+
 /**
  * Created by Mark on 10/1/2017.
  */
@@ -45,13 +47,13 @@ public class TankDrive extends HardwareController implements IDrive {
     }
 
     public void setLeftDrivePower(double power) {
-        RobotLog.i(String.format("Enabling Left Motor w/ speed: %f", power));
+       RobotBase.log(String.format("Enabling Left Motor w/ speed: %f", power));
         Robot.telemetry.addLine(String.format("Enabling Left Motor w/ speed: %f", power));
         leftDriveMotor.setPower(power);
     }
 
     public void setRightDrivePower(double power) {
-        RobotLog.i(String.format("Enabling Right Motor w/ speed: %f", power));
+       RobotBase.log(String.format("Enabling Right Motor w/ speed: %f", power));
         Robot.telemetry.addLine(String.format("Enabling Right Motor w/ speed: %f", power));
         rightDriveMotor.setPower(-power);
     }
