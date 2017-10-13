@@ -40,19 +40,18 @@ public class AccelDrive extends TankDrive {
         double loopTime=loopTimer.seconds();
         double power_change=accel*loopTime;    //power change for this loop
         //Adjust Left power based on the accel
-        if(Math.abs(targetLeftPower-leftDrivePower)<=power_change) {
+        if(Math.abs(targetLeftPower-leftDrivePower) <= power_change) {
             super.setLeftDrivePower(targetLeftPower);
         }
         else if (leftDrivePower < targetLeftPower) {
             super.setLeftDrivePower(leftDrivePower + power_change);
         }
-        else
-        {
+        else {
             super.setLeftDrivePower(leftDrivePower - power_change);
         }
 
         //Adjust Right power based on the accel
-        if(Math.abs(targetRightPower-rightDrivePower)<=power_change) {
+        if(Math.abs(targetRightPower-rightDrivePower) <= power_change) {
             super.setRightDrivePower(targetRightPower);
         }
         else if (rightDrivePower < targetRightPower) {
