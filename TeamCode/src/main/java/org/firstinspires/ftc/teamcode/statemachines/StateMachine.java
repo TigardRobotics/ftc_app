@@ -36,6 +36,7 @@ public class StateMachine {
 		if(firstUse) {
 			currentState.onEntry();
 			RobotBase.instance.telemetry.addData("Entering state", currentState.getName());
+			RobotLog.i("Entering state "+currentState.getName());
 			firstUse = false;
 		}
 		boolean transitioned;
@@ -47,12 +48,14 @@ public class StateMachine {
 				transitioned = true;
 				currentState.onExit();
 				RobotBase.instance.telemetry.addData("Exiting state", currentState.getName());
+				RobotLog.i("Exiting state "+currentState.getName());
 				for(State state : this.states) {
 					if(state.getName() == next) {
 						currentState = state;
 						nextExists = true;
 						currentState.onEntry();
 						RobotBase.instance.telemetry.addData("Entering state", currentState.getName());
+						RobotLog.i("Entering state "+currentState.getName());
 					}
 				}
 				if(!nextExists) {
