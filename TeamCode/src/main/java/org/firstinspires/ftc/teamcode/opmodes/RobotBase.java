@@ -44,7 +44,7 @@ public abstract class RobotBase extends OpMode {
     }
 
     public static void log(String msg) {
-       RobotBase.log("<TM>: "+msg);
+       RobotLog.i("<TM>: "+msg);
     }
 
     protected StateMachine stateMachine = null;
