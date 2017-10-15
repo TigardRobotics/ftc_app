@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Created by Derek Williams of team 3965 on 10/9/2016.
  * Superclass for all opmodes
+ * The "Center of our Universe"
  */
 
 public abstract class RobotBase extends OpMode {

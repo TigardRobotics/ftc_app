@@ -18,10 +18,11 @@ public class AccelDrive extends TankDrive {
     public double accel;    //Motor accel/time  1=0 to full power in 1 sec
 
     public AccelDrive(DcMotor right, DcMotor left, double accel) {
-        super( right, left);
+        super(right, left);
         targetLeftPower = 0;
         targetRightPower = 0;
         this.accel = accel;
+        loopTimer = new ElapsedTime();
     }
 
     public void setLeftDrivePower(double power) {
@@ -37,8 +38,8 @@ public class AccelDrive extends TankDrive {
     }
 
     public void loop() {
-        double loopTime=loopTimer.seconds();
-        double power_change=accel*loopTime;    //power change for this loop
+        double loopTime = loopTimer.seconds();
+        double power_change = accel*loopTime;    //power change for this loop
         //Adjust Left power based on the accel
         if(Math.abs(targetLeftPower-leftDrivePower) <= power_change) {
             super.setLeftDrivePower(targetLeftPower);

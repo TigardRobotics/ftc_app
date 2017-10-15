@@ -72,7 +72,7 @@ public class TankDrive extends HardwareController implements IDrive {
     }
 
     private double countsPerDegree = countsPerCentimeter * CM_PER_ROBOT_TURN / 360;     //Simple default
-    public void setCountsPerDegree( double cpd) {countsPerDegree=cpd;};
-    public double RotationToDegrees(double counts) { return counts/countsPerDegree;};
+    public void setCountsPerDegree(double cpd) {countsPerDegree=cpd;}
+    public double RotationToDegrees(double counts) { return counts/countsPerDegree;}
 
 }

@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * LED controler
  */
-public class LedController extends HardwareController implements IColorIndicator{
+public class LedController extends HardwareController implements IColorIndicator {
     public static final String RED = "red";
     public static final String WHITE = "white";
     public static final String BLUE = "blue";
