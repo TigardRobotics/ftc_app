@@ -26,6 +26,7 @@ public class TankDrive extends HardwareController implements IDrive {
     public TankDrive(DcMotor right, DcMotor left) {
         leftDriveMotor = left;
         rightDriveMotor = right;
+        rightDriveMotor.setDirection(DcMotor.Direction.REVERSE);
         leftDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -47,15 +48,17 @@ public class TankDrive extends HardwareController implements IDrive {
     }
 
     public void setLeftDrivePower(double power) {
-       RobotBase.log(String.format("Enabling Left Motor w/ speed: %f", power));
-        Robot.telemetry.addLine(String.format("Enabling Left Motor w/ speed: %f", power));
-        leftDriveMotor.setPower(power);
+        leftDrivePower = power;
+        RobotBase.log(String.format("Enabling Left Motor w/ speed: %f", leftDrivePower));
+        Robot.telemetry.addLine(String.format("Enabling Left Motor w/ speed: %f", leftDrivePower));
+        leftDriveMotor.setPower(leftDrivePower);
     }
 
     public void setRightDrivePower(double power) {
-       RobotBase.log(String.format("Enabling Right Motor w/ speed: %f", power));
-        Robot.telemetry.addLine(String.format("Enabling Right Motor w/ speed: %f", power));
-        rightDriveMotor.setPower(-power);
+        rightDrivePower = power;
+        RobotBase.log(String.format("Enabling Right Motor w/ speed: %f", rightDrivePower));
+        Robot.telemetry.addLine(String.format("Enabling Right Motor w/ speed: %f", rightDrivePower));
+        rightDriveMotor.setPower(rightDrivePower);
     }
 
     public double getDrivePosition() {
@@ -68,7 +71,7 @@ public class TankDrive extends HardwareController implements IDrive {
 
 //!! This probably doesn't work.  Need to find math from last year
     public double getRotationPosition() {
-        return leftDriveMotor.getCurrentPosition() + rightDriveMotor.getCurrentPosition();  //have to add because motors are going in the opposite direction
+        return leftDriveMotor.getCurrentPosition() - rightDriveMotor.getCurrentPosition();
     }
 
     private double countsPerDegree = countsPerCentimeter * CM_PER_ROBOT_TURN / 360;     //Simple default

@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.statemachines.TurnState;
 public class SquareAuto extends TankBot {
     private ModernRoboticsSensorModule sensors = new ModernRoboticsSensorModule(this);
 
-    private double sqrSideLen = 1000; //!! These values are guesses
-    private double turnAmount = 3830; //!! These values are guesses
+    private double sqrSideLen = 1000;
+    private double turnAmount = 3512;   //90 degrees
 
     @Override
     public void init() {
@@ -32,8 +32,8 @@ public class SquareAuto extends TankBot {
     public void start(){
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("drive", -1.0, sensors, new ProgressTrans("turn", sqrSideLen)),
-                new TurnState("turn", 1.0, sensors, new ProgressTrans("drive", turnAmount))
+                new DriveState("drive", -0.5, sensors, new ProgressTrans("turn", sqrSideLen)),
+                new TurnState("turn", 0.5, sensors, new ProgressTrans("drive", turnAmount))
         );
     }
 

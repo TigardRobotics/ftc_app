@@ -25,10 +25,12 @@ public class AccelDrive extends TankDrive {
         loopTimer = new ElapsedTime();
     }
 
+    @Override
     public void setLeftDrivePower(double power) {
         targetLeftPower = power;
     }
 
+    @Override
     public void setRightDrivePower(double power) {
         targetRightPower = power;
     }
@@ -40,6 +42,8 @@ public class AccelDrive extends TankDrive {
     public void loop() {
         double loopTime = loopTimer.seconds();
         double power_change = accel*loopTime;    //power change for this loop
+        loopTimer.reset();
+
         //Adjust Left power based on the accel
         if(Math.abs(targetLeftPower-leftDrivePower) <= power_change) {
             super.setLeftDrivePower(targetLeftPower);
@@ -62,5 +66,6 @@ public class AccelDrive extends TankDrive {
             super.setRightDrivePower(rightDrivePower - power_change);
         }
         super.loop();
+        Robot.telemetry.addLine(String.format("Left: %f of %f Right: %f of %f", leftDrivePower, targetLeftPower, rightDrivePower, targetRightPower));
     }
 }

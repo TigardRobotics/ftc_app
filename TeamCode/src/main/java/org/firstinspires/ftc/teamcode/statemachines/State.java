@@ -35,6 +35,7 @@ public abstract class State {
     }
 
     public void onEntry() {
+        RobotBase.log("Entering "+name+" state");
         runtime.reset();
         //complete = false;
     }
@@ -42,7 +43,7 @@ public abstract class State {
     public abstract void doState();
 
     public void onExit() {
-
+        RobotBase.log("Exiting "+name+" state");
     }
 
     public String checkTransitions() {
