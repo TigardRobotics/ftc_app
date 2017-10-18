@@ -4,9 +4,11 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.Pid;
+
 
 /**
- * Created by derek on 10/17/17.
+ * Created by Derek on 10/17/17.
  */
 //! Add IHolonomic and implement instead of IDrive
 //! Split into SwerveUnits
@@ -28,7 +30,7 @@ public class SwerveController extends HardwareController implements IDrive {
     public SwerveController(Servo directionServo, AnalogInput hall) {
         this.directionServo = directionServo;
         this.hall = hall;
-        pid = new Pid(0.0, 0.0, 0.0, 0.0, 0.0); //!! Tune to actual values
+        pid = new Pid(0.0, Double.POSITIVE_INFINITY, 0.0, 0.0, 0.0); //!! Tune to actual values
     }
 
     @Override

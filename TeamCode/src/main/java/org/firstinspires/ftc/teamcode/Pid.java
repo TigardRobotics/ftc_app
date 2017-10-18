@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.controllers;
+package org.firstinspires.ftc.teamcode;
 
 /**
  * Imported from github.com/pmtischler/ftc_app
