@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
  */
 @TeleOp(name="Tune Swerve", group="3965")
 public class SwerveDirectionTuner extends RobotBase {
-    private ModernRoboticsSensorModule sensors = new ModernRoboticsSensorModule(this);
+    private ModernRoboticsSensorModule sensors; //= new ModernRoboticsSensorModule(this);
 
     private double kd = 0.0;
     private double ti = Double.POSITIVE_INFINITY;
@@ -31,7 +31,7 @@ public class SwerveDirectionTuner extends RobotBase {
     @Override
     public void init() {
         super.init();
-        sensors.init();
+        //sensors.init();
         addControllers(new SwerveController(hardwareMap.servo.get(Names.swerveServo),
                                             hardwareMap.analogInput.get(Names.hall)));
         swerve = (SwerveController)(findController(SwerveController.class));

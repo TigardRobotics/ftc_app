@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Pid;
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 
 /**
@@ -19,9 +20,15 @@ public class SwerveController extends HardwareController implements IDrive {
     private Pid pid;
     private ElapsedTime stopwatch = new ElapsedTime();
 
-    private static final double HOME = 1.0; //! Figure out correct home
-    private static final double HOMING_SPEED = 138.0; //! Figure out the correct speed
-    private static final double DIRECTION_SERVO_STOP = 128.0;
+    /* For the servo:
+       set position 0.0 : full speed counter-clockwise
+       set position 0.5 : stop
+       set position 1.0 : full speed clockwise
+    */
+
+    private static final double HOME = 50.0; 
+    private static final double HOMING_SPEED = 130.0; //! Figure out the correct speed
+    private static final double DIRECTION_SERVO_STOP = 0.5;
 
     private double direction = HOME;
 
@@ -31,25 +38,29 @@ public class SwerveController extends HardwareController implements IDrive {
     public SwerveController(Servo directionServo, AnalogInput hall) {
         this.directionServo = directionServo;
         this.hall = hall;
-        pid = new Pid(0.0, Double.POSITIVE_INFINITY, 0.0, 0.0, 0.0); //!! Tune to actual values
+        pid = new Pid(0.0, Double.POSITIVE_INFINITY, 0.0, 0.0, 0.0); //! Tune to actual values
     }
 
     @Override
     public void init() {
+        //! TODO: Scan for min and max hall values
         directionServo.setPosition(HOMING_SPEED);
     }
 
     @Override
     public void init_loop() {
         // Slowly move to point towards home
-        if(getRotationPosition() < HOME) {
+        double rp = getRotationPosition();
+        Robot.telemetry.addData("servo pos", rp);
+        Robot.telemetry.addData("hall volt", hall.getVoltage());
+        if(rp < HOME) {
             directionServo.setPosition(DIRECTION_SERVO_STOP);
         }
     }
 
     @Override
     public void start() {
-
+        directionServo.setPosition(DIRECTION_SERVO_STOP);
     }
 
     @Override
@@ -61,7 +72,7 @@ public class SwerveController extends HardwareController implements IDrive {
 
     @Override
     public void stop() {
-
+        directionServo.setPosition(DIRECTION_SERVO_STOP);
     }
 
     /**

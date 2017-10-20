@@ -78,7 +78,7 @@ public abstract class RobotBase extends OpMode {
 
     @Override
     public void stop() {
-        stateMachine.stop();
+        if(stateMachine != null) stateMachine.stop();
         for (HardwareController control : controllers) control.stop();
     }
 
