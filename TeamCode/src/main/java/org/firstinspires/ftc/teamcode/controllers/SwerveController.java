@@ -19,8 +19,9 @@ public class SwerveController extends HardwareController implements IDrive {
     private Pid pid;
     private ElapsedTime stopwatch = new ElapsedTime();
 
-    private static final double HOME = 0.0; //! Figure out correct home
-    private static final double HOMING_SPEED = 1.0; //! Figure out the correct speed
+    private static final double HOME = 1.0; //! Figure out correct home
+    private static final double HOMING_SPEED = 138.0; //! Figure out the correct speed
+    private static final double DIRECTION_SERVO_STOP = 128.0;
 
     private double direction = HOME;
 
@@ -35,20 +36,14 @@ public class SwerveController extends HardwareController implements IDrive {
 
     @Override
     public void init() {
-
+        directionServo.setPosition(HOMING_SPEED);
     }
 
     @Override
     public void init_loop() {
         // Slowly move to point towards home
-        if(hall.getVoltage() > HOME) {
-            directionServo.setPosition(HOMING_SPEED);
-        }
-        else if(hall.getVoltage() < HOME) {
-            directionServo.setPosition(-HOMING_SPEED);
-        }
-        else {
-            directionServo.setPosition(0.0);
+        if(getRotationPosition() < HOME) {
+            directionServo.setPosition(DIRECTION_SERVO_STOP);
         }
     }
 
@@ -59,7 +54,7 @@ public class SwerveController extends HardwareController implements IDrive {
 
     @Override
     public void loop() {
-        double power = pid.update(direction, hall.getVoltage(), stopwatch.milliseconds());
+        double power = pid.update(direction, hall.getVoltage(), stopwatch.seconds());
         stopwatch.reset();
         directionServo.setPosition(power);
     }
@@ -67,6 +62,14 @@ public class SwerveController extends HardwareController implements IDrive {
     @Override
     public void stop() {
 
+    }
+
+    /**
+     * Change the swerve pid for tuning purposes
+     * @param pid
+     */
+    public void setPid(Pid pid) {
+        this.pid = pid;
     }
 
     public void setDirection(double direction) {
@@ -106,8 +109,12 @@ public class SwerveController extends HardwareController implements IDrive {
         return 0.0; //! fix this
     }
 
+    /**
+     *
+     * @return 0-359.99...
+     */
     public double getRotationPosition() {
-        return 0.0; //! fix this
+        return (360.0 * hall.getVoltage() / 5.0) ;
     }
 
     public void setCountsPerDegree(double cpd) {
