@@ -26,11 +26,12 @@ public class SwerveController extends HardwareController implements IDrive {
        set position 1.0 : full speed clockwise
     */
 
-    private static final double HOME = 50.0; 
+    private static final double HOME = 50.0;
     private static final double HOMING_SPEED = 130.0; //! Figure out the correct speed
     private static final double DIRECTION_SERVO_STOP = 0.5;
 
-    private double direction = HOME;
+    private double direction = 0;
+
 
     /**
      * Constructor
@@ -54,6 +55,7 @@ public class SwerveController extends HardwareController implements IDrive {
         Robot.telemetry.addData("servo pos", rp);
         Robot.telemetry.addData("hall volt", hall.getVoltage());
         if(rp < HOME) {
+            direction = getRotationPosition();
             directionServo.setPosition(DIRECTION_SERVO_STOP);
         }
     }
@@ -65,9 +67,10 @@ public class SwerveController extends HardwareController implements IDrive {
 
     @Override
     public void loop() {
-        double power = pid.update(direction, hall.getVoltage(), stopwatch.seconds());
+        double error = ((getRotationPosition()- direction+360)%360)-180;
+        double power = pid.update(error, stopwatch.seconds());
         stopwatch.reset();
-        directionServo.setPosition(power);
+        directionServo.setPosition(power-0.5);
     }
 
     @Override
@@ -76,11 +79,10 @@ public class SwerveController extends HardwareController implements IDrive {
     }
 
     /**
-     * Change the swerve pid for tuning purposes
-     * @param pid
+     * Get the swerve pid for tuning purposes
      */
-    public void setPid(Pid pid) {
-        this.pid = pid;
+    public Pid getPid() {
+        return pid;
     }
 
     public void setDirection(double direction) {
@@ -96,6 +98,7 @@ public class SwerveController extends HardwareController implements IDrive {
     }
 
     public void setRotationPower(double power) {
+        direction = power;
         //! implement this
     }
 

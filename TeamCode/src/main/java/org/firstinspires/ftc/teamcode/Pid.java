@@ -33,13 +33,11 @@ public class Pid {
 
     /**
      * Performs a PID update and returns the output control.
-     * @param desiredValue The desired state value (e.g. speed).
-     * @param actualValue The actual state value (e.g. speed).
+     * @param e desiredValue-actual
      * @param dt The amount of time (sec) elapsed since last update.
      * @return The output which impacts state value (e.g. motor throttle).
      */
-    public double update(double desiredValue, double actualValue, double dt) {
-        double e = desiredValue - actualValue;
+    public double update(double e, double dt) {
         runningIntegral = clampValue(runningIntegral + e * dt,
                 integralMin, integralMax);
         double d = (e - previousError) / dt;
@@ -75,4 +73,17 @@ public class Pid {
     private double previousError;
     // The discrete running integral (bounded by integralMax).
     private double runningIntegral;
+
+    /**
+     * Used to tune pid
+     * @param kp
+     * @param ti
+     * @param td
+     */
+    public void tune(double kp, double ti, double td) {
+        runningIntegral = 0.0;
+        this.kp = kp;
+        this.ti = ti;
+        this.td = td;
+    }
 }
