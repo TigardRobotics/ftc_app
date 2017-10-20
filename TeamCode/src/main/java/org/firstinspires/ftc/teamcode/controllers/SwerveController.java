@@ -68,13 +68,13 @@ public class SwerveController extends HardwareController implements IDrive {
     @Override
     public void loop() {
         /* Mr. Hancock's Error Formula:
-            double error = ((getRotationPosition()- direction+360)%360)-180;
+            double error = (direction-getRotationPosition()+540)%360-180
          */
 
         // Derek's Error Formula:
         double positiveError = (360.0 - getRotationPosition() + direction) % 360.0;
-        double negativeError = 360.0 - positiveError;
-        double error = -negativeError > positiveError ? positiveError : negativeError;
+        double negativeError = positiveError - 360.0;
+        double error = Math.abs(negativeError) > positiveError ? positiveError : negativeError;
 
         double power = pid.update(error, stopwatch.seconds());
         stopwatch.reset();
