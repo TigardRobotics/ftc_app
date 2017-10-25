@@ -45,8 +45,8 @@ public class SwerveDirectionTuner extends RobotBase {
         stopwatch.reset();
     }
 
-    private static final double dbgPos1 = 0.0;
-    private static final double dbgPos2 = 90.0;
+    private static final double dbgPos1 = 90.0;
+    private static final double dbgPos2 = 180.0;
     private static final double otime = 5.0;
 
     private double dbgPos = dbgPos1;
@@ -59,15 +59,19 @@ public class SwerveDirectionTuner extends RobotBase {
         double incr = 0.0;
 
         // determine if incrementing or decrementing
-        if(gamepad1.right_bumper) incr = 0.1;
-        if(gamepad1.left_bumper) incr = -0.1;
+        if(gamepad1.right_bumper) incr = 0.001;
+        if(gamepad1.left_bumper) incr = -0.001;
 
         // change 10x speed if dpad pressed
         if(gamepad1.dpad_up) incr *= 10.0;
+        if(gamepad1.dpad_down) incr /= 10.0;
 
         // change selected tuning values
         if(gamepad1.x) kp += incr;
-        if(gamepad1.y) ti += incr;
+        if(gamepad1.y) {
+            if(ti == Double.POSITIVE_INFINITY) ti = 10.0/kp;
+            ti += incr;
+        }
         if(gamepad1.b) td += incr;
 
         telemetry.addLine(String.format("kp = %f, ti = %f, td = %f", kp, ti, td));
