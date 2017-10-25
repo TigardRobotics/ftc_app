@@ -39,7 +39,7 @@ public class SwerveController extends HardwareController implements IDrive {
     public SwerveController(Servo directionServo, AnalogInput hall) {
         this.directionServo = directionServo;
         this.hall = hall;
-        pid = new Pid(0.0, Double.POSITIVE_INFINITY, 0.0, 0.0, 0.0); //! Tune to actual values
+        pid = new Pid(0.025, Double.POSITIVE_INFINITY, 0.0, 0.0, 0.0); //! Tune to actual values
     }
 
     @Override
@@ -78,7 +78,8 @@ public class SwerveController extends HardwareController implements IDrive {
 
         double power = pid.update(error, stopwatch.seconds());
         stopwatch.reset();
-        directionServo.setPosition(power-0.5);
+        Robot.telemetry.addLine(String.format("error = %f, power = %f", error, power));
+        directionServo.setPosition(power+0.5);
     }
 
     @Override
