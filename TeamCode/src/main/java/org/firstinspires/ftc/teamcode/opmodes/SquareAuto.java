@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.statemachines.TurnState;
 
 @Autonomous(name="Square", group="test")
 public class SquareAuto extends TankBot {
-    private ModernRoboticsSensorModule sensors = new ModernRoboticsSensorModule(this);
+    private ModernRoboticsSensorModule sensors = null;//new ModernRoboticsSensorModule(this);
 
     private double sqrSideLen = 1000;
     private double turnAmount = 3512;   //90 degrees
@@ -25,7 +25,7 @@ public class SquareAuto extends TankBot {
     @Override
     public void init() {
         super.init();
-        sensors.init();
+        //sensors.init();
     }
 
     @Override

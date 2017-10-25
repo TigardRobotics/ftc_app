@@ -18,19 +18,20 @@ import org.firstinspires.ftc.teamcode.statemachines.BelowRangeTrans;
 //@Disabled
 
 public class BasicAutonomous extends TankBot {
-    private ModernRoboticsSensorModule sensors = new ModernRoboticsSensorModule(this);
+    private ModernRoboticsSensorModule sensors = null;//new ModernRoboticsSensorModule(this);
 
     @Override
     public void init() {
         super.init();
-        sensors.init();
+        //sensors.init();
     }
 
     @Override
     public void start(){
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("forward", -100.0, sensors, new BelowRangeTrans("turnaround", sensors, 30)),
+                //new DriveState("forward", -100.0, sensors, new BelowRangeTrans("turnaround", sensors, 30)),
+                new DriveState("forward", -0.5, sensors, new ProgressTrans("turnaround", 1000)),
                 new TurnState("turnaround", 100, sensors, new ProgressTrans("forward", 7660/2))
         );
     }

@@ -32,19 +32,19 @@ public class BasicTeleop extends TankBot {
     @Override
     public void init() {
         super.init();
-        io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
-        addControllers(new LedController(io, LedIoMap));
+        //io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
+        //addControllers(new LedController(io, LedIoMap));
 
-        Leds = (LedController)(findController(LedController.class));
+        //Leds = (LedController)(findController(LedController.class));
 
         telemetry.addLine("Basic Hardware Initialized");
-        Leds.setLed(LedController.BLUE, true);
+        //Leds.setLed(LedController.BLUE, true);
     }
 
     @Override
     public void start() {
         super.start();
-        Leds.setLed(LedController.GREEN, true);
+        //Leds.setLed(LedController.GREEN, true);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class BasicTeleop extends TankBot {
     @Override
     public void stop() {
         super.stop();
-        Leds.setLed(LedController.ALL_COLORS, false);
+        //Leds.setLed(LedController.ALL_COLORS, false);
     }
 
 }
