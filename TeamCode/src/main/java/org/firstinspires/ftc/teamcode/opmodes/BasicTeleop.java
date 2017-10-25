@@ -51,6 +51,7 @@ public class BasicTeleop extends TankBot {
     public void loop(){
         Drive.setLeftDrivePower(gamepad1.left_stick_y);
         Drive.setRightDrivePower(gamepad1.right_stick_y);
+        super.loop();
     }
 
     @Override
