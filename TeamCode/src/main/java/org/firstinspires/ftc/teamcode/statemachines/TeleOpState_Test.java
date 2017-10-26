@@ -25,7 +25,7 @@ public class TeleOpState_Test extends TankBot {
     public void start(){
         super.start();
         stateMachine = new StateMachine(
-                new TeleOpState("teleop", new Transition[]{})
+                new TeleOpState("teleop")
         );
     }
 
