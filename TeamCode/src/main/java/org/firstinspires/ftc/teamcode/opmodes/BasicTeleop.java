@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.LedController;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
+import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +47,9 @@ public class BasicTeleop extends TankBot {
     public void start() {
         super.start();
         //Leds.setLed(LedController.GREEN, true);
-        stateMachine = new StateMachine();
+        stateMachine = new StateMachine(
+                new WaitState("wait")
+        );
     }
 
     @Override

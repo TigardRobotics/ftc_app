@@ -10,4 +10,7 @@ public final class Names {
     public static String range = "range";
     public static String swerveServo = "direc_servo";
     public static String hall = "hall";
+    public static String liftMotor = "lift";
+    public static String leftClamp = "clamp_l";
+    public static String rightClamp = "clamp_r";
 }
