@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.IDrive;
-import org.firstinspires.ftc.teamcode.controllers.ModernRoboticsSensorModule;
-import org.firstinspires.ftc.teamcode.controllers.SensorModule;
 import org.firstinspires.ftc.teamcode.controllers.SwerveController;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
@@ -19,7 +17,6 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
  */
 @TeleOp(name="Tune Swerve", group="3965")
 public class SwerveDirectionTuner extends RobotBase {
-    private ModernRoboticsSensorModule sensors; //= new ModernRoboticsSensorModule(this);
 
     private double kp = 0.0;
     private double ti = Double.POSITIVE_INFINITY;
@@ -86,8 +83,4 @@ public class SwerveDirectionTuner extends RobotBase {
 
     }
 
-    @Override
-    public SensorModule Sensors() {
-        return sensors;
-    }
 }

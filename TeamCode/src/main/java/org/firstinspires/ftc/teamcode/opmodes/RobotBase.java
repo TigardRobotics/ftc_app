@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
-import org.firstinspires.ftc.teamcode.controllers.SensorModule;
 import org.firstinspires.ftc.teamcode.statemachines.State;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 
@@ -82,8 +81,4 @@ public abstract class RobotBase extends OpMode {
         for (HardwareController control : controllers) control.stop();
     }
 
-    //!TODO: Move to controllers
-    public SensorModule Sensors() {
-        throw new RuntimeException("Sensor Module does not Exist");
-    }
 }

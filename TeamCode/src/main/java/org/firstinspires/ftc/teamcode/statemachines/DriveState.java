@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.statemachines;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.controllers.SensorModule;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
@@ -13,8 +12,8 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 public class DriveState extends MoveState {
     protected double initialPos;
 
-    public DriveState(String name, double speed, SensorModule sensors, Transition... transitions) {
-        super(name, speed, sensors, transitions);
+    public DriveState(String name, double speed, Transition... transitions) {
+        super(name, speed, transitions);
     }
 
     @Override

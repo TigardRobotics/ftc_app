@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.statemachines;
 
-import org.firstinspires.ftc.teamcode.controllers.SensorModule;
-
 /**
  * Created by Derek Williams on 10/12/2016.
  */
@@ -9,8 +7,8 @@ import org.firstinspires.ftc.teamcode.controllers.SensorModule;
 public class TurnState extends MoveState {
     protected double initialEncoderPosition;
 
-    public TurnState(String name, double speed, SensorModule sensors, Transition... transitions){
-        super(name, speed, sensors, transitions);
+    public TurnState(String name, double speed, Transition... transitions){
+        super(name, speed, transitions);
     }
 
     public double getProgress() {
