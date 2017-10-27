@@ -13,4 +13,18 @@ public final class Names {
     public static String liftMotor = "lift";
     public static String leftClamp = "clamp_l";
     public static String rightClamp = "clamp_r";
+
+    // Names for swerve
+    public static String frm = "frm";
+    public static String frs = "frs";
+    public static String frh = "frh";
+    public static String flm = "flm";
+    public static String fls = "fls";
+    public static String flh = "flh";
+    public static String brm = "brm";
+    public static String brs = "brs";
+    public static String brh = "brh";
+    public static String blm = "blm";
+    public static String bls = "bls";
+    public static String blh = "blh";
 }
