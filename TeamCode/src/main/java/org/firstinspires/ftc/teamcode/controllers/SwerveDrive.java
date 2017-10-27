@@ -1,21 +1,24 @@
 package org.firstinspires.ftc.teamcode.controllers;
 
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
+
 /**
  * Swerve Drive (4 Swerve Assemblies)
  */
 
 public class SwerveDrive extends HardwareController implements IDrive {
 
-    SwerveController[] controllers;
+    SwerveUnit[] controllers;
 
-    public SwerveDrive(SwerveController... controllers) {
+    public SwerveDrive(SwerveUnit... controllers) {
+        Robot.telemetry.addLine("Swerve Drive consturcted with "+controllers.length+" swerve units");
         this.controllers = controllers;
     }
 
     @Override
     public void init() {
         super.init();
-        for(SwerveController controller : controllers) controller.init();
+        for(SwerveUnit controller : controllers) controller.init();
     }
 
     @Override
@@ -27,29 +30,29 @@ public class SwerveDrive extends HardwareController implements IDrive {
     @Override
     public void start() {
         super.start();
-        for(SwerveController controller : controllers) controller.init();
+        for(SwerveUnit controller : controllers) controller.init();
     }
 
     @Override
     public void loop() {
         super.loop();
-        for(SwerveController controller : controllers) controller.loop();
+        for(SwerveUnit controller : controllers) controller.loop();
     }
 
     @Override
     public void stop() {
         super.stop();
-        for(SwerveController controller : controllers) controller.stop();
+        for(SwerveUnit controller : controllers) controller.stop();
     }
 
     @Override
     public void setDrivePower(double power) {
-        for(SwerveController controller : controllers) controller.setDrivePower(power);
+        for(SwerveUnit controller : controllers) controller.setDrivePower(power);
     }
 
     @Override
     public void stopDriveMotors() {
-        for(SwerveController controller : controllers) controller.stopDriveMotors();
+        for(SwerveUnit controller : controllers) controller.stopDriveMotors();
     }
 
     @Override
@@ -97,7 +100,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
     }
 
     public void setDirection(double direction) {
-        for(SwerveController controller : controllers) controller.stopDriveMotors();
+        for(SwerveUnit controller : controllers) controller.stopDriveMotors();
     }
 
 }

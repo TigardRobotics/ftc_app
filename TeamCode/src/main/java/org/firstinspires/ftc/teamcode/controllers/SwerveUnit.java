@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.controllers;
 
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -13,7 +14,8 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
  */
 //! Add IHolonomic and implement instead of IDrive
 //! Split into SwerveUnits
-public class SwerveController extends HardwareController {
+public class SwerveUnit extends HardwareController {
+    private DcMotor motor;
     private Servo directionServo;
     private AnalogInput hall;
 
@@ -30,13 +32,15 @@ public class SwerveController extends HardwareController {
     private static final double HOMING_SPEED = 130.0; //! Figure out the correct speed
     private static final double DIRECTION_SERVO_STOP = 0.5;
 
+    // the commanded direction
     private double direction = 0;
 
 
     /**
      * Constructor
      */
-    public SwerveController(Servo directionServo, AnalogInput hall) {
+    public SwerveUnit(DcMotor motor, Servo directionServo, AnalogInput hall) {
+        this.motor = motor;
         this.directionServo = directionServo;
         this.hall = hall;
         pid = new Pid(0.025, Double.POSITIVE_INFINITY, 0.0, 0.0, 0.0); //! Tune to actual values
@@ -99,11 +103,11 @@ public class SwerveController extends HardwareController {
     }
 
     public void setDrivePower(double power) {
-        //! implement this
+        motor.setPower(power);
     }
 
     public void stopDriveMotors() {
-        //! implement this
+        motor.setPower(0.0);
     }
 
     public void setRotationPower(double power) {

@@ -81,4 +81,11 @@ public abstract class RobotBase extends OpMode {
         for (HardwareController control : controllers) control.stop();
     }
 
+    /**
+     * Methods for getting controller info
+     */
+    public double getGamepad1RightJoystickAngle() {
+        return Math.toDegrees(Math.atan2(-gamepad1.right_stick_y, gamepad1.right_stick_x));
+    }
+
 }

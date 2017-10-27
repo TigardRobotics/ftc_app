@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Names;
-import org.firstinspires.ftc.teamcode.controllers.IDrive;
-import org.firstinspires.ftc.teamcode.controllers.SwerveController;
-import org.firstinspires.ftc.teamcode.statemachines.DriveState;
+import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
-import org.firstinspires.ftc.teamcode.statemachines.TeleOpState;
-import org.firstinspires.ftc.teamcode.statemachines.Transition;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 /**
@@ -22,7 +19,7 @@ public class SwerveDirectionTuner extends RobotBase {
     private double ti = Double.POSITIVE_INFINITY;
     private double td = 0.0;
 
-    private SwerveController swerve;
+    private SwerveUnit swerve;
 
     private ElapsedTime stopwatch = new ElapsedTime();
 
@@ -30,8 +27,10 @@ public class SwerveDirectionTuner extends RobotBase {
     public void init() {
         super.init();
         //sensors.init();
-        swerve = new SwerveController(hardwareMap.servo.get(Names.swerveServo),
-                                            hardwareMap.analogInput.get(Names.hall));
+        DcMotor fakeDcMotor = null;
+        swerve = new SwerveUnit(fakeDcMotor,
+                                hardwareMap.servo.get(Names.swerveServo),
+                                hardwareMap.analogInput.get(Names.hall));
         addControllers(swerve);
     }
 
