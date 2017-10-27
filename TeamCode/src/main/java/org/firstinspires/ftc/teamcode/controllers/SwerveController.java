@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
  */
 //! Add IHolonomic and implement instead of IDrive
 //! Split into SwerveUnits
-public class SwerveController extends HardwareController implements IDrive {
+public class SwerveController extends HardwareController {
     private Servo directionServo;
     private AnalogInput hall;
 

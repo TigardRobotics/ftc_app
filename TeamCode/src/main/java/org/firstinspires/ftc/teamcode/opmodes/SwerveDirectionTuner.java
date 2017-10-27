@@ -30,9 +30,9 @@ public class SwerveDirectionTuner extends RobotBase {
     public void init() {
         super.init();
         //sensors.init();
-        addControllers(new SwerveController(hardwareMap.servo.get(Names.swerveServo),
-                                            hardwareMap.analogInput.get(Names.hall)));
-        swerve = (SwerveController)(findController(SwerveController.class));
+        swerve = new SwerveController(hardwareMap.servo.get(Names.swerveServo),
+                                            hardwareMap.analogInput.get(Names.hall));
+        addControllers(swerve);
     }
 
     @Override
