@@ -84,8 +84,16 @@ public abstract class RobotBase extends OpMode {
     /**
      * Methods for getting controller info
      */
+    private static final double AMP_THRESHOLD = 0.1;
     public double getGamepad1RightJoystickAngle() {
-        return Math.toDegrees(Math.atan2(-gamepad1.right_stick_y, gamepad1.right_stick_x));
+        if(getGamepad1RightJoystickAmplitude() > AMP_THRESHOLD) {
+            return (Math.toDegrees(Math.atan2(gamepad1.right_stick_x, -gamepad1.right_stick_y))+360)%360;
+        }
+        return 0.0;
+    }
+
+    public double getGamepad1RightJoystickAmplitude() {
+        return Math.sqrt(gamepad1.right_stick_y*gamepad1.right_stick_y + gamepad1.right_stick_x*gamepad1.right_stick_x);
     }
 
 }

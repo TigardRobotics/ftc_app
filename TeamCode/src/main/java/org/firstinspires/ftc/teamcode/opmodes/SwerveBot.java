@@ -43,26 +43,32 @@ public class SwerveBot extends RobotBase {
 
         // Get swerve motors from hardwaremap
         frontRightDriveMotor = hardwareMap.dcMotor.get(Names.frm);
-        //frontLeftDriveMotor = hardwareMap.dcMotor.get(Names.flm); // needs hall
+        frontLeftDriveMotor = hardwareMap.dcMotor.get(Names.flm);
         backRightDriveMotor = hardwareMap.dcMotor.get(Names.brm);
         backLeftDriveMotor = hardwareMap.dcMotor.get(Names.blm);
 
+        // set swerve motor zero power behaviors
+        frontRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        frontLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        backRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        backLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
         //Get swerve servos from hardwaremap
         frontRightServo = hardwareMap.servo.get(Names.frs);
-        //frontLeftServo = hardwareMap.servo.get(Names.fls); // needs hall
+        frontLeftServo = hardwareMap.servo.get(Names.fls);
         backRightServo = hardwareMap.servo.get(Names.brs);
         backLeftServo = hardwareMap.servo.get(Names.bls);
 
         //Get swerve hall sensors from hardwaremap
         frontRightHall = hardwareMap.analogInput.get(Names.frh);
-        //frontLeftHall = hardwareMap.analogInput.get(Names.flh); // Not on robot yet
+        frontLeftHall = hardwareMap.analogInput.get(Names.flh);
         backRightHall = hardwareMap.analogInput.get(Names.brh);
         backLeftHall = hardwareMap.analogInput.get(Names.blh);
 
         // create SwerveDrive object
         addControllers(new SwerveDrive(
-              //new SwerveUnit(frontRightDriveMotor, frontRightServo, frontRightHall)//, //front right
-              //new SwerveUnit(frontLeftDriveMotor, frontLeftServo, frontLeftHall),    //front left //not currently on robot
+              //new SwerveUnit(frontRightDriveMotor, frontRightServo, frontRightHall), //front right
+              new SwerveUnit(frontLeftDriveMotor, frontLeftServo, frontLeftHall)    //front left //not currently on robot
               //new SwerveUnit(backRightDriveMotor, backRightServo, backRightHall),    //back right
               //new SwerveUnit(backLeftDriveMotor, backLeftServo, backLeftHall)        //back left
         ));
@@ -81,6 +87,9 @@ public class SwerveBot extends RobotBase {
         super.loop();
         drive.setDirection(getGamepad1RightJoystickAngle()); //swerve direction is direction of right joystick
         drive.setDrivePower(-gamepad1.left_stick_y); //swerve speed is vertical position of left joystick
+
+        telemetry.addData("cmd direction", getGamepad1RightJoystickAngle());
+        telemetry.addData("cmd power", -gamepad1.left_stick_y);
     }
 
     @Override

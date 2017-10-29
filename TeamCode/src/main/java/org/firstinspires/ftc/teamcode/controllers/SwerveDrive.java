@@ -100,7 +100,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
     }
 
     public void setDirection(double direction) {
-        for(SwerveUnit controller : controllers) controller.stopDriveMotors();
+        for(SwerveUnit controller : controllers) controller.setDirection(direction);
     }
 
 }

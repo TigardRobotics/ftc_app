@@ -28,7 +28,7 @@ public class SwerveUnit extends HardwareController {
        set position 1.0 : full speed clockwise
     */
 
-    private static final double HOME = 50.0;
+    private static final double HOME_RANGE = 5.0;
     private static final double HOMING_SPEED = 130.0; //! Figure out the correct speed
     private static final double DIRECTION_SERVO_STOP = 0.5;
 
@@ -56,9 +56,9 @@ public class SwerveUnit extends HardwareController {
     public void init_loop() {
         // Slowly move to point towards home
         double rp = getRotationPosition();
-        Robot.telemetry.addData("servo pos", rp);
-        Robot.telemetry.addData("hall volt", hall.getVoltage());
-        if(rp < HOME) {
+        Robot.telemetry.addData("actual pos", rp);
+        Robot.telemetry.addData("cmd pos", direction);
+        if(rp < HOME_RANGE || rp > 360.0-HOME_RANGE) {
             direction = getRotationPosition();
             directionServo.setPosition(DIRECTION_SERVO_STOP);
         }
@@ -82,13 +82,15 @@ public class SwerveUnit extends HardwareController {
 
         double power = pid.update(error, stopwatch.seconds());
         stopwatch.reset();
+        Robot.telemetry.addData("actual pos", getRotationPosition());
+        Robot.telemetry.addData("cmd pos", direction);
         Robot.telemetry.addLine(String.format("error = %f, power = %f", error, power));
         directionServo.setPosition(power+0.5);
     }
 
     @Override
     public void stop() {
-        directionServo.setPosition(DIRECTION_SERVO_STOP);
+        stopDriveMotors();
     }
 
     /**
@@ -108,6 +110,7 @@ public class SwerveUnit extends HardwareController {
 
     public void stopDriveMotors() {
         motor.setPower(0.0);
+        directionServo.setPosition(DIRECTION_SERVO_STOP);
     }
 
     public void setRotationPower(double power) {
@@ -141,7 +144,8 @@ public class SwerveUnit extends HardwareController {
      * @return 0-359.99...
      */
     public double getRotationPosition() {
-        return (360.0 * hall.getVoltage() / 5.0) ;
+        //! TODO: scan for min and max
+        return ((360.0 * (hall.getVoltage()-2.5) / 5.0)+360.0)%360.0 ;
     }
 
     public void setCountsPerDegree(double cpd) {
