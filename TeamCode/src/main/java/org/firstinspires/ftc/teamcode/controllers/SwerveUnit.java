@@ -48,12 +48,12 @@ public class SwerveUnit extends HardwareController {
 
     @Override
     public void init() {
-        //! TODO: Scan for min and max hall values
         directionServo.setPosition(HOMING_SPEED);
     }
 
     @Override
     public void init_loop() {
+        //! TODO: Scan for min and max hall values
         // Slowly move to point towards home
         double rp = getRotationPosition();
         Robot.telemetry.addData("actual pos", rp);
@@ -100,10 +100,18 @@ public class SwerveUnit extends HardwareController {
         return pid;
     }
 
+    /**
+     * Set Commanded Direction
+     * @param direction Direction Servo (handles -360 to + 360)
+     */
     public void setDirection(double direction) {
-        this.direction = direction;
+        this.direction = (direction+360.0)%360.0;
     }
 
+    /**
+     * Set power to Drive Motor
+     * @param power Drive Motor power
+     */
     public void setDrivePower(double power) {
         motor.setPower(power);
     }
@@ -113,29 +121,8 @@ public class SwerveUnit extends HardwareController {
         directionServo.setPosition(DIRECTION_SERVO_STOP);
     }
 
-    public void setRotationPower(double power) {
-        direction = power;
-        //! implement this
-    }
-
-    public void setLeftDrivePower(double power) {
-        //! implement this
-    }
-
-    public void setRightDrivePower(double power) {
-        //! implement this
-    }
-
     public double getDrivePosition() {
         //! implement this
-        return 0.0; //! fix this
-    }
-
-    public void setCountsPerCentimeter(double cpc) {
-        //!implement this
-    }
-
-    public double PositionToCentimeters(double position) {
         return 0.0; //! fix this
     }
 
@@ -144,7 +131,7 @@ public class SwerveUnit extends HardwareController {
      * @return 0-359.99...
      */
     public double getRotationPosition() {
-        //! TODO: scan for min and max
+        //! TODO: account for min and max hall sensor valuse
         return ((360.0 * (hall.getVoltage()-2.5) / 5.0)+360.0)%360.0 ;
     }
 

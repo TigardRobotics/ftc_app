@@ -126,10 +126,10 @@ public class SwerveDrive extends HardwareController implements IDrive {
                 right_steer = Math.atan(-steer_direction/(1- 2*steer_direction))*MaxSteer;
                 left_steer = Math.atan(-steer_direction)*MaxSteer;
             }
-            controllers[FrontRight].setDirection((crab_direction+right_steer)%360.0);
-            controllers[FrontLeft].setDirection((crab_direction+left_steer)%360.0);
-            controllers[BackRight].setDirection((crab_direction-right_steer+360.0)%360.0);
-            controllers[BackLeft].setDirection((crab_direction-left_steer+360.0)%360.0);
+            controllers[FrontRight].setDirection(crab_direction+right_steer);
+            controllers[FrontLeft].setDirection(crab_direction+left_steer);
+            controllers[BackRight].setDirection(crab_direction-right_steer);
+            controllers[BackLeft].setDirection(crab_direction-left_steer);
         }
         else {
             for (SwerveUnit controller : controllers) controller.setDirection(crab_direction);
