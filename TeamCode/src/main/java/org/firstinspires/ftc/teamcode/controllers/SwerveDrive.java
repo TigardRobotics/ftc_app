@@ -3,15 +3,22 @@ package org.firstinspires.ftc.teamcode.controllers;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
- * Swerve Drive (4 Swerve Assemblies)
+ * Swerve Drive (4 Swerve Units)
  */
 
 public class SwerveDrive extends HardwareController implements IDrive {
 
+    //Order of the SwerveUnit controllers
+    static final int FrontRight=0, FrontLeft=1, BackRight=2, BackLeft=3;
+
     SwerveUnit[] controllers;
 
+    /**
+     * Drive Controller for 4-wheel swerve drive chassis
+     * @param controllers (frontRight, frontLeft, backRight, backLeft)
+     */
     public SwerveDrive(SwerveUnit... controllers) {
-        Robot.telemetry.addLine("Swerve Drive consturcted with "+controllers.length+" swerve units");
+        RobotBase.log("Swerve Drive constructed with "+controllers.length+" swerve units");
         this.controllers = controllers;
     }
 
@@ -57,16 +64,20 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     @Override
     public void setRotationPower(double power) {
+        //!TODO Support this
+        throw new UnsupportedOperationException("setRotationPower not supported in Swerve");
     }
 
     @Override
     public void setLeftDrivePower(double power) {
-
+        //!TODO Support this
+        throw new UnsupportedOperationException("setLeftDrivePower not supported in Swerve");
     }
 
     @Override
     public void setRightDrivePower(double power) {
-
+        //!TODO Support this
+        throw new UnsupportedOperationException("setRightDrivePower not supported in Swerve");
     }
 
     @Override
@@ -75,9 +86,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
     }
 
     @Override
-    public void setCountsPerCentimeter(double cpc) {
-
-    }
+    public void setCountsPerCentimeter(double cpc) {}
 
     @Override
     public double PositionToCentimeters(double position) {
@@ -90,17 +99,41 @@ public class SwerveDrive extends HardwareController implements IDrive {
     }
 
     @Override
-    public void setCountsPerDegree(double cpd) {
-
-    }
+    public void setCountsPerDegree(double cpd) {}
 
     @Override
     public double RotationToDegrees(double position) {
         return 0;
     }
 
-    public void setDirection(double direction) {
-        for(SwerveUnit controller : controllers) controller.setDirection(direction);
+    /**
+     * Set drive direction
+     * @param crab_direction (0-360)
+     * @param steer_direction (-1 to +1)  -1 = max left steer, 0 = no steer, +1 = max right steer
+     */
+    public void setDirection(double crab_direction, double steer_direction) {
+        if (controllers.length > BackLeft)
+        {
+            double MaxSteer = 45;   //Max steer is 45 degrees
+            double right_steer, left_steer;
+            if (steer_direction > 0)
+            {
+                right_steer = Math.atan(steer_direction)*MaxSteer;
+                left_steer = Math.atan(steer_direction/(1+ 2*steer_direction))*MaxSteer;
+            }
+            else
+            {
+                right_steer = Math.atan(-steer_direction/(1- 2*steer_direction))*MaxSteer;
+                left_steer = Math.atan(-steer_direction)*MaxSteer;
+            }
+            controllers[FrontRight].setDirection((crab_direction+right_steer)%360.0);
+            controllers[FrontLeft].setDirection((crab_direction+left_steer)%360.0);
+            controllers[BackRight].setDirection((crab_direction-right_steer+360.0)%360.0);
+            controllers[BackLeft].setDirection((crab_direction-left_steer+360.0)%360.0);
+        }
+        else {
+            for (SwerveUnit controller : controllers) controller.setDirection(crab_direction);
+        }
     }
 
 }

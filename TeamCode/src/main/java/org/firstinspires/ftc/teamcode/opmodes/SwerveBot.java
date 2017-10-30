@@ -67,10 +67,10 @@ public class SwerveBot extends RobotBase {
 
         // create SwerveDrive object
         addControllers(new SwerveDrive(
-              //new SwerveUnit(frontRightDriveMotor, frontRightServo, frontRightHall), //front right
-              new SwerveUnit(frontLeftDriveMotor, frontLeftServo, frontLeftHall)    //front left //not currently on robot
-              //new SwerveUnit(backRightDriveMotor, backRightServo, backRightHall),    //back right
-              //new SwerveUnit(backLeftDriveMotor, backLeftServo, backLeftHall)        //back left
+              new SwerveUnit(frontRightDriveMotor, frontRightServo, frontRightHall), //front right
+              new SwerveUnit(frontLeftDriveMotor, frontLeftServo, frontLeftHall),    //front left //not currently on robot
+              new SwerveUnit(backRightDriveMotor, backRightServo, backRightHall),    //back right
+              new SwerveUnit(backLeftDriveMotor, backLeftServo, backLeftHall)        //back left
         ));
 
         drive = (SwerveDrive)(findController(SwerveDrive.class));
@@ -85,11 +85,14 @@ public class SwerveBot extends RobotBase {
     @Override
     public void loop() {
         super.loop();
-        drive.setDirection(getGamepad1RightJoystickAngle()); //swerve direction is direction of right joystick
-        drive.setDrivePower(-gamepad1.left_stick_y); //swerve speed is vertical position of left joystick
-
-        telemetry.addData("cmd direction", getGamepad1RightJoystickAngle());
-        telemetry.addData("cmd power", -gamepad1.left_stick_y);
+        double crab_direction = getGamepad1RightJoystickAngle(); //crab direction is right joystick direction
+        double steer_direction = gamepad1.left_stick_y; //steer direction is left joystick horizontal
+        double drive_power = -gamepad1.left_stick_y*Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
+        drive.setDirection(crab_direction, steer_direction);
+        drive.setDrivePower(drive_power);
+        telemetry.addData("steer direction", steer_direction);
+        telemetry.addData("crab direction", crab_direction);
+        telemetry.addData("drive power", drive_power);
     }
 
     @Override
