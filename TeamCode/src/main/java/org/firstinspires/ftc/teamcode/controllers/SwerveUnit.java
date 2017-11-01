@@ -22,19 +22,12 @@ public class SwerveUnit extends HardwareController {
     private Pid pid;
     private ElapsedTime stopwatch = new ElapsedTime();
 
-    /* For the servo:
-       set position 0.0 : full speed counter-clockwise
-       set position 0.5 : stop
-       set position 1.0 : full speed clockwise
-    */
-
     private static final double HOME_RANGE = 5.0;
     private static final double HOMING_SPEED = 130.0; //! Figure out the correct speed
     private static final double DIRECTION_SERVO_STOP = 0.5;
 
     // the commanded direction
     private double direction = 0;
-
 
     /**
      * Constructor
@@ -82,15 +75,24 @@ public class SwerveUnit extends HardwareController {
         double error = Math.abs(negativeError) > positiveError ? positiveError : negativeError;
         */
 
-        double error = (getRotationPosition()-direction+540.0)%360.0-180.0;
+        //Calculate an error that is -180 to +180
+        //Negative indicates Commanded Direction is higher (clockwise) of Actual Direction
+        //Positive indicates Commanded Direction is lower (counter-clockwise) of Actual Direction
+        double error = (getRotationPosition()-direction+360.0+180.0)%360.0-180.0;
 
         double power = pid.update(error, stopwatch.seconds());
         stopwatch.reset();
-        Robot.telemetry.addData("actual direction", getRotationPosition());
-        Robot.telemetry.addData("hall volt", hall.getVoltage());
-        Robot.telemetry.addData("cmd direction", direction);
-        Robot.telemetry.addLine(String.format("error = %f, power = %f", error, power));
-        directionServo.setPosition(power+0.5);
+        Robot.telemetry.addLine(String.format("cmd = %1$.1f, actual = %2$.1f (%3$.2fV)", direction,  getRotationPosition(), hall.getVoltage()));
+        Robot.telemetry.addLine(String.format("error = %1$.2f, power = %2$.4f", error, power));
+
+        //negative power needs to try to fix negative error (turn clockwise)
+        //positive power needs to try to fix negative error (turn counter-clockwise)
+        /* For the servo:
+           set position 0.0 : full speed counter-clockwise
+           set position 0.5 : stop
+           set position 1.0 : full speed clockwise
+        */
+        directionServo.setPosition(power+0.5);  //!! This looks backwards based on the above notes
     }
 
     @Override
@@ -136,7 +138,8 @@ public class SwerveUnit extends HardwareController {
      * @return 0-359.99...
      */
     public double getRotationPosition() {
-        //! TODO: account for min and max hall sensor valuse
+        //! TODO: account for min and max hall sensor values
+        //Calculate position assuming forward in center position on the hall (2.5V)
         return ((360.0 * (hall.getVoltage()-2.5) / 5.0)+360.0)%360.0 ;
     }
 
