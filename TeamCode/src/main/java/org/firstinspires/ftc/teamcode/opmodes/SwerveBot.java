@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
@@ -47,10 +48,12 @@ public class SwerveBot extends RobotBase {
         backRightDriveMotor = hardwareMap.dcMotor.get(Names.brm);
         backLeftDriveMotor = hardwareMap.dcMotor.get(Names.blm);
 
-        // set swerve motor zero power behaviors
+        // set swerve motor zero power behaviors and reversals
         frontRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        frontRightDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         backRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        backRightDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         //Get swerve servos from hardwaremap

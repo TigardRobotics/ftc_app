@@ -76,14 +76,19 @@ public class SwerveUnit extends HardwareController {
          */
 
         // Derek's Error Formula:
+        /*
         double positiveError = (360.0 - getRotationPosition() + direction) % 360.0;
         double negativeError = positiveError - 360.0;
         double error = Math.abs(negativeError) > positiveError ? positiveError : negativeError;
+        */
+
+        double error = (getRotationPosition()-direction+540.0)%360.0-180.0;
 
         double power = pid.update(error, stopwatch.seconds());
         stopwatch.reset();
-        Robot.telemetry.addData("actual pos", getRotationPosition());
-        Robot.telemetry.addData("cmd pos", direction);
+        Robot.telemetry.addData("actual direction", getRotationPosition());
+        Robot.telemetry.addData("hall volt", hall.getVoltage());
+        Robot.telemetry.addData("cmd direction", direction);
         Robot.telemetry.addLine(String.format("error = %f, power = %f", error, power));
         directionServo.setPosition(power+0.5);
     }
