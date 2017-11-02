@@ -7,17 +7,16 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
-import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
+import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 /**
- * Created by Derek on 10/26/2017.
+ * Created by Mark on 11/1/2017.
  */
 
-@TeleOp(name="Swerve Teleop", group="3965")
-public class SwerveBot extends RobotBase {
+public abstract class SwerveBase extends RobotBase {
 
     // Drive Motors
     private DcMotor frontRightDriveMotor;
@@ -70,10 +69,10 @@ public class SwerveBot extends RobotBase {
 
         // create SwerveDrive object
         addControllers(new SwerveDrive(
-              new SwerveUnit(frontRightDriveMotor, frontRightServo, frontRightHall), //front right
-              new SwerveUnit(frontLeftDriveMotor, frontLeftServo, frontLeftHall),    //front left //not currently on robot
-              new SwerveUnit(backRightDriveMotor, backRightServo, backRightHall),    //back right
-              new SwerveUnit(backLeftDriveMotor, backLeftServo, backLeftHall)        //back left
+                new SwerveUnit(frontRightDriveMotor, frontRightServo, frontRightHall), //front right
+                new SwerveUnit(frontLeftDriveMotor, frontLeftServo, frontLeftHall),    //front left //not currently on robot
+                new SwerveUnit(backRightDriveMotor, backRightServo, backRightHall),    //back right
+                new SwerveUnit(backLeftDriveMotor, backLeftServo, backLeftHall)        //back left
         ));
 
         drive = (SwerveDrive)(findController(SwerveDrive.class));
@@ -88,9 +87,10 @@ public class SwerveBot extends RobotBase {
     @Override
     public void loop() {
         super.loop();
+
         double crab_direction = getGamepad1RightJoystickAngle(); //crab direction is right joystick direction
         //!WORKAROUND Prevent facing the hall hole (see comments in Swerve unit)
-        if ( crab_direction >160 && crab_direction < 200 ) {
+        if (crab_direction >160 && crab_direction < 200) {
             if(crab_direction < 180) crab_direction = 160;
             else crab_direction = 200;
         }

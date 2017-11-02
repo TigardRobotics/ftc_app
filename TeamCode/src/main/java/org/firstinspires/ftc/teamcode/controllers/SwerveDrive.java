@@ -13,6 +13,8 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     SwerveUnit[] drives;
 
+    boolean spinMode = false;
+
     /**
      * Drive Controller for 4-wheel swerve drive chassis
      * @param drives (frontRight, frontLeft, backRight, backLeft)
@@ -44,6 +46,14 @@ public class SwerveDrive extends HardwareController implements IDrive {
     @Override
     public void loop() {
         super.loop();
+
+        if(spinMode) {
+            drives[FRONT_RIGHT].setDirection(315.0);
+            drives[FRONT_LEFT].setDirection(45.0);
+            drives[BACK_RIGHT].setDirection(45.0);
+            drives[BACK_LEFT].setDirection(315.0);
+        }
+
         for(SwerveUnit drive : drives) drive.loop();
     }
 
@@ -55,7 +65,13 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     @Override
     public void setDrivePower(double power) {
-        for(SwerveUnit drive : drives) drive.setDrivePower(power);
+        if(spinMode) {
+            drives[FRONT_RIGHT].setDrivePower(-power);
+            drives[FRONT_LEFT].setDrivePower(power);
+            drives[BACK_RIGHT].setDrivePower(-power);
+            drives[BACK_LEFT].setDrivePower(power);
+        }
+        else for(SwerveUnit drive : drives) drive.setDrivePower(power);
     }
 
     @Override
@@ -118,13 +134,11 @@ public class SwerveDrive extends HardwareController implements IDrive {
             double MaxSteer = 45;   //Max steer is 45 degrees
             double right_steer=0, left_steer=0;
 
-            if (steer_direction > 0)
-            {
+            if (steer_direction > 0) {
                 right_steer = Math.atan(steer_direction)*MaxSteer;
                 left_steer = Math.atan(steer_direction/(1+ 2*steer_direction))*MaxSteer;
             }
-            else
-            {
+            else {
                 right_steer = -Math.atan(-steer_direction/(1- 2*steer_direction))*MaxSteer;
                 left_steer = -Math.atan(-steer_direction)*MaxSteer;
             }
@@ -136,6 +150,14 @@ public class SwerveDrive extends HardwareController implements IDrive {
         else {
             for (SwerveUnit drive : drives) drive.setDirection(crab_direction);
         }
+    }
+
+    public void spinMode() {
+        spinMode = true;
+    }
+
+    public void crabMode() {
+        spinMode = false;
     }
 
 }
