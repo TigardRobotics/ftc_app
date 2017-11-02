@@ -89,9 +89,6 @@ public class SwerveTeleop extends RobotBase {
     public void loop() {
         super.loop();
 
-
-
-
         double crab_direction = getGamepad1RightJoystickAngle(); //crab direction is right joystick direction
         //!WORKAROUND Prevent facing the hall hole (see comments in Swerve unit)
         if (crab_direction >160 && crab_direction < 200) {

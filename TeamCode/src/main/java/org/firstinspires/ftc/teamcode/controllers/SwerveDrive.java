@@ -65,6 +65,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     @Override
     public void setDrivePower(double power) {
+        Robot.log(String.format("SwerveDrive drive_power = %1$.1f%%", power*100));
         if(spinMode) {
             drives[FRONT_RIGHT].setDrivePower(-power);
             drives[FRONT_LEFT].setDrivePower(power);
@@ -129,6 +130,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
      * @param steer_direction (-1 to +1)  -1 = max left steer, 0 = no steer, +1 = max right steer
      */
     public void setDirection(double crab_direction, double steer_direction) {
+        Robot.log(String.format("SwerveDrive crab_direction = %1$.1f, steer_direction = %2$.1f", crab_direction,  steer_direction));
         if (drives.length > BACK_LEFT) {
 
             double MaxSteer = 45;   //Max steer is 45 degrees

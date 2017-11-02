@@ -79,31 +79,6 @@ public abstract class SwerveBase extends RobotBase {
     }
 
     @Override
-    public void start() {
-        super.start();
-        stateMachine = new StateMachine(new WaitState("wait"));
-    }
-
-    @Override
-    public void loop() {
-        super.loop();
-
-        double crab_direction = getGamepad1RightJoystickAngle(); //crab direction is right joystick direction
-        //!WORKAROUND Prevent facing the hall hole (see comments in Swerve unit)
-        if (crab_direction >160 && crab_direction < 200) {
-            if(crab_direction < 180) crab_direction = 160;
-            else crab_direction = 200;
-        }
-        double steer_direction = gamepad1.left_stick_x; //steer direction is left joystick horizontal
-        double drive_power = -gamepad1.left_stick_y*Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
-        drive.setDirection(crab_direction, steer_direction);
-        drive.setDrivePower(drive_power);
-        telemetry.addData("steer direction", steer_direction);
-        telemetry.addData("crab direction", crab_direction);
-        telemetry.addData("drive power", drive_power);
-    }
-
-    @Override
     public void stop() {
         super.stop();
         drive.stopDriveMotors();

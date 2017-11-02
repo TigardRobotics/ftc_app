@@ -64,17 +64,6 @@ public class SwerveUnit extends HardwareController {
 
     @Override
     public void loop() {
-        /* Mr. Hancock's Error Formula:
-            double error = (direction-getRotationPosition()+540)%360-180
-         */
-
-        // Derek's Error Formula:
-        /*
-        double positiveError = (360.0 - getRotationPosition() + direction) % 360.0;
-        double negativeError = positiveError - 360.0;
-        double error = Math.abs(negativeError) > positiveError ? positiveError : negativeError;
-        */
-
         //Calculate an error that is -180 to +180
         //Negative indicates Commanded Direction is lower (counter-clockwise) of Actual Direction
         //Positive indicates Commanded Direction is higher (clockwise) of Actual Direction
@@ -82,6 +71,8 @@ public class SwerveUnit extends HardwareController {
 
         double power = pid.update(error, stopwatch.seconds());
         stopwatch.reset();
+        //Enable logging if needed, but probably would flood the log if we did it all the time
+        //Robot.log(String.format("SwerveUnit cmd = %1$.1f, actual = %2$.1f , power = %2$.4f", direction,  getRotationPosition(), power));
         Robot.telemetry.addLine(String.format("cmd = %1$.1f, actual = %2$.1f (%3$.2fV)", direction,  getRotationPosition(), hall.getVoltage()));
         Robot.telemetry.addLine(String.format("error = %1$.2f, power = %2$.4f", error, power));
 
