@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 /**
- * Created by Mark on 11/1/2017.
+ * Created by Derek on 11/1/2017.
  */
 
 public abstract class SwerveBase extends RobotBase {
@@ -38,6 +38,7 @@ public abstract class SwerveBase extends RobotBase {
 
     public SwerveDrive drive;
 
+    @Override
     public void init() {
         super.init();
 

@@ -13,7 +13,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     SwerveUnit[] drives;
 
-    boolean spinMode = false;
+    private boolean spinMode = false;
 
     /**
      * Drive Controller for 4-wheel swerve drive chassis
@@ -65,7 +65,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     @Override
     public void setDrivePower(double power) {
-        Robot.log(String.format("SwerveDrive drive_power = %1$.1f%%", power*100));
+        RobotBase.log(String.format("SwerveDrive drive_power = %1$.1f%%", power*100));
         if(spinMode) {
             drives[FRONT_RIGHT].setDrivePower(-power);
             drives[FRONT_LEFT].setDrivePower(power);
