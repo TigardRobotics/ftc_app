@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
  */
 
 @Autonomous(name="Simple Swerve Auto", group="test")
-public class SwerveParkAuto extends SwerveTeleop {
+public class SwerveParkAuto extends RobotBase {
     private double driveTime = 30.0;
 
     // Drive Motors
@@ -86,7 +86,7 @@ public class SwerveParkAuto extends SwerveTeleop {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("drive", 0.5),
+                new DriveState("drive", 0.5, new TimeTrans("stop", 10)),
                 new WaitState("stop")
         );
     }
