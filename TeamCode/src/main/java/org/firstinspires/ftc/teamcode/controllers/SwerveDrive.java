@@ -113,11 +113,11 @@ public class SwerveDrive extends HardwareController implements IDrive {
      * @param steer_direction (-1 to +1)  -1 = max left steer, 0 = no steer, +1 = max right steer
      */
     public void setDirection(double crab_direction, double steer_direction) {
-        if (drives.length > BACK_LEFT)
-        {
+        if (drives.length > BACK_LEFT) {
+
             double MaxSteer = 45;   //Max steer is 45 degrees
             double right_steer=0, left_steer=0;
-            /*
+
             if (steer_direction > 0)
             {
                 right_steer = Math.atan(steer_direction)*MaxSteer;
@@ -125,9 +125,9 @@ public class SwerveDrive extends HardwareController implements IDrive {
             }
             else
             {
-                right_steer = Math.atan(-steer_direction/(1- 2*steer_direction))*MaxSteer;
-                left_steer = Math.atan(-steer_direction)*MaxSteer;
-            }*/
+                right_steer = -Math.atan(-steer_direction/(1- 2*steer_direction))*MaxSteer;
+                left_steer = -Math.atan(-steer_direction)*MaxSteer;
+            }
             drives[FRONT_RIGHT].setDirection(crab_direction+right_steer);
             drives[FRONT_LEFT].setDirection(crab_direction+left_steer);
             drives[BACK_RIGHT].setDirection(crab_direction-right_steer);

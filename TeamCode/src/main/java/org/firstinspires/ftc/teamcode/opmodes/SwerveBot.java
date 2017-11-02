@@ -89,7 +89,12 @@ public class SwerveBot extends RobotBase {
     public void loop() {
         super.loop();
         double crab_direction = getGamepad1RightJoystickAngle(); //crab direction is right joystick direction
-        double steer_direction = gamepad1.left_stick_y; //steer direction is left joystick horizontal
+        //!WORKAROUND Prevent facing the hall hole (see comments in Swerve unit)
+        if ( crab_direction >160 && crab_direction < 200 ) {
+            if(crab_direction < 180) crab_direction = 160;
+            else crab_direction = 200;
+        }
+        double steer_direction = gamepad1.left_stick_x; //steer direction is left joystick horizontal
         double drive_power = -gamepad1.left_stick_y*Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
         drive.setDirection(crab_direction, steer_direction);
         drive.setDrivePower(drive_power);

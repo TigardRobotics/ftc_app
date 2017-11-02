@@ -76,9 +76,9 @@ public class SwerveUnit extends HardwareController {
         */
 
         //Calculate an error that is -180 to +180
-        //Negative indicates Commanded Direction is higher (clockwise) of Actual Direction
-        //Positive indicates Commanded Direction is lower (counter-clockwise) of Actual Direction
-        double error = (getRotationPosition()-direction+360.0+180.0)%360.0-180.0;
+        //Negative indicates Commanded Direction is lower (counter-clockwise) of Actual Direction
+        //Positive indicates Commanded Direction is higher (clockwise) of Actual Direction
+        double error = (direction-getRotationPosition()+360.0+180.0)%360.0-180.0;
 
         double power = pid.update(error, stopwatch.seconds());
         stopwatch.reset();
@@ -92,7 +92,7 @@ public class SwerveUnit extends HardwareController {
            set position 0.5 : stop
            set position 1.0 : full speed clockwise
         */
-        directionServo.setPosition(power+0.5);  //!! This looks backwards based on the above notes
+        directionServo.setPosition(power+0.5);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class SwerveUnit extends HardwareController {
 
     /**
      * Set Commanded Direction
-     * @param direction Direction Servo (handles -360 to + 360)
+     * @param direction Direction Servo (handles -360 to + 360) Positive is clockwise
      */
     public void setDirection(double direction) {
         this.direction = (direction+360.0)%360.0;
@@ -135,12 +135,12 @@ public class SwerveUnit extends HardwareController {
 
     /**
      *
-     * @return 0-359.99...
+     * @return 0-359.99... Positive is clockwise
      */
     public double getRotationPosition() {
         //! TODO: account for min and max hall sensor values
         //Calculate position assuming forward in center position on the hall (2.5V)
-        return ((360.0 * (hall.getVoltage()-2.5) / 5.0)+360.0)%360.0 ;
+        return ((360.0 * (2.5-hall.getVoltage()) / 5.0)+360.0)%360.0 ;
     }
 
     public void setCountsPerDegree(double cpd) {
