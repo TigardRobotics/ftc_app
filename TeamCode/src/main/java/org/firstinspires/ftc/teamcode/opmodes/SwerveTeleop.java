@@ -42,5 +42,13 @@ public class SwerveTeleop extends SwerveBase {
         telemetry.addData("steer direction", steer_direction);
         telemetry.addData("crab direction", crab_direction);
         telemetry.addData("drive power", drive_power);
-    }
+
+        blockLift.lift(gamepad1.left_trigger - gamepad1.right_trigger);
+
+        if(gamepad1.right_bumper) {
+            blockLift.clamp();
+        }
+        else if(gamepad1.left_bumper) {
+            blockLift.release();
+        }    }
 }
