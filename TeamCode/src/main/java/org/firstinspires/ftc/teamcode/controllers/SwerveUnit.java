@@ -25,6 +25,7 @@ public class SwerveUnit extends HardwareController {
     private static final double HOME_RANGE = 5.0;
     private static final double HOMING_SPEED = 130.0; //! Figure out the correct speed
     private static final double DIRECTION_SERVO_STOP = 0.5;
+    private static final double MAX_DRIVE_SPEED = 0.5;
 
     // the commanded direction
     private double direction = 0;
@@ -87,9 +88,7 @@ public class SwerveUnit extends HardwareController {
     }
 
     @Override
-    public void stop() {
-        stopDriveMotors();
-    }
+    public void stop() { stopDriveMotors(); }
 
     /**
      * Get the swerve pid for tuning purposes
@@ -111,7 +110,7 @@ public class SwerveUnit extends HardwareController {
      * @param power Drive Motor power
      */
     public void setDrivePower(double power) {
-        motor.setPower(power);
+        motor.setPower(power*MAX_DRIVE_SPEED);
     }
 
     public void stopDriveMotors() {
