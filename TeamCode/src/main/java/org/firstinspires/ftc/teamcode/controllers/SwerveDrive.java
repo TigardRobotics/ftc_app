@@ -131,7 +131,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
      */
     public void setDirection(double crab_direction, double steer_direction) {
         Robot.log(String.format("SwerveDrive crab_direction = %1$.1f, steer_direction = %2$.1f", crab_direction,  steer_direction));
-        if (drives.length > BACK_LEFT) {
+        if ( drives.length > BACK_LEFT && ((crab_direction >350) || (crab_direction <10)) ) {
 
             double MaxSteer = 45;   //Max steer is 45 degrees
             double right_steer=0, left_steer=0;
