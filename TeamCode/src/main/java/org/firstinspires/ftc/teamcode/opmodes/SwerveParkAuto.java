@@ -24,7 +24,7 @@ public class SwerveParkAuto extends SwerveBase {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("drive", 0.5, new TimeTrans("stop", 10)),
+                new DriveState("drive", 0.5, new TimeTrans("stop", 2)),
                 new WaitState("stop")
         );
     }
