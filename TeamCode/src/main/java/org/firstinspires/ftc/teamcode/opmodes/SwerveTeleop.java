@@ -29,6 +29,15 @@ public class SwerveTeleop extends SwerveBase {
     public void loop() {
         super.loop();
 
+        if(gamepad1.right_stick_button) {
+            drive.spinMode();
+            double spinPower = gamepad1.right_stick_x*0.6;
+            drive.setDrivePower(spinPower);
+            telemetry.addData("spin power", spinPower);
+            return;
+        }
+        else drive.crabMode();
+
         double crab_direction = getGamepad1RightJoystickAngle(); //crab direction is right joystick direction
         //!WORKAROUND Prevent facing the hall hole (see comments in Swerve unit)
         if (crab_direction > 160 && crab_direction < 200) {
