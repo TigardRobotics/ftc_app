@@ -9,6 +9,10 @@ public final class Tools {
         return x / Math.abs(x);
     }
 
+    public static double sign(double x) {
+        return x / Math.abs(x);
+    }
+
     public static double sqr(double x) {
         return Math.pow(x, 2);
     }

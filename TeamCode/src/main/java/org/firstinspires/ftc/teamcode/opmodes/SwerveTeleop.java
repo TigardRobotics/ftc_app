@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
+import org.firstinspires.ftc.teamcode.Tools;
 import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
@@ -45,7 +46,8 @@ public class SwerveTeleop extends SwerveBase {
             else crab_direction = 200;
         }
         double steer_direction = gamepad1.left_stick_x; //steer direction is left joystick horizontal
-        double drive_power = -gamepad1.left_stick_y*Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
+        //double drive_power = -gamepad1.left_stick_y*Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
+        double drive_power = Tools.timesabs(Tools.sign(-gamepad1.left_stick_y)*getGamepad1LeftJoystickAmplitude());
         drive.setDirection(crab_direction, steer_direction);
         drive.setDrivePower(drive_power);
         telemetry.addData("steer direction", steer_direction);

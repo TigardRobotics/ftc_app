@@ -96,4 +96,8 @@ public abstract class RobotBase extends OpMode {
         return Math.sqrt(gamepad1.right_stick_y*gamepad1.right_stick_y + gamepad1.right_stick_x*gamepad1.right_stick_x);
     }
 
+    public double getGamepad1LeftJoystickAmplitude() {
+        return Math.sqrt(gamepad1.left_stick_y*gamepad1.left_stick_y + gamepad1.left_stick_x*gamepad1.left_stick_x);
+    }
+
 }
