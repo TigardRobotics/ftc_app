@@ -46,8 +46,8 @@ public class SwerveTeleop extends SwerveBase {
             else crab_direction = 200;
         }
         double steer_direction = gamepad1.left_stick_x; //steer direction is left joystick horizontal
-        //double drive_power = -gamepad1.left_stick_y*Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
-        double drive_power = Tools.timesabs(Tools.sign(-gamepad1.left_stick_y)*getGamepad1LeftJoystickAmplitude());
+        double drive_power = -gamepad1.left_stick_y*Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
+        //double drive_power = Tools.timesabs(Tools.sign(-gamepad1.left_stick_y)*getGamepad1LeftJoystickAmplitude());  //expiremental
         drive.setDirection(crab_direction, steer_direction);
         drive.setDrivePower(drive_power);
         telemetry.addData("steer direction", steer_direction);
@@ -61,5 +61,6 @@ public class SwerveTeleop extends SwerveBase {
         }
         else if(gamepad1.left_bumper) {
             blockLift.release();
-        }    }
+        }
+    }
 }

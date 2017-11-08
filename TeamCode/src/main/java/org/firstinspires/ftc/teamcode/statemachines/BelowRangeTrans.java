@@ -1,18 +1,16 @@
 package org.firstinspires.ftc.teamcode.statemachines;
 
-import org.firstinspires.ftc.teamcode.controllers.SensorModule;
-
 /**
  * Created by Derek on 9/26/17.
  */
-public class BelowRangeTrans extends RangeSensorTrans {
+public class BelowRangeTrans extends RangeTrans {
 
-    public BelowRangeTrans (String destination, SensorModule sensors, double range) {
-        super(destination, sensors, range);
+    public BelowRangeTrans (String destination, double range) {
+        super(destination, range);
     }
 
     @Override
     public boolean test() {
-        return sensors.getRangeCm() < range;
+        return sensor.getRangeCm() < range;
     }
 }
