@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.Tools;
+import org.firstinspires.ftc.teamcode.controllers.KnockerController;
 import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
@@ -19,6 +20,15 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 @TeleOp(name="Swerve Teleop", group="3965")
 public class SwerveTeleop extends SwerveBase {
+
+    KnockerController knocker;
+
+    @Override
+    public void init() {
+        super.init();
+        addControllers(new KnockerController(hardwareMap.servo.get(Names.knockServo)));
+        knocker = (KnockerController)findController(KnockerController.class);
+    }
 
     @Override
     public void start() {
@@ -61,6 +71,13 @@ public class SwerveTeleop extends SwerveBase {
         }
         else if(gamepad1.left_bumper) {
             blockLift.release();
+        }
+
+        if(gamepad1.x) {
+            knocker.extend();
+        }
+        else {
+            knocker.retract();
         }
     }
 }

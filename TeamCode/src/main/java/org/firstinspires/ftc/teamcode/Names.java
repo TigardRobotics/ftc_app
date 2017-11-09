@@ -13,6 +13,8 @@ public final class Names {
     public static String liftMotor = "lift";
     public static String leftClamp = "clamp_l";
     public static String rightClamp = "clamp_r";
+    public static String knockServo = "knock";
+    public static String colorSensor = "color";
 
     // Names for swerve
     public static String frm = "frm";

@@ -40,7 +40,9 @@ public abstract class State {
         //complete = false;
     }
 
-    public abstract void doState();
+    public void doState() {
+        //Nothing for now
+    }
 
     public void onExit() {
         RobotBase.log("Exiting "+name+" state");
