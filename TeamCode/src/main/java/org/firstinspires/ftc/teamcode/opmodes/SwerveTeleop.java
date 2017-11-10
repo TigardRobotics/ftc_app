@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.Tools;
+import org.firstinspires.ftc.teamcode.controllers.ColorController;
 import org.firstinspires.ftc.teamcode.controllers.KnockerController;
 import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
@@ -22,12 +23,13 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 public class SwerveTeleop extends SwerveBase {
 
     KnockerController knocker;
+    ColorController colorController;
 
     @Override
     public void init() {
         super.init();
-        addControllers(new KnockerController(hardwareMap.servo.get(Names.knockServo)));
         knocker = (KnockerController)findController(KnockerController.class);
+        colorController = (ColorController)findController(ColorController.class);
     }
 
     @Override

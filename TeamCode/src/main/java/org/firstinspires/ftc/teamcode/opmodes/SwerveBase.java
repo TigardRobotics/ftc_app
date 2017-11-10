@@ -8,7 +8,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.BlockLift;
+import org.firstinspires.ftc.teamcode.controllers.ColorController;
 import org.firstinspires.ftc.teamcode.controllers.IBlockLift;
+import org.firstinspires.ftc.teamcode.controllers.KnockerController;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
@@ -90,6 +92,10 @@ public abstract class SwerveBase extends RobotBase {
         // Get blocklift controller from controller list
         blockLift = (IBlockLift)findController(IBlockLift.class);
         drive = (SwerveDrive)(findController(SwerveDrive.class));
+
+        // Add knocker and color sensor controller
+        addControllers(new KnockerController(hardwareMap.servo.get(Names.knockServo)));
+        addControllers(new ColorController(hardwareMap.colorSensor.get(Names.colorSensor)));
     }
 
     @Override

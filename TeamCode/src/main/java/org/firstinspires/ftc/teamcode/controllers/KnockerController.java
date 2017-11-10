@@ -16,6 +16,12 @@ public class KnockerController extends HardwareController {
         this.servo = servo;
     }
 
+    @Override
+    public void init() {
+        super.init();
+        retract();
+    }
+
     public void extend() {
         servo.setPosition(DOWN);
     }
