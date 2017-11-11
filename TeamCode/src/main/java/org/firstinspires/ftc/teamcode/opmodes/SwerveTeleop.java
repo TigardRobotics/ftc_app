@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Color;
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.Tools;
 import org.firstinspires.ftc.teamcode.controllers.ColorController;
@@ -81,5 +82,18 @@ public class SwerveTeleop extends SwerveBase {
         else {
             knocker.retract();
         }
+
+        if(colorController.getColor() == Color.BLUE) {
+            telemetry.addLine("Blue Color Detected");
+        }
+        else if(colorController.getColor() == Color.RED) {
+            telemetry.addLine("Red Color Detected");
+        }
+        else {
+            telemetry.addLine("No Color Detected");
+        }
+
+        telemetry.addData("red", colorController.getRed());
+        telemetry.addData("blue", colorController.getBlue());
     }
 }

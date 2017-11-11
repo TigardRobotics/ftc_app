@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class KnockerController extends HardwareController {
     private static final double DOWN = 0.0;
-    private static final double UP = 0.5;
+    private static final double UP = 0.57;
 
     private Servo servo;
 

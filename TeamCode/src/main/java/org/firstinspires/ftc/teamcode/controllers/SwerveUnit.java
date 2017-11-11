@@ -50,8 +50,6 @@ public class SwerveUnit extends HardwareController {
         //! TODO: Scan for min and max hall values
         // Slowly move to point towards home
         double rp = getRotationPosition();
-        Robot.telemetry.addData("actual pos", rp);
-        Robot.telemetry.addData("cmd pos", direction);
         if(rp < HOME_RANGE || rp > 360.0-HOME_RANGE) {
             direction = getRotationPosition();
             directionServo.setPosition(DIRECTION_SERVO_STOP);
@@ -74,8 +72,8 @@ public class SwerveUnit extends HardwareController {
         stopwatch.reset();
         //Enable logging if needed, but probably would flood the log if we did it all the time
         //Robot.log(String.format("SwerveUnit cmd = %1$.1f, actual = %2$.1f , power = %2$.4f", direction,  getRotationPosition(), power));
-        Robot.telemetry.addLine(String.format("cmd = %1$.1f, actual = %2$.1f (%3$.2fV)", direction,  getRotationPosition(), hall.getVoltage()));
-        Robot.telemetry.addLine(String.format("error = %1$.2f, power = %2$.4f", error, power));
+        //Robot.telemetry.addLine(String.format("cmd = %1$.1f, actual = %2$.1f (%3$.2fV)", direction,  getRotationPosition(), hall.getVoltage()));
+        //Robot.telemetry.addLine(String.format("error = %1$.2f, power = %2$.4f", error, power));
 
         //negative power needs to try to fix negative error (turn clockwise)
         //positive power needs to try to fix negative error (turn counter-clockwise)

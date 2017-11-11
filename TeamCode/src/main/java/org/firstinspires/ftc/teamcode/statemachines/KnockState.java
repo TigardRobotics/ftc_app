@@ -24,6 +24,7 @@ public class KnockState extends State {
     @Override
     public void onExit() {
         super.onExit();
-        knocker.retract();
+        //This is kindof a hack
+        //knocker.retract();
     }
 }

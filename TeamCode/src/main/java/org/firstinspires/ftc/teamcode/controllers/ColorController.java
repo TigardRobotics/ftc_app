@@ -36,12 +36,12 @@ public class ColorController extends HardwareController {
         return color.blue();
     }
 
-    private double THRESHOLD = 32.0;
+
     public Color getColor() {
-        if(getRed() > getBlue()+THRESHOLD) {
+        if(getRed() > getBlue()) {
             return Color.RED;
         }
-        else if(getBlue() > getRed()+THRESHOLD) {
+        else if(getBlue() > getRed()) {
             return Color.BLUE;
         }
         return Color.NEITHER;
