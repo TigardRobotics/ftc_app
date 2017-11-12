@@ -59,13 +59,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
     @Override
     public void setDrivePower(double power) {
         RobotBase.log(String.format("SwerveDrive drive_power = %1$.1f%%", power*100));
-        if(spinMode) {
-            drives[FRONT_RIGHT].setDrivePower(-power);
-            drives[FRONT_LEFT].setDrivePower(power);
-            drives[BACK_RIGHT].setDrivePower(-power);
-            drives[BACK_LEFT].setDrivePower(power);
-        }
-        else for(SwerveUnit drive : drives) drive.setDrivePower(power);
+        for(SwerveUnit drive : drives) drive.setDrivePower(power);
     }
 
     @Override
@@ -153,9 +147,9 @@ public class SwerveDrive extends HardwareController implements IDrive {
      * Enter Spin Mode
      */
     public void spinMode() {
-        drives[FRONT_RIGHT].setDirection(315.0);
+        drives[FRONT_RIGHT].setDirection(135.0);
         drives[FRONT_LEFT].setDirection(45.0);
-        drives[BACK_RIGHT].setDirection(45.0);
+        drives[BACK_RIGHT].setDirection(225.0);
         drives[BACK_LEFT].setDirection(315.0);
 
         spinMode = true;
