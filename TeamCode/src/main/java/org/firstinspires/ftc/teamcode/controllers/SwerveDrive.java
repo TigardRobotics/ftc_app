@@ -64,7 +64,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     @Override
     public void stopDriveMotors() {
-        for(SwerveUnit drive : drives) drive.stopDriveMotors();
+        for(SwerveUnit drive : drives) drive.setDrivePower(0);
     }
 
     @Override
@@ -87,7 +87,9 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     @Override
     public double getDrivePosition() {
-        return 0;
+        double position = 0;
+        for(SwerveUnit drive : drives) position = Math.max(position, drive.getDrivePosition());
+        return position;
     }
 
     @Override
@@ -100,7 +102,8 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     @Override
     public double getRotationPosition() {
-        return 0;
+        //For swerve, consider this the spin; and, since spin is done with the drive motors, it is also the DrivePosition
+        return getDrivePosition();
     }
 
     @Override

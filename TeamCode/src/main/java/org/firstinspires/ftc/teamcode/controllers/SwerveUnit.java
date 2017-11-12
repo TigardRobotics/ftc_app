@@ -80,7 +80,7 @@ public class SwerveUnit extends HardwareController {
     }
 
     @Override
-    public void stop() { stopDriveMotors(); }
+    public void stop() { stopMotors(); }
 
     /**
      * Get the swerve pid for tuning purposes
@@ -105,14 +105,20 @@ public class SwerveUnit extends HardwareController {
         motor.setPower(power*MAX_DRIVE_SPEED);
     }
 
-    public void stopDriveMotors() {
+    /**
+     * Stop the Drive Motor
+     */
+    public void stopMotors() {
         motor.setPower(0.0);
         directionServo.setPosition(DIRECTION_SERVO_STOP);
     }
 
+    /**
+     * Get the encoder position of the Drive Motor
+     * @return encoder position of the drive motor
+     */
     public double getDrivePosition() {
-        //! implement this
-        return 0.0; //! fix this
+        return motor.getCurrentPosition();
     }
 
     /**
