@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Pid;
-import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 
 /**
@@ -23,7 +22,6 @@ public class SwerveUnit extends HardwareController {
     private ElapsedTime stopwatch = new ElapsedTime();
 
     private static final double HOME_RANGE = 5.0;
-    private static final double HOMING_SPEED = 130.0; //! Figure out the correct speed
     private static final double DIRECTION_SERVO_STOP = 0.5;
     private static final double MAX_DRIVE_SPEED = 0.5;
 
@@ -42,16 +40,23 @@ public class SwerveUnit extends HardwareController {
 
     @Override
     public void init() {
-        directionServo.setPosition(HOMING_SPEED);
+        setDirection(0.0);    //Home location (forward)
+        //Turn motor closest direction toward home
+        if( getDirectionError() > 0 ) {
+            directionServo.setPosition(1.0);    //clockwise
+        }
+        else {
+            directionServo.setPosition(0.0);    //counter-clockwise
+        }
     }
 
     @Override
     public void init_loop() {
         //! TODO: Scan for min and max hall values
         // Slowly move to point towards home
-        double rp = getRotationPosition();
-        if(rp < HOME_RANGE || rp > 360.0-HOME_RANGE) {
-            direction = getRotationPosition();
+        // Once we are close enough, stop
+        if( Math.abs(getDirectionError()) < HOME_RANGE) {
+            setDirection(getActualDirection());
             directionServo.setPosition(DIRECTION_SERVO_STOP);
         }
     }
@@ -63,26 +68,15 @@ public class SwerveUnit extends HardwareController {
 
     @Override
     public void loop() {
-        //Calculate an error that is -180 to +180
-        //Negative indicates Commanded Direction is lower (counter-clockwise) of Actual Direction
-        //Positive indicates Commanded Direction is higher (clockwise) of Actual Direction
-        double error = (direction-getRotationPosition()+360.0+180.0)%360.0-180.0;
 
-        double power = pid.update(error, stopwatch.seconds());
-        stopwatch.reset();
-        //Enable logging if needed, but probably would flood the log if we did it all the time
-        //Robot.log(String.format("SwerveUnit cmd = %1$.1f, actual = %2$.1f , power = %2$.4f", direction,  getRotationPosition(), power));
-        //Robot.telemetry.addLine(String.format("cmd = %1$.1f, actual = %2$.1f (%3$.2fV)", direction,  getRotationPosition(), hall.getVoltage()));
-        //Robot.telemetry.addLine(String.format("error = %1$.2f, power = %2$.4f", error, power));
-
-        //negative power needs to try to fix negative error (turn clockwise)
-        //positive power needs to try to fix negative error (turn counter-clockwise)
+        double power = pid.update(getDirectionError(), stopwatch.seconds());
         /* For the servo:
            set position 0.0 : full speed counter-clockwise
            set position 0.5 : stop
            set position 1.0 : full speed clockwise
         */
         directionServo.setPosition(power+0.5);
+        stopwatch.reset();
     }
 
     @Override
@@ -122,13 +116,24 @@ public class SwerveUnit extends HardwareController {
     }
 
     /**
-     *
+     *  Get the actual direction of the swerve unit based on the hall voltage
      * @return 0-359.99... Positive is clockwise
      */
-    public double getRotationPosition() {
+    public double getActualDirection() {
         //! TODO: account for min and max hall sensor values
         //Calculate position assuming forward in center position on the hall (2.5V)
         return ((360.0 * (2.5-hall.getVoltage()) / 5.0)+360.0)%360.0 ;
+    }
+
+    /**
+     * Calculate direction error (how far the servo needs to more to move it to the commanded position)
+     * @return Positional error -180 to +180 Positive is clockwise
+     */
+    public double getDirectionError() {
+        //
+        //Negative indicates Commanded Direction is lower (counter-clockwise) of Actual Direction
+        //Positive indicates Commanded Direction is higher (clockwise) of Actual Direction
+        return (direction - getActualDirection() + 360.0 + 180.0) % 360.0 - 180.0;
     }
 
     public void setCountsPerDegree(double cpd) {
