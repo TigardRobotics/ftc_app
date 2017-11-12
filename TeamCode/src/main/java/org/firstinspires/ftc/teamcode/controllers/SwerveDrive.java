@@ -47,13 +47,6 @@ public class SwerveDrive extends HardwareController implements IDrive {
     public void loop() {
         super.loop();
 
-        if(spinMode) {
-            drives[FRONT_RIGHT].setDirection(315.0);
-            drives[FRONT_LEFT].setDirection(45.0);
-            drives[BACK_RIGHT].setDirection(45.0);
-            drives[BACK_LEFT].setDirection(315.0);
-        }
-
         for(SwerveUnit drive : drives) drive.loop();
     }
 
@@ -131,6 +124,8 @@ public class SwerveDrive extends HardwareController implements IDrive {
      */
     public void setDirection(double crab_direction, double steer_direction) {
         Robot.log(String.format("SwerveDrive crab_direction = %1$.1f, steer_direction = %2$.1f", crab_direction,  steer_direction));
+        spinMode = false;
+
         if ( drives.length > BACK_LEFT && ((crab_direction >350) || (crab_direction <10)) ) {
 
             double MaxSteer = 45;   //Max steer is 45 degrees
@@ -154,12 +149,16 @@ public class SwerveDrive extends HardwareController implements IDrive {
         }
     }
 
+    /**
+     * Enter Spin Mode
+     */
     public void spinMode() {
-        spinMode = true;
-    }
+        drives[FRONT_RIGHT].setDirection(315.0);
+        drives[FRONT_LEFT].setDirection(45.0);
+        drives[BACK_RIGHT].setDirection(45.0);
+        drives[BACK_LEFT].setDirection(315.0);
 
-    public void crabMode() {
-        spinMode = false;
+        spinMode = true;
     }
 
 }

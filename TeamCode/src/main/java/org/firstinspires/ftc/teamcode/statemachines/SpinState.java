@@ -34,7 +34,7 @@ public class SpinState extends State {
     @Override
     public void onExit() {
         super.onExit();
-        swerve.crabMode();
         swerve.stopDriveMotors();
+        swerve.setDirection( 0.0, 0.0);   //Point Forward
     }
 }
