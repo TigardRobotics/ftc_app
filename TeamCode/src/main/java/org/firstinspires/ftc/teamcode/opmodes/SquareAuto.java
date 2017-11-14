@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.statemachines.BelowRangeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
@@ -16,8 +15,8 @@ import org.firstinspires.ftc.teamcode.statemachines.TurnState;
 @Autonomous(name="Square", group="test")
 public class SquareAuto extends TankBot {
 
-    private double sqrSideLen = 1000;
-    private double turnAmount = 3512;   //90 degrees
+    private double sqrSideLen = 30.5;   //12 inches
+    private double turnAmount = 90.0;   //90 degrees
 
     @Override
     public void init() {

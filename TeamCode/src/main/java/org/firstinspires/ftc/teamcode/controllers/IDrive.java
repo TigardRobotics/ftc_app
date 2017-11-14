@@ -10,10 +10,16 @@ public interface IDrive {
     void setRotationPower(double power);
     void setLeftDrivePower(double power);
     void setRightDrivePower(double power);
+
+    /**
+     * Get drive distance
+     * @return position in cm
+     */
     double getDrivePosition();
-    void setCountsPerCentimeter(double cpc);
-    double PositionToCentimeters(double position);
+
+    /**
+     * Get rotation angle
+     * @return rotation in degrees (not truncated, clockwise increases)
+     */
     double getRotationPosition();
-    void setCountsPerDegree(double cpd);
-    double RotationToDegrees(double position);
 }

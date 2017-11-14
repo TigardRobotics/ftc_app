@@ -89,30 +89,22 @@ public class SwerveDrive extends HardwareController implements IDrive {
     public double getDrivePosition() {
         double position = 0;
         for(SwerveUnit drive : drives) position = Math.max(position, drive.getDrivePosition());
-        return position;
-    }
-
-    @Override
-    public void setCountsPerCentimeter(double cpc) {}
-
-    @Override
-    public double PositionToCentimeters(double position) {
-        return 0;
+        return PositionToCentimeters(position);
     }
 
     @Override
     public double getRotationPosition() {
         //For swerve, consider this the spin; and, since spin is done with the drive motors, it is also the DrivePosition
-        return getDrivePosition();
+        double position = 0;
+        for(SwerveUnit drive : drives) position = Math.max(position, drive.getDrivePosition());
+        return RotationToDegrees(position);
     }
 
-    @Override
-    public void setCountsPerDegree(double cpd) {}
+    private double countsPerCentimeter = 5.85;    //estimate based on 3" wheels, 280 ppr AndyMark encoder and 1:2 bevel gear ratio ( (280 ppr / 2) / (3.0*Math.PI*2.54) )
+    public double PositionToCentimeters(double counts) { return counts/countsPerCentimeter;};
 
-    @Override
-    public double RotationToDegrees(double position) {
-        return 0;
-    }
+    private double countsPerDegree = countsPerCentimeter * 123.7 / 360.0; //estimate based on 15.5" turn-base ( countsPerCentimeter * (15.5.0*Math.PI*2.54) / 360 )
+    public double RotationToDegrees(double counts) { return counts/countsPerDegree;}
 
     /**
      * Set drive direction

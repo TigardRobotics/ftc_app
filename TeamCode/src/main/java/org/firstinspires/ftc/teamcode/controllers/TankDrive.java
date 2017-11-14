@@ -13,10 +13,6 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 public class TankDrive extends HardwareController implements IDrive {
 
-    private static final double COUNTS_PER_WHEEL_ROTATION = 1440;         //Tetrix Encoder
-    private static final double CM_PER_WHEEL_ROTATION = 4.0*Math.PI*2.54; //4" Tetrix Wheel
-    private static final double CM_PER_ROBOT_TURN = 17.0*Math.PI*2.54;    //17" Turn Radius
-
     private DcMotor leftDriveMotor;
     private DcMotor rightDriveMotor;
 
@@ -65,17 +61,13 @@ public class TankDrive extends HardwareController implements IDrive {
         return Math.max(leftDriveMotor.getCurrentPosition(), rightDriveMotor.getCurrentPosition()); //Max is used to account for slippage
     }
 
-    private double countsPerCentimeter = COUNTS_PER_WHEEL_ROTATION / CM_PER_WHEEL_ROTATION;     //Simple default
-    public void setCountsPerCentimeter( double cpc) {countsPerCentimeter=cpc;};
-    public double PositionToCentimeters(double counts) { return counts/countsPerCentimeter;};
-
-//!! This probably doesn't work.  Need to find math from last year
     public double getRotationPosition() {
-        return leftDriveMotor.getCurrentPosition() - rightDriveMotor.getCurrentPosition();
+        return RotationToDegrees(leftDriveMotor.getCurrentPosition() - rightDriveMotor.getCurrentPosition());
     }
 
-    private double countsPerDegree = countsPerCentimeter * CM_PER_ROBOT_TURN / 360;     //Simple default
-    public void setCountsPerDegree(double cpd) {countsPerDegree=cpd;}
-    public double RotationToDegrees(double counts) { return counts/countsPerDegree;}
+    private double countsPerCentimeter = 45.0;    //estimate based on 4" tetrix wheels
+    public double PositionToCentimeters(double counts) { return counts/countsPerCentimeter;};
 
+    private double countsPerDegree = 7660.0 / 180.0; //emperical measurement from BasicAutonomous
+    public double RotationToDegrees(double counts) { return counts/countsPerDegree;}
 }
