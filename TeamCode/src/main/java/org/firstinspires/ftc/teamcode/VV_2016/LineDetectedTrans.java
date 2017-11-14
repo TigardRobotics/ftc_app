@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.statemachines;
-
-import org.firstinspires.ftc.teamcode.controllers.SensorModule;
+package org.firstinspires.ftc.teamcode.VV_2016;
 
 /**
  * Created by Derek Williams of team 3965 on 11/8/2016.

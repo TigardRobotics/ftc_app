@@ -59,8 +59,8 @@ public abstract class VelocityVortexRobotBase extends TankBot {
         retractLeftPusher();
         retractRightPusher();
 
-        Drive.setCountsPerCentimeter(COUNTS_PER_CENTIMETER);
-        Drive.setCountsPerDegree(COUNTS_PER_DEGREE);
+        //! Drive.setCountsPerCentimeter(COUNTS_PER_CENTIMETER);
+        //! Drive.setCountsPerDegree(COUNTS_PER_DEGREE);
     }
 
     @Override

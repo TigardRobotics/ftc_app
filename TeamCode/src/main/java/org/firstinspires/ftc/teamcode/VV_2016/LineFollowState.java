@@ -1,4 +1,8 @@
-package org.firstinspires.ftc.teamcode.statemachines;
+package org.firstinspires.ftc.teamcode.VV_2016;
+
+import org.firstinspires.ftc.teamcode.statemachines.State;
+import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
+import org.firstinspires.ftc.teamcode.statemachines.Transition;
 
 /**
  * Created by Derek Williams of team 3965 on 11/8/2016.

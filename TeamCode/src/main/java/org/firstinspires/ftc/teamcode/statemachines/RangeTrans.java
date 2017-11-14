@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.statemachines;
 
 import org.firstinspires.ftc.teamcode.controllers.RangeController;
-import org.firstinspires.ftc.teamcode.controllers.SensorModule;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**

@@ -1,8 +1,9 @@
-package org.firstinspires.ftc.teamcode.opmodes;
+package org.firstinspires.ftc.teamcode.VV_2016;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.controllers.ModernRoboticsSensorModule;
+import org.firstinspires.ftc.teamcode.VV_2016.ModernRoboticsSensorModule;
+import org.firstinspires.ftc.teamcode.opmodes.TankBot;
 
 /**
  * Created by Derek Williams on 1/12/2017.
