@@ -19,6 +19,11 @@ public class SpinState extends State {
     }
 
     @Override
+    public double getProgress() {
+        return swerve.getRotationPosition();
+    }
+
+    @Override
     public void onEntry() {
         super.onEntry();
         swerve.spinMode();
@@ -35,6 +40,5 @@ public class SpinState extends State {
     public void onExit() {
         super.onExit();
         swerve.stopDriveMotors();
-        swerve.setDirection( 0.0, 0.0);   //Point Forward
     }
 }

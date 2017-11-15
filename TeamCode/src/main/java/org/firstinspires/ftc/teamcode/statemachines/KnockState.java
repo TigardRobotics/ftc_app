@@ -10,9 +10,18 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 public class KnockState extends State {
     private KnockerController knocker;
 
+    //HACK
+    boolean retract_hack = false;
+
     public KnockState(String name, Transition... transitions) {
         super(name, transitions);
         knocker = (KnockerController) RobotBase.findController(KnockerController.class);
+    }
+
+    public KnockState(String name, boolean retract_hack, Transition... transitions) {
+        super(name, transitions);
+        knocker = (KnockerController) RobotBase.findController(KnockerController.class);
+        this.retract_hack = retract_hack;
     }
 
     @Override
@@ -24,7 +33,7 @@ public class KnockState extends State {
     @Override
     public void onExit() {
         super.onExit();
-        //This is kindof a hack
-        //knocker.retract();
+        //This is a hack
+        if(retract_hack) knocker.retract();
     }
 }

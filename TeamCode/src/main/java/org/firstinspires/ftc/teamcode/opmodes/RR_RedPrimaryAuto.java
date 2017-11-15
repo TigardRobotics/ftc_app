@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.Color;
 import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.KnockState;
+import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
 import org.firstinspires.ftc.teamcode.statemachines.SpinState;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
@@ -22,17 +23,21 @@ public class RR_RedPrimaryAuto extends SwerveBase {
         super.start();
         stateMachine = new StateMachine(
                 new KnockState("knock", new ColorTrans("spin right", Color.BLUE), new ColorTrans("spin left", Color.RED)),
-                new SpinState("spin right", 0.1, new TimeTrans("spin left back", 0.5)),
-                new SpinState("spin left", -0.1, new TimeTrans("spin right back", 0.5)),
+                new SpinState("spin right", 0.2, new TimeTrans("unknock from right", 3.0)),
+                new SpinState("spin left", -0.2, new TimeTrans("unknock from left", 3.0)),
+
+                //hack to retract knocker
+                new KnockState("unknock from right", true, new TimeTrans("spin left back", 2.0)),
+                new KnockState("unknock from left", true, new TimeTrans("spin right back", 2.0)),
 
                 //Spin back
-                new SpinState("spin right back", 0.1, new TimeTrans("turn swerves", 0.5)),
-                new SpinState("spin left back", -0.1, new TimeTrans("turn swerves", 0.5)),
+                new SpinState("spin right back", 0.3, new TimeTrans("to crab", 3.0)),
+                new SpinState("spin left back", -0.3, new TimeTrans("to crab", 3.0)),
 
                 //Drive to cryptobox
-                new WaitState("turn swerves", new TimeTrans("to box", 3.0)),
-                new DriveState("to box", 0.1, new TimeTrans("spin box", 2.0)),
-                new SpinState("spin box", 0.1, new TimeTrans("end", 0.5)),
+                new DriveState("to crab", 0.0, new TimeTrans("to box", 5.0)),
+                new DriveState("to box", 0.4, new ProgressTrans("spin box", 350.0)),
+                new SpinState("spin box", 0.2, new TimeTrans("end", 12.0)),
                 new WaitState("end")
 
         );

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.statemachines;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
@@ -25,6 +26,7 @@ public class DriveState extends MoveState {
     public void onEntry() {
         super.onEntry();
         initialPos = drive.getDrivePosition();
+        if(drive instanceof SwerveDrive) ((SwerveDrive)drive).setDirection(0.0, 0.0); //hack
         drive.setDrivePower(speed);
     }
 

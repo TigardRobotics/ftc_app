@@ -46,7 +46,6 @@ public class SwerveDrive extends HardwareController implements IDrive {
     @Override
     public void loop() {
         super.loop();
-
         for(SwerveUnit drive : drives) drive.loop();
     }
 
@@ -58,7 +57,9 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     @Override
     public void setDrivePower(double power) {
-        RobotBase.log(String.format("SwerveDrive drive_power = %1$.1f%%", power*100));
+        String msg = String.format("SwerveDrive drive_power = %1$.1f%%", power*100);
+        RobotBase.log(msg);
+        Robot.telemetry.addLine(msg);
         for(SwerveUnit drive : drives) drive.setDrivePower(power);
     }
 
