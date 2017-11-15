@@ -60,7 +60,15 @@ public class SwerveDrive extends HardwareController implements IDrive {
         String msg = String.format("SwerveDrive drive_power = %1$.1f%%", power*100);
         RobotBase.log(msg);
         Robot.telemetry.addLine(msg);
-        for(SwerveUnit drive : drives) drive.setDrivePower(power);
+        if(spinMode) {
+            drives[FRONT_RIGHT].setDrivePower(-power);
+            drives[FRONT_LEFT].setDrivePower(power);
+            drives[BACK_RIGHT].setDrivePower(-power);
+            drives[BACK_LEFT].setDrivePower(power);
+        }
+        else {
+            for (SwerveUnit drive : drives) drive.setDrivePower(power);
+        }
     }
 
     @Override
@@ -88,16 +96,16 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     @Override
     public double getDrivePosition() {
-        double position = 0;
-        for(SwerveUnit drive : drives) position = Math.max(position, drive.getDrivePosition());
+        //average the position of the left motors - they always rotate forward
+        double position = (drives[FRONT_LEFT].getDrivePosition()+drives[BACK_LEFT].getDrivePosition())/2.0;
         return PositionToCentimeters(position);
     }
 
     @Override
     public double getRotationPosition() {
         //For swerve, consider this the spin; and, since spin is done with the drive motors, it is also the DrivePosition
-        double position = 0;
-        for(SwerveUnit drive : drives) position = Math.max(position, drive.getDrivePosition());
+        //average the position of the left motors - they always rotate forward
+        double position = (drives[FRONT_LEFT].getDrivePosition()+drives[BACK_LEFT].getDrivePosition())/2.0;
         return RotationToDegrees(position);
     }
 
@@ -143,9 +151,9 @@ public class SwerveDrive extends HardwareController implements IDrive {
      * Enter Spin Mode
      */
     public void spinMode() {
-        drives[FRONT_RIGHT].setDirection(135.0);
+        drives[FRONT_RIGHT].setDirection(315.0);
         drives[FRONT_LEFT].setDirection(45.0);
-        drives[BACK_RIGHT].setDirection(225.0);
+        drives[BACK_RIGHT].setDirection(45.0);
         drives[BACK_LEFT].setDirection(315.0);
 
         spinMode = true;
