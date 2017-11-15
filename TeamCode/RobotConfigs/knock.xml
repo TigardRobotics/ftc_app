@@ -8,6 +8,8 @@
         <TetrixMotor name="blm" port="2" />
     </MotorController>
     <DeviceInterfaceModule name="Device Interface Module 1" serialNumber="AI049LXZ">
+        <ColorSensor name="color" port="0" />
+        <ModernRoboticsI2cRangeSensor name="range" port="1" />
         <AnalogInput name="brh" port="0" />
         <AnalogInput name="frh" port="1" />
         <AnalogInput name="blh" port="2" />
