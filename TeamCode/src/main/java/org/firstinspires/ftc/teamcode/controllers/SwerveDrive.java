@@ -97,7 +97,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
     @Override
     public double getDrivePosition() {
         //average the position of the left motors - they always rotate forward
-        double position = (drives[FRONT_LEFT].getDrivePosition()+drives[BACK_LEFT].getDrivePosition())/2.0;
+        double position = (drives[FRONT_LEFT].getDrivePosition());// +drives[BACK_LEFT].getDrivePosition())/2.0;
         return PositionToCentimeters(position);
     }
 
@@ -105,14 +105,14 @@ public class SwerveDrive extends HardwareController implements IDrive {
     public double getRotationPosition() {
         //For swerve, consider this the spin; and, since spin is done with the drive motors, it is also the DrivePosition
         //average the position of the left motors - they always rotate forward
-        double position = (drives[FRONT_LEFT].getDrivePosition()+drives[BACK_LEFT].getDrivePosition())/2.0;
+        double position = (drives[FRONT_LEFT].getDrivePosition());//+drives[BACK_LEFT].getDrivePosition())/2.0;
         return RotationToDegrees(position);
     }
 
-    private double countsPerCentimeter = 5.85;    //estimate based on 3" wheels, 280 ppr AndyMark encoder and 1:2 bevel gear ratio ( (280 ppr / 2) / (3.0*Math.PI*2.54) )
+    private double countsPerCentimeter = 16.25;    //estimate based on 3" wheels, 280 ppr AndyMark encoder and 1:2 bevel gear ratio ( (280 ppr / 2) / (3.0*Math.PI*2.54) )
     public double PositionToCentimeters(double counts) { return counts/countsPerCentimeter;};
 
-    private double countsPerDegree = countsPerCentimeter * 123.7 / 360.0; //estimate based on 15.5" turn-base ( countsPerCentimeter * (15.5.0*Math.PI*2.54) / 360 )
+    private double countsPerDegree = 72.0 / 360.0; //estimate based on 15.5" turn-base ( countsPerCentimeter * (15.5.0*Math.PI*2.54) / 360 )
     public double RotationToDegrees(double counts) { return counts/countsPerDegree;}
 
     /**
