@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
- * Created by Derek Williams on 10/12/2016.
+ * Drive the Robot Straight
  */
 
 public class DriveState extends MoveState {
@@ -26,14 +26,14 @@ public class DriveState extends MoveState {
     public void onEntry() {
         super.onEntry();
         initialPos = drive.getDrivePosition();
-        if(drive instanceof SwerveDrive) ((SwerveDrive)drive).setDirection(0.0, 0.0); //hack
+        if(drive instanceof SwerveDrive) ((SwerveDrive)drive).setDirection(0.0, 0.0); //!WORKAROUND: Make sure we are not in spin mode
         drive.setDrivePower(speed);
     }
 
     @Override
     public void doState() {
-        Robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
-        RobotBase.log(name+String.format("Driven %f encoder counts", getProgress()));
+        Robot.telemetry.addData(name, String.format("Driven %f", getProgress()));
+        RobotBase.log(name+String.format("Driven %f", getProgress()));
     }
 
     @Override

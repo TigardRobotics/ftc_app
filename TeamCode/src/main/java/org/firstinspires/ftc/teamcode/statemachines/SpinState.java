@@ -4,10 +4,11 @@ import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
- * Created by Derek on 11/9/2017.
+ * Spin the robot
  */
 
 public class SpinState extends State {
+    protected double initialPosition;
 
     private double speed;
     private SwerveDrive swerve;
@@ -20,7 +21,7 @@ public class SpinState extends State {
 
     @Override
     public double getProgress() {
-        return swerve.getRotationPosition();
+        return Math.abs(swerve.getRotationPosition() - initialPosition);
     }
 
     @Override
@@ -28,17 +29,19 @@ public class SpinState extends State {
         super.onEntry();
         swerve.spinMode();
         swerve.setDrivePower(speed);
+        initialPosition = swerve.getRotationPosition();
     }
 
     @Override
     public void doState() {
-        Robot.telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
-        RobotBase.log(name+String.format("Driven %f encoder counts", getProgress()));
+        Robot.telemetry.addData(name, String.format("Driven %f ", getProgress()));
+        RobotBase.log(name+String.format("Driven %f ", getProgress()));
     }
 
     @Override
     public void onExit() {
         super.onExit();
+        //swerve.setDirection(0.0, 0.0); //!Doing this will exit spin; but, will mmess us up if we want to spin again
         swerve.stopDriveMotors();
     }
 }

@@ -1,29 +1,29 @@
 package org.firstinspires.ftc.teamcode.statemachines;
 
 /**
- * Created by Derek Williams on 10/12/2016.
+ * Turn the Robot
  */
 
 public class TurnState extends MoveState {
-    protected double initialEncoderPosition;
+    protected double initialPosition;
 
     public TurnState(String name, double speed, Transition... transitions){
         super(name, speed, transitions);
     }
 
     public double getProgress() {
-        return Math.abs(drive.getRotationPosition() - initialEncoderPosition);
+        return Math.abs(drive.getRotationPosition() - initialPosition);
     }
 
     @Override
     public void onEntry() {
-        initialEncoderPosition = drive.getRotationPosition();
+        initialPosition = drive.getRotationPosition();
         drive.setRotationPower(speed);
     }
 
     @Override
     public void doState() {
-        //telemetry.addData(name, String.format("Driven %f encoder counts", getProgress()));
+        Robot.telemetry.addData(name, String.format("Driven %f", getProgress()));
     }
 
     @Override
