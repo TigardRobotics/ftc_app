@@ -1,8 +1,9 @@
-package org.firstinspires.ftc.teamcode.opmodes;
+package org.firstinspires.ftc.teamcode.RR_2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.KnockState;
@@ -13,11 +14,11 @@ import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 /**
- * Created by Derek on 11/7/2017.
+ * BLUE Autonomous for Stone furthest from Recovery Zone
  */
 
-@Autonomous(name="Primary Red", group="3965")
-public class RR_RedPrimaryAuto extends SwerveBase {
+@Autonomous(name="Secondary Red", group="3965")
+public class RR_RedSecondaryAuto extends SwerveBase {
     @Override
     public void start() {
         super.start();
@@ -47,8 +48,12 @@ public class RR_RedPrimaryAuto extends SwerveBase {
                         new TimeTrans("end", 5.0)), //in case stall
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
                 new SpinState("spin box", 0.3,
-                        new ProgressTrans("end", 90.0),
+                        new ProgressTrans("to reverse to box", 90.0),
                         new TimeTrans("end", 2.0)), //in case stall
+                new DriveState("to reverse to box", 0.0, new TimeTrans("reverse to box", 1.0)),
+                new DriveState("reverse to box", -0.3,
+                        new ProgressTrans("end", 24*2.54),
+                        new TimeTrans("end", 4.0)),
                 new WaitState("end")
 
         );

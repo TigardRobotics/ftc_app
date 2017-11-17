@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.controllers;
+package org.firstinspires.ftc.teamcode.RR_2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -14,19 +14,19 @@ import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 /**
- * Created by Robotics on 11/16/2017.
+ * BLUE Autonomous for Stone furthest from Recovery Zone
  */
 
-@Autonomous(name="Secondary Red", group="3965")
-public class RR_RedSecondaryAuto extends SwerveBase {
+@Autonomous(name="Secondary Blue", group="3965")
+public class RR_BlueSecondaryAuto extends SwerveBase {
     @Override
     public void start() {
         super.start();
         stateMachine = new StateMachine(
                 new SpinState("to spin", 0.0, new TimeTrans("knock", 1.5)),
                 new KnockState("knock",
-                        new ColorTrans("spin right", Color.BLUE),
-                        new ColorTrans("spin left", Color.RED),
+                        new ColorTrans("spin right", Color.RED),
+                        new ColorTrans("spin left", Color.BLUE),
                         new TimeTrans("unknock", 10.0)),
 
                 //Blue on the right
@@ -44,7 +44,7 @@ public class RR_RedSecondaryAuto extends SwerveBase {
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("to box", 1.5)),
                 new DriveState("to box", 0.4,
-                        new ProgressTrans("to spin box", 120.0),
+                        new ProgressTrans("to spin box", -120.0),
                         new TimeTrans("end", 5.0)), //in case stall
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
                 new SpinState("spin box", 0.3,
