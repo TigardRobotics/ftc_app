@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.controllers.VuforiaController;
  */
 
 @Autonomous(name="Video Drive", group="3965")
-@Disabled
 public class VideoDrive extends SwerveTeleop {
     @Override
     public void init() {

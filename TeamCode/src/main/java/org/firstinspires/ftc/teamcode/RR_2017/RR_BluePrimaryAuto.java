@@ -25,8 +25,8 @@ public class RR_BluePrimaryAuto extends SwerveBase {
         stateMachine = new StateMachine(
                 new SpinState("to spin", 0.0, new TimeTrans("knock", 1.5)),
                 new KnockState("knock",
-                        new ColorTrans("spin right", Color.RED),
-                        new ColorTrans("spin left", Color.BLUE),
+                        new ColorTrans("spin right", Color.BLUE),
+                        new ColorTrans("spin left", Color.RED),
                         new TimeTrans("unknock", 10.0)),
 
                 //Red on the right
@@ -43,8 +43,8 @@ public class RR_BluePrimaryAuto extends SwerveBase {
 
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("to box", 1.5)),
-                new DriveState("to box", 0.4,
-                        new ProgressTrans("to spin box", -120.0),
+                new DriveState("to box", -0.4,
+                        new ProgressTrans("to spin box", 120.0),
                         new TimeTrans("end", 5.0)), //in case stall
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
                 new SpinState("spin box", 0.3,
