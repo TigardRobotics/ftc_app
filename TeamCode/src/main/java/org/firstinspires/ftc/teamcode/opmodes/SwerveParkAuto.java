@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -19,6 +20,7 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
  */
 
 @Autonomous(name="Simple Swerve Auto", group="test")
+@Disabled
 public class SwerveParkAuto extends SwerveBase {
     @Override
     public void start() {

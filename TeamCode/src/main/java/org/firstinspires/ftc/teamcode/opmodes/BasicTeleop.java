@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 
@@ -16,6 +17,7 @@ import java.util.Map;
  */
 
 @TeleOp(name="Basic Teleop", group="3965")
+@Disabled
 public class BasicTeleop extends TankBot {
 
     private DeviceInterfaceModule io;
