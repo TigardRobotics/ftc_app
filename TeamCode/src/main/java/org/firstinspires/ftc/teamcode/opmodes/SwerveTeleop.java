@@ -25,6 +25,7 @@ public class SwerveTeleop extends SwerveBase {
 
     KnockerController knocker;
     ColorController colorController;
+    boolean holdDown = false;
 
     @Override
     public void init() {
@@ -78,7 +79,16 @@ public class SwerveTeleop extends SwerveBase {
             blockLift.release();
         }
 
-        if(gamepad1.x) {
+        // hold the knocker down
+        if (gamepad1.b){
+            holdDown = true;
+        }
+
+        if (gamepad1.x){
+            holdDown = false;
+        }
+
+        if(gamepad1.x || holdDown) {
             knocker.extend();
         }
         else {
