@@ -11,13 +11,14 @@ import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.TurnState;
 
 /**
- * Created by Derek Williams on 10/12/2016.
+ * Opmode for calibrating the drive coeficients
+ * Drives 1 foot, turns 180 deg, repeats forever
  */
 
-@Autonomous(name="Basic Autonomous", group="3965")
+@Autonomous(name="Drive Calibration", group="test")
 //@Disabled
 
-public class BasicAutonomous extends SwerveBase {
+public class DriveCalibration extends SwerveBase {
 
     @Override
     public void init() {

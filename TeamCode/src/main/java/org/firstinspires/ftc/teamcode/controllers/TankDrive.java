@@ -68,6 +68,6 @@ public class TankDrive extends HardwareController implements IDrive {
     private double countsPerCentimeter = 45.0;    //estimate based on 4" tetrix wheels
     public double PositionToCentimeters(double counts) { return counts/countsPerCentimeter;};
 
-    private double countsPerDegree = 7660.0 / 180.0; //emperical measurement from BasicAutonomous
+    private double countsPerDegree = 7660.0 / 180.0; //emperical measurement from DriveCalibration
     public double RotationToDegrees(double counts) { return counts/countsPerDegree;}
 }
