@@ -19,8 +19,6 @@ public class BlockLift extends HardwareController implements IBlockLift {
     private static final double leftClampPos = 0.508;
     private static final double leftReleasePos = 0.078;
 
-
-
     /**
      * Constructor
      * @param liftMotor

@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 /**
  * Created by Derek on 11/8/2017.
  */
-
+// TODO: Exted SpinState for cleaner auto
 public class KnockState extends State {
     private KnockerController knocker;
 
