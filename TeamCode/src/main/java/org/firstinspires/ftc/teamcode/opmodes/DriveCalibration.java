@@ -13,6 +13,8 @@ import org.firstinspires.ftc.teamcode.statemachines.TurnState;
 /**
  * Opmode for calibrating the drive coeficients
  * Drives 1 foot, turns 180 deg, repeats forever
+ *
+ * Created by Derek on 10/12/2016.
  */
 
 @Autonomous(name="Drive Calibration", group="test")

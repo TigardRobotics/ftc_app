@@ -91,7 +91,7 @@ public class VuMarkController extends VuforiaController {
 
     // rotational components of the target relative to the robot
     public double rX;
-    public  double rY;
+    public double rY;
     public double rZ;
 
     /**
@@ -100,7 +100,7 @@ public class VuMarkController extends VuforiaController {
      * To get monitor use cameraId = hardwareMap.appContext.getResources()
      */
     public VuMarkController(Context appContext) {
-    super(appContext);
+        super(appContext);
     }
 
     @Override
