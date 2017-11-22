@@ -72,9 +72,6 @@ public class VuforiaController extends HardwareController {
 
     public static final String KEY = "AeVzAhr/////AAAAGXRSmCKs50SBs1rd/S528/st/2kCpgadInEirrV1g0tOoiJ6LHrprlXO+lZrEpbruFcBqVWXzjbZo4y5O6Dm2r1mhyfQ/n1B7JSCdiXlBwmLDCrAEz7NRyRQq8598ZyMZBqJZUqEiCkivK1CyOlXobCRdNnRTeELFYWJIETViKhC+Id0ke8iOHtvT7uWq0vQiaiMyuQaJyLQNKISnu4+1Vp2LzXLnETvI0MMvT0VaBwhoYBcWNDfUBlo/XVfgRcE8kjc81MFd6ZY4yVPseDmkW4912S5CmDDaVRUQjFbF2YEk9acUE/q5cMcGYLEYOIv2ZuqOr1cKAz2Wtxgz8zWQqXpUrFgI0+qlFDXzrIWfJR6";
 
-    public static final String TAG = "Vuforia VuMark Sample";
-
-
     /**
      * ID to access camera view
      */
@@ -96,7 +93,9 @@ public class VuforiaController extends HardwareController {
         cameraViewId = appContext.getResources().getIdentifier("cameraMonitorViewId", "id", appContext.getPackageName());
     }
 
-    @Override public void init() {
+    @Override
+    public void init() {
+        //only do this once (in case we are using more than one Vuforia Controller
         if (cameraViewId == -1) {
             /*
              * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
