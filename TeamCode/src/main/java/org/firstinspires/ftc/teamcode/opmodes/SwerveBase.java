@@ -54,12 +54,12 @@ public abstract class SwerveBase extends RobotBase {
         backLeftDriveMotor = hardwareMap.dcMotor.get(Names.blm);
 
         // set swerve motor zero power behaviors and reversals
-        frontRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        frontRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        backRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        frontLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        backLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //Get swerve servos from hardwaremap
         frontRightServo = hardwareMap.servo.get(Names.frs);
