@@ -73,15 +73,13 @@ public class VuforiaController extends HardwareController {
     public static final String KEY = "AeVzAhr/////AAAAGXRSmCKs50SBs1rd/S528/st/2kCpgadInEirrV1g0tOoiJ6LHrprlXO+lZrEpbruFcBqVWXzjbZo4y5O6Dm2r1mhyfQ/n1B7JSCdiXlBwmLDCrAEz7NRyRQq8598ZyMZBqJZUqEiCkivK1CyOlXobCRdNnRTeELFYWJIETViKhC+Id0ke8iOHtvT7uWq0vQiaiMyuQaJyLQNKISnu4+1Vp2LzXLnETvI0MMvT0VaBwhoYBcWNDfUBlo/XVfgRcE8kjc81MFd6ZY4yVPseDmkW4912S5CmDDaVRUQjFbF2YEk9acUE/q5cMcGYLEYOIv2ZuqOr1cKAz2Wtxgz8zWQqXpUrFgI0+qlFDXzrIWfJR6";
 
     /**
-     * ID to access camera view
-     */
-    protected static int cameraViewId = -1;
-
-    /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
      * localization engine.
      */
-    protected static VuforiaLocalizer vuforia;
+    protected VuforiaLocalizer vuforia = null;
+
+    //appContext (so we can request the CameraView)
+    protected Context appContext;
 
     /**
      * Viewforia Base (sets up static info that all Vuforia Controllers use
@@ -90,32 +88,31 @@ public class VuforiaController extends HardwareController {
 
      */
     public VuforiaController(Context appContext) {
-        cameraViewId = appContext.getResources().getIdentifier("cameraMonitorViewId", "id", appContext.getPackageName());
+        this.appContext = appContext;
     }
 
     @Override
     public void init() {
-        //only do this once (in case we are using more than one Vuforia Controller
-        if (cameraViewId == -1) {
-            /*
-             * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
-             * If no camera monitor is desired, use the parameterless constructor instead (commented out below).
-             */
-                VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraViewId);
+        // Get the Id for the cameraMonitorView
+        int cameraViewId = appContext.getResources().getIdentifier("cameraMonitorViewId", "id", appContext.getPackageName());
+        /*
+         * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
+         * If no camera monitor is desired, use the parameterless constructor instead (commented out below).
+         */
+            VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraViewId);
 
-                // OR...  Do Not Activate the Camera Monitor View, to save power
-                // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+            // OR...  Do Not Activate the Camera Monitor View, to save power
+            // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
-                parameters.vuforiaLicenseKey = KEY;
+            parameters.vuforiaLicenseKey = KEY;
 
-            /*
-             * We also indicate which camera on the RC that we wish to use.
-             * Here we chose the back (HiRes) camera (for greater range), but
-             * for a competition robot, the front camera might be more convenient.
-             */
-                parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
-                this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
-        }
+        /*
+         * We also indicate which camera on the RC that we wish to use.
+         * Here we chose the back (HiRes) camera (for greater range), but
+         * for a competition robot, the front camera might be more convenient.
+         */
+            parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+            vuforia = ClassFactory.createVuforiaLocalizer(parameters);
     }
 
 }

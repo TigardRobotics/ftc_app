@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
  * Created by Derek on 11/21/2017.
  */
 
-@Autonomous(name="Unittest VuMark Controller", group ="test")
+@Autonomous(name="VuMark Test", group ="test")
 //@Disabled
 public class VuMark_Test extends RobotBase {
     @Override
