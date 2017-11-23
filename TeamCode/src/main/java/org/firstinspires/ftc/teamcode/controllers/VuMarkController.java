@@ -82,7 +82,7 @@ public class VuMarkController extends VuforiaController {
      *         CENTER,
      *         RIGHT;
      */
-    public RelicRecoveryVuMark vuMark;
+    public RelicRecoveryVuMark vuMark = null;
 
     // X, Y, and Z components of the offset of the target relative to the robot
     public double tX;
@@ -101,6 +101,14 @@ public class VuMarkController extends VuforiaController {
      */
     public VuMarkController(Context appContext) {
         super(appContext);
+    }
+
+    /**
+     * Get the detected vuMark
+     * @return detected vuMark
+     */
+    public RelicRecoveryVuMark getMark(){
+        return vuMark;
     }
 
     @Override
@@ -169,7 +177,7 @@ public class VuMarkController extends VuforiaController {
      * @param transformationMatrix
      * @return
      */
-    String format(OpenGLMatrix transformationMatrix) {
+    private String format(OpenGLMatrix transformationMatrix) {
         return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
 }
