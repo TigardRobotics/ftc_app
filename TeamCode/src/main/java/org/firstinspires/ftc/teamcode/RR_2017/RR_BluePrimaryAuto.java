@@ -2,15 +2,19 @@ package org.firstinspires.ftc.teamcode.RR_2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.controllers.VuMarkController;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
+import org.firstinspires.ftc.teamcode.statemachines.GlobalTimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.KnockState;
 import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
 import org.firstinspires.ftc.teamcode.statemachines.SpinState;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
+import org.firstinspires.ftc.teamcode.statemachines.VuMarkTrans;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 /**
@@ -19,6 +23,13 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 @Autonomous(name="Primary Blue", group="3965")
 public class RR_BluePrimaryAuto extends SwerveBase {
+
+    @Override
+    public void init() {
+        super.init();
+        addControllers(new VuMarkController(hardwareMap.appContext));
+    }
+
     @Override
     public void start() {
         super.start();
@@ -42,7 +53,13 @@ public class RR_BluePrimaryAuto extends SwerveBase {
                 new KnockState("unknock", true, new TimeTrans("to crab", 1.5)),
 
                 //Drive to cryptobox
-                new DriveState("to crab", 0.0, new TimeTrans("to box", 1.5)),
+                new DriveState("to crab", 0.0, new TimeTrans("key column", 1.5)),
+                new WaitState("key column",
+                        new VuMarkTrans("to box", RelicRecoveryVuMark.RIGHT),
+                        new VuMarkTrans("to box", RelicRecoveryVuMark.LEFT),
+                        new VuMarkTrans("to box", RelicRecoveryVuMark.CENTER),
+                        new GlobalTimeTrans("to box", 20.0)
+                ),
                 new DriveState("to box", -0.4,
                         new ProgressTrans("to spin box", 120.0),
                         new TimeTrans("end", 5.0)), //in case stall

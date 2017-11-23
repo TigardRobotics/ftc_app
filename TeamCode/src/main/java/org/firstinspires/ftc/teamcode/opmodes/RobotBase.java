@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
@@ -24,6 +25,8 @@ public abstract class RobotBase extends OpMode {
 
     //* List of supported Hardware controllers */
     private List<HardwareController> controllers = new ArrayList<HardwareController>();
+
+    public ElapsedTime stopwatch;
 
     /**
      * This method searches a list for a HardwareController with the desired interface
@@ -66,6 +69,8 @@ public abstract class RobotBase extends OpMode {
     @Override
     public void start() {
         for (HardwareController control : controllers) control.start();
+        stopwatch = new ElapsedTime();
+        stopwatch.reset();
     }
 
     @Override

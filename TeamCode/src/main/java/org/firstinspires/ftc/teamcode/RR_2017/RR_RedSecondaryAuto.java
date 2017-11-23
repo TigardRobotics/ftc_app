@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.RR_2017;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.controllers.VuMarkController;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
@@ -19,6 +20,13 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 @Autonomous(name="Secondary Red", group="3965")
 public class RR_RedSecondaryAuto extends SwerveBase {
+
+    @Override
+    public void init() {
+        super.init();
+        addControllers(new VuMarkController(hardwareMap.appContext));
+    }
+
     @Override
     public void start() {
         super.start();
