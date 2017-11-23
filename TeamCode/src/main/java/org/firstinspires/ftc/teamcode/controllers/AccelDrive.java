@@ -6,13 +6,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
 /**
- * Created by Mark on 10/1/2017.
+ * Tank Drive but with limit on accelearation/decelleration (to prevent slipping)
  */
 
 public class AccelDrive extends TankDrive {
 
     private double targetLeftPower = 0;
     private double targetRightPower = 0;
+
+    private double actualLeftPower = 0;
+    private double actualRightPower = 0;
+
     private ElapsedTime loopTimer;
 
     public double accel;    //Motor accel/time  1=0 to full power in 1 sec
@@ -45,27 +49,30 @@ public class AccelDrive extends TankDrive {
         loopTimer.reset();
 
         //Adjust Left power based on the accel
-        if(Math.abs(targetLeftPower-leftDrivePower) <= power_change) {
-            super.setLeftDrivePower(targetLeftPower);
+        if(Math.abs(targetLeftPower-actualLeftPower) <= power_change) {
+            actualLeftPower = targetLeftPower;
         }
-        else if (leftDrivePower < targetLeftPower) {
-            super.setLeftDrivePower(leftDrivePower + power_change);
+        else if (actualLeftPower < targetLeftPower) {
+            actualLeftPower = (actualLeftPower + power_change);
         }
         else {
-            super.setLeftDrivePower(leftDrivePower - power_change);
+            actualLeftPower = (actualLeftPower - power_change);
         }
+        super.setLeftDrivePower(actualLeftPower);
 
         //Adjust Right power based on the accel
-        if(Math.abs(targetRightPower-rightDrivePower) <= power_change) {
-            super.setRightDrivePower(targetRightPower);
+        if(Math.abs(targetRightPower-actualRightPower) <= power_change) {
+            actualRightPower = targetRightPower;
         }
-        else if (rightDrivePower < targetRightPower) {
-            super.setRightDrivePower(rightDrivePower + power_change);
+        else if (actualRightPower < targetRightPower) {
+            actualRightPower = (actualRightPower + power_change);
         }
         else {
-            super.setRightDrivePower(rightDrivePower - power_change);
+            actualRightPower = (actualRightPower - power_change);
         }
+        super.setRightDrivePower(actualRightPower);
+
         super.loop();
-        Robot.telemetry.addLine(String.format("Left: %f of %f Right: %f of %f", leftDrivePower, targetLeftPower, rightDrivePower, targetRightPower));
+        Robot.telemetry.addLine(String.format("Left: %f of %f Right: %f of %f", actualLeftPower, targetLeftPower, actualRightPower, targetRightPower));
     }
 }

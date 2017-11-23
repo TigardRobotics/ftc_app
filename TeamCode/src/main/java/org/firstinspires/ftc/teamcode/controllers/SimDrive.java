@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.controllers;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
@@ -16,6 +17,9 @@ public class SimDrive extends HardwareController implements IDrive {
     private static final double COUNTS_PER_WHEEL_ROTATION = 1440;         //Tetrix Encoder
     private static final double CM_PER_WHEEL_ROTATION = 4.0*Math.PI*2.54; //4" Tetrix Wheel
     private static final double CM_PER_ROBOT_TURN = 17.0*Math.PI*2.54;    //17" Turn Radius
+
+    protected double drivePower;
+    protected double driveDirection;
 
     private double leftPower = 0;
     private double rightPower = 0;
@@ -34,8 +38,16 @@ public class SimDrive extends HardwareController implements IDrive {
     }
 
     public void setDrivePower(double power) {
-        setLeftDrivePower(power);
-        setRightDrivePower(power);
+        drivePower = power;
+        //Determine wheel powers based in direction so that:
+        //Average power = power
+        //Direction = 0 => Same power to both wheels
+        //Direction = -1 => All power to right wheel (steer left)
+        //Direction = +1 => All power to left wheel (steer right)
+        double right_power = Range.clip(drivePower*(1-driveDirection), -1.0, 1.0);
+        double left_power = Range.clip(drivePower*(1+driveDirection), -1.0, 1.0);
+        setLeftDrivePower(right_power);
+        setRightDrivePower(left_power);
     }
 
     public void stopDriveMotors(){
@@ -45,6 +57,13 @@ public class SimDrive extends HardwareController implements IDrive {
     public void setRotationPower(double power) {
         setLeftDrivePower(power);
         setRightDrivePower(-power);
+    }
+
+    @Override
+    public void setDriveDirection(double direction)
+    {
+        driveDirection = direction;
+        setDrivePower(drivePower);  //Set the correct wheel powers for the new direction
     }
 
     public void setLeftDrivePower(double power) {

@@ -13,42 +13,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Derek Williams of team 3965 on 10/9/2016.
+ * Drive Teleop using iDrive interface
  */
 
 @TeleOp(name="Basic Teleop", group="3965")
 @Disabled
 public class BasicTeleop extends TankBot {
 
-    private DeviceInterfaceModule io;
-    LedController Leds;
-
-    private static Map<String, Byte> LedIoMap = new HashMap<String, Byte>(){{
-        put(LedController.ALL_COLORS, (byte)0x1F);
-        put(LedController.NO_COLOR, (byte)0x00);
-        put(LedController.RED, (byte)0x01);   //D0
-        put(LedController.WHITE, (byte)0x02); //D1
-        put(LedController.BLUE, (byte)0x04);  //D2
-        put(LedController.GREEN, (byte)0x08); //D3
-        put(LedController.YELLOW, (byte)0x10);//D4
-    }};
-
     @Override
     public void init() {
         super.init();
-        //io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
-        //addControllers(new LedController(io, LedIoMap));
-
-        //Leds = (LedController)(findController(LedController.class));
 
         telemetry.addLine("Basic Hardware Initialized");
-        //Leds.setLed(LedController.BLUE, true);
     }
 
     @Override
     public void start() {
         super.start();
-        //Leds.setLed(LedController.GREEN, true);
         stateMachine = new StateMachine(
                 new WaitState("wait")
         );
@@ -56,15 +37,28 @@ public class BasicTeleop extends TankBot {
 
     @Override
     public void loop(){
-        Drive.setLeftDrivePower(gamepad1.left_stick_y);
-        Drive.setRightDrivePower(gamepad1.right_stick_y);
+        //Use Steer Control rather than Tank Control so that it works with any iDrive controller
+        //Left JoyStick sets Drive Power and Steering Angle
+        double steer_direction = gamepad1.left_stick_x; //steer direction is left joystick horizontal
+        Drive.setDriveDirection(steer_direction);
+
+        double drive_power = -gamepad1.left_stick_y * Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
+        Drive.setDrivePower(drive_power);
+
+        //Right JoyStick sets Rotation Power
+        double rotation_power = gamepad1.right_stick_x; //rotation power is right joystick horizontal
+        Drive.setRotationPower(rotation_power);
+
+        telemetry.addData("drive power", drive_power);
+        telemetry.addData("steer direction", steer_direction);
+        telemetry.addData("rotation power", rotation_power);
+
         super.loop();
     }
 
     @Override
     public void stop() {
         super.stop();
-        //Leds.setLed(LedController.ALL_COLORS, false);
     }
 
 }

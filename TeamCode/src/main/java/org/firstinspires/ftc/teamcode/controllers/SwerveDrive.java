@@ -77,21 +77,15 @@ public class SwerveDrive extends HardwareController implements IDrive {
     }
 
     @Override
+    public void setDriveDirection(double direction)
+    {
+        setDirection(0,direction);
+    }
+
+    @Override
     public void setRotationPower(double power) {
         //!TODO Support this
         throw new UnsupportedOperationException("setRotationPower not supported in Swerve");
-    }
-
-    @Override
-    public void setLeftDrivePower(double power) {
-        //!TODO Support this
-        throw new UnsupportedOperationException("setLeftDrivePower not supported in Swerve");
-    }
-
-    @Override
-    public void setRightDrivePower(double power) {
-        //!TODO Support this
-        throw new UnsupportedOperationException("setRightDrivePower not supported in Swerve");
     }
 
     @Override

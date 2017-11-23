@@ -16,7 +16,7 @@ public abstract class TankBot extends RobotBase {
 
     private DcMotor leftDriveMotor;
     private DcMotor rightDriveMotor;
-    public IDrive Drive;
+    public TankDrive Drive;
 
     public void init() {
         super.init();
@@ -25,7 +25,7 @@ public abstract class TankBot extends RobotBase {
         addControllers(new AccelDrive(rightDriveMotor, leftDriveMotor, 3.0));
         //addControllers(new TankDrive(rightDriveMotor, leftDriveMotor));
 
-        Drive = (IDrive)(findController(IDrive.class));
+        Drive = (TankDrive)(findController(TankDrive.class));
     }
 
     @Override

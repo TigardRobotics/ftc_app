@@ -26,8 +26,18 @@ public class TeleOpState extends State {
     }
 
     public void doState() {
-        drive.setLeftDrivePower(Tools.timesabs(Robot.gamepad1.left_stick_y));
-        drive.setRightDrivePower(Tools.timesabs(Robot.gamepad1.right_stick_y));
+        //Use Steer Control rather than Tank Control so that it works with any iDrive controller
+        //Left JoyStick sets Drive Power and Steering Angle
+        double steer_direction = Robot.gamepad1.left_stick_x; //steer direction is left joystick horizontal
+        drive.setDriveDirection(steer_direction);
+
+        double drive_power = -Robot.gamepad1.left_stick_y * Math.abs(Robot.gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
+        drive.setDrivePower(drive_power);
+
+        //Right JoyStick sets Rotation Power
+        double rotation_power = Robot.gamepad1.right_stick_x; //rotation power is right joystick horizontal
+        drive.setRotationPower(rotation_power);
+
     }
 
     public void onExit() {
