@@ -34,6 +34,7 @@ import android.content.res.Resources;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
+import com.vuforia.CameraDevice;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -81,6 +82,8 @@ public class VuforiaController extends HardwareController {
     //appContext (so we can request the CameraView)
     protected Context appContext;
 
+    protected CameraDevice camera;
+
     /**
      * Viewforia Base (sets up static info that all Vuforia Controllers use
      * @param appContext Android Application Context (hardwareMap.appContext)
@@ -89,6 +92,14 @@ public class VuforiaController extends HardwareController {
      */
     public VuforiaController(Context appContext) {
         this.appContext = appContext;
+    }
+
+    /**
+     * Turn camera light on/off
+     * @param on
+     */
+    public void setLight( boolean on){
+        CameraDevice.getInstance().setFlashTorchMode(on);
     }
 
     @Override
@@ -113,6 +124,7 @@ public class VuforiaController extends HardwareController {
          */
             parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
             vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+
     }
 
 }

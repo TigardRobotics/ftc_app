@@ -83,6 +83,7 @@ public class VuMarkController extends VuforiaController {
      *         RIGHT;
      */
     public RelicRecoveryVuMark vuMark = null;
+    public RelicRecoveryVuMark lastVuMark = RelicRecoveryVuMark.UNKNOWN;
 
     // X, Y, and Z components of the offset of the target relative to the robot
     public double tX;
@@ -104,15 +105,16 @@ public class VuMarkController extends VuforiaController {
     }
 
     /**
-     * Get the detected vuMark
-     * @return detected vuMark
+     * Get the last detected vuMark
+     * @return last detected vuMark
      */
     public RelicRecoveryVuMark getMark(){
-        return vuMark;
+        return lastVuMark;
     }
 
     @Override
     public void init() {
+        lastVuMark = RelicRecoveryVuMark.UNKNOWN;
         super.init();
         /**
          * Load the data set containing the VuMarks for Relic Recovery. There's only one trackable
@@ -127,7 +129,9 @@ public class VuMarkController extends VuforiaController {
 
     @Override
     public void start() {
+
         relicTrackables.activate();
+        setLight(true);
     }
 
     @Override
@@ -141,6 +145,7 @@ public class VuMarkController extends VuforiaController {
          */
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
         if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+            lastVuMark = vuMark;
 
             /* Found an instance of the template. In the actual game, you will probably
              * loop until this condition occurs, then move on to act accordingly depending
@@ -169,6 +174,7 @@ public class VuMarkController extends VuforiaController {
                 double rY = rot.secondAngle;
                 double rZ = rot.thirdAngle;
             }
+            setLight(false);
         }
     }
 
