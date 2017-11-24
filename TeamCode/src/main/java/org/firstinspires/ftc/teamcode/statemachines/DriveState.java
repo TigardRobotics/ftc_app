@@ -26,7 +26,7 @@ public class DriveState extends MoveState {
     public void onEntry() {
         super.onEntry();
         initialPos = drive.getDrivePosition();
-        if(drive instanceof SwerveDrive) ((SwerveDrive)drive).setDirection(0.0, 0.0); //!WORKAROUND: Make sure we are not in spin mode
+        drive.setDriveDirection(0.0);
         drive.setDrivePower(speed);
     }
 
