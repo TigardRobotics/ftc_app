@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 public class SpinState extends State {
     protected double initialPosition;
 
-    private double speed;
-    private SwerveDrive swerve;
+    protected double speed;
+    protected SwerveDrive swerve;
 
     public SpinState(String name, double speed, Transition... transitions) {
         super(name, transitions);
