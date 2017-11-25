@@ -52,13 +52,14 @@ public class SwerveUnit extends HardwareController {
 
     @Override
     public void init_loop() {
-        //! TODO: Scan for min and max hall values
-        // Slowly move to point towards home
-        // Once we are close enough, stop
-        if( Math.abs(getDirectionError()) < HOME_RANGE) {
-            setDirection(getActualDirection());
-            directionServo.setPosition(DIRECTION_SERVO_STOP);
-        }
+        double power = pid.update(getDirectionError(), stopwatch.seconds());
+        /* For the servo:
+           set position 0.0 : full speed counter-clockwise
+           set position 0.5 : stop
+           set position 1.0 : full speed clockwise
+        */
+        directionServo.setPosition(power+0.5);
+        stopwatch.reset();
     }
 
     @Override
@@ -68,7 +69,6 @@ public class SwerveUnit extends HardwareController {
 
     @Override
     public void loop() {
-
         double power = pid.update(getDirectionError(), stopwatch.seconds());
         /* For the servo:
            set position 0.0 : full speed counter-clockwise

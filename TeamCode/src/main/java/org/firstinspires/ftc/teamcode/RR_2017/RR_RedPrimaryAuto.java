@@ -4,12 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.controllers.VuMarkController;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.GlobalTimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.KnockState;
+import org.firstinspires.ftc.teamcode.statemachines.PickUpBlockState;
 import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
 import org.firstinspires.ftc.teamcode.statemachines.SpinState;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
@@ -28,12 +30,14 @@ public class RR_RedPrimaryAuto extends SwerveBase {
     public void init() {
         super.init();
         addControllers(new VuMarkController(hardwareMap.appContext));
+        ((SwerveDrive)findController(SwerveDrive.class)).spinMode();
     }
 
     @Override
     public void start() {
         super.start();
         stateMachine = new StateMachine(
+                new PickUpBlockState("lift block", -1.0, new TimeTrans("to spin", 1.0)),
                 new SpinState("to spin", 0.0, new TimeTrans("knock", 1.5)),
                 new KnockState("knock",
                         new ColorTrans("spin right", Color.RED),
