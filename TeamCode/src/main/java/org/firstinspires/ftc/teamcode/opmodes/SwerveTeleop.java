@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.RR_2017;
+package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
@@ -18,21 +18,15 @@ import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 /**
- * Created by Derek on 10/26/2017.
+ * Teleop for Swerve Drive
  */
 
 @TeleOp(name="Swerve Teleop", group="3965")
 public class SwerveTeleop extends SwerveBase {
 
-    KnockerController knocker;
-    ColorController colorController;
-    boolean holdDown = false;
-
     @Override
     public void init() {
         super.init();
-        knocker = (KnockerController)findController(KnockerController.class);
-        colorController = (ColorController)findController(ColorController.class);
     }
 
     @Override
@@ -69,44 +63,5 @@ public class SwerveTeleop extends SwerveBase {
             drive.setDrivePower(drive_power);
             telemetry.addData("drive power", drive_power);
         }
-
-
-        blockLift.lift(gamepad1.left_trigger - gamepad1.right_trigger);
-
-        if(gamepad1.right_bumper) {
-            blockLift.clamp();
-        }
-        else if(gamepad1.left_bumper) {
-            blockLift.release();
-        }
-
-        // hold the knocker down
-        if (gamepad1.b){
-            holdDown = true;
-        }
-
-        if (gamepad1.x){
-            holdDown = false;
-        }
-
-        if(gamepad1.x || holdDown) {
-            knocker.extend();
-        }
-        else {
-            knocker.retract();
-        }
-
-        if(colorController.getColor() == Color.BLUE) {
-            telemetry.addLine("Blue Color Detected");
-        }
-        else if(colorController.getColor() == Color.RED) {
-            telemetry.addLine("Red Color Detected");
-        }
-        else {
-            telemetry.addLine("No Color Detected");
-        }
-
-        telemetry.addData("red", colorController.getRed());
-        telemetry.addData("blue", colorController.getBlue());
     }
 }
