@@ -90,23 +90,33 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
     @Override
     public double getDrivePosition() {
+        double enc_fl = drives[FRONT_LEFT].getDrivePosition();
+        double enc_fr = drives[FRONT_RIGHT].getDrivePosition();
+        double enc_bl = drives[BACK_LEFT].getDrivePosition();
+        double enc_br = drives[BACK_RIGHT].getDrivePosition();
         //average the position of the left motors - they always rotate forward
-        double position = (drives[FRONT_LEFT].getDrivePosition());// +drives[BACK_LEFT].getDrivePosition())/2.0;
-        return PositionToCentimeters(position);
+        double position = PositionToCentimeters(enc_fl);// +enc_bl)/2.0;
+        RobotBase.log(String.format("DPos=%f (fl=%f,fr=%f,bl=%f,br=%f)", position,enc_fl,enc_fr,enc_bl,enc_br));
+        return position;
     }
 
     @Override
     public double getRotationPosition() {
         //For swerve, consider this the spin; and, since spin is done with the drive motors, it is also the DrivePosition
+        double enc_fl = drives[FRONT_LEFT].getDrivePosition();
+        double enc_fr = drives[FRONT_RIGHT].getDrivePosition();
+        double enc_bl = drives[BACK_LEFT].getDrivePosition();
+        double enc_br = drives[BACK_RIGHT].getDrivePosition();
         //average the position of the left motors - they always rotate forward
-        double position = (drives[FRONT_LEFT].getDrivePosition());//+drives[BACK_LEFT].getDrivePosition())/2.0;
+        double position = RotationToDegrees(enc_fl);// +enc_bl)/2.0;
+        RobotBase.log(String.format("RPos=%f (fl=%f,fr=%f,bl=%f,br=%f)", position,enc_fl,enc_fr,enc_bl,enc_br));
         return RotationToDegrees(position);
     }
 
-    private double countsPerCentimeter = 16.25;    //estimate based on 3" wheels, 280 ppr AndyMark encoder and 1:2 bevel gear ratio ( (280 ppr / 2) / (3.0*Math.PI*2.54) )
+    private double countsPerCentimeter = 16.25;    // 5.84=(280/2)/(3.0*Math.PI*2.54 (based on 3" wheels, 280 ppr AndyMark encoder and 1:2 bevel gear ratio)
     public double PositionToCentimeters(double counts) { return counts/countsPerCentimeter;};
 
-    private double countsPerDegree = 2625.0 / 360.0; //estimate based on 15.5" turn-base ( countsPerCentimeter * (15.5.0*Math.PI*2.54) / 360 )
+    private double countsPerDegree = 2625.0 / 360.0; // 2.0=5.85*(15.5*Math.PI*2.54)/360 (based on 5.85 cts/cm and 15.5" turn-base)
     public double RotationToDegrees(double counts) { return counts/countsPerDegree;}
 
     /**
