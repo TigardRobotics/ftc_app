@@ -41,14 +41,14 @@ public class RR_BluePrimaryAuto extends SwerveBase {
                         new TimeTrans("unknock", 10.0)),
 
                 //Red on the right
-                new SpinState("spin right", 0.2, new ProgressTrans("unknock from right", 45.0)),
+                new SpinState("spin right", 0.2, new ProgressTrans("unknock from right", 20.0)),
                 new KnockState("unknock from right", true, new TimeTrans("spin left back", 0.5)),
-                new SpinState("spin left back", -0.3, new ProgressTrans("to crab", 45.0)),
+                new SpinState("spin left back", -0.3, new ProgressTrans("to crab", 20.0)),
 
                 //Red on the left
-                new SpinState("spin left", -0.2, new ProgressTrans("unknock from left", 45.0)),
+                new SpinState("spin left", -0.2, new ProgressTrans("unknock from left", 20.0)),
                 new KnockState("unknock from left", true, new TimeTrans("spin right back", 0.5)),
-                new SpinState("spin right back", 0.3, new ProgressTrans("to crab", 45.0)),
+                new SpinState("spin right back", 0.3, new ProgressTrans("to crab", 20.0)),
 
                 new KnockState("unknock", true, new TimeTrans("to crab", 1.5)),
 
@@ -66,7 +66,7 @@ public class RR_BluePrimaryAuto extends SwerveBase {
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
                 new SpinState("spin box", 0.3,
                         new ProgressTrans("end", 90.0),
-                        new TimeTrans("end", 2.0)), //in case stall
+                        new TimeTrans("end", 8.0)), //in case stall
                 new WaitState("end")
 
         );

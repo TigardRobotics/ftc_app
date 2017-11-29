@@ -41,7 +41,7 @@ public class SwerveTeleop extends SwerveBase {
 
         if(gamepad1.right_stick_button) {
             drive.spinMode();
-            double spinPower = gamepad1.right_stick_x*0.6;
+            double spinPower = -gamepad1.left_stick_x * Math.abs(gamepad1.left_stick_x); //speed is Left joystick vertical (with square acceleration)
             drive.setDrivePower(spinPower);
             telemetry.addData("spin power", spinPower);
             return;

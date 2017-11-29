@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.Color;
 import org.firstinspires.ftc.teamcode.controllers.VuMarkController;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
+import org.firstinspires.ftc.teamcode.statemachines.CrabState;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.KnockState;
 import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
@@ -51,17 +52,13 @@ public class RR_RedSecondaryAuto extends SwerveBase {
 
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("to box", 1.5)),
-                new DriveState("to box", 0.4,
-                        new ProgressTrans("to spin box", 120.0),
+                new DriveState("to box forward", 0.4,
+                        new ProgressTrans("to left crab", 120.0),
                         new TimeTrans("end", 5.0)), //in case stall
-                new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
-                new SpinState("spin box", 0.3,
+                new CrabState("to left crab", 270.0, 0.0, new TimeTrans("spin box", 1.5)),
+                new CrabState("left crab", 270.0, 0.3,
                         new ProgressTrans("to reverse to box", 90.0),
                         new TimeTrans("end", 2.0)), //in case stall
-                new DriveState("to reverse to box", 0.0, new TimeTrans("reverse to box", 1.0)),
-                new DriveState("reverse to box", -0.3,
-                        new ProgressTrans("end", 24*2.54),
-                        new TimeTrans("end", 4.0)),
                 new WaitState("end")
 
         );
