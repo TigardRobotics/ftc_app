@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
 import org.firstinspires.ftc.teamcode.statemachines.CrabState;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.KnockState;
+import org.firstinspires.ftc.teamcode.statemachines.PickUpBlockState;
 import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
 import org.firstinspires.ftc.teamcode.statemachines.SpinState;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
@@ -32,6 +33,7 @@ public class RR_RedSecondaryAuto extends SwerveBase {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
+                new PickUpBlockState("lift block", -1.0, new TimeTrans("to spin", 1.0)),
                 new SpinState("to spin", 0.0, new TimeTrans("knock", 1.5)),
                 new KnockState("knock",
                         new ColorTrans("spin right", Color.RED),
@@ -51,14 +53,19 @@ public class RR_RedSecondaryAuto extends SwerveBase {
                 new KnockState("unknock", true, new TimeTrans("to crab", 1.5)),
 
                 //Drive to cryptobox
-                new DriveState("to crab", 0.0, new TimeTrans("to box", 1.5)),
-                new DriveState("to box forward", 0.4,
+                new DriveState("to crab", 0.0, new TimeTrans("forward", 1.5)),
+                new DriveState("forward", 0.4,
                         new ProgressTrans("to left crab", 120.0),
                         new TimeTrans("end", 5.0)), //in case stall
-                new CrabState("to left crab", 270.0, 0.0, new TimeTrans("spin box", 1.5)),
+                new CrabState("to left crab", 270.0, 0.0, new TimeTrans("left crab", 1.5)),
                 new CrabState("left crab", 270.0, 0.3,
-                        new ProgressTrans("to reverse to box", 90.0),
+                        new ProgressTrans("to push", 90.0),
                         new TimeTrans("end", 2.0)), //in case stall
+                new DriveState("to push", 0.0, new TimeTrans("drop block", 1.5)),
+                new PickUpBlockState("drop block", 1.0, true, new TimeTrans("push", 1.0)),
+                new DriveState("push", 0.4,
+                        new ProgressTrans("end", 120.0),
+                        new TimeTrans("end", 5.0)), //in case stall
                 new WaitState("end")
 
         );
