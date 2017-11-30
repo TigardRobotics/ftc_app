@@ -110,7 +110,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
         //average the position of the left motors - they always rotate forward
         double position = RotationToDegrees(enc_fl);// +enc_bl)/2.0;
         RobotBase.log(String.format("RPos=%f (fl=%f,fr=%f,bl=%f,br=%f)", position,enc_fl,enc_fr,enc_bl,enc_br));
-        return RotationToDegrees(position);
+        return position;
     }
 
     private double countsPerCentimeter = 16.25;    // 5.84=(280/2)/(3.0*Math.PI*2.54 (based on 3" wheels, 280 ppr AndyMark encoder and 1:2 bevel gear ratio)
