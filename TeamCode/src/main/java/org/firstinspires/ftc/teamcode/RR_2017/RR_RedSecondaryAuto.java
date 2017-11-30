@@ -36,8 +36,8 @@ public class RR_RedSecondaryAuto extends SwerveBase {
                 new PickUpBlockState("lift block", -1.0, new TimeTrans("to spin", 1.0)),
                 new SpinState("to spin", 0.0, new TimeTrans("knock", 1.5)),
                 new KnockState("knock",
-                        new ColorTrans("spin right", Color.RED),
-                        new ColorTrans("spin left", Color.BLUE),
+                        new ColorTrans("spin right", Color.BLUE),
+                        new ColorTrans("spin left", Color.RED),
                         new TimeTrans("unknock", 10.0)),
 
                 //Blue on the right

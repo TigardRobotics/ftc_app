@@ -40,8 +40,8 @@ public class RR_RedPrimaryAuto extends SwerveBase {
                 new PickUpBlockState("lift block", -1.0, new TimeTrans("to spin", 1.0)),
                 new SpinState("to spin", 0.0, new TimeTrans("knock", 1.5)),
                 new KnockState("knock",
-                        new ColorTrans("spin right", Color.RED),
-                        new ColorTrans("spin left", Color.BLUE),
+                        new ColorTrans("spin right", Color.BLUE),
+                        new ColorTrans("spin left", Color.RED),
                         new TimeTrans("unknock", 10.0)),
 
                 //Blue on the right
@@ -69,7 +69,7 @@ public class RR_RedPrimaryAuto extends SwerveBase {
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to center column", 0.4,
-                        new ProgressTrans("to spin box", 110.0),
+                        new ProgressTrans("to spin box", 160.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to left column", 0.4,
@@ -77,7 +77,7 @@ public class RR_RedPrimaryAuto extends SwerveBase {
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
-                new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 90.0)),
+                new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 150.0)),
                 new DriveState("to final crab", 0.0, new TimeTrans("ram block", 1.5)),
                 new DriveState("ram block", 0.5, new TimeTrans("end", 2.0)),
                 new WaitState("end")

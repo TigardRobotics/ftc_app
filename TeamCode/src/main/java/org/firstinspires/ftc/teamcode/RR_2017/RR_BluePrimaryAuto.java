@@ -36,8 +36,8 @@ public class RR_BluePrimaryAuto extends SwerveBase {
         stateMachine = new StateMachine(
                 new SpinState("to spin", 0.0, new TimeTrans("knock", 1.5)),
                 new KnockState("knock",
-                        new ColorTrans("spin right", Color.BLUE),
-                        new ColorTrans("spin left", Color.RED),
+                        new ColorTrans("spin right", Color.RED),
+                        new ColorTrans("spin left", Color.BLUE),
                         new TimeTrans("unknock", 10.0)),
 
                 //Red on the right
