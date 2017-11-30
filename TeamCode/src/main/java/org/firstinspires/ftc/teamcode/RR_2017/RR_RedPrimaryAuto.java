@@ -78,7 +78,8 @@ public class RR_RedPrimaryAuto extends SwerveBase {
                 ),
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
                 new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 150.0)),
-                new DriveState("to final crab", 0.0, new TimeTrans("ram block", 1.5)),
+                new DriveState("to final crab", 0.0, new TimeTrans("drop block", 1.5)),
+                new PickUpBlockState("drop block", 1.0, true, new TimeTrans("ram block", 1.0)),
                 new DriveState("ram block", 0.5, new TimeTrans("end", 2.0)),
                 new WaitState("end")
 
