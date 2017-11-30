@@ -20,12 +20,14 @@ public class StateMachine {
 		firstUse = true;
 		currentState = states[0];
 		this.states = Arrays.asList(states);
+		//TODO:
 	}
 
 	public void stop() {
 		if (currentState != null) {
 			currentState.onExit();
-			RobotBase.instance.telemetry.addData("Exiting state", currentState.getName());
+			RobotBase.instance.telemetry.addData("Exiting final state", currentState.getName());
+			RobotBase.log("Exiting final state "+currentState.getName());
 		}
 	}
 
