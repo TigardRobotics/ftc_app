@@ -79,7 +79,7 @@ public abstract class SwerveBase extends RobotBase {
                 new SwerveUnit(frontLeftDriveMotor, frontLeftServo, frontLeftHall),    //front left //not currently on robot
                 new SwerveUnit(backRightDriveMotor, backRightServo, backRightHall),    //back right
                 new SwerveUnit(backLeftDriveMotor, backLeftServo, backLeftHall)        //back left
-        ));
+            ));
 
         // Get hardware from hardware map
         DcMotor liftMotor = hardwareMap.dcMotor.get(Names.liftMotor);
@@ -92,6 +92,7 @@ public abstract class SwerveBase extends RobotBase {
         // Get blocklift controller from controller list
         blockLift = (IBlockLift)findController(IBlockLift.class);
         drive = (SwerveDrive)(findController(SwerveDrive.class));
+        drive.setDriveDirection(0.0);
 
         // Add knocker and color sensor controller
         addControllers(new KnockerController(hardwareMap.servo.get(Names.knockServo)));

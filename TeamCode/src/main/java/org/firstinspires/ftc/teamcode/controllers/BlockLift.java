@@ -31,6 +31,12 @@ public class BlockLift extends HardwareController implements IBlockLift {
         this.leftClamp = leftClamp;
     }
 
+    @Override
+    public void init() {
+        release();
+        super.init();
+    }
+
     public void clamp() {
         rightClamp.setPosition(rightClampPos);
         leftClamp.setPosition(leftClampPos);

@@ -63,11 +63,6 @@ public class SwerveUnit extends HardwareController {
     }
 
     @Override
-    public void start() {
-        directionServo.setPosition(DIRECTION_SERVO_STOP);
-    }
-
-    @Override
     public void loop() {
         double power = pid.update(getDirectionError(), stopwatch.seconds());
         /* For the servo:
