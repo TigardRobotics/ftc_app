@@ -22,7 +22,6 @@ public class SwerveDrive extends HardwareController implements IDrive {
     public SwerveDrive(SwerveUnit... drives) {
         RobotBase.log("Swerve Drive constructed with "+drives.length+" swerve units");
         this.drives = drives;
-
     }
 
     @Override
@@ -67,6 +66,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
             drives[BACK_LEFT].setDrivePower(power);
         }
         else {
+            RobotBase.log("Set drive power (fr, fl, br, bl)");
             for (SwerveUnit drive : drives) drive.setDrivePower(power);
         }
     }
@@ -77,9 +77,9 @@ public class SwerveDrive extends HardwareController implements IDrive {
     }
 
     @Override
-    public void setDriveDirection(double direction)
-    {
-        setDirection(0,direction);
+    public void setDriveDirection(double direction) {
+        setDirection(0, direction);
+        RobotBase.log("Drive direction set to "+direction);
     }
 
     @Override
@@ -141,10 +141,18 @@ public class SwerveDrive extends HardwareController implements IDrive {
                 right_steer = -Math.atan(-steer_direction/(1- 2*steer_direction))*MaxSteer;
                 left_steer = -Math.atan(-steer_direction)*MaxSteer;
             }
+
             drives[FRONT_RIGHT].setDirection(crab_direction+right_steer);
+            RobotBase.log("Front right drive unit direction set to "+(crab_direction+right_steer));
+
             drives[FRONT_LEFT].setDirection(crab_direction+left_steer);
+            RobotBase.log("Front left drive unit direction set to "+(crab_direction+left_steer));
+
             drives[BACK_RIGHT].setDirection(crab_direction-right_steer);
+            RobotBase.log("Back right drive unit direction set to "+(crab_direction-right_steer));
+
             drives[BACK_LEFT].setDirection(crab_direction-left_steer);
+            RobotBase.log("Back left drive unit direction set to "+(crab_direction-left_steer));
         }
         else {
             for (SwerveUnit drive : drives) drive.setDirection(crab_direction);

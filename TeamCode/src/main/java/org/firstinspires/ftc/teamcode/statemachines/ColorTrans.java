@@ -22,6 +22,8 @@ public class ColorTrans extends Transition {
     @Override
     public boolean test() {
         Color colorDetected = controller.getColor();
-        return colorDetected == target;
+        boolean correct = colorDetected == target;
+        if(correct) RobotBase.log("Color transition detected "+colorDetected.toString());
+        return correct;
     }
 }

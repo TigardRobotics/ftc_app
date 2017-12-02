@@ -55,10 +55,10 @@ public abstract class SwerveBase extends RobotBase {
 
         // set swerve motor zero power behaviors and reversals
         frontRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        //frontRightDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        //backRightDriveMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //Get swerve servos from hardwaremap
@@ -75,10 +75,10 @@ public abstract class SwerveBase extends RobotBase {
 
         // create SwerveDrive object
         addControllers(new SwerveDrive(
-                new SwerveUnit(frontRightDriveMotor, frontRightServo, frontRightHall), //front right
-                new SwerveUnit(frontLeftDriveMotor, frontLeftServo, frontLeftHall),    //front left //not currently on robot
-                new SwerveUnit(backRightDriveMotor, backRightServo, backRightHall),    //back right
-                new SwerveUnit(backLeftDriveMotor, backLeftServo, backLeftHall)        //back left
+                new SwerveUnit(frontRightDriveMotor, frontRightServo, frontRightHall, false), //front right
+                new SwerveUnit(frontLeftDriveMotor, frontLeftServo, frontLeftHall, true),    //front left
+                new SwerveUnit(backRightDriveMotor, backRightServo, backRightHall, false),    //back right
+                new SwerveUnit(backLeftDriveMotor, backLeftServo, backLeftHall, true)        //back left
             ));
 
         // Get hardware from hardware map

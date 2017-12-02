@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
  */
 
 @Autonomous(name="Primary Red", group="3965")
-public class RR_RedPrimaryAuto extends SwerveBase {
+public class RR_RedPrimaryAuto extends RR_AutoBase {
 
     @Override
     public void init() {
@@ -65,15 +65,15 @@ public class RR_RedPrimaryAuto extends SwerveBase {
                         new GlobalTimeTrans("to center column", 20.0) // Default to center column
                 ),
                 new DriveState("to right column", 0.4,
-                        new ProgressTrans("to spin box", 110.0-19.0),
+                        new ProgressTrans("to spin box", 120.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to center column", 0.4,
-                        new ProgressTrans("to spin box", 160.0),
+                        new ProgressTrans("to spin box", 140.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to left column", 0.4,
-                        new ProgressTrans("to spin box", 110.0+19.0),
+                        new ProgressTrans("to spin box", 160.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),

@@ -48,6 +48,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
  * This OpMode illustrates the basics of using the Vuforia engine to determine
@@ -129,7 +130,6 @@ public class VuMarkController extends VuforiaController {
 
     @Override
     public void start() {
-
         relicTrackables.activate();
         setLight(true);
     }
@@ -146,6 +146,7 @@ public class VuMarkController extends VuforiaController {
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
         if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
             lastVuMark = vuMark;
+            RobotBase.log(String.format("%s detected", vuMark));
 
             /* Found an instance of the template. In the actual game, you will probably
              * loop until this condition occurs, then move on to act accordingly depending

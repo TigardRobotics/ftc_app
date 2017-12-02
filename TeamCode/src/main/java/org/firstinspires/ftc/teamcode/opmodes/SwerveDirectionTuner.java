@@ -30,7 +30,7 @@ public class SwerveDirectionTuner extends RobotBase {
         DcMotor fakeDcMotor = null;
         swerve = new SwerveUnit(fakeDcMotor,
                                 hardwareMap.servo.get(Names.swerveServo),
-                                hardwareMap.analogInput.get(Names.hall));
+                                hardwareMap.analogInput.get(Names.hall), false);
         addControllers(swerve);
     }
 

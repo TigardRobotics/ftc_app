@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<Robot type="FirstInspires-FTC">
+    <MotorController name="Motor Controller 1" serialNumber="A104OR5T">
+        <TetrixMotor name="lift" port="1" />
+    </MotorController>
+    <MotorController name="Left Drive" serialNumber="A7008OJL">
+        <NeveRest40Gearmotor name="flm" port="1" />
+        <NeveRest40Gearmotor name="blm" port="2" />
+    </MotorController>
+    <DeviceInterfaceModule name="Device Interface Module 1" serialNumber="AI049LXZ">
+        <ColorSensor name="color" port="0" />
+        <ModernRoboticsI2cRangeSensor name="range" port="1" />
+        <AnalogInput name="brh" port="0" />
+        <AnalogInput name="frh" port="1" />
+        <AnalogInput name="blh" port="2" />
+        <AnalogInput name="flh" port="3" />
+    </DeviceInterfaceModule>
+    <ServoController name="Left Servo" serialNumber="A104OQYV">
+        <Servo name="clamp_l" port="4" />
+        <Servo name="fls" port="5" />
+        <Servo name="bls" port="6" />
+    </ServoController>
+    <ServoController name="Right Servo" serialNumber="AI049LG9">
+        <Servo name="frs" port="1" />
+        <Servo name="brs" port="2" />
+        <Servo name="clamp_r" port="3" />
+        <Servo name="knock" port="4" />
+    </ServoController>
+    <MotorController name="Right Drive" serialNumber="AL00VTAL">
+        <NeveRest40Gearmotor name="frm" port="1" />
+        <NeveRest40Gearmotor name="brm" port="2" />
+    </MotorController>
+</Robot>

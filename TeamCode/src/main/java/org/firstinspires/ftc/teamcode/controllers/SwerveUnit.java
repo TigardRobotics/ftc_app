@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Pid;
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 
 /**
@@ -27,27 +28,23 @@ public class SwerveUnit extends HardwareController {
 
     // the commanded direction
     private double direction = 0;
+    private int motorDirection = 1;
 
     /**
      * Constructor
      */
-    public SwerveUnit(DcMotor motor, Servo directionServo, AnalogInput hall) {
+    public SwerveUnit(DcMotor motor, Servo directionServo, AnalogInput hall, boolean reverse) {
         this.motor = motor;
         this.directionServo = directionServo;
         this.hall = hall;
+        this.motorDirection = reverse ? -1 : 1;
         pid = new Pid(0.025, Double.POSITIVE_INFINITY, 0.0, 0.0, 0.0); //! Tune to actual values
     }
 
     @Override
     public void init() {
+        //motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         setDirection(0.0);    //Home location (forward)
-        //Turn motor closest direction toward home
-        if( getDirectionError() > 0 ) {
-            directionServo.setPosition(1.0);    //clockwise
-        }
-        else {
-            directionServo.setPosition(0.0);    //counter-clockwise
-        }
     }
 
     @Override
@@ -97,7 +94,8 @@ public class SwerveUnit extends HardwareController {
      * @param power Drive Motor power
      */
     public void setDrivePower(double power) {
-        motor.setPower(power*MAX_DRIVE_SPEED);
+        motor.setPower(motorDirection*power*MAX_DRIVE_SPEED);
+        RobotBase.log("Drive power set to "+(power*MAX_DRIVE_SPEED));
     }
 
     /**
@@ -113,7 +111,7 @@ public class SwerveUnit extends HardwareController {
      * @return encoder position of the drive motor
      */
     public double getDrivePosition() {
-        return motor.getCurrentPosition();
+        return motorDirection*motor.getCurrentPosition();
     }
 
     /**

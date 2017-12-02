@@ -23,6 +23,9 @@ public class VuMarkTrans extends Transition {
 
     @Override
     public boolean test() {
-        return controller.getMark() == target;
+        RelicRecoveryVuMark vuMark = controller.getMark();
+        boolean correct = controller.getMark() == target;
+        if(correct) RobotBase.log(String.format("VuMark transition triggered: %s", vuMark));
+        return correct;
     }
 }

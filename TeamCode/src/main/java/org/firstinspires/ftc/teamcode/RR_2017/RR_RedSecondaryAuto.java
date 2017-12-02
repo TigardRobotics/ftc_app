@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
  */
 
 @Autonomous(name="Secondary Red", group="3965")
-public class RR_RedSecondaryAuto extends SwerveBase {
+public class RR_RedSecondaryAuto extends RR_AutoBase {
 
     @Override
     public void init() {
