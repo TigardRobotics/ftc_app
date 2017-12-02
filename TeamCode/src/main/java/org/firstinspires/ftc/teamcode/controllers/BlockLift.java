@@ -15,10 +15,10 @@ public class BlockLift extends HardwareController implements IBlockLift {
 
     // set servo positions
     private static final double rightClampPos = 0.204; // 52 in core discovery
-    private static final double rightReleasePos = 0.824; // 210 in core discovery
+    private static final double rightReleasePos = 0.745; // 190 in core discovery
 
     private static final double leftClampPos = 0.647; // 165 in core discovery
-    private static final double leftReleasePos = 0.078; // 20 in core discovery
+    private static final double leftReleasePos = 0.157; // 40 in core discovery
 
 
     /**
