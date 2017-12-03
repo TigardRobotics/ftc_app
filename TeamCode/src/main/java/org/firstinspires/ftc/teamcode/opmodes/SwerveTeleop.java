@@ -41,7 +41,7 @@ public class SwerveTeleop extends SwerveBase {
 
         if(gamepad1.right_stick_button) {
             drive.spinMode();
-            double spinPower = -gamepad1.left_stick_y * Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
+            double spinPower = -gamepad1.left_stick_x * Math.abs(gamepad1.left_stick_x); //speed is Left joystick vertical (with square acceleration)
             drive.setDrivePower(spinPower);
             telemetry.addData("spin power", spinPower);
         }
@@ -58,6 +58,7 @@ public class SwerveTeleop extends SwerveBase {
             telemetry.addData("crab direction", crab_direction);
 
             double drive_power = -gamepad1.left_stick_y * Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
+            //double drive_power = Tools.timesabs(Tools.sign(-gamepad1.left_stick_y)*getGamepad1LeftJoystickAmplitude());  //expiremental
             drive.setDrivePower(drive_power);
             telemetry.addData("drive power", drive_power);
 
