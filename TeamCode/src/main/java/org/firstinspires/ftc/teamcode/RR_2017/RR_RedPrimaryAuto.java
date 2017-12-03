@@ -69,7 +69,7 @@ public class RR_RedPrimaryAuto extends RR_AutoBase {
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to center column", 0.4,
-                        new ProgressTrans("to spin box", 145.0),
+                        new ProgressTrans("to spin box", 140.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to left column", 0.4,
