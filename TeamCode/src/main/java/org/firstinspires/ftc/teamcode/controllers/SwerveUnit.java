@@ -35,6 +35,7 @@ public class SwerveUnit extends HardwareController {
      */
     public SwerveUnit(DcMotor motor, Servo directionServo, AnalogInput hall, boolean reverse) {
         this.motor = motor;
+        //this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.directionServo = directionServo;
         this.hall = hall;
         this.motorDirection = reverse ? -1 : 1;
@@ -43,7 +44,7 @@ public class SwerveUnit extends HardwareController {
 
     @Override
     public void init() {
-        //motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         setDirection(0.0);    //Home location (forward)
     }
 
