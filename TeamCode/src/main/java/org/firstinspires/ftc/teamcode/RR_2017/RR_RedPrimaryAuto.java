@@ -42,19 +42,25 @@ public class RR_RedPrimaryAuto extends RR_AutoBase {
                 new KnockState("knock",
                         new ColorTrans("spin right", Color.BLUE),
                         new ColorTrans("spin left", Color.RED),
-                        new TimeTrans("unknock", 10.0)),
+                        new TimeTrans("search", 1.0)),
+
+                new SpinState("search", 0.1,
+                        new ColorTrans("spin right", Color.BLUE),
+                        new ColorTrans("spin left", Color.RED),
+                        new ProgressTrans("unknock", 5.0)),
+
+                new SpinState("unspin", -0.2, new ProgressTrans("unknock from left", 5.0)),
+                new KnockState("unknock", true, new TimeTrans("to crab", 1.5)),
 
                 //Blue on the right
                 new SpinState("spin right", 0.2, new ProgressTrans("unknock from right", 20.0)),
                 new KnockState("unknock from right", true, new TimeTrans("spin left back", 0.5)),
-                new SpinState("spin left back", -0.2, new ProgressTrans("to crab", 24.0)),
+                new SpinState("spin left back", -0.2, new ProgressTrans("to crab", 25.0)),
 
                 //Blue on the left
                 new SpinState("spin left", -0.2, new ProgressTrans("unknock from left", 20.0)),
                 new KnockState("unknock from left", true, new TimeTrans("spin right back", 0.5)),
                 new SpinState("spin right back", 0.2, new ProgressTrans("to crab", 15.0)),
-
-                new KnockState("unknock", true, new TimeTrans("to crab", 1.5)),
 
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("key column", 1.5)),
@@ -64,23 +70,24 @@ public class RR_RedPrimaryAuto extends RR_AutoBase {
                         new VuMarkTrans("to center column", RelicRecoveryVuMark.CENTER),
                         new GlobalTimeTrans("to center column", 10.0) // Default to center column
                 ),
-                new DriveState("to right column", 0.4,
-                        new ProgressTrans("to spin box", 112.0),
+                new DriveState("to right column", 0.6,
+                        new ProgressTrans("to spin box", 107.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
-                new DriveState("to center column", 0.4,
-                        new ProgressTrans("to spin box", 140.0),
+                new DriveState("to center column", 0.6,
+                        new ProgressTrans("to spin box", 145.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
-                new DriveState("to left column", 0.4,
-                        new ProgressTrans("to spin box", 170.0),
+                new DriveState("to left column", 0.6,
+                        new ProgressTrans("to spin box", 123.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
-                new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 120.0)),
+                new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 100.0)),
                 new DriveState("to final crab", 0.0, new TimeTrans("drop block", 1.5)),
                 new PickUpBlockState("drop block", 1.0, true, new TimeTrans("ram block", 1.0)),
-                new DriveState("ram block", 0.5, new TimeTrans("end", 2.0)),
+                new DriveState("ram block", 0.5, new TimeTrans("backup", 2.0)),
+                new DriveState("backup", -0.5, new TimeTrans("end", 2.0)),
                 new WaitState("end")
 
         );

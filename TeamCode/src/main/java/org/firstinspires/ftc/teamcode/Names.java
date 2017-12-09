@@ -15,6 +15,7 @@ public final class Names {
     public static String rightClamp = "clamp_r";
     public static String knockServo = "knock";
     public static String colorSensor = "color";
+    public static String gyro = "gyro";
 
     // Names for swerve
     public static String frm = "frm";

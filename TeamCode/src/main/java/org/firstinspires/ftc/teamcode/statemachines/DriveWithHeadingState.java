@@ -16,7 +16,7 @@ public class DriveWithHeadingState extends DriveState {
     protected IOrientation gyro;
     static final double STEER_COOEF = 1/45.0;   //Set max steer at 45deg error
 
-    DriveWithHeadingState(String name, double speed, double targetHeading, Transition... transitions) {
+    public DriveWithHeadingState(String name, double speed, double targetHeading, Transition... transitions) {
         super(name, speed, transitions);
         this.targetHeading = targetHeading;
         gyro = (IOrientation)(RobotBase.findController(IOrientation.class));

@@ -24,7 +24,7 @@ public class SwerveUnit extends HardwareController {
 
     private static final double HOME_RANGE = 5.0;
     private static final double DIRECTION_SERVO_STOP = 0.5;
-    private static final double MAX_DRIVE_SPEED = 0.5;
+    private static final double MAX_DRIVE_SPEED = 0.75;
 
     // the commanded direction
     private double direction = 0;

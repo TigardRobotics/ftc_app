@@ -17,7 +17,7 @@ public class SpinToHeadingState extends SpinState {
 
     static final double SPIN_COOEF = 1/45.0;   //Set max spin at 45deg error
 
-    SpinToHeadingState(String name, double speed, double targetHeading, Transition... transitions) {
+    public SpinToHeadingState(String name, double speed, double targetHeading, Transition... transitions) {
         super(name, speed, transitions);
         this.targetHeading = targetHeading;
         gyro = (IOrientation)(RobotBase.findController(IOrientation.class));
