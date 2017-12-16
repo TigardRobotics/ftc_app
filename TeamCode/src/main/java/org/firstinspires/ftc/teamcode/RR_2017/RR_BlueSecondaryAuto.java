@@ -39,7 +39,12 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
                 new KnockState("knock",
                         new ColorTrans("spin right", Color.RED),
                         new ColorTrans("spin left", Color.BLUE),
-                        new TimeTrans("unknock", 10.0)),
+                        new TimeTrans("search", 1.0)),
+
+                new SpinState("search", 0.1,
+                        new ColorTrans("spin right", Color.RED),
+                        new ColorTrans("spin left", Color.BLUE),
+                        new ProgressTrans("unknock", 5.0)),
 
                 //Blue on the right
                 new SpinState("spin right", 0.2, new ProgressTrans("unknock from right", 20.0)),
@@ -55,16 +60,15 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
 
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("reverse", 1.5)),
-                new DriveState("reverse", -0.4,
-                        new ProgressTrans("to spin2", 70.0),
+                new DriveState("reverse", -0.6,
+                        new ProgressTrans("to spin2", 85.0),
                         new TimeTrans("end", 5.0)), //in case stall
                 new SpinState("to spin2", 0.0, new TimeTrans("spin", 1.5)),
                 new SpinState("spin", -0.5, new ProgressTrans("to push", 200.0)),
                 new DriveState("to push", 0.0, new TimeTrans("drop block", 1.5)),
-                new PickUpBlockState("drop block", 1.0, true, new TimeTrans("push", 1.0)),
-                new DriveState("push", 0.4,
-                        new ProgressTrans("end", 120.0),
-                        new TimeTrans("end", 5.0)), //in case stall
+                new PickUpBlockState("drop block", 1.0, true, new TimeTrans("ram block", 1.0)),
+                new DriveState("ram block", 0.5, new TimeTrans("backup", 2.0)),
+                new DriveState("backup", -0.5, new TimeTrans("end", 0.3)),
                 new WaitState("end")
 
         );

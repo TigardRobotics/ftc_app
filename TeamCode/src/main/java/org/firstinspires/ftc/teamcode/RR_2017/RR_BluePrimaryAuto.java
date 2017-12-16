@@ -42,7 +42,12 @@ public class RR_BluePrimaryAuto extends RR_AutoBase {
                 new KnockState("knock",
                         new ColorTrans("spin right", Color.RED),
                         new ColorTrans("spin left", Color.BLUE),
-                        new TimeTrans("unknock", 10.0)),
+                        new TimeTrans("search", 1.0)),
+
+                new SpinState("search", 0.1,
+                        new ColorTrans("spin right", Color.RED),
+                        new ColorTrans("spin left", Color.BLUE),
+                        new ProgressTrans("unknock", 8.0)),
 
                 //Blue on the right
                 new SpinState("spin right", 0.2, new ProgressTrans("unknock from right", 20.0)),
@@ -65,25 +70,24 @@ public class RR_BluePrimaryAuto extends RR_AutoBase {
                         new GlobalTimeTrans("to center column", 10.0) // Default to center column
                 ),
                 new DriveState("to right column", -0.4,
-                        new ProgressTrans("to spin box", 150.0),
+                        new ProgressTrans("to spin box", 143.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to center column", -0.4,
-                        new ProgressTrans("to spin box", 115.0),
+                        new ProgressTrans("to spin box", 117.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to left column", -0.4,
-                        new ProgressTrans("to spin box", 95.0),
+                        new ProgressTrans("to spin box", 93.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
-                new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 120.0)),
+                new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 132.0)),
                 new DriveState("to final crab", 0.0, new TimeTrans("drop block", 1.5)),
                 new PickUpBlockState("drop block", 1.0, true, new TimeTrans("ram block", 1.0)),
-                new DriveState("ram block", 0.5, new TimeTrans("end", 1.0)),
+                new DriveState("ram block", 0.5, new TimeTrans("backup", 2.0)),
+                new DriveState("backup", -0.5, new TimeTrans("end", 0.3)),
                 new WaitState("end")
-
-
         );
     }
 }

@@ -58,9 +58,9 @@ public class RR_RedPrimaryAuto extends RR_AutoBase {
                 new SpinState("spin left back", -0.2, new ProgressTrans("to crab", 20.0)),
 
                 //Blue on the left
-                new SpinState("spin left", -0.2, new ProgressTrans("unknock from left", 20.0)),
+                new SpinState("spin left", -0.1, new ProgressTrans("unknock from left", 20.0)),
                 new KnockState("unknock from left", true, new TimeTrans("spin right back", 0.5)),
-                new SpinState("spin right back", 0.2, new ProgressTrans("to crab", 20.0)),
+                new SpinState("spin right back", 0.1, new ProgressTrans("to crab", 20.0)),
 
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("key column", 1.5)),
@@ -71,15 +71,15 @@ public class RR_RedPrimaryAuto extends RR_AutoBase {
                         new GlobalTimeTrans("to center column", 10.0) // Default to center column
                 ),
                 new DriveState("to right column", 0.6,
-                        new ProgressTrans("to spin box", 102.0),
+                        new ProgressTrans("to spin box", 94.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to center column", 0.6,
-                        new ProgressTrans("to spin box", 133.0),
+                        new ProgressTrans("to spin box", 123.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to left column", 0.6,
-                        new ProgressTrans("to spin box", 148.0),
+                        new ProgressTrans("to spin box", 146.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
