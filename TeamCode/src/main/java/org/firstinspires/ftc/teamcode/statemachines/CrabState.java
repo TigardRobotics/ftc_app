@@ -31,7 +31,7 @@ public class CrabState extends State {
     public void onEntry() {
         super.onEntry();
         initialPos = swerve.getDrivePosition();
-        swerve.setDriveDirection(direction);
+        swerve.setDirection(direction,0.0);
         swerve.setDrivePower(speed);
     }
 

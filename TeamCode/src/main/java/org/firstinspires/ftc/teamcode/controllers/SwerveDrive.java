@@ -96,7 +96,12 @@ public class SwerveDrive extends HardwareController implements IDrive {
         double enc_br = drives[BACK_RIGHT].getDrivePosition();
         //average the position of the left motors - they always rotate forward
         double position = PositionToCentimeters(enc_fl);// +enc_bl)/2.0;
-        RobotBase.log(String.format("DPos=%f (fl=%f,fr=%f,bl=%f,br=%f)", position,enc_fl,enc_fr,enc_bl,enc_br));
+        RobotBase.log(String.format("DPos=%f (fl=%f,fr=%f,bl=%f,br=%f)", position, enc_fl, enc_fr, enc_bl, enc_br));
+        double angle_fl = drives[FRONT_LEFT].getActualDirection();
+        double angle_fr = drives[FRONT_RIGHT].getActualDirection();
+        double angle_bl = drives[BACK_LEFT].getActualDirection();
+        double angle_br = drives[BACK_RIGHT].getActualDirection();
+        RobotBase.log(String.format("DAngle (fl=%f,fr=%f,bl=%f,br=%f)", angle_fl, angle_fr, angle_bl, angle_br));
         return position;
     }
 
