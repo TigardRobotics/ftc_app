@@ -5,7 +5,8 @@ package org.firstinspires.ftc.teamcode.controllers;
  */
 
 public interface IBlockLift {
-    void clamp();
+    void acquire();
+    void hold();
     void release();
     void lift(double power);
     void reset();

@@ -39,9 +39,13 @@ public class BlockLift extends HardwareController implements IBlockLift {
         super.init();
     }
 
-    public void clamp() {
+    public void acquire() {
         rightClamp.setPosition(rightClampPos);
         leftClamp.setPosition(leftClampPos);
+    }
+
+    public void hold() {
+        acquire();
     }
 
     public void release() {

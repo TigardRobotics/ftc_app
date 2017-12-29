@@ -2,16 +2,10 @@ package org.firstinspires.ftc.teamcode.controllers;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.opmodes.BasicTeleop;
-import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
-import org.firstinspires.ftc.teamcode.statemachines.WaitState;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Katrina on 10/26/2017.
@@ -51,7 +45,7 @@ public class BlockLift_Test extends BasicTeleop {
         blockLift.lift(gamepad1.left_trigger - gamepad1.right_trigger);
 
         if(gamepad1.right_bumper) {
-            blockLift.clamp();
+            blockLift.acquire();
         }
         else if(gamepad1.left_bumper) {
             blockLift.release();

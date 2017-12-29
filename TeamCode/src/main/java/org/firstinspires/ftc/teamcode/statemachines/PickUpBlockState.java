@@ -26,7 +26,7 @@ public class PickUpBlockState extends State {
     @Override
     public void onEntry() {
         super.onEntry();
-        lift.clamp();
+        lift.acquire();
         lift.lift(power);
     }
 

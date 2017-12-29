@@ -37,7 +37,7 @@ public class RR_Teleop extends SwerveTeleop {
         blockLift.lift(gamepad1.left_trigger - gamepad1.right_trigger);
 
         if(gamepad1.right_bumper) {
-            blockLift.clamp();
+            blockLift.acquire();
         }
         else if(gamepad1.left_bumper) {
             blockLift.release();

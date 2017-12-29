@@ -49,9 +49,9 @@ public class Pid {
 
     /**
      * Clamps a value to a given range.
-     * @param value The value to clamp.
-     * @param min The min clamp.
-     * @param max The max clamp.
+     * @param value The value to acquire.
+     * @param min The min acquire.
+     * @param max The max acquire.
      * @return The clamped value.
      */
     public static double clampValue(double value, double min, double max) {
