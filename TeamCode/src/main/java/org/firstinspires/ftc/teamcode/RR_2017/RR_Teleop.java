@@ -42,6 +42,9 @@ public class RR_Teleop extends SwerveTeleop {
         else if(gamepad1.left_bumper) {
             blockLift.release();
         }
+        else {
+            blockLift.hold();
+        }
 
         // hold the knocker down
         if (gamepad1.b){
