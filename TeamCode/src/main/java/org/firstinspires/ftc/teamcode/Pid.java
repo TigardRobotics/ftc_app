@@ -22,8 +22,8 @@ public class Pid {
     public Pid(double kp, double ti, double td, double integralMin,
                double integralMax) {
         this.kp = kp;
-        this.ti = ti;
-        this.td = td;
+        this.ki = (ti==Double.POSITIVE_INFINITY) ? 0 : kp/ti;
+        this.kd = kp*td;
         this.integralMin = integralMin;
         this.integralMax = integralMax;
 
@@ -41,7 +41,7 @@ public class Pid {
         runningIntegral = clampValue(runningIntegral + e * dt,
                 integralMin, integralMax);
         double d = (e - previousError) / dt;
-        double output = kp * (e + (runningIntegral / ti) + (td * d));
+        double output = (kp * e) + (ki * runningIntegral) + (kd * d);
 
         previousError = e;
         return output;
@@ -60,10 +60,10 @@ public class Pid {
 
     // Proportional factor to scale error to output.
     private double kp;
-    // The number of seconds to eliminate all past errors.
-    private double ti;
-    // The number of seconds to predict the error in the future.
-    private double td;
+    // Proportional factor to scale integral error to output.
+    private double ki;
+    // Proportional factor to scale differential error to output.
+    private double kd;
     // The min of the running integral.
     private double integralMin;
     // The max of the running integral.
@@ -76,14 +76,17 @@ public class Pid {
 
     /**
      * Used to tune pid
-     * @param kp
-     * @param ti
-     * @param td
+     * @param kp Proportional factor to scale error to output.
+     * @param ki Proportional factor to scale integral error to output.     *
+     * @param kd Proportional factor to scale differential error to output.
+     * @param maxI The maximum allowed integral error
      */
-    public void tune(double kp, double ti, double td) {
-        runningIntegral = 0.0;
+    public void tune(double kp, double ki, double kd, double maxI) {
+        //runningIntegral = 0.0;    //can't do this because of the way the tuning tool works
         this.kp = kp;
-        this.ti = ti;
-        this.td = td;
+        this.ki = ki;
+        this.kd = kd;
+        this.integralMax = maxI;
+        this.integralMin = -maxI;
     }
 }

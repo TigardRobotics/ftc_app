@@ -16,8 +16,9 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 public class SwerveDirectionTuner extends RobotBase {
 
     private double kp = 0.0;
-    private double ti = Double.POSITIVE_INFINITY;
-    private double td = 0.0;
+    private double ki = 0.0;
+    private double kd = 0.0;
+    private double maxI = 100.0;
 
     private SwerveUnit swerve;
 
@@ -27,10 +28,9 @@ public class SwerveDirectionTuner extends RobotBase {
     public void init() {
         super.init();
         //sensors.init();
-        DcMotor fakeDcMotor = null;
-        swerve = new SwerveUnit(fakeDcMotor,
-                                hardwareMap.servo.get(Names.swerveServo),
-                                hardwareMap.analogInput.get(Names.hall), false);
+        swerve = new SwerveUnit(hardwareMap.dcMotor.get("motor"),
+                                hardwareMap.servo.get("servo"),
+                                hardwareMap.analogInput.get("hall"), false);
         addControllers(swerve);
     }
 
@@ -41,8 +41,8 @@ public class SwerveDirectionTuner extends RobotBase {
         stopwatch.reset();
     }
 
-    private static final double dbgPos1 = 90.0;
-    private static final double dbgPos2 = 180.0;
+    private static final double dbgPos1 = 0.0;
+    private static final double dbgPos2 = 90.0;
     private static final double otime = 5.0;
 
     private double dbgPos = dbgPos1;
@@ -55,8 +55,8 @@ public class SwerveDirectionTuner extends RobotBase {
         double incr = 0.0;
 
         // determine if incrementing or decrementing
-        if(gamepad1.right_bumper) incr = 0.001;
-        if(gamepad1.left_bumper) incr = -0.001;
+        if(gamepad1.right_bumper) incr = 0.00001;
+        if(gamepad1.left_bumper) incr = -0.00001;
 
         // change 10x speed if dpad pressed
         if(gamepad1.dpad_up) incr *= 10.0;
@@ -64,14 +64,19 @@ public class SwerveDirectionTuner extends RobotBase {
 
         // change selected tuning values
         if(gamepad1.x) kp += incr;
-        if(gamepad1.y) {
-            if(ti == Double.POSITIVE_INFINITY) ti = 10.0/kp;
-            ti += incr;
-        }
-        if(gamepad1.b) td += incr;
+        if(gamepad1.y) ki += incr;
+        if(gamepad1.b) kd += incr;
+        if(gamepad1.a) maxI += incr;
 
-        telemetry.addLine(String.format("kp = %f, ti = %f, td = %f", kp, ti, td));
-        swerve.getPid().tune(kp, ti, td);
+        // zero everything (but maxI)
+        if(gamepad1.right_stick_button) {
+            kp = 0.0;
+            ki = 0.0;
+            kd = 0.0;
+        }
+
+        telemetry.addLine(String.format("kp = %f, ki = %f, kd = %f, MaxI = %f", kp, ki, kd, maxI));
+        swerve.getPid().tune(kp, ki, kd, maxI);
 
         if(stopwatch.seconds() >= otime) {
             stopwatch.reset();
