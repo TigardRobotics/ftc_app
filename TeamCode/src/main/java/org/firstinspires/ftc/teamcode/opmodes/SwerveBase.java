@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.BlockLift;
+import org.firstinspires.ftc.teamcode.controllers.BlockRolling;
 import org.firstinspires.ftc.teamcode.controllers.ColorController;
 import org.firstinspires.ftc.teamcode.controllers.IBlockLift;
 import org.firstinspires.ftc.teamcode.controllers.KnockerController;
@@ -41,7 +42,7 @@ public abstract class SwerveBase extends RobotBase {
     private AnalogInput backLeftHall;
 
     protected SwerveDrive drive;
-    protected IBlockLift blockLift;
+    protected IBlockLift blockLift; //! TODO: Move blocklift out of swervebase
 
     @Override
     public void init() {
@@ -87,7 +88,7 @@ public abstract class SwerveBase extends RobotBase {
         Servo rightClamp = hardwareMap.servo.get(Names.rightClamp);
 
         // Add blocklift controller to controller list
-        addControllers(new BlockLift(liftMotor, rightClamp, leftClamp));
+        addControllers(new BlockRolling(liftMotor, rightClamp, leftClamp));
 
         // Get blocklift controller from controller list
         blockLift = (IBlockLift)findController(IBlockLift.class);
