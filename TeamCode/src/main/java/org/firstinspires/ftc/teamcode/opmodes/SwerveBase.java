@@ -88,7 +88,7 @@ public abstract class SwerveBase extends RobotBase {
         Servo rightClamp = hardwareMap.servo.get(Names.rightClamp);
 
         // Add blocklift controller to controller list
-        addControllers(new BlockRolling(liftMotor, rightClamp, leftClamp));
+        addControllers(new BlockLift(liftMotor, rightClamp, leftClamp));
 
         // Get blocklift controller from controller list
         blockLift = (IBlockLift)findController(IBlockLift.class);
