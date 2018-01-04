@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.RR_2017;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.controllers.BlockRolling;
 import org.firstinspires.ftc.teamcode.controllers.ColorController;
 import org.firstinspires.ftc.teamcode.controllers.KnockerController;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveTeleop;
@@ -36,11 +37,24 @@ public class RR_Teleop extends SwerveTeleop {
 
         blockLift.lift(gamepad1.left_trigger - gamepad1.right_trigger);
 
-        if(gamepad1.right_bumper) {
+        if(gamepad1.dpad_down) {
             blockLift.acquire();
         }
-        else if(gamepad1.left_bumper) {
+        else if(gamepad1.dpad_up) {
             blockLift.release();
+        }
+        else if(blockLift instanceof BlockRolling) {
+            BlockRolling blockRolling = (BlockRolling) blockLift;
+            if(gamepad1.dpad_right) {
+                blockRolling.turnClockwise();
+            }
+            else if(gamepad1.dpad_left) {
+                blockRolling.turnCounterClockwise();
+            }
+
+            if(gamepad1.right_bumper) {
+                blockRolling.setPos();
+            }
         }
         else {
             blockLift.hold();
