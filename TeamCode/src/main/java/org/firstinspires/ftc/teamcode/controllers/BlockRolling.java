@@ -34,14 +34,14 @@ public class BlockRolling extends HardwareController implements IBlockLift {
      */
     public BlockRolling(DcMotor liftMotor, Servo rightClamp, Servo leftClamp) {
         this.liftMotor = liftMotor;
-        this.liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //this.liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.rightClamp = rightClamp;
         this.leftClamp = leftClamp;
     }
 
     @Override
     public void init() {
-        initialEncoderPos = liftMotor.getCurrentPosition();
+        //initialEncoderPos = liftMotor.getCurrentPosition();
         hold();
         super.init();
     }
@@ -78,22 +78,24 @@ public class BlockRolling extends HardwareController implements IBlockLift {
     }
 
     public void setPos() {
-        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftMotor.setTargetPosition(4000);
+        //liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //liftMotor.setTargetPosition(4000+(int)initialEncoderPos);
+        //Robot.telemetry.addData("Lift RTP", 4000+(int)initialEncoderPos);
     }
 
     public void lift(double power) {
-        liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftMotor.setPower(power);
+        //liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Robot.telemetry.addData("Lift RTV", power);
+        liftMotor.setPower(0.5*power);
     }
 
     public void reset() {
-        liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        //liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         liftMotor.setPower(0.0);
     }
 
     private double getLiftPos() {
-        return Math.abs(liftMotor.getCurrentPosition()-initialEncoderPos);
+        return 0.0;//Math.abs(liftMotor.getCurrentPosition()-initialEncoderPos);
     }
 }

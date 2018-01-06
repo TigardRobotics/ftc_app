@@ -35,7 +35,7 @@ public class RR_Teleop extends SwerveTeleop {
     public void loop() {
         super.loop();
 
-        blockLift.lift(gamepad1.left_trigger - gamepad1.right_trigger);
+        if(gamepad1.left_trigger != gamepad1.right_trigger) blockLift.lift(gamepad1.left_trigger - gamepad1.right_trigger);
 
         if(gamepad1.dpad_down) {
             blockLift.acquire();
@@ -52,7 +52,7 @@ public class RR_Teleop extends SwerveTeleop {
                 blockRolling.turnCounterClockwise();
             }
 
-            if(gamepad1.right_bumper) {
+            if(gamepad1.y) {
                 blockRolling.setPos();
             }
         }

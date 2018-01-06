@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.statemachines;
 
 import org.firstinspires.ftc.teamcode.controllers.BlockLift;
+import org.firstinspires.ftc.teamcode.controllers.IBlockLift;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
@@ -8,13 +9,13 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
  */
 
 public class PickUpBlockState extends State {
-    private BlockLift lift;
+    private IBlockLift lift;
     private double power;
     private boolean releaseOnExit;
 
     public PickUpBlockState(String name, double power, boolean releaseOnExit, Transition... transitions) {
         super(name, transitions);
-        this.lift = (BlockLift) RobotBase.findController(BlockLift.class);
+        this.lift = (IBlockLift) RobotBase.findController(IBlockLift.class);
         this.power = power;
         this.releaseOnExit = releaseOnExit;
     }

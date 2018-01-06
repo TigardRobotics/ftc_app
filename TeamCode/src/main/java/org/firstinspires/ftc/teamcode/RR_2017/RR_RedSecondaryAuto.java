@@ -66,11 +66,16 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("forward", 1.5)),
                 new DriveState("forward", 0.4,
-                        new ProgressTrans("to crab right", 80.0),
+                        new ProgressTrans("to tweek right", 90.0),
                         new TimeTrans("end", 5.0)), //in case stall
 
-                new CrabState("to crab right", 90.0, 0.0, new TimeTrans("crab to wall", 1.5)),
-                new CrabState("crab to wall", 90.0, 0.2, new TimeTrans("key column", 5.0)),
+                new SpinState("to tweek right", 0.0, new TimeTrans("tweek right", 2.0)),
+                new SpinState("tweek right", 0.2, new ProgressTrans("to crab right", 6.0)),
+
+                new CrabState("to crab right", 90.0, 0.0, new TimeTrans("crab to wall", 2.0)),
+                new CrabState("crab to wall", 90.0, 0.2, new TimeTrans("to key column", 8.0)),
+                new CrabState("to key column", 90.0, 0.0, new TimeTrans("key column", 1.5)),
+
                 new WaitState("key column",
                         new VuMarkTrans("to right column", RelicRecoveryVuMark.RIGHT),
                         new VuMarkTrans("to left column", RelicRecoveryVuMark.LEFT),
