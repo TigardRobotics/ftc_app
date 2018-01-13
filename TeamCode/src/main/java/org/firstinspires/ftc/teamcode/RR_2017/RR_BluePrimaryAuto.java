@@ -4,9 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
+import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.controllers.VuMarkController;
-import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.GlobalTimeTrans;
@@ -19,6 +20,8 @@ import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.VuMarkTrans;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
+import java.util.List;
+
 /**
  * BLUE Autonomous for Stone closest to Recovery Zone
  */
@@ -29,8 +32,14 @@ public class RR_BluePrimaryAuto extends RR_AutoBase {
     @Override
     public void init() {
         super.init();
-        addControllers(new VuMarkController(hardwareMap.appContext));
         ((SwerveDrive)findController(SwerveDrive.class)).spinMode();
+    }
+
+    @Override
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
+        controllers.add(new VuMarkController(hardwareMap.appContext));
+        return controllers;
     }
 
     @Override
@@ -70,19 +79,19 @@ public class RR_BluePrimaryAuto extends RR_AutoBase {
                         new GlobalTimeTrans("to center column", 10.0) // Default to center column
                 ),
                 new DriveState("to right column", -0.4,
-                        new ProgressTrans("to spin box", 143.0),
+                        new ProgressTrans("to spin box", 150.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to center column", -0.4,
-                        new ProgressTrans("to spin box", 117.0),
+                        new ProgressTrans("to spin box", 116.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to left column", -0.4,
-                        new ProgressTrans("to spin box", 93.0),
+                        new ProgressTrans("to spin box", 83.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
-                new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 132.0)),
+                new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 110.0)),
                 new DriveState("to final crab", 0.0, new TimeTrans("drop block", 1.5)),
                 new PickUpBlockState("drop block", 1.0, true, new TimeTrans("ram block", 1.0)),
                 new DriveState("ram block", 0.5, new TimeTrans("backup", 2.0)),

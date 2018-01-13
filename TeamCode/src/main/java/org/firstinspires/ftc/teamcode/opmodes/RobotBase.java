@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.statemachines.State;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,18 +31,30 @@ public abstract class RobotBase extends OpMode {
      * This method searches a list for a HardwareController with the desired interface
      */
     public static HardwareController findController(Class interf){
+        HardwareController result = null;
         for(HardwareController entry : instance.controllers){
-            if(entry.implementsInterface(interf)) return entry;
+            if(entry.implementsInterface(interf)) {
+                if(result == null) {
+                    result = entry;
+                }
+                else {
+                    throw new RuntimeException("multiple controllers with the "+interf.getName()+" interface.");
+                }
+            }
         }
-        throw new RuntimeException("Hardware controller with the "+interf.getName()+" interface does not exist.");
+        if(result == null) {
+            throw new RuntimeException("Hardware controller with the " + interf.getName() + " interface does not exist.");
+        }
+        else {
+            return result;
+        }
     }
 
     /**
      * This method allows opmodes to add controllers to the list
      */
-    protected static void addControllers(HardwareController... controllers) {
-        for(HardwareController controller : controllers) controller.init();
-        instance.controllers.addAll(Arrays.asList(controllers));
+    protected List<HardwareController> getControllers() {
+        return new ArrayList<HardwareController>();
     }
 
     public static void log(String msg) {
@@ -59,6 +70,11 @@ public abstract class RobotBase extends OpMode {
         instance = this;
         HardwareController.Robot = this;
         State.Robot = this;
+
+        controllers = getControllers();
+        for(HardwareController controller : controllers) {
+            controller.init();
+        }
     }
 
     @Override

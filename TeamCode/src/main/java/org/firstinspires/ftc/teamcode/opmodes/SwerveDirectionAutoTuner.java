@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
+import org.firstinspires.ftc.teamcode.controllers.MRGyroController;
 import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
@@ -11,19 +15,26 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 import java.util.List;
 
 /**
- * Created by Derek on 10/18/17.
+ * Created by Derek on 1/10/18.
  */
-@TeleOp(name="Tune Swerve", group="3965")
-public class SwerveDirectionTuner extends RobotBase {
+@TeleOp(name="Auto Tune Swerve", group="3965")
+@Disabled
+public class SwerveDirectionAutoTuner extends RobotBase {
 
     private double kp = 0.0;
-    private double ki = 0.0;
+    private double ki = 0.001;
     private double kd = 0.0;
     private double maxI = 100.0;
 
     private SwerveUnit swerve;
 
     private ElapsedTime stopwatch = new ElapsedTime();
+
+    @Override
+    public void init() {
+        super.init();
+        //sensors.init();
+    }
 
     @Override
     public List<HardwareController> getControllers() {
@@ -46,6 +57,8 @@ public class SwerveDirectionTuner extends RobotBase {
     private static final double otime = 5.0;
 
     private double dbgPos = dbgPos1;
+
+    private double runningIntegralError = 0;
 
     @Override
     public void loop() {
@@ -75,13 +88,19 @@ public class SwerveDirectionTuner extends RobotBase {
             kd = 0.0;
         }
 
+        runningIntegralError += stopwatch.milliseconds()*swerve.getDirectionError();
+
         telemetry.addLine(String.format("kp = %f, ki = %f, kd = %f, MaxI = %f", kp, ki, kd, maxI));
         swerve.getPid().tune(kp, ki, kd, maxI);
 
         if(stopwatch.seconds() >= otime) {
             stopwatch.reset();
-            if(dbgPos == dbgPos1) dbgPos = dbgPos2;
-            else if(dbgPos == dbgPos2) dbgPos = dbgPos1;
+            if(dbgPos == dbgPos1) {
+                dbgPos = dbgPos2;
+            }
+            else if(dbgPos == dbgPos2) {
+                dbgPos = dbgPos1;
+            }
             swerve.setDirection(dbgPos);
         }
 

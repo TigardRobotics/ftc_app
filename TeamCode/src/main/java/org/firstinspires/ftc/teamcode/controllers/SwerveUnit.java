@@ -126,6 +126,11 @@ public class SwerveUnit extends HardwareController {
         return ((360.0 * (2.5-hall.getVoltage()) / 5.0)+360.0)%360.0 ;
     }
 
+    // for debuggin'
+    public double getHallVoltage() {
+        return hall.getVoltage();
+    }
+
     /**
      * Calculate direction error (how far the servo needs to more to move it to the commanded position)
      * @return Positional error -180 to +180 Positive is clockwise

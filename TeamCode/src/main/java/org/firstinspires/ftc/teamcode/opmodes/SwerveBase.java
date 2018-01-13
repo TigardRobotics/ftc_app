@@ -1,21 +1,19 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
-import org.firstinspires.ftc.teamcode.controllers.BlockLift;
 import org.firstinspires.ftc.teamcode.controllers.BlockRolling;
 import org.firstinspires.ftc.teamcode.controllers.ColorController;
+import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.IBlockLift;
 import org.firstinspires.ftc.teamcode.controllers.KnockerController;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
-import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
-import org.firstinspires.ftc.teamcode.statemachines.WaitState;
+
+import java.util.List;
 
 /**
  * Created by Derek on 11/1/2017.
@@ -47,6 +45,15 @@ public abstract class SwerveBase extends RobotBase {
     @Override
     public void init() {
         super.init();
+        // Get blocklift controller from controller list
+        blockLift = (IBlockLift)findController(IBlockLift.class);
+        drive = (SwerveDrive)(findController(SwerveDrive.class));
+        drive.setDriveDirection(0.0);
+    }
+
+    @Override
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
 
         // Get swerve motors from hardwaremap
         frontRightDriveMotor = hardwareMap.dcMotor.get(Names.frm);
@@ -74,30 +81,23 @@ public abstract class SwerveBase extends RobotBase {
         backRightHall = hardwareMap.analogInput.get(Names.brh);
         backLeftHall = hardwareMap.analogInput.get(Names.blh);
 
-        // create SwerveDrive object
-        addControllers(new SwerveDrive(
+        controllers.add(new SwerveDrive(
                 new SwerveUnit(frontRightDriveMotor, frontRightServo, frontRightHall, false), //front right
                 new SwerveUnit(frontLeftDriveMotor, frontLeftServo, frontLeftHall, true),    //front left
                 new SwerveUnit(backRightDriveMotor, backRightServo, backRightHall, false),    //back right
                 new SwerveUnit(backLeftDriveMotor, backLeftServo, backLeftHall, true)        //back left
-            ));
+        ));
 
         // Get hardware from hardware map
         DcMotor liftMotor = hardwareMap.dcMotor.get(Names.liftMotor);
         Servo leftClamp = hardwareMap.servo.get(Names.leftClamp);
         Servo rightClamp = hardwareMap.servo.get(Names.rightClamp);
+        controllers.add(new BlockRolling(liftMotor, rightClamp, leftClamp));
 
-        // Add blocklift controller to controller list
-        addControllers(new BlockRolling(liftMotor, rightClamp, leftClamp));
+        controllers.add(new KnockerController(hardwareMap.servo.get(Names.knockServo)));
+        controllers.add(new ColorController(hardwareMap.colorSensor.get(Names.colorSensor)));
 
-        // Get blocklift controller from controller list
-        blockLift = (IBlockLift)findController(IBlockLift.class);
-        drive = (SwerveDrive)(findController(SwerveDrive.class));
-        drive.setDriveDirection(0.0);
-
-        // Add knocker and color sensor controller
-        addControllers(new KnockerController(hardwareMap.servo.get(Names.knockServo)));
-        addControllers(new ColorController(hardwareMap.colorSensor.get(Names.colorSensor)));
+        return controllers;
     }
 
     @Override

@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.controllers.VuMarkController;
-import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
 import org.firstinspires.ftc.teamcode.statemachines.CrabState;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
@@ -20,6 +20,8 @@ import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.VuMarkTrans;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
+import java.util.List;
+
 /**
  * BLUE Autonomous for Stone furthest from Recovery Zone
  */
@@ -30,8 +32,14 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
     @Override
     public void init() {
         super.init();
-        addControllers(new VuMarkController(hardwareMap.appContext));
         ((SwerveDrive)findController(SwerveDrive.class)).spinMode();
+    }
+
+    @Override
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
+        controllers.add(new VuMarkController(hardwareMap.appContext));
+        return controllers;
     }
 
     @Override
@@ -69,7 +77,7 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
                         new TimeTrans("end", 5.0)), //in case stall
 
                 new SpinState("to spin", 0.0, new TimeTrans("spin around", 2.0)),
-                new SpinState("spin around", -0.5, new ProgressTrans("to crab left", 234.0)),
+                new SpinState("spin around", -0.5, new ProgressTrans("to crab left", 210.0)),
 
                 new CrabState("to crab left", 270.0, 0.0, new TimeTrans("crab to wall", 1.5)),
                 new CrabState("crab to wall", 270.0, 0.2, new TimeTrans("key column", 5.0)),

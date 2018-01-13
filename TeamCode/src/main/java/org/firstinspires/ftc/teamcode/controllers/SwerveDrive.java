@@ -102,6 +102,13 @@ public class SwerveDrive extends HardwareController implements IDrive {
         double angle_bl = drives[BACK_LEFT].getActualDirection();
         double angle_br = drives[BACK_RIGHT].getActualDirection();
         RobotBase.log(String.format("DAngle (fl=%f,fr=%f,bl=%f,br=%f)", angle_fl, angle_fr, angle_bl, angle_br));
+
+        double hallv_fl = drives[FRONT_LEFT].getHallVoltage();
+        double hallv_fr = drives[FRONT_RIGHT].getHallVoltage();
+        double hallv_bl = drives[BACK_LEFT].getHallVoltage();
+        double hallv_br = drives[BACK_RIGHT].getHallVoltage();
+        RobotBase.log(String.format("Hall Volts (fl=%f,fr=%f,bl=%f,br=%f)", hallv_fl, hallv_fr, hallv_bl, hallv_br));
+
         return position;
     }
 

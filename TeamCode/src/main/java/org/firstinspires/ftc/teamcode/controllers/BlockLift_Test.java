@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.opmodes.BasicTeleop;
 
+import java.util.List;
+
 /**
  * Created by Katrina on 10/26/2017.
  */
@@ -20,16 +22,21 @@ public class BlockLift_Test extends BasicTeleop {
     public void init() {
         super.init();
 
+        // Get blocklift controller from controller list
+        blockLift = (IBlockLift)findController(IBlockLift.class);
+    }
+
+    @Override
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
+
         // Get hardware from hardware map
         DcMotor liftMotor = hardwareMap.dcMotor.get(Names.liftMotor);
         Servo leftClamp = hardwareMap.servo.get(Names.leftClamp);
         Servo rightClamp = hardwareMap.servo.get(Names.rightClamp);
 
-        // Add blocklift controller to controller list
-        addControllers(new BlockLift(liftMotor, rightClamp, leftClamp));
-
-        // Get blocklift controller from controller list
-        blockLift = (IBlockLift)findController(IBlockLift.class);
+        controllers.add(new BlockLift(liftMotor, rightClamp, leftClamp));
+        return controllers;
     }
 
     @Override

@@ -2,16 +2,16 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Names;
+import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.MRGyroController;
-import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.DriveWithHeadingState;
 import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
 import org.firstinspires.ftc.teamcode.statemachines.SpinToHeadingState;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
-import org.firstinspires.ftc.teamcode.statemachines.TurnState;
+
+import java.util.List;
 
 /**
  * Created by Derek on 10/3/17.
@@ -24,10 +24,10 @@ public class SquareAuto extends SwerveBase {
     private double sqrSideLen = 30.5;   //12 inches
 
     @Override
-    public void init() {
-        super.init();
-        //sensors.init();
-        addControllers(new MRGyroController((ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get(Names.gyro)));
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
+        controllers.add(new MRGyroController((ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get(Names.gyro)));
+        return controllers;
     }
 
     @Override

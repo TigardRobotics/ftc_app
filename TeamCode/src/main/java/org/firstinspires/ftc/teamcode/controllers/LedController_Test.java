@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,8 +36,6 @@ public class LedController_Test extends RobotBase {
     @Override
     public void init() {
         super.init();
-        io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
-        addControllers(new LedController(io, LED_IO_MAP));
 
         leds = (IColorIndicator)(findController(IColorIndicator.class));
 
@@ -45,6 +44,14 @@ public class LedController_Test extends RobotBase {
         leds.setLed(LedController.ALL_COLORS, true);
         lightTimer = new ElapsedTime();
         lightTimer.reset();
+    }
+
+    @Override
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
+        io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
+        controllers.add(new LedController(io, LED_IO_MAP));
+        return controllers;
     }
 
     @Override

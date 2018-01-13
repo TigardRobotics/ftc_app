@@ -4,8 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.controllers.AccelDrive;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
-import org.firstinspires.ftc.teamcode.controllers.IDrive;
 import org.firstinspires.ftc.teamcode.controllers.TankDrive;
+
+import java.util.List;
 
 /**
  * Created by Mark on 10/26/17
@@ -20,12 +21,17 @@ public abstract class TankBot extends RobotBase {
 
     public void init() {
         super.init();
+        Drive = (TankDrive)(findController(TankDrive.class));
+    }
+
+    @Override
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
         leftDriveMotor = hardwareMap.dcMotor.get("motor_l");
         rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
-        addControllers(new AccelDrive(rightDriveMotor, leftDriveMotor, 3.0));
-        //addControllers(new TankDrive(rightDriveMotor, leftDriveMotor));
-
-        Drive = (TankDrive)(findController(TankDrive.class));
+        controllers.add(new AccelDrive(rightDriveMotor, leftDriveMotor, 3.0));
+        //controllers.add(new TankDrive(rightDriveMotor, leftDriveMotor));
+        return controllers;
     }
 
     @Override

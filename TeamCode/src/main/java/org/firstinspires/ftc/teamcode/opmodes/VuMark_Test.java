@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.controllers.HardwareController;
+import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.controllers.VuMarkController;
-import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
+
+import java.util.List;
 
 /**
  * Created by Derek on 11/21/2017.
@@ -14,8 +16,9 @@ import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 //@Disabled
 public class VuMark_Test extends RobotBase {
     @Override
-    public void init() {
-        super.init();
-        addControllers(new VuMarkController(hardwareMap.appContext));
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
+        controllers.add(new VuMarkController(hardwareMap.appContext));
+        return controllers;
     }
 }

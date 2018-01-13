@@ -4,6 +4,8 @@ import com.qualcomm.hardware.motors.TetrixMotor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
+
 /**
  * Created by Katrina on 12/30/2017.
  */
@@ -16,8 +18,8 @@ public class BlockRolling extends HardwareController implements IBlockLift {
 
     // set servo positions
     private static final double servoHold = 0.5;
-    private static final double servoRelease = 0.0;
-    private static final double servoAcquire = 1.0;
+    private static final double servoRelease = 0.4;
+    private static final double servoAcquire = 0.6;
 
     private double initialEncoderPos;
 
@@ -50,6 +52,11 @@ public class BlockRolling extends HardwareController implements IBlockLift {
     public void loop() {
         super.loop();
         Robot.telemetry.addData("lift pos", getLiftPos());
+    }
+
+    @Override
+    public void stop() {
+        hold();
     }
 
     public void acquire() {

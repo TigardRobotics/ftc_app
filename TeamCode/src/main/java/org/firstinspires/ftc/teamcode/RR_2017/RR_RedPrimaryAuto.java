@@ -4,9 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
+import org.firstinspires.ftc.teamcode.controllers.SwerveUnit;
 import org.firstinspires.ftc.teamcode.controllers.VuMarkController;
-import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
 import org.firstinspires.ftc.teamcode.statemachines.GlobalTimeTrans;
@@ -19,6 +20,8 @@ import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.VuMarkTrans;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
+import java.util.List;
+
 /**
  * RED Autonomous for Stone closest to Recovery Zone
  */
@@ -29,8 +32,14 @@ public class RR_RedPrimaryAuto extends RR_AutoBase {
     @Override
     public void init() {
         super.init();
-        addControllers(new VuMarkController(hardwareMap.appContext));
         ((SwerveDrive)findController(SwerveDrive.class)).spinMode();
+    }
+
+    @Override
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
+        controllers.add(new VuMarkController(hardwareMap.appContext));
+        return controllers;
     }
 
     @Override
