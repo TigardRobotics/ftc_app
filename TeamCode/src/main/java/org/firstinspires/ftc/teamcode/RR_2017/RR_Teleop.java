@@ -35,22 +35,24 @@ public class RR_Teleop extends SwerveTeleop {
     public void loop() {
         super.loop();
 
-        if(gamepad1.dpad_down) {
+        // Assume lift should hold
+        // Any change before end of this loop overrides this
+        blockLift.hold();
+
+        if(gamepad1.dpad_down || gamepad1.left_bumper) {
             blockLift.acquire();
         }
-        else if(gamepad1.dpad_up) {
+        else if(gamepad1.dpad_up || gamepad1.right_bumper) {
             blockLift.release();
         }
-        else if(blockLift instanceof BlockRolling) {
+
+        if(blockLift instanceof BlockRolling) {
             BlockRolling blockRolling = (BlockRolling) blockLift;
             if(gamepad1.dpad_right) {
                 blockRolling.turnClockwise();
             }
             else if(gamepad1.dpad_left) {
                 blockRolling.turnCounterClockwise();
-            }
-            else {
-                blockLift.hold();
             }
 
             if(gamepad1.y) {
@@ -62,7 +64,6 @@ public class RR_Teleop extends SwerveTeleop {
         }
         else {
             blockLift.lift(gamepad1.left_trigger - gamepad1.right_trigger);
-            blockLift.hold();
         }
 
         // hold the knocker down
