@@ -18,8 +18,8 @@ public class BlockRolling extends HardwareController implements IBlockLift {
 
     // set servo positions
     private static final double servoHold = 0.5;
-    private static final double servoRelease = 0.3;
-    private static final double servoAcquire = 0.6;
+    private static final double servoRelease = 0.0;
+    private static final double servoAcquire = 1.0;
 
     private double initialEncoderPos;
 
@@ -60,7 +60,7 @@ public class BlockRolling extends HardwareController implements IBlockLift {
     }
 
     public void acquire() {
-        rightClamp.setPosition(servoAcquire+0.2);
+        rightClamp.setPosition(servoAcquire);
         leftClamp.setPosition(servoRelease);
     }
 
@@ -70,7 +70,7 @@ public class BlockRolling extends HardwareController implements IBlockLift {
     }
 
     public void release() {
-        rightClamp.setPosition(servoRelease-0.2);
+        rightClamp.setPosition(servoRelease);
         leftClamp.setPosition(servoAcquire);
     }
 

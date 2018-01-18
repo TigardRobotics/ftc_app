@@ -35,15 +35,14 @@ public class RR_Teleop extends SwerveTeleop {
     public void loop() {
         super.loop();
 
-        // Assume lift should hold
-        // Any change before end of this loop overrides this
-        blockLift.hold();
-
         if(gamepad1.dpad_down || gamepad1.left_bumper) {
             blockLift.acquire();
         }
         else if(gamepad1.dpad_up || gamepad1.right_bumper) {
             blockLift.release();
+        }
+        else {
+            blockLift.hold();
         }
 
         if(blockLift instanceof BlockRolling) {
