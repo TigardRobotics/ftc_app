@@ -5,9 +5,15 @@ package org.firstinspires.ftc.teamcode.controllers;
  */
 
 public interface IBlockLift {
-    void acquire();
-    void hold();
-    void release();
+    void setBlockControlMode(BlockControlMode mode);
     void lift(double power);
     void reset();
+
+    enum BlockControlMode {
+        acquire,
+        release,
+        hold,
+        clockwise,
+        counterclockwise
+    }
 }

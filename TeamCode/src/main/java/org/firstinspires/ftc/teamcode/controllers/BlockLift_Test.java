@@ -42,7 +42,6 @@ public class BlockLift_Test extends BasicTeleop {
     @Override
     public void start() {
         super.start();
-
     }
 
     @Override
@@ -52,10 +51,10 @@ public class BlockLift_Test extends BasicTeleop {
         blockLift.lift(gamepad1.left_trigger - gamepad1.right_trigger);
 
         if(gamepad1.right_bumper) {
-            blockLift.acquire();
+            blockLift.setBlockControlMode(IBlockLift.BlockControlMode.acquire);
         }
         else if(gamepad1.left_bumper) {
-            blockLift.release();
+            blockLift.setBlockControlMode(IBlockLift.BlockControlMode.release);
         }
     }
 

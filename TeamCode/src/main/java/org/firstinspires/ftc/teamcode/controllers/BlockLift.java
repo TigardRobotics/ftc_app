@@ -20,6 +20,7 @@ public class BlockLift extends HardwareController implements IBlockLift {
     private static final double leftClampPos = 0.490; // 125 in core discovery
     private static final double leftReleasePos = 0.216; // 55 in core discovery
 
+    private BlockControlMode blockControlMode = BlockControlMode.hold;
 
     /**
      * Constructor
@@ -35,22 +36,28 @@ public class BlockLift extends HardwareController implements IBlockLift {
 
     @Override
     public void init() {
-        release();
+        setBlockControlMode(BlockControlMode.hold);
         super.init();
     }
 
-    public void acquire() {
-        rightClamp.setPosition(rightClampPos);
-        leftClamp.setPosition(leftClampPos);
+    public void setBlockControlMode(BlockControlMode mode) {
+        blockControlMode = mode;
     }
 
-    public void hold() {
-        // Nothing to see here!
-    }
-
-    public void release() {
-        rightClamp.setPosition(rightReleasePos);
-        leftClamp.setPosition(leftReleasePos);
+    @Override
+    public void loop() {
+        switch(blockControlMode) {
+            case acquire:
+                rightClamp.setPosition(rightClampPos);
+                leftClamp.setPosition(leftClampPos);
+                break;
+            case release:
+                rightClamp.setPosition(rightReleasePos);
+                leftClamp.setPosition(leftReleasePos);
+                break;
+            default:
+                break;
+        }
     }
 
     public void lift(double power) {

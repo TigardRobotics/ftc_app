@@ -23,6 +23,10 @@ public class BlockRolling extends HardwareController implements IBlockLift {
 
     private double initialEncoderPos;
 
+    private static final double maxEncPos = 4700.0;
+
+    private BlockControlMode blockControlMode = BlockControlMode.hold;
+
     /* Preset Positions:
 
      */
@@ -35,53 +39,57 @@ public class BlockRolling extends HardwareController implements IBlockLift {
      * @param leftClamp
      */
     public BlockRolling(DcMotor liftMotor, Servo rightClamp, Servo leftClamp) {
+        setBlockControlMode(BlockControlMode.hold);
         this.liftMotor = liftMotor;
-        //this.liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.rightClamp = rightClamp;
         this.leftClamp = leftClamp;
     }
 
+    public void setBlockControlMode(BlockControlMode mode) {
+        blockControlMode = mode;
+    }
+
     @Override
     public void init() {
-        //initialEncoderPos = liftMotor.getCurrentPosition();
-        hold();
+        initialEncoderPos = liftMotor.getCurrentPosition();
+        this.liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        setBlockControlMode(BlockControlMode.hold);
         super.init();
     }
 
     @Override
     public void loop() {
+        switch(blockControlMode) {
+            case acquire:
+                rightClamp.setPosition(servoAcquire);
+                leftClamp.setPosition(servoRelease);
+                break;
+            case release:
+                rightClamp.setPosition(servoRelease);
+                leftClamp.setPosition(servoAcquire);
+                break;
+            case clockwise:
+                rightClamp.setPosition(servoAcquire);
+                leftClamp.setPosition(servoAcquire);
+                break;
+            case counterclockwise:
+                rightClamp.setPosition(servoRelease);
+                leftClamp.setPosition(servoRelease);
+                break;
+            case hold:
+                rightClamp.setPosition(servoHold);
+                leftClamp.setPosition(servoHold);
+                break;
+            default:
+                break;
+        }
         super.loop();
         Robot.telemetry.addData("lift pos", getLiftPos());
     }
 
     @Override
     public void stop() {
-        hold();
-    }
-
-    public void acquire() {
-        rightClamp.setPosition(servoAcquire);
-        leftClamp.setPosition(servoRelease);
-    }
-
-    public void hold() {
-        rightClamp.setPosition(servoHold);
-        leftClamp.setPosition(servoHold);
-    }
-
-    public void release() {
-        rightClamp.setPosition(servoRelease);
-        leftClamp.setPosition(servoAcquire);
-    }
-
-    public void turnClockwise() {
-        rightClamp.setPosition(servoAcquire);
-        leftClamp.setPosition(servoAcquire);
-    }
-
-    public void turnCounterClockwise() {
-        rightClamp.setPosition(servoRelease);
-        leftClamp.setPosition(servoRelease);
+        setBlockControlMode(BlockControlMode.hold);
     }
 
     public void setPos() {
@@ -94,7 +102,14 @@ public class BlockRolling extends HardwareController implements IBlockLift {
         //liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Robot.telemetry.addData("Lift RTV", power);
-        liftMotor.setPower(0.5*power);
+
+        if (!(power < 0.0 && getLiftPos() >= maxEncPos) && !(power > 0.0 && getLiftPos() <= 0.0)) {
+            liftMotor.setPower(0.5*power);
+        }
+        else {
+            liftMotor.setPower(0.0);
+        }
+
     }
 
     public void reset() {
@@ -103,6 +118,6 @@ public class BlockRolling extends HardwareController implements IBlockLift {
     }
 
     private double getLiftPos() {
-        return 0.0;//Math.abs(liftMotor.getCurrentPosition()-initialEncoderPos);
+        return Math.abs(liftMotor.getCurrentPosition()-initialEncoderPos);
     }
 }

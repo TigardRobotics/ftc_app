@@ -36,10 +36,10 @@ public class PickUpBlockState extends State {
         super.onExit();
         lift.lift(0.0);
         if(releaseOnExit) {
-            lift.release();
+            lift.setBlockControlMode(IBlockLift.BlockControlMode.release);
         }
         else {
-            lift.hold();
+            lift.setBlockControlMode(IBlockLift.BlockControlMode.hold);
         }
     }
 }

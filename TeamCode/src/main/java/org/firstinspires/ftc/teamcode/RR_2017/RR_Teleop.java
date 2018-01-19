@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Color;
 import org.firstinspires.ftc.teamcode.controllers.BlockRolling;
 import org.firstinspires.ftc.teamcode.controllers.ColorController;
+import org.firstinspires.ftc.teamcode.controllers.IBlockLift;
 import org.firstinspires.ftc.teamcode.controllers.KnockerController;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveTeleop;
 
@@ -36,23 +37,23 @@ public class RR_Teleop extends SwerveTeleop {
         super.loop();
 
         if(gamepad1.dpad_down || gamepad1.left_bumper) {
-            blockLift.acquire();
+            blockLift.setBlockControlMode(IBlockLift.BlockControlMode.acquire);
         }
         else if(gamepad1.dpad_up || gamepad1.right_bumper) {
-            blockLift.release();
+            blockLift.setBlockControlMode(IBlockLift.BlockControlMode.release);
+        }
+        else if (gamepad1.dpad_right) {
+            blockLift.setBlockControlMode(IBlockLift.BlockControlMode.clockwise);
+        }
+        else if (gamepad1.dpad_left) {
+            blockLift.setBlockControlMode(IBlockLift.BlockControlMode.counterclockwise);
         }
         else {
-            blockLift.hold();
+            blockLift.setBlockControlMode(IBlockLift.BlockControlMode.hold);
         }
 
         if(blockLift instanceof BlockRolling) {
             BlockRolling blockRolling = (BlockRolling) blockLift;
-            if(gamepad1.dpad_right) {
-                blockRolling.turnClockwise();
-            }
-            else if(gamepad1.dpad_left) {
-                blockRolling.turnCounterClockwise();
-            }
 
             if(gamepad1.y) {
                 blockRolling.setPos();
