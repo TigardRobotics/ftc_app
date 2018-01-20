@@ -47,7 +47,7 @@ public class RR_RedPrimaryAuto extends RR_AutoBase {
         super.start();
         stateMachine = new StateMachine(
                 new SpinState("to spin", 0.0, new TimeTrans("lift block", 1.5)),
-                new PickUpBlockState("lift block", -1.0, new TimeTrans("knock", 1.0)),
+                new PickUpBlockState("lift block", 1.0, new TimeTrans("knock", 1.0)),
                 new KnockState("knock",
                         new ColorTrans("spin right", Color.BLUE),
                         new ColorTrans("spin left", Color.RED),
@@ -94,7 +94,7 @@ public class RR_RedPrimaryAuto extends RR_AutoBase {
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
                 new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 120.0)),
                 new DriveState("to final crab", 0.0, new TimeTrans("drop block", 1.5)),
-                new PickUpBlockState("drop block", 1.0, true, new TimeTrans("ram block", 1.0)),
+                new PickUpBlockState("drop block", -1.0, true, new TimeTrans("ram block", 1.0)),
                 new DriveState("ram block", 0.5, new TimeTrans("backup", 2.0)),
                 new DriveState("backup", -0.5, new TimeTrans("end", 0.3)),
                 new WaitState("end")

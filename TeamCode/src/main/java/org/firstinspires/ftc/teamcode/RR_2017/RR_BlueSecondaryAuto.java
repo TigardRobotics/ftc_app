@@ -47,7 +47,7 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
         super.start();
         stateMachine = new StateMachine(
                 new SpinState("to spin", 0.0, new TimeTrans("lift block", 1.5)),
-                new PickUpBlockState("lift block", -1.0, new TimeTrans("knock", 1.0)),
+                new PickUpBlockState("lift block", 1.0, new TimeTrans("knock", 1.0)),
                 new KnockState("knock",
                         new ColorTrans("spin right", Color.RED),
                         new ColorTrans("spin left", Color.BLUE),
@@ -73,14 +73,15 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("reverse", 1.5)),
                 new DriveState("reverse", -0.6,
-                        new ProgressTrans("to spin", 85.0),
+                        new ProgressTrans("to spin", 77.0),
                         new TimeTrans("end", 5.0)), //in case stall
 
                 new SpinState("to spin", 0.0, new TimeTrans("spin around", 2.0)),
-                new SpinState("spin around", -0.5, new ProgressTrans("to crab left", 210.0)),
+                new SpinState("spin around", -0.5, new ProgressTrans("to crab left", 230.0)),
 
                 new CrabState("to crab left", 270.0, 0.0, new TimeTrans("crab to wall", 1.5)),
-                new CrabState("crab to wall", 270.0, 0.2, new TimeTrans("key column", 5.0)),
+                new CrabState("crab to wall", 270.0, 0.2, new TimeTrans("to key column", 5.0)),
+                new CrabState("to key column", 270, 0.0, new TimeTrans("key column", 2.0)),
                 new WaitState("key column",
                         new VuMarkTrans("to right column", RelicRecoveryVuMark.RIGHT),
                         new VuMarkTrans("to left column", RelicRecoveryVuMark.LEFT),
@@ -89,20 +90,20 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
                 ),
 
                 new CrabState("to right column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 128.0),
+                        new ProgressTrans("to forward", 105.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to center column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 104.0),
+                        new ProgressTrans("to forward", 80.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to left column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 78.0),
+                        new ProgressTrans("to forward", 50.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
 
                 new CrabState("to forward", 0.0, 0.0, new TimeTrans("drop block", 0.5)),
-                new PickUpBlockState("drop block", 1.0, true, new TimeTrans("ram block", 1.0)),
+                new PickUpBlockState("drop block", -1.0, true, new TimeTrans("ram block", 1.0)),
                 new DriveState("ram block", 0.5, new TimeTrans("backup", 2.0)),
                 new DriveState("backup", -0.5, new TimeTrans("end", 0.3)),
                 new WaitState("end")

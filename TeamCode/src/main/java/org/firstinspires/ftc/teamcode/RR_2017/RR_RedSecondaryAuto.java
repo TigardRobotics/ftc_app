@@ -47,7 +47,7 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
         super.start();
         stateMachine = new StateMachine(
                 new SpinState("to spin", 0.0, new TimeTrans("lift block", 1.5)),
-                new PickUpBlockState("lift block", -1.0, new TimeTrans("knock", 1.0)),
+                new PickUpBlockState("lift block", 1.0, new TimeTrans("knock", 1.0)),
                 new KnockState("knock",
                         new ColorTrans("spin right", Color.BLUE),
                         new ColorTrans("spin left", Color.RED),
@@ -82,7 +82,7 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
 
                 new CrabState("to crab right", 90.0, 0.0, new TimeTrans("crab to wall", 2.0)),
                 new CrabState("crab to wall", 90.0, 0.2, new TimeTrans("to key column", 8.0)),
-                new CrabState("to key column", 90.0, 0.0, new TimeTrans("key column", 1.5)),
+                new CrabState("to key column", 90.0, 0.0, new TimeTrans("key column", 2.0)),
 
                 new WaitState("key column",
                         new VuMarkTrans("to right column", RelicRecoveryVuMark.RIGHT),
@@ -105,7 +105,7 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
                 ),
 
                 new CrabState("to forward", 0.0, 0.0, new TimeTrans("drop block", 0.5)),
-                new PickUpBlockState("drop block", 1.0, true, new TimeTrans("ram block", 1.0)),
+                new PickUpBlockState("drop block", -1.0, true, new TimeTrans("ram block", 1.0)),
                 new DriveState("ram block", 0.5, new TimeTrans("backup", 2.0)),
                 new DriveState("backup", -0.5, new TimeTrans("end", 0.3)),
                 new WaitState("end")

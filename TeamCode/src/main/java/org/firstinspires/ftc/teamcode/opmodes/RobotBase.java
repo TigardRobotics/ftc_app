@@ -26,6 +26,7 @@ public abstract class RobotBase extends OpMode {
     private List<HardwareController> controllers = new ArrayList<HardwareController>();
 
     public ElapsedTime stopwatch;
+    private long itNum = 0;
 
     /**
      * This method searches a list for a HardwareController with the desired interface
@@ -84,6 +85,7 @@ public abstract class RobotBase extends OpMode {
 
     @Override
     public void start() {
+        itNum = 0;
         for (HardwareController control : controllers) control.start();
         stopwatch = new ElapsedTime();
         stopwatch.reset();
@@ -91,6 +93,7 @@ public abstract class RobotBase extends OpMode {
 
     @Override
     public void loop() {
+        itNum++;
         if(stateMachine != null) stateMachine.step();
         for (HardwareController control : controllers) control.loop();
     }
@@ -99,6 +102,13 @@ public abstract class RobotBase extends OpMode {
     public void stop() {
         if(stateMachine != null) stateMachine.stop();
         for (HardwareController control : controllers) control.stop();
+    }
+
+    /*
+     * Returns iteration number
+     */
+    public long getItNum() {
+        return itNum;
     }
 
     /**
