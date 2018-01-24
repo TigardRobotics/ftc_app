@@ -69,4 +69,6 @@ public class BlockLift extends HardwareController implements IBlockLift {
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         liftMotor.setPower(0.0);
     }
+
+    public void overrideMinLimit( boolean override ){}   //No Limit to Override
 }

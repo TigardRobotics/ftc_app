@@ -25,6 +25,8 @@ public class BlockRolling extends HardwareController implements IBlockLift {
     private double initialEncoderPos;
 
     private static final double maxEncPos = 7300.0;
+    private static final double minEncPos = 100.0;
+    private boolean disableMinLimit = false;
 
     private BlockControlMode blockControlMode = BlockControlMode.hold;
 
@@ -108,7 +110,8 @@ public class BlockRolling extends HardwareController implements IBlockLift {
         }
 
         // Don't allow lift to move out of range
-        if (!(power > 0.0 && liftPos >= maxEncPos) && !(power < 0.0 && liftPos <= 100.0)) {
+        if ( !(power > 0.0 && liftPos >= maxEncPos)
+          && !(power < 0.0 && liftPos <= minEncPos) && !disableMinLimit) {
             liftMotor.setPower(power);
         }
         else {
@@ -167,6 +170,16 @@ public class BlockRolling extends HardwareController implements IBlockLift {
     public void reset() {
         //liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         liftMotor.setPower(0.0);
+    }
+
+    public void overrideMinLimit( boolean override )
+    {
+        if (!override && disableMinLimit)
+        {
+            //When Min Limit is re-enambled, reset it to the current position
+            initialEncoderPos = liftMotor.getCurrentPosition();
+        }
+        disableMinLimit = override;
     }
 
     private double getLiftPos() {
