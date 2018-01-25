@@ -172,10 +172,8 @@ public class BlockRolling extends HardwareController implements IBlockLift {
         liftMotor.setPower(0.0);
     }
 
-    public void overrideMinLimit( boolean override )
-    {
-        if (!override && disableMinLimit)
-        {
+    public void overrideMinLimit(boolean override) {
+        if (!override && disableMinLimit) {
             //When Min Limit is re-enambled, reset it to the current position
             initialEncoderPos = liftMotor.getCurrentPosition();
         }
