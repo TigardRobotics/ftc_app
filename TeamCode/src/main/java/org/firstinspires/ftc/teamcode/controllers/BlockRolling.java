@@ -104,21 +104,21 @@ public class BlockRolling extends HardwareController implements IBlockLift {
         // If row commanded
         if(row != -1) {
             double target = rowPositions[row];
-            if(liftPos < target-rowThreshold) power = 0.5;
-            else if (liftPos > target+rowThreshold) power = -0.5;
+            if(liftPos < target-rowThreshold) power = 0.9;
+            else if (liftPos > target+rowThreshold) power = -0.4;
             else power = 0.0;
         }
 
         // Don't allow lift to move out of range
-        if ( !(power > 0.0 && liftPos >= maxEncPos)
-          && !(power < 0.0 && liftPos <= minEncPos) && !disableMinLimit) {
+        if ((!(power > 0.0 && liftPos >= maxEncPos) && !(power < 0.0 && liftPos <= minEncPos))
+             || disableMinLimit) {
             liftMotor.setPower(power);
         }
         else {
             liftMotor.setPower(0.0);
         }
 
-        Robot.telemetry.addData("lift pos, lift speed, row", liftPos +", "+getLiftSpeed()+", "+row);
+        Robot.telemetry.addData("lift pos, speed, row", liftPos +", "+getLiftSpeed()+", "+row);
         prevPos = liftPos;
         prevTime = System.currentTimeMillis();
     }
@@ -159,10 +159,10 @@ public class BlockRolling extends HardwareController implements IBlockLift {
     public void lift(double power) {
         //liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Robot.telemetry.addData("Lift RTV", power);
+        //Robot.telemetry.addData("Lift RTV", power);
         if(power != comPower) {
             row = -1;
-            this.power = power;
+            this.power = 0.95*power;
         }
         comPower = power;
     }
@@ -174,7 +174,9 @@ public class BlockRolling extends HardwareController implements IBlockLift {
 
     public void overrideMinLimit(boolean override) {
         if (!override && disableMinLimit) {
-            //When Min Limit is re-enambled, reset it to the current position
+            Robot.telemetry.addLine("Overriding lift Min");
+            RobotBase.log("Overriding lift Min");
+            //When Min Limit is re-enabled, reset it to the current position
             initialEncoderPos = liftMotor.getCurrentPosition();
         }
         disableMinLimit = override;
