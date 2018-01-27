@@ -118,7 +118,7 @@ public class BlockRolling extends HardwareController implements IBlockLift {
             liftMotor.setPower(0.0);
         }
 
-        Robot.telemetry.addData("lift pos, speed, row", liftPos +", "+getLiftSpeed()+", "+row);
+        Robot.telemetry.addData("lift pos, power, row", liftPos +", "+power+", "+row);
         prevPos = liftPos;
         prevTime = System.currentTimeMillis();
     }

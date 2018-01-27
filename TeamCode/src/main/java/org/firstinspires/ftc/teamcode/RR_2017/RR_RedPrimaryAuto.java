@@ -80,23 +80,24 @@ public class RR_RedPrimaryAuto extends RR_AutoBase {
                         new GlobalTimeTrans("to center column", 10.0) // Default to center column
                 ),
                 new DriveState("to right column", 0.6,
-                        new ProgressTrans("to spin box", 94.0),
+                        new ProgressTrans("to spin box", 98.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to center column", 0.6,
-                        new ProgressTrans("to spin box", 123.0),
+                        new ProgressTrans("to spin box", 125.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to left column", 0.6,
-                        new ProgressTrans("to spin box", 146.0),
+                        new ProgressTrans("to spin box", 152.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),
                 new SpinState("spin box", 0.3, new ProgressTrans("to final crab", 120.0)),
                 new DriveState("to final crab", 0.0, new TimeTrans("drop block", 1.5)),
-                new PickUpBlockState("drop block", -1.0, true, new TimeTrans("ram block", 1.0)),
+                new PickUpBlockState("drop block", -1.0, true, new TimeTrans("spit", 1.0)),
+                new PickUpBlockState("spit", 0.0, true, new TimeTrans("ram block", 0.1)),
                 new DriveState("ram block", 0.5, new TimeTrans("backup", 2.0)),
-                new DriveState("backup", -0.5, new TimeTrans("end", 0.3)),
+                new DriveState("backup", -0.5, new TimeTrans("end", 0.7)),
                 new WaitState("end")
 
         );

@@ -78,11 +78,9 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
                         new TimeTrans("end", 5.0)), //in case stall
 
                 new SpinState("to tweek right", 0.0, new TimeTrans("tweek right", 2.0)),
-                new SpinState("tweek right", 0.2, new ProgressTrans("to crab right", 6.0)),
+                new SpinState("tweek right", 0.2, new ProgressTrans("to key column", 6.0)),
 
-                new CrabState("to crab right", 90.0, 0.0, new TimeTrans("crab to wall", 2.0)),
-                new CrabState("crab to wall", 90.0, 0.2, new TimeTrans("to key column", 8.0)),
-                new CrabState("to key column", 90.0, 0.0, new TimeTrans("key column", 2.0)),
+                new CrabState("to key column", 90.0, 0.0, new TimeTrans("key column", 0.5)),
 
                 new WaitState("key column",
                         new VuMarkTrans("to right column", RelicRecoveryVuMark.RIGHT),
@@ -92,22 +90,23 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
                 ),
 
                 new CrabState("to right column", 90.0, -0.4,
-                        new ProgressTrans("to forward", 70.0),
+                        new ProgressTrans("to forward", 7.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to center column", 90.0, -0.4,
-                        new ProgressTrans("to forward", 92.0),
+                        new ProgressTrans("to forward", 24.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to left column", 90.0, -0.4,
-                        new ProgressTrans("to forward", 120.0),
+                        new ProgressTrans("to forward", 41.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
 
                 new CrabState("to forward", 0.0, 0.0, new TimeTrans("drop block", 0.5)),
-                new PickUpBlockState("drop block", -1.0, true, new TimeTrans("ram block", 1.0)),
+                new PickUpBlockState("drop block", -1.0, true, new TimeTrans("spit", 1.0)),
+                new PickUpBlockState("spit", 0.0, true, new TimeTrans("ram block", 0.1)),
                 new DriveState("ram block", 0.5, new TimeTrans("backup", 2.0)),
-                new DriveState("backup", -0.5, new TimeTrans("end", 0.3)),
+                new DriveState("backup", -0.5, new TimeTrans("end", 0.7)),
                 new WaitState("end")
         );
     }
