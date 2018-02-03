@@ -40,7 +40,7 @@ public class SwerveUnit extends HardwareController {
         this.hall = hall;
         this.motorDirection = reverse ? -1 : 1;
         //pid = new Pid(0.010, 0.01, 0.0, -100.0, 100.0);
-        pid = new Pid(0.010/*.02*/, 1.0, 0.0, -10.0, 10.0);
+        pid = new Pid(0.010/*.02*/, 0.5, 0.0, -10.0, 10.0);
     }
 
     @Override

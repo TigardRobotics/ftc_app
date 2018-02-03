@@ -52,13 +52,15 @@ public class SwerveTeleop extends SwerveBase {
                 if (crab_direction < 180) crab_direction = 160;
                 else crab_direction = 200;
             }
-            double steer_direction = gamepad1.left_stick_x; //steer direction is left joystick horizontal
+            double steer_direction = Math.pow(gamepad1.left_stick_x, 3.0); //steer direction is left joystick horizontal
+            //if(steer_direction < 0.15 && steer_direction > -0.15) steer_direction = 0.0;
             drive.setDirection(crab_direction, steer_direction);
             telemetry.addData("steer direction", steer_direction);
             telemetry.addData("crab direction", crab_direction);
 
-            double drive_power = -gamepad1.left_stick_y * Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
-            //double drive_power = Tools.timesabs(Tools.sign(-gamepad1.left_stick_y)*getGamepad1LeftJoystickAmplitude());  //expiremental
+            //double drive_power = -gamepad1.left_stick_y * Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
+            double drive_power = gamepad1.left_stick_y*gamepad1.left_stick_y + gamepad1.left_stick_x*gamepad1.left_stick_x;
+            if(gamepad1.left_stick_y > 0.0) drive_power *= -1.0; // Make power negative if stick is down
             drive.setDrivePower(drive_power);
             telemetry.addData("drive power", drive_power);
 

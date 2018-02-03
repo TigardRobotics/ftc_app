@@ -142,7 +142,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
 
         if ( drives.length > BACK_LEFT && ((crab_direction >350) || (crab_direction <10)) ) {
 
-            double MaxSteer = 45;   //Max steer is 45 degrees
+            double MaxSteer = 45.0;   //Max steer is 45 degrees
             double right_steer=0, left_steer=0;
 
             if (steer_direction > 0) {

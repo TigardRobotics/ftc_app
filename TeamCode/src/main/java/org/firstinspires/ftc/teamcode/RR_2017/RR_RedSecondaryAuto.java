@@ -103,7 +103,7 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
                 ),
 
                 new CrabState("to forward", 0.0, 0.0, new TimeTrans("drop block", 0.5)),
-                new PickUpBlockState("drop block", -1.0, true, new TimeTrans("spit", 1.0)),
+                new PickUpBlockState("drop block", -1.0, false, new TimeTrans("spit", 1.0)),
                 new PickUpBlockState("spit", 0.0, true, new TimeTrans("ram block", 0.1)),
                 new DriveState("ram block", 0.5, new TimeTrans("backup", 2.0)),
                 new DriveState("backup", -0.5, new TimeTrans("end", 0.7)),
