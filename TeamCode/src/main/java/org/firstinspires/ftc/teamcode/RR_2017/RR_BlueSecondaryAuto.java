@@ -77,10 +77,8 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
                         new TimeTrans("end", 5.0)), //in case stall
 
                 new SpinState("to spin", 0.0, new TimeTrans("spin around", 2.0)),
-                new SpinState("spin around", -0.5, new ProgressTrans("to crab left", 230.0)),
+                new SpinState("spin around", -0.5, new ProgressTrans("to key column", 205.0)),
 
-                new CrabState("to crab left", 270.0, 0.0, new TimeTrans("crab to wall", 1.5)),
-                new CrabState("crab to wall", 270.0, 0.2, new TimeTrans("to key column", 5.0)),
                 new CrabState("to key column", 270, 0.0, new TimeTrans("key column", 2.0)),
                 new WaitState("key column",
                         new VuMarkTrans("to right column", RelicRecoveryVuMark.RIGHT),
@@ -90,15 +88,15 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
                 ),
 
                 new CrabState("to right column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 105.0),
+                        new ProgressTrans("to forward", 44.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to center column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 77.5),
+                        new ProgressTrans("to forward", 27.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to left column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 50.0),
+                        new ProgressTrans("to forward", 10.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
 

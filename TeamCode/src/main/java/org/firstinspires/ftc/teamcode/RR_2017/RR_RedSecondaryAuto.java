@@ -74,11 +74,8 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("forward", 1.5)),
                 new DriveState("forward", 0.4,
-                        new ProgressTrans("to tweek right", 90.0),
+                        new ProgressTrans("to key column", 90.0),
                         new TimeTrans("end", 5.0)), //in case stall
-
-                new SpinState("to tweek right", 0.0, new TimeTrans("tweek right", 2.0)),
-                new SpinState("tweek right", 0.2, new ProgressTrans("to key column", 6.0)),
 
                 new CrabState("to key column", 90.0, 0.0, new TimeTrans("key column", 0.5)),
 
