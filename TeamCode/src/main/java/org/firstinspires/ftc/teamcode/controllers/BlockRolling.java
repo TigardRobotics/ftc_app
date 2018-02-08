@@ -71,6 +71,12 @@ public class BlockRolling extends HardwareController implements IBlockLift {
     }
 
     @Override
+    public void start() {
+        initialEncoderPos = liftMotor.getCurrentPosition();
+        super.start();
+    }
+
+    @Override
     public void loop() {
         switch(blockControlMode) {
             case acquire:
