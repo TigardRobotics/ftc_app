@@ -79,7 +79,7 @@ public class RR_BluePrimaryAuto extends RR_AutoBase {
                         new GlobalTimeTrans("to center column", 10.0) // Default to center column
                 ),
                 new DriveState("to right column", -0.4,
-                        new ProgressTrans("to spin box", 138.0),
+                        new ProgressTrans("to spin box", 133.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to center column", -0.4,
@@ -87,7 +87,7 @@ public class RR_BluePrimaryAuto extends RR_AutoBase {
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to left column", -0.4,
-                        new ProgressTrans("to spin box", 82.0),
+                        new ProgressTrans("to spin box", 84.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new SpinState("to spin box", 0.0, new TimeTrans("spin box", 1.5)),

@@ -58,9 +58,6 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
                         new ColorTrans("spin left", Color.RED),
                         new ProgressTrans("unknock", 5.0)),
 
-                new SpinState("unspin", -0.2, new ProgressTrans("unknock from left", 5.0)),
-                new KnockState("unknock", true, new TimeTrans("to crab", 1.5)),
-
                 //Blue on the right
                 new SpinState("spin right", 0.2, new ProgressTrans("unknock from right", 20.0)),
                 new KnockState("unknock from right", true, new TimeTrans("spin left back", 0.5)),
@@ -71,6 +68,8 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
                 new KnockState("unknock from left", true, new TimeTrans("spin right back", 0.5)),
                 new SpinState("spin right back", 0.2, new ProgressTrans("to crab", 20.0)),
 
+                new KnockState("unknock", true, new TimeTrans("to crab", 1.5)),
+
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("forward", 1.5)),
                 new DriveState("forward", 0.4,
@@ -78,7 +77,6 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
                         new TimeTrans("end", 5.0)), //in case stall
 
                 new CrabState("to key column", 90.0, 0.0, new TimeTrans("key column", 0.5)),
-
                 new WaitState("key column",
                         new VuMarkTrans("to right column", RelicRecoveryVuMark.RIGHT),
                         new VuMarkTrans("to left column", RelicRecoveryVuMark.LEFT),
@@ -87,15 +85,15 @@ public class RR_RedSecondaryAuto extends RR_AutoBase {
                 ),
 
                 new CrabState("to right column", 90.0, -0.4,
-                        new ProgressTrans("to forward", 7.0),
+                        new ProgressTrans("to forward", 3.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to center column", 90.0, -0.4,
-                        new ProgressTrans("to forward", 24.0),
+                        new ProgressTrans("to forward", 25.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to left column", 90.0, -0.4,
-                        new ProgressTrans("to forward", 41.0),
+                        new ProgressTrans("to forward", 48.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
 

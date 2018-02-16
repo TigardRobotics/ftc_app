@@ -88,15 +88,15 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
                 ),
 
                 new CrabState("to right column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 44.0),
+                        new ProgressTrans("to forward", 49.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to center column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 27.0),
+                        new ProgressTrans("to forward", 32.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to left column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 10.0),
+                        new ProgressTrans("to forward", 15.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
 

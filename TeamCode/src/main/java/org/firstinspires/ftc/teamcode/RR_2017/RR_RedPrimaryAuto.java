@@ -80,11 +80,11 @@ public class RR_RedPrimaryAuto extends RR_AutoBase {
                         new GlobalTimeTrans("to center column", 10.0) // Default to center column
                 ),
                 new DriveState("to right column", 0.6,
-                        new ProgressTrans("to spin box", 98.0),
+                        new ProgressTrans("to spin box", 103.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to center column", 0.6,
-                        new ProgressTrans("to spin box", 125.0),
+                        new ProgressTrans("to spin box", 127.5),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new DriveState("to left column", 0.6,

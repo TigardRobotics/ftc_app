@@ -38,7 +38,7 @@ public class RR_Teleop extends SwerveTeleop {
 
         //Disable Min Limit if back is pressed
         //Note: Limit is reset when button is released
-        blockLift.overrideMinLimit(gamepad1.y);
+        //blockLift.overrideMinLimit(gamepad1.y);
 
         if(gamepad1.left_bumper) {
             blockLift.setBlockControlMode(IBlockLift.BlockControlMode.acquire);
@@ -59,7 +59,10 @@ public class RR_Teleop extends SwerveTeleop {
         if(blockLift instanceof BlockRolling) {
             BlockRolling blockRolling = (BlockRolling) blockLift;
 
-            if(gamepad1.dpad_up) {
+            if(gamepad1.a) {
+                blockRolling.setRow(0);
+            }
+            else if(gamepad1.dpad_up) {
                 blockRolling.nextRow();
             }
             else if(gamepad1.dpad_down) {

@@ -95,7 +95,7 @@ public abstract class RobotBase extends OpMode {
     public void loop() {
         itNum++;
         telemetry.addData("Loop Number", itNum);
-        log("Loop Number "+itNum);
+        log("----- Loop Number "+itNum+" -----");
         if(stateMachine != null) stateMachine.step();
         for (HardwareController control : controllers) control.loop();
     }
