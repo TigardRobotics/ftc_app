@@ -27,8 +27,10 @@ public class SwerveUnit extends HardwareController {
     private static final double MAX_DRIVE_SPEED = 0.75;
 
     // the commanded direction
-    private double direction = 0;
+    private double direction = 0.0;
     private int motorDirection = 1;
+
+    private double drivePower = 0.0;
 
     /**
      * Constructor
@@ -39,8 +41,8 @@ public class SwerveUnit extends HardwareController {
         this.directionServo = directionServo;
         this.hall = hall;
         this.motorDirection = reverse ? -1 : 1;
-        //pid = new Pid(0.010, 0.01, 0.0, -100.0, 100.0);
-        pid = new Pid(0.010/*.02*/, 0.5, 0.0, -10.0, 10.0);
+        //The following pid values were found with an oscilloscope
+        pid = new Pid(0.019090, 36.0188679, 0.00995285, -10.0, 10.0);
     }
 
     @Override
@@ -96,8 +98,17 @@ public class SwerveUnit extends HardwareController {
      * @param power Drive Motor power
      */
     public void setDrivePower(double power) {
-        motor.setPower(motorDirection*power*MAX_DRIVE_SPEED);
-        RobotBase.log("Drive power set to "+(power*MAX_DRIVE_SPEED));
+        drivePower = motorDirection*power*MAX_DRIVE_SPEED;
+        motor.setPower(drivePower);
+        //RobotBase.log("Drive power set to "+(power*MAX_DRIVE_SPEED));
+    }
+
+    /**
+     * gets the drive power
+     * @return drive power
+     */
+    public double getDrivePower() {
+        return drivePower;
     }
 
     /**

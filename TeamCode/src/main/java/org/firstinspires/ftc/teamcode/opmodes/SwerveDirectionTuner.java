@@ -35,6 +35,12 @@ public class SwerveDirectionTuner extends RobotBase {
     }
 
     @Override
+    public void init() {
+        super.init();
+        swerve = (SwerveUnit)(findController(SwerveUnit.class));
+    }
+
+    @Override
     public void start() {
         super.start();
         stateMachine = new StateMachine(new WaitState("wait"));

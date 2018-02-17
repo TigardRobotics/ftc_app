@@ -54,11 +54,15 @@ public class SwerveDrive extends HardwareController implements IDrive {
         for(SwerveUnit drive : drives) drive.stop();
     }
 
+    private double lastPower = 0.0;
+
     @Override
     public void setDrivePower(double power) {
         String msg = String.format("SwerveDrive drive_power = %1$.1f%%", power*100);
         RobotBase.log(msg);
-        Robot.telemetry.addLine(msg);
+        boolean log = power != lastPower;
+        lastPower = power;
+        if(log) Robot.telemetry.addLine(msg);
         if(spinMode) {
             drives[FRONT_RIGHT].setDrivePower(-power);
             drives[FRONT_LEFT].setDrivePower(power);
@@ -66,7 +70,7 @@ public class SwerveDrive extends HardwareController implements IDrive {
             drives[BACK_LEFT].setDrivePower(power);
         }
         else {
-            RobotBase.log("Set drive power (fr, fl, br, bl)");
+            if(log) RobotBase.log("Set drive power (fr="+drives[FRONT_RIGHT].getDrivePower()+", fl="+drives[FRONT_LEFT].getDrivePower()+", br"+drives[BACK_RIGHT].getDrivePower()+", bl"+drives[BACK_LEFT].getDrivePower()+")");
             for (SwerveUnit drive : drives) drive.setDrivePower(power);
         }
     }
