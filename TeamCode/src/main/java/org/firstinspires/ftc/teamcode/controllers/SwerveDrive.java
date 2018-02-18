@@ -158,17 +158,24 @@ public class SwerveDrive extends HardwareController implements IDrive {
                 left_steer = -Math.atan(-steer_direction)*MaxSteer;
             }
 
-            drives[FRONT_RIGHT].setDirection(crab_direction+right_steer);
-            RobotBase.log("Front right drive unit direction set to "+(crab_direction+right_steer));
+            double fr_angle = (crab_direction+right_steer);
+            double fl_angle = (crab_direction+left_steer);
+            double br_angle = (crab_direction-right_steer);
+            double bl_angle = (crab_direction-left_steer);
 
-            drives[FRONT_LEFT].setDirection(crab_direction+left_steer);
-            RobotBase.log("Front left drive unit direction set to "+(crab_direction+left_steer));
+            drives[FRONT_RIGHT].setDirection(fr_angle);
+            //RobotBase.log("Front right drive unit direction set to "+fr_angle);
 
-            drives[BACK_RIGHT].setDirection(crab_direction-right_steer);
-            RobotBase.log("Back right drive unit direction set to "+(crab_direction-right_steer));
+            drives[FRONT_LEFT].setDirection(fl_angle);
+            //RobotBase.log("Front left drive unit direction set to "+fl_angle);
 
-            drives[BACK_LEFT].setDirection(crab_direction-left_steer);
-            RobotBase.log("Back left drive unit direction set to "+(crab_direction-left_steer));
+            drives[BACK_RIGHT].setDirection(br_angle);
+            //RobotBase.log("Back right drive unit direction set to "+br_angle);
+
+            drives[BACK_LEFT].setDirection(bl_angle);
+            //RobotBase.log("Back left drive unit direction set to "+bl_angle);
+
+            RobotBase.log("CMD DAngle (fr="+fr_angle+", fl="+fl_angle+", br="+br_angle+", bl="+bl_angle+")");
         }
         else {
             for (SwerveUnit drive : drives) drive.setDirection(crab_direction);
