@@ -9,17 +9,20 @@ import org.firstinspires.ftc.teamcode.controllers.ColorController;
 import org.firstinspires.ftc.teamcode.controllers.IBlockLift;
 import org.firstinspires.ftc.teamcode.controllers.KnockerController;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveTeleop;
+import org.firstinspires.ftc.teamcode.opmodes.SwerveTeleopRefined;
 
 /**
  * Relic Recovery Teleop
  */
 
-@TeleOp(name="RR Teleop State", group="3965")
-public class RR_Teleop_State extends SwerveTeleop {
+@TeleOp(name="RR Teleop Refined", group="3965")
+public class RR_Teleop_Refined extends SwerveTeleopRefined {
 
     KnockerController knocker;
     ColorController colorController;
     BinaryToggle knockerDown;
+
+    IBlockLift blockLift;
 
     @Override
     public void init() {
@@ -27,6 +30,7 @@ public class RR_Teleop_State extends SwerveTeleop {
         knocker = (KnockerController)findController(KnockerController.class);
         colorController = (ColorController)findController(ColorController.class);
         knockerDown = new BinaryToggle();
+        blockLift = (IBlockLift)findController(IBlockLift.class);
     }
 
     @Override

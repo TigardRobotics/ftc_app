@@ -1,13 +1,20 @@
 package org.firstinspires.ftc.teamcode.RR_2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.BinaryToggle;
+import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.BlockRolling;
 import org.firstinspires.ftc.teamcode.controllers.ColorController;
+import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.IBlockLift;
 import org.firstinspires.ftc.teamcode.controllers.KnockerController;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveTeleop;
+
+import java.util.List;
 
 /**
  * Relic Recovery Teleop
@@ -18,13 +25,30 @@ public class RR_Teleop extends SwerveTeleop {
 
     KnockerController knocker;
     ColorController colorController;
-    boolean holdDown = false;
+    //boolean holdDown = false;
+    BinaryToggle knockerDown;
+
+    IBlockLift blockLift;
+
+    @Override
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
+        DcMotor liftMotor = hardwareMap.dcMotor.get(Names.liftMotor);
+        Servo leftClamp = hardwareMap.servo.get(Names.leftClamp);
+        Servo rightClamp = hardwareMap.servo.get(Names.rightClamp);
+        controllers.add(new BlockRolling(liftMotor, rightClamp, leftClamp));
+        controllers.add(new KnockerController(hardwareMap.servo.get(Names.knockServo)));
+        controllers.add(new ColorController(hardwareMap.colorSensor.get(Names.colorSensor)));
+        return controllers;
+    }
 
     @Override
     public void init() {
         super.init();
         knocker = (KnockerController)findController(KnockerController.class);
         colorController = (ColorController)findController(ColorController.class);
+        knockerDown = new BinaryToggle();
+        blockLift = (IBlockLift)findController(IBlockLift.class);
     }
 
     @Override
@@ -38,7 +62,7 @@ public class RR_Teleop extends SwerveTeleop {
 
         //Disable Min Limit if back is pressed
         //Note: Limit is reset when button is released
-        //blockLift.overrideMinLimit(gamepad1.y);
+        blockLift.overrideMinLimit(gamepad1.y);
 
         if(gamepad1.left_bumper) {
             blockLift.setBlockControlMode(IBlockLift.BlockControlMode.acquire);
@@ -77,15 +101,7 @@ public class RR_Teleop extends SwerveTeleop {
         }
 
         // hold the knocker down
-        if (gamepad1.b){
-            holdDown = true;
-        }
-
-        if (gamepad1.x){
-            holdDown = false;
-        }
-
-        if(gamepad1.x || holdDown) {
+        if(knockerDown.update(gamepad1.b)) {
             knocker.extend();
         }
         else {

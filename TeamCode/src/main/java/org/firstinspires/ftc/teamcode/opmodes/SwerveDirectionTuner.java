@@ -53,9 +53,16 @@ public class SwerveDirectionTuner extends RobotBase {
 
     private double dbgPos = dbgPos1;
 
+    private double sumError = 0.0;
+    private double loops = 0.0;
+
     @Override
     public void loop() {
         super.loop();
+
+        sumError += swerve.getDirectionError();
+        loops++;
+
         //! fix increments
         //! create new pid instance if values change and set swerve's pid to it
         double incr = 0.0;
@@ -82,12 +89,17 @@ public class SwerveDirectionTuner extends RobotBase {
         }
 
         telemetry.addLine(String.format("kp = %f, ki = %f, kd = %f, MaxI = %f", kp, ki, kd, maxI));
+        telemetry.addData("Mean error", sumError/loops);
         swerve.getPid().tune(kp, ki, kd, maxI);
 
         if(stopwatch.seconds() >= otime) {
             stopwatch.reset();
             if(dbgPos == dbgPos1) dbgPos = dbgPos2;
-            else if(dbgPos == dbgPos2) dbgPos = dbgPos1;
+            else if(dbgPos == dbgPos2) {
+                dbgPos = dbgPos1;
+                sumError = 0.0;
+                loops = 0.0;
+            }
             swerve.setDirection(dbgPos);
         }
 

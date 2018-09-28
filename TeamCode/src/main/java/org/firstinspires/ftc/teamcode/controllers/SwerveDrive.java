@@ -182,6 +182,22 @@ public class SwerveDrive extends HardwareController implements IDrive {
         }
     }
 
+    // Sets crab direction and does not restrict
+    public void forceDirection(double direction) {
+        setDirection(0.0, 0.0);
+        for(SwerveUnit drive : drives) {
+            drive.setDirection(direction);
+        }
+    }
+
+    public double getMeanDirectionError() {
+        double running = 0.0;
+        for(SwerveUnit unit : drives) {
+            running += unit.getDirectionError();
+        }
+        return running / drives.length;
+    }
+
     /**
      * Enter Spin Mode
      */

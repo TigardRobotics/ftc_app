@@ -95,7 +95,7 @@ public abstract class RobotBase extends OpMode {
     public void loop() {
         itNum++;
         telemetry.addData("Loop Number", itNum);
-        log("----- Loop Number "+itNum+" -----");
+        log("----- Loop Number "+itNum+" ("+((double)itNum/stopwatch.seconds())+" Hz) -----");
         if(stateMachine != null) stateMachine.step();
         for (HardwareController control : controllers) control.loop();
     }
@@ -121,7 +121,12 @@ public abstract class RobotBase extends OpMode {
         if(getGamepad1RightJoystickAmplitude() > AMP_THRESHOLD) {
             return (Math.toDegrees(Math.atan2(gamepad1.right_stick_x, -gamepad1.right_stick_y))+360)%360;
         }
-        return 0;
+        return 0.0;
+    }
+
+    public double getRightJAngle() {
+        if(gamepad1.right_stick_x == 0.0 && gamepad1.right_stick_y == 0.0) return 0.0;
+        return (Math.toDegrees(Math.atan2(gamepad1.right_stick_x, -gamepad1.right_stick_y))+360)%360;
     }
 
     public double getGamepad1RightJoystickAmplitude() {

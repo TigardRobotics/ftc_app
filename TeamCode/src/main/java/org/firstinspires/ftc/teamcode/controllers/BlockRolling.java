@@ -38,7 +38,7 @@ public class BlockRolling extends HardwareController implements IBlockLift {
     private double comPower;
     private int row = -1; //-1 means set power not row
 
-    private static final double[] rowPositions = {120.0, 2700.0, 5100.0, 7200.0};
+    private static final double[] rowPositions = {0.0, 2700.0, 5100.0, 7200.0};
     private static final double rowThreshold = 100.0;
 
     /**

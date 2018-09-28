@@ -35,6 +35,8 @@ public class SwerveTeleop extends SwerveBase {
         stateMachine = new StateMachine(new WaitState("wait"));
     }
 
+    boolean drive_sideways = false;
+
     @Override
     public void loop() {
         super.loop();
@@ -54,6 +56,19 @@ public class SwerveTeleop extends SwerveBase {
             }
             double steer_direction = Math.pow(gamepad1.left_stick_x, 3.0); //steer direction is left joystick horizontal
             //if(steer_direction < 0.15 && steer_direction > -0.15) steer_direction = 0.0;
+
+            //Shortcut to crab sideways
+            //TODO: reconsider
+            if(gamepad1.left_stick_button) {
+                drive_sideways = true;
+            }
+            if(getGamepad1RightJoystickAmplitude() > 0.01 || gamepad1.right_stick_button) {
+                drive_sideways = false;
+            }
+            if(drive_sideways) {
+                crab_direction = 270.0;
+            }
+
             drive.setDirection(crab_direction, steer_direction);
             telemetry.addData("steer direction", steer_direction);
             telemetry.addData("crab direction", crab_direction);

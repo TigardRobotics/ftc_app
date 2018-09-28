@@ -20,4 +20,15 @@ public final class Tools {
     public static double timesabs(double x) {
         return x*Math.abs(x);
     }
+
+    public static double frontize(double direction) {
+        if(notFrontized(direction)) {
+            return (direction+180) % 360;
+        }
+        return direction;
+    }
+
+    public static boolean notFrontized(double direction) {
+        return Math.cos(Math.toRadians(direction)) < 0.0;
+    }
 }

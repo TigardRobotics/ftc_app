@@ -4,11 +4,11 @@ package org.firstinspires.ftc.teamcode;
  * Created by Robotics on 2/23/2018.
  */
 
-public class Toggle {
+public class BinaryToggle {
     private boolean state;
     private boolean previousUpdate;
 
-    public Toggle() {
+    public BinaryToggle() {
         state = false;
         previousUpdate = false;
     }
@@ -28,9 +28,14 @@ public class Toggle {
         }
     }
 
+    public boolean toggle() {
+        state = !state;
+        return state;
+    }
+
     public boolean update(boolean value) {
         if(!previousUpdate && value) {
-            state = !state;
+            toggle();
         }
         previousUpdate = value;
         return get();

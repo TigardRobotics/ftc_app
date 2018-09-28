@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode.controllers;
 public interface IBlockLift {
     void setBlockControlMode(BlockControlMode mode);
     void lift(double power);
-    void overrideMinLimit( boolean override );
+    void overrideMinLimit(boolean override);
     void reset();
 
     enum BlockControlMode {

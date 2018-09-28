@@ -40,13 +40,13 @@ public abstract class SwerveBase extends RobotBase {
     private AnalogInput backLeftHall;
 
     protected SwerveDrive drive;
-    protected IBlockLift blockLift; //! TODO: Move blocklift out of swervebase
+    //protected IBlockLift blockLift; //! TODO: Move blocklift out of swervebase
 
     @Override
     public void init() {
         super.init();
         // Get blocklift controller from controller list
-        blockLift = (IBlockLift)findController(IBlockLift.class);
+        //blockLift = (IBlockLift)findController(IBlockLift.class);
         drive = (SwerveDrive)(findController(SwerveDrive.class));
         drive.setDriveDirection(0.0);
     }
@@ -88,6 +88,7 @@ public abstract class SwerveBase extends RobotBase {
                 new SwerveUnit(backLeftDriveMotor, backLeftServo, backLeftHall, true)        //back left
         ));
 
+        /* Should not be here!
         // Get hardware from hardware map
         DcMotor liftMotor = hardwareMap.dcMotor.get(Names.liftMotor);
         Servo leftClamp = hardwareMap.servo.get(Names.leftClamp);
@@ -96,6 +97,7 @@ public abstract class SwerveBase extends RobotBase {
 
         controllers.add(new KnockerController(hardwareMap.servo.get(Names.knockServo)));
         controllers.add(new ColorController(hardwareMap.colorSensor.get(Names.colorSensor)));
+        */
 
         return controllers;
     }

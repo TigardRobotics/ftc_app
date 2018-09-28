@@ -73,7 +73,7 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
                 //Drive to cryptobox
                 new DriveState("to crab", 0.0, new TimeTrans("reverse", 1.5)),
                 new DriveState("reverse", -0.6,
-                        new ProgressTrans("to spin", 77.0),
+                        new ProgressTrans("to spin", 80.0),
                         new TimeTrans("end", 5.0)), //in case stall
 
                 new SpinState("to spin", 0.0, new TimeTrans("spin around", 2.0)),
@@ -88,11 +88,11 @@ public class RR_BlueSecondaryAuto extends RR_AutoBase {
                 ),
 
                 new CrabState("to right column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 49.0),
+                        new ProgressTrans("to forward", 51.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to center column", 270.0, -0.4,
-                        new ProgressTrans("to forward", 32.0),
+                        new ProgressTrans("to forward", 33.0),
                         new TimeTrans("end", 5.0) //in case stall
                 ),
                 new CrabState("to left column", 270.0, -0.4,

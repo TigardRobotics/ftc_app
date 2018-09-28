@@ -11,6 +11,8 @@ package org.firstinspires.ftc.teamcode;
  * http://pmtischler-ftc-app.readthedocs.io/en/latest/javasphinx/com/github/pmtischler/control/Pid.html
  */
 public class Pid {
+    private double fightFactor = 0.3;
+
     /**
      * Creates a PID Controller.
      * @param kp Proportional factor to scale error to output.
@@ -33,6 +35,7 @@ public class Pid {
 
     /**
      * Performs a PID update and returns the output control.
+     *
      * @param e desiredValue-actual
      * @param dt The amount of time (sec) elapsed since last update.
      * @return The output which impacts state value (e.g. motor throttle).
@@ -40,7 +43,12 @@ public class Pid {
     public double update(double e, double dt) {
         runningIntegral = clampValue(runningIntegral + e * dt,
                 integralMin, integralMax);
+
+        if(runningIntegral*e < 0.0) runningIntegral = 0.0; // Reset if overshooting
+
         double d = (e - previousError) / dt;
+        if(d*e < 0.0) d *= fightFactor; // reduce effect of d term if fighting against the target
+
         double output = (kp * e) + (ki * runningIntegral) + (kd * d);
 
         previousError = e;
