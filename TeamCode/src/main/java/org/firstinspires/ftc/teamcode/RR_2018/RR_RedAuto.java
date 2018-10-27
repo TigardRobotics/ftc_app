@@ -1,7 +1,13 @@
 package org.firstinspires.ftc.teamcode.RR_2018;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
+import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.controllers.VuMarkController;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
@@ -29,18 +35,20 @@ import static org.firstinspires.ftc.teamcode.opmodes.RobotBase.findController;
  * Created by Derek on 10/26/18.
  */
 
-@Autonomous(name="Primary RR", group="3965")
-@Disabled
-public class RR_Auto extends SwerveBase {
+@Autonomous(name="Rvr Rcs Red", group="3965")
+//@Disabled
+public class RR_RedAuto extends SwerveBase {
     @Override
     public void init() {
         super.init();
-        //((SwerveDrive)findController(SwerveDrive.class)).spinMode();
+
     }
 
     @Override
     public List<HardwareController> getControllers() {
         List<HardwareController> controllers = super.getControllers();
+        DcMotor hangmotor = hardwareMap.dcMotor.get(Names.hanger);
+        controllers.add(new RobotHanger(hangmotor));
         return controllers;
     }
 
@@ -48,15 +56,26 @@ public class RR_Auto extends SwerveBase {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new HangState("lower", HangState.LOWER_SPEED, new TimeTrans("pre unhook", 3.0)),
-                new CrabState("pre unhook", 90.0, 0.0 ,new TimeTrans("unhook", 1.0)),
-                new CrabState("unhook", 90.0, 0.5, new TimeTrans("pre align", 2.0)),
+                new HangState("lower", HangState.LOWER_SPEED, new TimeTrans("pre ground", 1.5)),
+
+                // Back up to ground all 4 wheels
+                new CrabState("pre ground", 90.0, 0.0, new TimeTrans("ground", 1.0)),
+                new CrabState("ground", 90.0, 0.2, new TimeTrans("pre unhook", 0.25)),
+
+                // Crab to side to unhook from lander
+                new CrabState("pre unhook", 0.0, 0.0 ,new TimeTrans("unhook", 1.0)),
+                new CrabState("unhook", 0.0, 0.2, new TimeTrans("pre back away", 1.0)),
+
+                // Back away from lander
+                new CrabState("pre back away", 90.0, 0.0, new TimeTrans("back away", 1.0)),
+                new CrabState("back away", 90.0, 0.3, new TimeTrans("", 1.0)),
+
                 new SpinState("pre align", 0.0, new TimeTrans("align to wall", 1.0)),
-                new TurnState("align to wall", 0.5, new ProgressTrans("pre crab to wall", 0.5)), //Tune Progress here
+                new SpinState("align to wall", 0.2, new ProgressTrans("pre crab to wall", 80.0)), //Tune Progress here
                 new CrabState("pre crab to wall", 0.9, 0.0, new TimeTrans("crab to wall", 0.1)), //Tune Direction here
-                new CrabState("crab to wall", 0.9, 9.0, new RangeTrans("pre drive to park", 5.0)),
+                new CrabState("crab to wall", 0.9, 0.3, new TimeTrans("pre drive to park", 5.0)),
                 new DriveState("pre drive to park", 0.0, new TimeTrans("drive to park", 0.0)),
-                new DriveState("drive to park", 0.4, new TimeTrans("park", 8.0)),
+                new DriveState("drive to park", 0.2, new TimeTrans("park", 8.0)),
                 new WaitState("park", new TimeTrans("park", 1.0))
         );
     }
