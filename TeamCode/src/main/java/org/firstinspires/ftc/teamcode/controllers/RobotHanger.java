@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.configuration.MotorConfigurationType;
 public class RobotHanger extends HardwareController {
     private DcMotor hangMotor;
 
-    private double speed = 0.0;
+    private double speed = 0.95;
 
 
     public RobotHanger(DcMotor hangMotor) {
@@ -19,6 +19,7 @@ public class RobotHanger extends HardwareController {
 
     @Override
     public void init() {
+        //! TODO: Add homing by stalling
         hangMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         hangMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
