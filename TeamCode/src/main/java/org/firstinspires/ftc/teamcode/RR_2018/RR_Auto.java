@@ -1,9 +1,10 @@
-package org.firstinspires.ftc.teamcode.opmodes;
+package org.firstinspires.ftc.teamcode.RR_2018;
 
 import org.firstinspires.ftc.teamcode.Color;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.SwerveDrive;
 import org.firstinspires.ftc.teamcode.controllers.VuMarkController;
+import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.ColorTrans;
 import org.firstinspires.ftc.teamcode.statemachines.CrabState;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
@@ -30,7 +31,7 @@ import static org.firstinspires.ftc.teamcode.opmodes.RobotBase.findController;
 
 @Autonomous(name="Primary RR", group="3965")
 @Disabled
-public class RR_Auto extends  SwerveBase {
+public class RR_Auto extends SwerveBase {
     @Override
     public void init() {
         super.init();
