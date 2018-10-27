@@ -27,6 +27,7 @@ import java.util.List;
  */
 
 @Autonomous(name="Primary Blue", group="3965")
+@Disabled
 public class RR_BluePrimaryAuto extends RR_AutoBase {
 
     @Override
