@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<Robot type="FirstInspires-FTC">
+    <DeviceInterfaceModule name="Device Interface Module 1" serialNumber="AI049LXZ">
+        <Led name="red" port="0" />
+        <Led name="white" port="1" />
+        <Led name="blue" port="2" />
+        <Led name="green" port="3" />
+        <Led name="yellow" port="4" />
+    </DeviceInterfaceModule>
+</Robot>

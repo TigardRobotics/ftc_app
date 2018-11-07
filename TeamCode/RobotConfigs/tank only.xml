@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<Robot type="FirstInspires-FTC">
+    <MotorController name="Motor Controller 1" serialNumber="AL00VTAL">
+        <TetrixMotor name="motor_r" port="1" />
+        <TetrixMotor name="motor_l" port="2" />
+    </MotorController>
+</Robot>

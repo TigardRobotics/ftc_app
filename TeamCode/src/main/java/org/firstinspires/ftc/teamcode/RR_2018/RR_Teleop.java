@@ -1,0 +1,58 @@
+package org.firstinspires.ftc.teamcode.RR_2018;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.Names;
+import org.firstinspires.ftc.teamcode.controllers.HardwareController;
+import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
+import org.firstinspires.ftc.teamcode.opmodes.SwerveTeleop;
+import org.firstinspires.ftc.teamcode.opmodes.TankBot;
+import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
+import org.firstinspires.ftc.teamcode.statemachines.WaitState;
+
+import java.util.List;
+
+/**
+ * Drive Teleop using iDrive interface
+ */
+
+@TeleOp(name="Rover Ruckus Teleop", group="3965")
+//@Disabled
+public class RR_Teleop extends SwerveTeleop {
+
+    RobotHanger hanger;
+
+    //! TODO: Move this into a Rover Ruckus Opbase
+    @Override
+    public List<HardwareController> getControllers() {
+        List<HardwareController> controllers = super.getControllers();
+        DcMotor hangmotor = hardwareMap.dcMotor.get(Names.hanger);
+        controllers.add(new RobotHanger(hangmotor));
+        return controllers;
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        hanger = (RobotHanger)(findController(RobotHanger.class));
+    }
+
+    @Override
+    public void start() {
+        super.start();
+    }
+
+    @Override
+    public void loop() {
+        super.loop();
+        hanger.setSpeed(gamepad1.left_trigger-gamepad1.right_trigger);
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+    }
+}
