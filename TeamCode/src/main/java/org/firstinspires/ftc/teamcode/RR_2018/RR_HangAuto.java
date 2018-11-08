@@ -35,9 +35,9 @@ import static org.firstinspires.ftc.teamcode.opmodes.RobotBase.findController;
  * Created by Derek on 10/26/18.
  */
 
-@Autonomous(name="Rvr Rcs Red", group="3965")
+@Autonomous(name="HangAuto", group="3965")
 //@Disabled
-public class RR_RedAuto extends SwerveBase {
+public class RR_HangAuto extends SwerveBase {
     @Override
     public void init() {
         super.init();
@@ -64,7 +64,7 @@ public class RR_RedAuto extends SwerveBase {
 
                 // Crab to side to unhook from lander
                 new CrabState("pre unhook", 0.0, 0.0 ,new TimeTrans("unhook", 1.0)),
-                new CrabState("unhook", 0.0, 0.2, new TimeTrans("pre back away", 1.0)),
+                new CrabState("unhook", 0.0, -0.2, new TimeTrans("park", 1.0)), //pre back away
 
                 // Back away from lander
                 new CrabState("pre back away", 90.0, 0.0, new TimeTrans("back away", 1.0)),
