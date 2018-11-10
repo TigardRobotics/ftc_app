@@ -49,6 +49,7 @@ public class RR_Teleop extends SwerveTeleop {
     public void loop() {
         super.loop();
         hanger.setSpeed(gamepad1.left_trigger-gamepad1.right_trigger);
+        telemetry.addData("lift pos", hanger.getPos());
     }
 
     @Override

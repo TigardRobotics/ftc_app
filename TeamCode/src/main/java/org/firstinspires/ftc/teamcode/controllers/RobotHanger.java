@@ -40,4 +40,8 @@ public class RobotHanger extends HardwareController {
     public double getSpeed() {
         return speed;
     }
+
+    public double getPos() {
+        return hangMotor.getCurrentPosition();
+    }
 }
