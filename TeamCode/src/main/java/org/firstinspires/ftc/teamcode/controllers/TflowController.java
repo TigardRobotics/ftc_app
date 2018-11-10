@@ -75,10 +75,6 @@ public class TflowController extends HardwareController {
      */
     private TFObjectDetector tfod;
 
-    private String goldMinPos = "NONE";
-    private int objectCount = 0;
-    private boolean seeGold = false;
-
     private int goldMineralX = -1;
     private int silverMineral1X = -1;
     private int silverMineral2X = -1;
@@ -117,34 +113,27 @@ public class TflowController extends HardwareController {
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
+            // New information might be nothing important
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
+                Robot.telemetry.addLine("Recognitions Updated");
                 Robot.telemetry.addData("# Object Detected", updatedRecognitions.size());
-                objectCount = updatedRecognitions.size();
-                if (objectCount <= 3) {
+                if (updatedRecognitions.size() <= 3 && updatedRecognitions.size() > 0) {
                     goldMineralX = -1;
                     silverMineral1X = -1;
                     silverMineral2X = -1;
                     for (Recognition recognition : updatedRecognitions) {
                         if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                            goldMineralX = (int) recognition.getLeft();
+                            goldMineralX = (int) (recognition.getLeft()+recognition.getRight())/2;
                         } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
+                            silverMineral1X = (int) (recognition.getLeft()+recognition.getRight())/2;
                         } else {
-                            silverMineral2X = (int) recognition.getLeft();
+                            silverMineral2X = (int) (recognition.getLeft()+recognition.getRight())/2;
                         }
                     }
                 }
             }
-            if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                    Robot.telemetry.addData("Gold Mineral Position", "Left");
-                } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                    Robot.telemetry.addData("Gold Mineral Position", "Right");
-                } else {
-                    Robot.telemetry.addData("Gold Mineral Position", "Center");
-                }
-            }
+            Robot.telemetry.addData("Gold Mineral Position", getGoldPos());
         }
     }
 
@@ -153,6 +142,32 @@ public class TflowController extends HardwareController {
         if (tfod != null) {
             tfod.shutdown();
         }
+    }
+
+    public int getObjectCount() {
+        int count = 0;
+        if(goldMineralX != -1) {
+            count++;
+        }
+        if(silverMineral1X != -1) {
+            count++;
+        }
+        if(silverMineral2X != -1) {
+            count++;
+        }
+        return count;
+    }
+
+    public String getGoldPos() {
+        if (getObjectCount() > 0) {
+            if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+                return "Left";
+            } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+                return"Right";
+            }
+            return "Center";
+        }
+        return "None";
     }
 
     /**
