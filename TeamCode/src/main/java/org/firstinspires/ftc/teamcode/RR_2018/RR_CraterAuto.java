@@ -55,14 +55,15 @@ public class RR_CraterAuto extends SwerveBase {
 
                 // Back away from lander
                 new CrabState("pre back away", 90.0, 0.0, new TimeTrans("back away", 1.0)),
-                new CrabState("back away", 90.0, 0.3, new TimeTrans("pre to wall", 2.0)),
-                new CrabState("pre to wall", 0.0, 0.0, new TimeTrans("to wall", 3.0)),
+                new CrabState("back away", 90.0, 0.3, new TimeTrans("pre to wall", 1.5)),
+                new CrabState("pre to wall", 0.0, 0.0, new TimeTrans("to wall", 1.0)),
                 //new CrabState("to wall", 0.0, 0.2, new ProgressTrans("to spin", 80.0)), //Tune Progress here
-                new CrabState("to wall", 0.0, 0.2, new TimeTrans("to spin", 4.0)),
+                new CrabState("to wall", 0.0, 0.3, new TimeTrans("to spin", 5.25)),
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),
-                new SpinState("spin", 0.2, new ProgressTrans("to depot", 45.0)),
-                new DriveState("to depot", 0.2, new TimeTrans("drive to park", 6.0)),
-                new DriveState("drive to park", -0.2, new TimeTrans("park", 10.0)),
+                new SpinState("spin", 0.2, new ProgressTrans("to crab", 80.0)),
+                new CrabState("to crab", 90.0, 0.0, new TimeTrans("to depot", 1.0)),
+                new CrabState("to depot", 90.0, -0.4, new TimeTrans("to park", 6.0)),
+                new CrabState("to park", 90.0, 0.5, new TimeTrans("park", 11.0)),
                 new WaitState("park", new TimeTrans("park", 1.0))
         );
     }
