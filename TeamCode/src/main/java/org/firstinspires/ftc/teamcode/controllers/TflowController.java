@@ -106,9 +106,7 @@ public class TflowController extends HardwareController {
     @Override
     public void loop() {
         super.loop();
-        Robot.telemetry.addData("Gold Mineral Pos", goldMineralX);
-        Robot.telemetry.addData("1st Silver Mineral Pos", silverMineral1X);
-        Robot.telemetry.addData("2nd Silver Mineral Pos", silverMineral2X);
+        Robot.telemetry.clearAll();
 
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
@@ -116,14 +114,15 @@ public class TflowController extends HardwareController {
             // New information might be nothing important
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
-                Robot.telemetry.addLine("Recognitions Updated");
-                Robot.telemetry.addData("# Object Detected", updatedRecognitions.size());
+                Robot.telemetry.addData("Objects Detected", updatedRecognitions.size());
                 if (updatedRecognitions.size() <= 3 && updatedRecognitions.size() > 0) {
                     goldMineralX = -1;
                     silverMineral1X = -1;
                     silverMineral2X = -1;
                     for (Recognition recognition : updatedRecognitions) {
-                        if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                        String name = recognition.getLabel();
+                        Robot.telemetry.addData("Object Label",name );
+                        if (name.equals(LABEL_GOLD_MINERAL)) {
                             goldMineralX = (int) (recognition.getLeft()+recognition.getRight())/2;
                         } else if (silverMineral1X == -1) {
                             silverMineral1X = (int) (recognition.getLeft()+recognition.getRight())/2;
@@ -132,9 +131,21 @@ public class TflowController extends HardwareController {
                         }
                     }
                 }
+                else
+                {
+                    Robot.telemetry.addLine("Too Few Objects");
+                }
             }
+            else
+            {
+                Robot.telemetry.addLine("Recognitions not Detected");
+            }
+            Robot.telemetry.addData("Gold", goldMineralX);
+            Robot.telemetry.addData("1Silver", silverMineral1X);
+            Robot.telemetry.addData("2Silver", silverMineral2X);
             Robot.telemetry.addData("Gold Mineral Position", getGoldPos());
         }
+
     }
 
     @Override
