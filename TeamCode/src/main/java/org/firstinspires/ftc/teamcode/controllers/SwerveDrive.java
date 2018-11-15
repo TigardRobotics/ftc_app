@@ -129,10 +129,10 @@ public class SwerveDrive extends HardwareController implements IDrive {
         return position;
     }
 
-    private double countsPerCentimeter = 16.25;    // 5.84=(280/2)/(3.0*Math.PI*2.54 (based on 3" wheels, 280 ppr AndyMark encoder and 1:2 bevel gear ratio)
+    private double countsPerCentimeter = 22.2;    // 5.84=(280/2)/(3.0*Math.PI*2.54 (based on 3" wheels, 280 ppr AndyMark encoder and 1:2 bevel gear ratio)
     public double PositionToCentimeters(double counts) { return counts/countsPerCentimeter;};
 
-    private double countsPerDegree = 2625.0 / 360.0; // 2.0=5.85*(15.5*Math.PI*2.54)/360 (based on 5.85 cts/cm and 15.5" turn-base)
+    private double countsPerDegree = 3500.0 / 360.0; // 2.0=5.85*(15.5*Math.PI*2.54)/360 (based on 5.85 cts/cm and 15.5" turn-base)
     public double RotationToDegrees(double counts) { return counts/countsPerDegree;}
 
     /**
