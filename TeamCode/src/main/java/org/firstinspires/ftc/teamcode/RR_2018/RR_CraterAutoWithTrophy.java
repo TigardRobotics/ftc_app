@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.RR_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
+import org.firstinspires.ftc.teamcode.controllers.TrophyDropper;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.CrabState;
 import org.firstinspires.ftc.teamcode.statemachines.DropTrophyState;
@@ -19,12 +21,12 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 import java.util.List;
 
 /**
- * Created by Brandon on 11/13/18.
+ * Created by Derek on 10/26/18.
  */
 
-@Autonomous(name="DepotAuto", group="3965")
+@Autonomous(name="CraterAuto w/ Trophy", group="3965")
 //@Disabled
-public class RR_DepotAuto extends SwerveBase {
+public class RR_CraterAutoWithTrophy extends SwerveBase {
     @Override
     public void init() {
         super.init();
@@ -35,7 +37,9 @@ public class RR_DepotAuto extends SwerveBase {
     public List<HardwareController> getControllers() {
         List<HardwareController> controllers = super.getControllers();
         DcMotor hangmotor = hardwareMap.dcMotor.get(Names.hanger);
+        Servo dropServo = hardwareMap.servo.get(Names.trophyDrop);
         controllers.add(new RobotHanger(hangmotor));
+        controllers.add(new TrophyDropper(dropServo));
         return controllers;
     }
 
@@ -55,13 +59,16 @@ public class RR_DepotAuto extends SwerveBase {
 
                 // Back away from lander
                 new CrabState("pre back away", 90.0, 0.0, new TimeTrans("back away", 1.0)),
-                new CrabState("back away", 90.0, 0.3, new TimeTrans("sense", 1.5)),
-                new WaitState("sense", new TimeTrans("continue",2.0)),
-                new CrabState("continue", 90.0, 0.3, new TimeTrans("to spin", 1.0)),
+                new CrabState("back away", 90.0, 0.3, new TimeTrans("pre to wall", 1.5)),
+                new CrabState("pre to wall", 0.0, 0.0, new TimeTrans("to wall", 1.0)),
+                //new CrabState("to wall", 0.0, 0.2, new ProgressTrans("to spin", 80.0)), //Tune Progress here
+                new CrabState("to wall", 0.0, 0.3, new TimeTrans("to spin", 5.25)),
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),
-                new SpinState("spin", 0.2, new ProgressTrans("pre crater", 45.0)),
-                new CrabState("pre crater", 90.0, 0.0, new TimeTrans("crater", 0.5)),
-                new CrabState("crater",90.0,-0.4, new TimeTrans("park", 9.0)),
+                new SpinState("spin", 0.2, new ProgressTrans("to crab", 80.0)),
+                new CrabState("to crab", 90.0, 0.0, new TimeTrans("to depot", 1.0)),
+                new CrabState("to depot", 90.0, -0.4, new TimeTrans("drop", 6.0)),
+                new DropTrophyState("drop", new TimeTrans("to park",1.0)),
+                new CrabState("to park", 90.0, 0.5, new TimeTrans("park", 11.0)),
                 new WaitState("park", new TimeTrans("park", 1.0))
         );
     }

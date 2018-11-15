@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.RR_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.CrabState;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
+import org.firstinspires.ftc.teamcode.statemachines.DropTrophyState;
 import org.firstinspires.ftc.teamcode.statemachines.HangState;
 import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
 import org.firstinspires.ftc.teamcode.statemachines.SpinState;

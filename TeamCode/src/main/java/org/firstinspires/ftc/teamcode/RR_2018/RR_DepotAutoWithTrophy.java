@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.RR_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
+import org.firstinspires.ftc.teamcode.controllers.TrophyDropper;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.CrabState;
 import org.firstinspires.ftc.teamcode.statemachines.DropTrophyState;
@@ -22,9 +24,9 @@ import java.util.List;
  * Created by Brandon on 11/13/18.
  */
 
-@Autonomous(name="DepotAuto", group="3965")
+@Autonomous(name="DepotAuto w/ Trophy", group="3965")
 //@Disabled
-public class RR_DepotAuto extends SwerveBase {
+public class RR_DepotAutoWithTrophy extends SwerveBase {
     @Override
     public void init() {
         super.init();
@@ -35,7 +37,9 @@ public class RR_DepotAuto extends SwerveBase {
     public List<HardwareController> getControllers() {
         List<HardwareController> controllers = super.getControllers();
         DcMotor hangmotor = hardwareMap.dcMotor.get(Names.hanger);
+        Servo dropServo = hardwareMap.servo.get(Names.trophyDrop);
         controllers.add(new RobotHanger(hangmotor));
+        controllers.add(new TrophyDropper(dropServo));
         return controllers;
     }
 
@@ -57,7 +61,9 @@ public class RR_DepotAuto extends SwerveBase {
                 new CrabState("pre back away", 90.0, 0.0, new TimeTrans("back away", 1.0)),
                 new CrabState("back away", 90.0, 0.3, new TimeTrans("sense", 1.5)),
                 new WaitState("sense", new TimeTrans("continue",2.0)),
-                new CrabState("continue", 90.0, 0.3, new TimeTrans("to spin", 1.0)),
+                new CrabState("continue", 90.0, 0.0, new TimeTrans("drop", 1.0)),
+                //Add DropState here to drop trophy
+                new DropTrophyState("drop",new TimeTrans("to spin",1.0)),
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),
                 new SpinState("spin", 0.2, new ProgressTrans("pre crater", 45.0)),
                 new CrabState("pre crater", 90.0, 0.0, new TimeTrans("crater", 0.5)),
