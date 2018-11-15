@@ -51,19 +51,19 @@ public class RR_CraterAuto extends SwerveBase {
 
                 // Crab to side to unhook from lander
                 new CrabState("pre unhook", 0.0, 0.0 ,new TimeTrans("unhook", 1.0)),
-                new CrabState("unhook", 0.0, -0.2, new TimeTrans("pre back away", 1.0)),
+                new CrabState("unhook", 0.0, -0.2, new ProgressTrans("pre back away", 6*2.54)),
 
                 // Back away from lander
                 new CrabState("pre back away", 90.0, 0.0, new TimeTrans("back away", 1.0)),
-                new CrabState("back away", 90.0, 0.3, new TimeTrans("pre to wall", 1.5)),
+                new CrabState("back away", 90.0, 0.3, new ProgressTrans("pre to wall", 15*2.54)),
                 new CrabState("pre to wall", 0.0, 0.0, new TimeTrans("to wall", 1.0)),
                 //new CrabState("to wall", 0.0, 0.2, new ProgressTrans("to spin", 80.0)), //Tune Progress here
-                new CrabState("to wall", 0.0, 0.3, new TimeTrans("to spin", 5.25)),
+                new CrabState("to wall", 0.0, 0.3, new ProgressTrans("to spin", 48*2.54)),
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),
-                new SpinState("spin", 0.2, new ProgressTrans("to crab", 80.0)),
+                new SpinState("spin", 0.5, new ProgressTrans("to crab", 50.0)),
                 new CrabState("to crab", 90.0, 0.0, new TimeTrans("to depot", 1.0)),
-                new CrabState("to depot", 90.0, -0.4, new TimeTrans("to park", 6.0)),
-                new CrabState("to park", 90.0, 0.5, new TimeTrans("park", 11.0)),
+                new CrabState("to depot", 90.0, -0.3, new ProgressTrans("to park", 40*2.54)),
+                new CrabState("to park", 90.0, 0.4, new ProgressTrans("park", 80*2.54)),
                 new WaitState("park", new TimeTrans("park", 1.0))
         );
     }
