@@ -24,6 +24,6 @@ public class DropTrophyState extends State {
     @Override
     public void onExit(){
         super.onExit();
-        dropper.setDrop(false);
+        //dropper.setDrop(false);
     }
 }
