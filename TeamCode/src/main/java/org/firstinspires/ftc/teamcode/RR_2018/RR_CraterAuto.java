@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
+import org.firstinspires.ftc.teamcode.controllers.TrophyDropper;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.CrabState;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
@@ -38,6 +39,8 @@ public class RR_CraterAuto extends SwerveBase {
         List<HardwareController> controllers = super.getControllers();
         DcMotor hangmotor = hardwareMap.dcMotor.get(Names.hanger);
         controllers.add(new RobotHanger(hangmotor));
+        Servo dropServo = hardwareMap.servo.get(Names.trophyDrop);
+        controllers.add(new TrophyDropper(dropServo));
         return controllers;
     }
 
@@ -57,15 +60,16 @@ public class RR_CraterAuto extends SwerveBase {
 
                 // Back away from lander
                 new CrabState("pre back away", 90.0, 0.0, new TimeTrans("back away", 1.0)),
-                new CrabState("back away", 90.0, 0.3, new ProgressTrans("pre to wall", 15*2.54)),
+                new CrabState("back away", 90.0, 0.4, new ProgressTrans("pre to wall", 15*2.54)),
                 new CrabState("pre to wall", 0.0, 0.0, new TimeTrans("to wall", 1.0)),
                 //new CrabState("to wall", 0.0, 0.2, new ProgressTrans("to spin", 80.0)), //Tune Progress here
-                new CrabState("to wall", 0.0, 0.3, new ProgressTrans("to spin", 48*2.54)),
+                new CrabState("to wall", 0.0, 0.4, new ProgressTrans("to spin", 48*2.54)),
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),
-                new SpinState("spin", 0.5, new ProgressTrans("to crab", 50.0)),
+                new SpinState("spin", 0.5, new ProgressTrans("to crab", 45.0)),
                 new CrabState("to crab", 90.0, 0.0, new TimeTrans("to depot", 1.0)),
-                new CrabState("to depot", 90.0, -0.3, new ProgressTrans("to park", 40*2.54)),
-                new CrabState("to park", 90.0, 0.4, new ProgressTrans("park", 80*2.54)),
+                new CrabState("to depot", 90.0, -0.4, new ProgressTrans("drop", 40*2.54)),
+                new DropTrophyState("drop",new TimeTrans("to park",3.0)),
+                new CrabState("to park", 90.0, 0.5, new ProgressTrans("park", 80*2.54)),
                 new WaitState("park", new TimeTrans("park", 1.0))
         );
     }

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
+import org.firstinspires.ftc.teamcode.controllers.TrophyDropper;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveTeleop;
 import org.firstinspires.ftc.teamcode.opmodes.TankBot;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
@@ -31,6 +32,8 @@ public class RR_Teleop extends SwerveTeleop {
         List<HardwareController> controllers = super.getControllers();
         DcMotor hangmotor = hardwareMap.dcMotor.get(Names.hanger);
         controllers.add(new RobotHanger(hangmotor));
+        Servo dropServo = hardwareMap.servo.get(Names.trophyDrop);
+        controllers.add(new TrophyDropper(dropServo));
         return controllers;
     }
 
