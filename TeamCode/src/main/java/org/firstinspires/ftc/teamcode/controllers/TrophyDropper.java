@@ -10,8 +10,8 @@ public class TrophyDropper extends HardwareController {
     private Servo dropServo;
 
     // Tune these values with core discovery
-    private static final double UP_POS = 0.9;
-    private static final double DOWN_POS = 0.1;
+    private static final double UP_POS = 0.1;
+    private static final double DOWN_POS = 0.9;
 
     private boolean drop = false;
 
