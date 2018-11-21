@@ -10,7 +10,9 @@ public class RobotHanger extends HardwareController {
     private DcMotor hangMotor;
 
     private double speed = 0.95;
+    private boolean ignoreLimit = false;
 
+    private static final double LIMIT = 20.0;
 
     public RobotHanger(DcMotor hangMotor) {
         this.hangMotor = hangMotor;
@@ -25,7 +27,13 @@ public class RobotHanger extends HardwareController {
 
     @Override
     public void loop() {
-        hangMotor.setPower(speed);
+        // If motor position is beyond limit and power is in the direction to beyond the limit
+        if(Math.abs(hangMotor.getCurrentPosition()) > LIMIT && speed*hangMotor.getCurrentPosition() > 0) {
+            hangMotor.setPower(0.0);
+        }
+        else {
+            hangMotor.setPower(speed);
+        }
     }
 
     @Override
