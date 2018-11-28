@@ -28,7 +28,7 @@ public class RobotHanger extends HardwareController {
     @Override
     public void loop() {
         // If motor position is beyond limit and power is in the direction to beyond the limit
-        if(Math.abs(hangMotor.getCurrentPosition()) > LIMIT && speed*hangMotor.getCurrentPosition() > 0) {
+        if(Math.abs(hangMotor.getCurrentPosition()) > LIMIT && speed*hangMotor.getCurrentPosition() > 0 && !ignoreLimit) {
             hangMotor.setPower(0.0);
         }
         else {

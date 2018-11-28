@@ -38,6 +38,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +49,11 @@ public class TflowController extends HardwareController {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
+
+    private static final String LEFT = "Left";
+    private static final String CENTER = "Center";
+    private static final String RIGHT = "Right";
+    private static final String NONE = "None";
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -75,10 +81,8 @@ public class TflowController extends HardwareController {
      */
     private TFObjectDetector tfod;
 
-    private int goldMineralX = -1;
-    private int silverMineral1X = -1;
-    private int silverMineral2X = -1;
-
+    private Recognition Gold;     // The best one
+    private List<Recognition> Silvers; // 2 or less
 
     @Override
     public void init() {
@@ -115,35 +119,50 @@ public class TflowController extends HardwareController {
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
                 Robot.telemetry.addData("Objects Detected", updatedRecognitions.size());
-                if (updatedRecognitions.size() <= 3 && updatedRecognitions.size() > 0) {
-                    goldMineralX = -1;
-                    silverMineral1X = -1;
-                    silverMineral2X = -1;
-                    for (Recognition recognition : updatedRecognitions) {
-                        String name = recognition.getLabel();
-                        Robot.telemetry.addData("Object Label",name );
-                        if (name.equals(LABEL_GOLD_MINERAL)) {
-                            goldMineralX = (int) (recognition.getLeft()+recognition.getRight())/2;
-                        } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) (recognition.getLeft()+recognition.getRight())/2;
-                        } else {
-                            silverMineral2X = (int) (recognition.getLeft()+recognition.getRight())/2;
+                Recognition gold = null;
+                List<Recognition> silvers = new ArrayList<Recognition>();
+
+                for (Recognition mineral : updatedRecognitions){
+                    String name = mineral.getLabel();
+                    Robot.telemetry.addData("Object Label",name );
+                    if (name.equals(LABEL_GOLD_MINERAL)){
+                        if (gold == null){
+                            gold = mineral;
+                        }
+                        else{
+                            //Evaluate if this this is a better gold
+                        }
+                    }
+                    if (name.equals(LABEL_SILVER_MINERAL)){
+                        if (silvers.size() <2){
+                            silvers.add(mineral);
+                        }
+                        else{
+                            //Evaluate if this this is a better silver
                         }
                     }
                 }
-                else
-                {
-                    Robot.telemetry.addLine("Too Few Objects");
+
+                if(gold!=null && silvers.size()==2){
+                    Robot.telemetry.addData("Gold-H", (gold.getLeft()+gold.getRight())/2);
+                    Robot.telemetry.addData("Silver1-H", (silvers.get(0).getLeft()+silvers.get(0).getRight())/2);
+                    Robot.telemetry.addData("Silver2-H", (silvers.get(1).getLeft()+silvers.get(1).getRight())/2);
+                    Robot.telemetry.addData("Gold-V", (gold.getTop()+gold.getBottom())/2);
+                    Robot.telemetry.addData("Silver1-V", (silvers.get(0).getTop()+silvers.get(0).getBottom())/2);
+                    Robot.telemetry.addData("Silver2-V", (silvers.get(1).getTop()+silvers.get(1).getBottom())/2);
+                    if(Gold==null){
+                        Gold=gold;
+                        Silvers=silvers;
+                    }
+                    else{
+                        //Evaluate if this is a better recognition
+                    }
                 }
             }
             else
             {
                 Robot.telemetry.addLine("Recognitions not Detected");
             }
-            Robot.telemetry.addData("Gold", goldMineralX);
-            Robot.telemetry.addData("1Silver", silverMineral1X);
-            Robot.telemetry.addData("2Silver", silverMineral2X);
-            Robot.telemetry.addData("Gold Mineral Position", getGoldPos());
         }
 
     }
@@ -155,30 +174,8 @@ public class TflowController extends HardwareController {
         }
     }
 
-    public int getObjectCount() {
-        int count = 0;
-        if(goldMineralX != -1) {
-            count++;
-        }
-        if(silverMineral1X != -1) {
-            count++;
-        }
-        if(silverMineral2X != -1) {
-            count++;
-        }
-        return count;
-    }
-
     public String getGoldPos() {
-        if (getObjectCount() > 0) {
-            if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                return "Left";
-            } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                return"Right";
-            }
-            return "Center";
-        }
-        return "None";
+        return ""; //!!!!!
     }
 
     /**
