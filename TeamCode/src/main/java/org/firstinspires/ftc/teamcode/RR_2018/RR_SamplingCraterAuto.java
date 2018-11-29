@@ -25,7 +25,7 @@ import java.util.List;
  * Created by Derek on 10/26/18.
  */
 
-@Autonomous(name="CraterAuto", group="3965")
+@Autonomous(name="WIP CraterAuto w/ Sampling", group="3965")
 //@Disabled
 public class RR_SamplingCraterAuto extends SwerveBase {
 
@@ -65,9 +65,13 @@ public class RR_SamplingCraterAuto extends SwerveBase {
                 new CrabState("pre to wall", 0.0, 0.0, new TimeTrans("to wall", 1.0)),
 
                 //Sample
-                  //Gold on left
-                //new MoveSamplingArmState("gol drop", new TimeTrans("gol crab")),
-                  //Gold on right
+                //Gold on left
+                new MoveSamplingArmState("gol drop", true, new TimeTrans("gol slide past", 0.2)),
+                new CrabState("gol slide past", 0.0, -0.2, new ProgressTrans("gol rise", 10*2.54)),
+                new MoveSamplingArmState("gol rise", false, new TimeTrans("gol to wall", 0.2)),
+                new CrabState("gol to wall", 0.0, 0.4, new ProgressTrans("", 50*2.54)),
+
+                //Gold on right
 
                 new CrabState("to wall", 0.0, 0.4, new ProgressTrans("to spin", 48*2.54)),
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),

@@ -18,6 +18,7 @@ public final class Names {
     public static String hanger = "hanger";
     public static String gyro = "gyro";
     public static String trophyDrop = "drop";
+    public static String sampler = "sampler";
 
     // Names for swerve
     public static String frm = "frm";

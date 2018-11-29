@@ -128,40 +128,49 @@ public class TflowController extends HardwareController {
                     if (name.equals(LABEL_GOLD_MINERAL)){
                         if (gold == null){
                             gold = mineral;
+                            Robot.telemetry.addData("Chose gold",mineral.getConfidence() );
                         }
                         else{
-                            //Evaluate if this this is a better gold
+                            //Robot.telemetry.addData("Skipped gold",mineral.getConfidence() );
                         }
                     }
                     if (name.equals(LABEL_SILVER_MINERAL)){
                         if (silvers.size() <2){
                             silvers.add(mineral);
+                            Robot.telemetry.addData("Chose silver",mineral.getConfidence() );
                         }
                         else{
-                            //Evaluate if this this is a better silver
+                            //Robot.telemetry.addData("Skipped silver",mineral.getConfidence() );
                         }
                     }
                 }
 
                 if(gold!=null && silvers.size()==2){
-                    Robot.telemetry.addData("Gold-H", (gold.getLeft()+gold.getRight())/2);
-                    Robot.telemetry.addData("Silver1-H", (silvers.get(0).getLeft()+silvers.get(0).getRight())/2);
-                    Robot.telemetry.addData("Silver2-H", (silvers.get(1).getLeft()+silvers.get(1).getRight())/2);
-                    Robot.telemetry.addData("Gold-V", (gold.getTop()+gold.getBottom())/2);
-                    Robot.telemetry.addData("Silver1-V", (silvers.get(0).getTop()+silvers.get(0).getBottom())/2);
-                    Robot.telemetry.addData("Silver2-V", (silvers.get(1).getTop()+silvers.get(1).getBottom())/2);
+                    float left = Math.min(gold.getLeft(), Math.min(silvers.get(0).getLeft(), silvers.get(1).getLeft()));
+                    float right = Math.max(gold.getRight(), Math.min(silvers.get(0).getRight(), silvers.get(1).getRight()));
+                    float top = Math.min(gold.getTop(), Math.min(silvers.get(0).getTop(), silvers.get(1).getTop()));
+                    float bottom = Math.max(gold.getBottom(), Math.min(silvers.get(0).getBottom(), silvers.get(1).getBottom()));
+                    Robot.telemetry.addData("", "top:%f , bottom:%f", top, bottom);
+                    Robot.telemetry.addData("", "left:%f , right:%f", left, right);
+                    Robot.telemetry.addData("gold-H",getPos(gold, silvers, false) );
+                    Robot.telemetry.addData("gold-V",getPos(gold, silvers, true) );
+
                     if(Gold==null){
                         Gold=gold;
                         Silvers=silvers;
                     }
                     else{
                         //Evaluate if this is a better recognition
+                        //!! For now always replace (for diagnostics)
+                        Gold=gold;
+                        Silvers=silvers;
                     }
                 }
             }
-            else
+            else if (Gold!=null)
             {
-                Robot.telemetry.addLine("Recognitions not Detected");
+                Robot.telemetry.addData("Final Gold-H",getPos(Gold, Silvers, false) );
+                Robot.telemetry.addData("Final Gold-V",getPos(Gold, Silvers, true) );
             }
         }
 
@@ -172,6 +181,18 @@ public class TflowController extends HardwareController {
         if (tfod != null) {
             tfod.shutdown();
         }
+    }
+
+    float getPos(Recognition gold, List<Recognition> silvers, boolean vert)
+    {
+        float left = Math.min(gold.getLeft(), Math.min(silvers.get(0).getLeft(), silvers.get(1).getLeft()));
+        float right = Math.max(gold.getRight(), Math.min(silvers.get(0).getRight(), silvers.get(1).getRight()));
+        float top = Math.min(gold.getTop(), Math.min(silvers.get(0).getTop(), silvers.get(1).getTop()));
+        float bottom = Math.max(gold.getBottom(), Math.min(silvers.get(0).getBottom(), silvers.get(1).getBottom()));
+        float hpos = ( ((gold.getLeft()+gold.getRight() )/2) - ((left+right)/2) ) / (right-left);
+        float vpos = ( ((gold.getTop() +gold.getBottom())/2) - ((bottom+top)/2) ) / (bottom-top);
+
+        return vert ? hpos : vpos;
     }
 
     public String getGoldPos() {
