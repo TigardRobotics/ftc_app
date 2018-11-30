@@ -41,7 +41,6 @@ public class RR_DelayCraterAuto extends SwerveBase {
         controllers.add(new RobotHanger(hangmotor));
         Servo dropServo = hardwareMap.servo.get(Names.trophyDrop);
         //dropServo.scaleRange();
-        hardwareMap.servoController.get("Servo Controller 0").();
         controllers.add(new TrophyDropper(dropServo));
         return controllers;
     }
