@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
+import org.firstinspires.ftc.teamcode.controllers.SamplingArm;
 import org.firstinspires.ftc.teamcode.controllers.TrophyDropper;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveTeleop;
 import org.firstinspires.ftc.teamcode.opmodes.TankBot;
@@ -25,6 +26,7 @@ import java.util.List;
 public class RR_Teleop extends SwerveTeleop {
 
     RobotHanger hanger;
+    SamplingArm arm;
 
     //! TODO: Move this into a Rover Ruckus Opbase
     @Override
@@ -34,6 +36,8 @@ public class RR_Teleop extends SwerveTeleop {
         controllers.add(new RobotHanger(hangmotor));
         Servo dropServo = hardwareMap.servo.get(Names.trophyDrop);
         controllers.add(new TrophyDropper(dropServo));
+        Servo armServo = hardwareMap.servo.get(Names.sampler);
+        controllers.add(new SamplingArm(armServo));
         return controllers;
     }
 
@@ -41,6 +45,7 @@ public class RR_Teleop extends SwerveTeleop {
     public void init() {
         super.init();
         hanger = (RobotHanger)(findController(RobotHanger.class));
+        arm = (SamplingArm)(findController(SamplingArm.class));
     }
 
     @Override
@@ -52,7 +57,10 @@ public class RR_Teleop extends SwerveTeleop {
     public void loop() {
         super.loop();
         hanger.setSpeed(gamepad1.left_trigger-gamepad1.right_trigger);
+        if(gamepad1.right_bumper) arm.setDrop(true);
+        else if(gamepad1.left_bumper) arm.setDrop(false);
         telemetry.addData("lift pos", hanger.getPos());
+
     }
 
     @Override
