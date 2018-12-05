@@ -40,8 +40,6 @@ public class RR_DelayCraterAuto extends SwerveBase {
         DcMotor hangmotor = hardwareMap.dcMotor.get(Names.hanger);
         controllers.add(new RobotHanger(hangmotor));
         Servo dropServo = hardwareMap.servo.get(Names.trophyDrop);
-        //dropServo.scaleRange();
-        hardwareMap.servoController.get("Servo Controller 0").();
         controllers.add(new TrophyDropper(dropServo));
         return controllers;
     }
@@ -68,6 +66,7 @@ public class RR_DelayCraterAuto extends SwerveBase {
                 new CrabState("to wall", 0.0, 0.4, new ProgressTrans("to spin", 48*2.54)),
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),
                 new SpinState("spin", 0.5, new ProgressTrans("stop", 45.0)),
+                new WaitState("stop", new TimeTrans("to crab", 5.0)),
                 new CrabState("to crab", 90.0, 0.0, new TimeTrans("to depot", 1.0)),
                 new CrabState("to depot", 90.0, -0.4, new ProgressTrans("drop", 40*2.54)),
                 new DropTrophyState("drop",new TimeTrans("to park",3.0)),

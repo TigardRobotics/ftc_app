@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
+import org.firstinspires.ftc.teamcode.controllers.SamplingArm;
 import org.firstinspires.ftc.teamcode.controllers.TrophyDropper;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.CrabState;
@@ -42,6 +43,8 @@ public class RR_SamplingCraterAuto extends SwerveBase {
         controllers.add(new RobotHanger(hangmotor));
         Servo dropServo = hardwareMap.servo.get(Names.trophyDrop);
         controllers.add(new TrophyDropper(dropServo));
+        Servo sampleServo = hardwareMap.servo.get(Names.sampler);
+        controllers.add(new SamplingArm(sampleServo));
         return controllers;
     }
 
