@@ -50,10 +50,10 @@ public class TflowController extends HardwareController {
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
 
-    private static final String LEFT = "Left";
-    private static final String CENTER = "Center";
-    private static final String RIGHT = "Right";
-    private static final String NONE = "None";
+    public static final String GOLD_ON_LEFT = "Left";
+    public static final String GOLD_CENTER = "Center";
+    public static final String GOLD_ON_RIGHT = "Right";
+    public static final String GOLD_NONE = "None";
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -185,18 +185,35 @@ public class TflowController extends HardwareController {
 
     float getPos(Recognition gold, List<Recognition> silvers, boolean vert)
     {
-        float left = Math.min(gold.getLeft(), Math.min(silvers.get(0).getLeft(), silvers.get(1).getLeft()));
-        float right = Math.max(gold.getRight(), Math.min(silvers.get(0).getRight(), silvers.get(1).getRight()));
-        float top = Math.min(gold.getTop(), Math.min(silvers.get(0).getTop(), silvers.get(1).getTop()));
-        float bottom = Math.max(gold.getBottom(), Math.min(silvers.get(0).getBottom(), silvers.get(1).getBottom()));
-        float hpos = ( ((gold.getLeft()+gold.getRight() )/2) - ((left+right)/2) ) / (right-left);
-        float vpos = ( ((gold.getTop() +gold.getBottom())/2) - ((bottom+top)/2) ) / (bottom-top);
+        float hpos = Float.NaN;
+        float vpos = Float.NaN;
+        if (gold != null) {
+            float left = Math.min(gold.getLeft(), Math.min(silvers.get(0).getLeft(), silvers.get(1).getLeft()));
+            float right = Math.max(gold.getRight(), Math.min(silvers.get(0).getRight(), silvers.get(1).getRight()));
+            float top = Math.min(gold.getTop(), Math.min(silvers.get(0).getTop(), silvers.get(1).getTop()));
+            float bottom = Math.max(gold.getBottom(), Math.min(silvers.get(0).getBottom(), silvers.get(1).getBottom()));
+            hpos = ( ((gold.getLeft()+gold.getRight() )/2) - ((left+right)/2) ) / (right-left);
+            vpos = ( ((gold.getTop() +gold.getBottom())/2) - ((bottom+top)/2) ) / (bottom-top);
+        }
 
         return vert ? hpos : vpos;
     }
 
     public String getGoldPos() {
-        return ""; //!!!!!
+        float gold_pos = getPos(Gold, Silvers, true);
+        String gold_pos_name = GOLD_NONE;
+        if (! Float.isNaN(gold_pos) ){
+            if (gold_pos < -0.25){
+                gold_pos_name = GOLD_ON_LEFT;
+            }
+            else if (gold_pos > 0.25){
+                gold_pos_name = GOLD_ON_RIGHT;
+            }
+            else {
+                gold_pos_name = GOLD_CENTER;
+            }
+        }
+        return  gold_pos_name;
     }
 
     /**
