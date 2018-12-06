@@ -81,9 +81,27 @@ public class TflowController extends HardwareController {
      */
     private TFObjectDetector tfod;
 
+    private Boolean ShowMessages = false;
+
+    private LedController Leds = null; //for debugging
+
     private Recognition Gold;     // The best one
     private List<Recognition> Silvers; // 2 or less
 
+    public TflowController( LedController leds, Boolean showMessages ){
+        Leds = leds;
+        ShowMessages = showMessages;
+    }
+
+    public TflowController( Boolean showMessages){
+        Leds = null;
+        ShowMessages = showMessages;
+    }
+
+    public TflowController( ){
+        Leds = null;
+        ShowMessages = false;
+    }
     @Override
     public void init() {
         super.init();
@@ -95,6 +113,7 @@ public class TflowController extends HardwareController {
             initTfod();
         } else {
             Robot.telemetry.addData("Sorry!", "This device is not compatible with TFOD");
+            Robot.log("This device is not compatible with TFOD");
         }
 
     }
@@ -110,7 +129,7 @@ public class TflowController extends HardwareController {
     @Override
     public void loop() {
         super.loop();
-        Robot.telemetry.clearAll();
+        if (ShowMessages) Robot.telemetry.clearAll();
 
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
@@ -118,29 +137,32 @@ public class TflowController extends HardwareController {
             // New information might be nothing important
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
-                Robot.telemetry.addData("Objects Detected", updatedRecognitions.size());
+                if (ShowMessages) Robot.telemetry.addData("Objects Detected", updatedRecognitions.size());
                 Recognition gold = null;
                 List<Recognition> silvers = new ArrayList<Recognition>();
 
                 for (Recognition mineral : updatedRecognitions){
                     String name = mineral.getLabel();
-                    Robot.telemetry.addData("Object Label",name );
+                    if (ShowMessages) Robot.telemetry.addData("Object Label",name );
+                    Robot.log("Object Label " + name);
                     if (name.equals(LABEL_GOLD_MINERAL)){
                         if (gold == null){
                             gold = mineral;
-                            Robot.telemetry.addData("Chose gold",mineral.getConfidence() );
+                            if (ShowMessages) Robot.telemetry.addData("Chose gold",mineral.getConfidence() );
+                            Robot.log("Chose gold with confidence" + Double.toString(mineral.getConfidence()) );
                         }
                         else{
-                            //Robot.telemetry.addData("Skipped gold",mineral.getConfidence() );
+                            //if (ShowMessages) Robot.telemetry.addData("Skipped gold",mineral.getConfidence() );
                         }
                     }
                     if (name.equals(LABEL_SILVER_MINERAL)){
                         if (silvers.size() <2){
                             silvers.add(mineral);
-                            Robot.telemetry.addData("Chose silver",mineral.getConfidence() );
+                            if (ShowMessages) Robot.telemetry.addData("Chose silver",mineral.getConfidence() );
+                            Robot.log("Chose silver with confidence" + Double.toString(mineral.getConfidence()) );
                         }
                         else{
-                            //Robot.telemetry.addData("Skipped silver",mineral.getConfidence() );
+                            //if (ShowMessages) Robot.telemetry.addData("Skipped silver",mineral.getConfidence() );
                         }
                     }
                 }
@@ -150,10 +172,10 @@ public class TflowController extends HardwareController {
                     float right = Math.max(gold.getRight(), Math.min(silvers.get(0).getRight(), silvers.get(1).getRight()));
                     float top = Math.min(gold.getTop(), Math.min(silvers.get(0).getTop(), silvers.get(1).getTop()));
                     float bottom = Math.max(gold.getBottom(), Math.min(silvers.get(0).getBottom(), silvers.get(1).getBottom()));
-                    Robot.telemetry.addData("", "top:%f , bottom:%f", top, bottom);
-                    Robot.telemetry.addData("", "left:%f , right:%f", left, right);
-                    Robot.telemetry.addData("gold-H",getPos(gold, silvers, false) );
-                    Robot.telemetry.addData("gold-V",getPos(gold, silvers, true) );
+                    if (ShowMessages) Robot.telemetry.addData("", "top:%f , bottom:%f", top, bottom);
+                    if (ShowMessages) Robot.telemetry.addData("", "left:%f , right:%f", left, right);
+                    if (ShowMessages) Robot.telemetry.addData("gold-H",getPos(gold, silvers, false) );
+                    if (ShowMessages) Robot.telemetry.addData("gold-V",getPos(gold, silvers, true) );
 
                     if(Gold==null){
                         Gold=gold;
@@ -169,11 +191,32 @@ public class TflowController extends HardwareController {
             }
             else if (Gold!=null)
             {
-                Robot.telemetry.addData("Final Gold-H",getPos(Gold, Silvers, false) );
-                Robot.telemetry.addData("Final Gold-V",getPos(Gold, Silvers, true) );
+                if (ShowMessages) Robot.telemetry.addData("Final Gold-H",getPos(Gold, Silvers, false) );
+                Robot.log("Final Gold-H position" + Double.toString(getPos(Gold, Silvers, false)) );
+                if (ShowMessages) Robot.telemetry.addData("Final Gold-V",getPos(Gold, Silvers, true) );
+                Robot.log("Final Gold-V position" + Double.toString(getPos(Gold, Silvers, true)) );
+                if (Leds != null){
+                    switch (getGoldPos()) {
+                        case GOLD_ON_RIGHT:
+                            Leds.setModuleLed(LedController.BLUE, false);
+                            Leds.setModuleLed(LedController.RED, true);
+                            break;
+                        case GOLD_ON_LEFT:
+                            Leds.setModuleLed(LedController.RED, false);
+                            Leds.setModuleLed(LedController.BLUE, true);
+                            break;
+                        case GOLD_CENTER:
+                            Leds.setModuleLed(LedController.RED, true);
+                            Leds.setModuleLed(LedController.BLUE, true);
+                            break;
+                        default:
+                            Leds.setModuleLed(LedController.RED, false);
+                            Leds.setModuleLed(LedController.BLUE, false);
+                            break;
+                    }
+                }
             }
         }
-
     }
 
     @Override
@@ -199,8 +242,12 @@ public class TflowController extends HardwareController {
         return vert ? hpos : vpos;
     }
 
-    public String getGoldPos() {
-        float gold_pos = getPos(Gold, Silvers, true);
+    public String getGoldPos( ) {
+        return getGoldPos(true);
+    }
+
+    public String getGoldPos( Boolean vert) {
+        float gold_pos = getPos(Gold, Silvers, vert);
         String gold_pos_name = GOLD_NONE;
         if (! Float.isNaN(gold_pos) ){
             if (gold_pos < -0.25){
@@ -243,7 +290,7 @@ public class TflowController extends HardwareController {
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
-        Robot.telemetry.addLine("TensorFlow initialized");
+        if (ShowMessages) Robot.telemetry.addLine("TensorFlow initialized");
         Robot.log("TensorFlow initialized");
     }
 }

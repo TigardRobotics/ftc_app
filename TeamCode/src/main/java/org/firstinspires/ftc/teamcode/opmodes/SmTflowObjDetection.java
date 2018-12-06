@@ -24,7 +24,7 @@ public class SmTflowObjDetection extends RobotBase {
     @Override
     public List<HardwareController> getControllers() {
         List<HardwareController> controllers = super.getControllers();
-        controllers.add(new TflowController());
+        controllers.add(new TflowController(true));
         return controllers;
     }
 
