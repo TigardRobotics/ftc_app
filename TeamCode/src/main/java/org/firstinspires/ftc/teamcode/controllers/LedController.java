@@ -60,6 +60,10 @@ public class LedController extends HardwareController implements IColorIndicator
             case RED:
                 io.setLED(1,on);
                 break;
+            case ALL_COLORS:
+                io.setLED(0,on);
+                io.setLED(1,on);
+                break;
             default:
                 throw new RuntimeException(color + " is not supported as an module led");
         }
