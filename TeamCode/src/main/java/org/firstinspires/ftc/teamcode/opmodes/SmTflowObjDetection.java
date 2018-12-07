@@ -4,6 +4,7 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @TeleOp(name="TFlowOp", group="3965")
 public class SmTflowObjDetection extends RobotBase {
+    private DeviceInterfaceModule io;
 
     @Override
     public List<HardwareController> getControllers() {
