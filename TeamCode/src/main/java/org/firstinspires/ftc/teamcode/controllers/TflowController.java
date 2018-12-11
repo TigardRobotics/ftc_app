@@ -151,8 +151,11 @@ public class TflowController extends HardwareController {
                             if (ShowMessages) Robot.telemetry.addData("Chose gold",mineral.getConfidence() );
                             Robot.log("Chose gold with confidence" + Double.toString(mineral.getConfidence()) );
                         }
-                        else{
-                            //if (ShowMessages) Robot.telemetry.addData("Skipped gold",mineral.getConfidence() );
+                        else if (IsBetter( mineral, gold)) {
+                            gold = mineral;
+                            if (ShowMessages)
+                                Robot.telemetry.addData("Replaced gold", mineral.getConfidence());
+                            Robot.log("Replaced gold with confidence" + Double.toString(mineral.getConfidence()));
                         }
                     }
                     if (name.equals(LABEL_SILVER_MINERAL)){
@@ -161,8 +164,19 @@ public class TflowController extends HardwareController {
                             if (ShowMessages) Robot.telemetry.addData("Chose silver",mineral.getConfidence() );
                             Robot.log("Chose silver with confidence" + Double.toString(mineral.getConfidence()) );
                         }
-                        else{
-                            //if (ShowMessages) Robot.telemetry.addData("Skipped silver",mineral.getConfidence() );
+                        else if ( IsBetter(silvers.get(1), silvers.get(0)) && IsBetter( mineral, silvers.get(0)) ) {
+                            silvers.remove(0);
+                            silvers.add(mineral);
+                            if (ShowMessages)
+                                Robot.telemetry.addData("Replaced silver", mineral.getConfidence());
+                            Robot.log("Replaced silver with confidence" + Double.toString(mineral.getConfidence()));
+                        }
+                        else if ( IsBetter(silvers.get(0), silvers.get(1)) && IsBetter( mineral, silvers.get(1)) ) {
+                            silvers.remove(1);
+                            silvers.add(mineral);
+                            if (ShowMessages)
+                                Robot.telemetry.addData("Replaced silver", mineral.getConfidence());
+                            Robot.log("Replaced silver with confidence" + Double.toString(mineral.getConfidence()));
                         }
                     }
                 }
@@ -181,15 +195,15 @@ public class TflowController extends HardwareController {
                         Gold=gold;
                         Silvers=silvers;
                     }
-                    else{
-                        //Evaluate if this is a better recognition
-                        //!! For now always replace (for diagnostics)
+                    else if ( (gold.getConfidence()+silvers.get(0).getConfidence()+silvers.get(1).getConfidence())
+                            > (Gold.getConfidence()+Silvers.get(0).getConfidence()+Silvers.get(1).getConfidence()) ){
                         Gold=gold;
                         Silvers=silvers;
                     }
                 }
             }
-            else if (Gold!=null)
+
+            if (Gold!=null)
             {
                 if (ShowMessages) Robot.telemetry.addData("Final Gold-H",getPos(Gold, Silvers, false) );
                 Robot.log("Final Gold-H position" + Double.toString(getPos(Gold, Silvers, false)) );
@@ -226,6 +240,25 @@ public class TflowController extends HardwareController {
         }
     }
 
+    /**
+     * Determine if the test recognition is better than the reference
+     * @param test
+     * @param reference
+     * @return
+     */
+    Boolean IsBetter( Recognition test, Recognition reference){
+        if (test == null) return false;
+        if (reference == null) return true;
+        return (test.getConfidence() > reference.getConfidence());
+    }
+
+    /**
+     * Get the relative position for the gold mineral
+     * @param gold the gold element
+     * @param silvers the silver elements
+     * @param vert = true if minerals are vertically oriented (usually because phone is horizontal/landscape)
+     * @return -0.5 to +0.5
+     */
     float getPos(Recognition gold, List<Recognition> silvers, boolean vert)
     {
         float hpos = Float.NaN;
@@ -242,10 +275,19 @@ public class TflowController extends HardwareController {
         return vert ? hpos : vpos;
     }
 
+    /**
+     * Get string name of gold position relative within the current chosen recognition (phone is horizontal/landscape)
+     * @return
+     */
     public String getGoldPos( ) {
         return getGoldPos(true);
     }
 
+    /**
+     * Get string name of gold position relative within the current chosen recognition
+     * @param vert = true if minerals are vertically oriented (usually because phone is horizontal/landscape)
+     * @return
+     */
     public String getGoldPos( Boolean vert) {
         float gold_pos = getPos(Gold, Silvers, vert);
         String gold_pos_name = GOLD_NONE;
