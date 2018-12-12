@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.RR_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
+import org.firstinspires.ftc.teamcode.controllers.LedController;
 import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
 import org.firstinspires.ftc.teamcode.controllers.SamplingArm;
 import org.firstinspires.ftc.teamcode.controllers.TflowController;
@@ -32,10 +34,11 @@ import java.util.List;
 //@Disabled
 public class RR_CraterAutoSample extends SwerveBase {
 
+    private DeviceInterfaceModule io;
+
     @Override
     public void init() {
         super.init();
-
     }
 
     @Override
@@ -46,8 +49,10 @@ public class RR_CraterAutoSample extends SwerveBase {
         Servo dropServo = hardwareMap.servo.get(Names.trophyDrop);
         controllers.add(new TrophyDropper(dropServo));
         Servo sampleServo = hardwareMap.servo.get(Names.sampler);
+        DeviceInterfaceModule io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
+        LedController leds = new LedController(io, LedController.DEFAULT_LED_IO_MAP);
         controllers.add(new SamplingArm(sampleServo));
-        controllers.add(new TflowController());
+        controllers.add(new TflowController(leds, true));
         return controllers;
     }
 
