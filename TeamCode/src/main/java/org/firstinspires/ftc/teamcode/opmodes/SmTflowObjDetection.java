@@ -8,12 +8,15 @@ import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
+import org.firstinspires.ftc.teamcode.controllers.LedController;
 import org.firstinspires.ftc.teamcode.controllers.MRGyroController;
 import org.firstinspires.ftc.teamcode.controllers.TflowController;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Drive Teleop using iDrive interface
@@ -21,12 +24,14 @@ import java.util.List;
 
 @TeleOp(name="TFlowOp", group="3965")
 public class SmTflowObjDetection extends RobotBase {
-    private DeviceInterfaceModule io;
 
     @Override
     public List<HardwareController> getControllers() {
         List<HardwareController> controllers = super.getControllers();
-        controllers.add(new TflowController(true));
+        DeviceInterfaceModule io = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
+        LedController leds = new LedController(io, LedController.DEFAULT_LED_IO_MAP);
+        controllers.add(leds);
+        controllers.add(new TflowController(leds, true));
         return controllers;
     }
 
