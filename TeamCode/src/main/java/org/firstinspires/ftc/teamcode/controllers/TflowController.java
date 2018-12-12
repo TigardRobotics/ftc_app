@@ -88,6 +88,8 @@ public class TflowController extends HardwareController {
     private Recognition Gold;     // The best one
     private List<Recognition> Silvers; // 2 or less
 
+    private boolean lockRecognitions = false;
+
     public TflowController( LedController leds, Boolean showMessages ){
         Leds = leds;
         ShowMessages = showMessages;
@@ -115,15 +117,28 @@ public class TflowController extends HardwareController {
             Robot.telemetry.addData("Sorry!", "This device is not compatible with TFOD");
             Robot.log("This device is not compatible with TFOD");
         }
+        reset();
 
+        if (tfod != null) {
+            tfod.activate();
+
+        }
+    }
+
+    @Override
+    public void init_loop() {
+        super.init_loop();
+        if (ShowMessages) Robot.telemetry.clearAll();
+
+        if (tfod != null) {
+            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+            processRecognitions(updatedRecognitions);
+        }
     }
 
     @Override
     public void start() {
         super.start();
-        if (tfod != null) {
-            tfod.activate();
-        }
     }
 
     @Override
@@ -132,104 +147,8 @@ public class TflowController extends HardwareController {
         if (ShowMessages) Robot.telemetry.clearAll();
 
         if (tfod != null) {
-            // getUpdatedRecognitions() will return null if no new information is available since
-            // the last time that call was made.
-            // New information might be nothing important
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-            if (updatedRecognitions != null) {
-                if (ShowMessages) Robot.telemetry.addData("Objects Detected", updatedRecognitions.size());
-                Recognition gold = null;
-                List<Recognition> silvers = new ArrayList<Recognition>();
-
-                for (Recognition mineral : updatedRecognitions){
-                    String name = mineral.getLabel();
-                    if (ShowMessages) Robot.telemetry.addData("Object Label",name );
-                    Robot.log("Object Label " + name);
-                    if (name.equals(LABEL_GOLD_MINERAL)){
-                        if (gold == null){
-                            gold = mineral;
-                            if (ShowMessages) Robot.telemetry.addData("Chose gold",mineral.getConfidence() );
-                            Robot.log("Chose gold with confidence" + Double.toString(mineral.getConfidence()) );
-                        }
-                        else if (IsBetter( mineral, gold)) {
-                            gold = mineral;
-                            if (ShowMessages)
-                                Robot.telemetry.addData("Replaced gold", mineral.getConfidence());
-                            Robot.log("Replaced gold with confidence" + Double.toString(mineral.getConfidence()));
-                        }
-                    }
-                    if (name.equals(LABEL_SILVER_MINERAL)){
-                        if (silvers.size() <2){
-                            silvers.add(mineral);
-                            if (ShowMessages) Robot.telemetry.addData("Chose silver",mineral.getConfidence() );
-                            Robot.log("Chose silver with confidence" + Double.toString(mineral.getConfidence()) );
-                        }
-                        else if ( IsBetter(silvers.get(1), silvers.get(0)) && IsBetter( mineral, silvers.get(0)) ) {
-                            silvers.remove(0);
-                            silvers.add(mineral);
-                            if (ShowMessages)
-                                Robot.telemetry.addData("Replaced silver", mineral.getConfidence());
-                            Robot.log("Replaced silver with confidence" + Double.toString(mineral.getConfidence()));
-                        }
-                        else if ( IsBetter(silvers.get(0), silvers.get(1)) && IsBetter( mineral, silvers.get(1)) ) {
-                            silvers.remove(1);
-                            silvers.add(mineral);
-                            if (ShowMessages)
-                                Robot.telemetry.addData("Replaced silver", mineral.getConfidence());
-                            Robot.log("Replaced silver with confidence" + Double.toString(mineral.getConfidence()));
-                        }
-                    }
-                }
-
-                if(gold!=null && silvers.size()==2){
-                    float left = Math.min(gold.getLeft(), Math.min(silvers.get(0).getLeft(), silvers.get(1).getLeft()));
-                    float right = Math.max(gold.getRight(), Math.min(silvers.get(0).getRight(), silvers.get(1).getRight()));
-                    float top = Math.min(gold.getTop(), Math.min(silvers.get(0).getTop(), silvers.get(1).getTop()));
-                    float bottom = Math.max(gold.getBottom(), Math.min(silvers.get(0).getBottom(), silvers.get(1).getBottom()));
-                    if (ShowMessages) Robot.telemetry.addData("", "top:%f , bottom:%f", top, bottom);
-                    if (ShowMessages) Robot.telemetry.addData("", "left:%f , right:%f", left, right);
-                    if (ShowMessages) Robot.telemetry.addData("gold-H",getPos(gold, silvers, false) );
-                    if (ShowMessages) Robot.telemetry.addData("gold-V",getPos(gold, silvers, true) );
-
-                    if(Gold==null){
-                        Gold=gold;
-                        Silvers=silvers;
-                    }
-                    else if ( (gold.getConfidence()+silvers.get(0).getConfidence()+silvers.get(1).getConfidence())
-                            > (Gold.getConfidence()+Silvers.get(0).getConfidence()+Silvers.get(1).getConfidence()) ){
-                        Gold=gold;
-                        Silvers=silvers;
-                    }
-                }
-            }
-
-            if (Gold!=null)
-            {
-                if (ShowMessages) Robot.telemetry.addData("Final Gold-H",getPos(Gold, Silvers, false) );
-                Robot.log("Final Gold-H position" + Double.toString(getPos(Gold, Silvers, false)) );
-                if (ShowMessages) Robot.telemetry.addData("Final Gold-V",getPos(Gold, Silvers, true) );
-                Robot.log("Final Gold-V position" + Double.toString(getPos(Gold, Silvers, true)) );
-                if (Leds != null){
-                    switch (getGoldPos()) {
-                        case GOLD_ON_RIGHT:
-                            Leds.setModuleLed(LedController.BLUE, false);
-                            Leds.setModuleLed(LedController.RED, true);
-                            break;
-                        case GOLD_ON_LEFT:
-                            Leds.setModuleLed(LedController.RED, false);
-                            Leds.setModuleLed(LedController.BLUE, true);
-                            break;
-                        case GOLD_CENTER:
-                            Leds.setModuleLed(LedController.RED, true);
-                            Leds.setModuleLed(LedController.BLUE, true);
-                            break;
-                        default:
-                            Leds.setModuleLed(LedController.RED, false);
-                            Leds.setModuleLed(LedController.BLUE, false);
-                            break;
-                    }
-                }
-            }
+            processRecognitions(updatedRecognitions);
         }
     }
 
@@ -240,13 +159,132 @@ public class TflowController extends HardwareController {
         }
     }
 
+    public void lock() {
+        lockRecognitions = true;
+    }
+
+    public void reset() {
+        lockRecognitions = false;
+        Gold = null;
+        if (Silvers != null) Silvers.clear();
+        if(Leds != null) {
+            Leds.setModuleLed(LedController.RED, false);
+            Leds.setModuleLed(LedController.BLUE, false);
+        }
+    }
+
+    void processRecognitions(List<Recognition> updatedRecognitions) {
+        // getUpdatedRecognitions() will return null if no new information is available since
+        // the last time that call was made.
+        // New information might be nothing important
+        if (updatedRecognitions != null) {
+            if (ShowMessages) Robot.telemetry.addData("Objects Detected", updatedRecognitions.size());
+            if (updatedRecognitions.size() <=2 ) return; //!!fix
+            Recognition gold = null;
+            List<Recognition> silvers = new ArrayList<Recognition>();
+            for (Recognition mineral : updatedRecognitions){
+                String name = mineral.getLabel();
+                //if (ShowMessages) Robot.telemetry.addData("Object Label",name );
+                Robot.log("Object Label " + name);
+                if (name.equals(LABEL_GOLD_MINERAL)){
+                    if (gold == null){
+                        gold = mineral;
+                        if (ShowMessages) Robot.telemetry.addData("Chose gold",mineral.getConfidence() );
+                        if (ShowMessages) Robot.telemetry.addData("Gold-AbsPos",(mineral.getTop()+mineral.getBottom())/2.0 );
+                        Robot.log("Chose gold with confidence" + Double.toString(mineral.getConfidence()) );
+                    }
+                    else if (IsBetter( mineral, gold)) {
+                        gold = mineral;
+                        if (ShowMessages)
+                            Robot.telemetry.addData("Replaced gold", mineral.getConfidence());
+                        if (ShowMessages) Robot.telemetry.addData("Gold-AbsPos",(mineral.getTop()+mineral.getBottom())/2.0 );
+                        Robot.log("Replaced gold with confidence" + Double.toString(mineral.getConfidence()));
+                    }
+                }
+                if (name.equals(LABEL_SILVER_MINERAL)){
+                    if (silvers.size() <2){
+                        silvers.add(mineral);
+                        if (ShowMessages) Robot.telemetry.addData("Chose silver",mineral.getConfidence() );
+                        if (ShowMessages) Robot.telemetry.addData("Silver-AbsPos",(mineral.getTop()+mineral.getBottom())/2.0 );
+                        Robot.log("Chose silver with confidence" + Double.toString(mineral.getConfidence()) );
+                    }
+                    else if ( IsBetter(silvers.get(1), silvers.get(0)) && IsBetter( mineral, silvers.get(0)) ) {
+                        silvers.remove(0);
+                        silvers.add(mineral);
+                        if (ShowMessages)
+                            Robot.telemetry.addData("Replaced silver", mineral.getConfidence());
+                        if (ShowMessages) Robot.telemetry.addData("Silver-AbsPos",(mineral.getTop()+mineral.getBottom())/2.0 );
+                        Robot.log("Replaced silver with confidence" + Double.toString(mineral.getConfidence()));
+                    }
+                    else if ( IsBetter(silvers.get(0), silvers.get(1)) && IsBetter( mineral, silvers.get(1)) ) {
+                        silvers.remove(1);
+                        silvers.add(mineral);
+                        if (ShowMessages)
+                            Robot.telemetry.addData("Replaced silver", mineral.getConfidence());
+                        if (ShowMessages) Robot.telemetry.addData("Silver-AbsPos",(mineral.getTop()+mineral.getBottom())/2.0 );
+                        Robot.log("Replaced silver with confidence" + Double.toString(mineral.getConfidence()));
+                    }
+                }
+            }
+
+            if(gold!=null && silvers.size()==2){
+                //!if (ShowMessages) Robot.telemetry.addData("gold-H",getPos(gold, silvers, false) );
+                if (ShowMessages) Robot.telemetry.addData("gold-V",getPos(gold, silvers, true) );
+
+                if(Gold==null){
+                    Gold=gold;
+                    Silvers=silvers;
+                }
+                else /*if ( (gold.getConfidence()+silvers.get(0).getConfidence()+silvers.get(1).getConfidence())
+                        > (Gold.getConfidence()+Silvers.get(0).getConfidence()+Silvers.get(1).getConfidence()) )*/{
+                    Gold=gold;
+                    Silvers=silvers;
+                }
+            }
+        }
+
+        if (Gold!=null)
+        {
+            /* Ignore for now
+            if (ShowMessages) Robot.telemetry.addData("Final Gold-H",getPos(Gold, Silvers, false) );
+            Robot.log("Final Gold-H position" + Double.toString(getPos(Gold, Silvers, false)) );
+            */
+            if (ShowMessages) Robot.telemetry.addData("Gold-AbsPos",(Gold.getTop()+Gold.getBottom())/2.0 );
+            if (ShowMessages) Robot.telemetry.addData("Silver0-AbsPos",(Silvers.get(0).getTop()+Silvers.get(0).getBottom())/2.0 );
+            if (ShowMessages) Robot.telemetry.addData("Silver1-AbsPos",(Silvers.get(1).getTop()+Silvers.get(1).getBottom())/2.0 );
+
+            if(ShowMessages) Robot.telemetry.addData("Final-V = "+getGoldPos() , getPos(Gold, Silvers, true) );
+            Robot.log("Final Gold-V position" + Double.toString(getPos(Gold, Silvers, true)) );
+            if (Leds != null){
+                switch (getGoldPos()) {
+                    case GOLD_ON_RIGHT:
+                        Leds.setModuleLed(LedController.BLUE, false);
+                        Leds.setModuleLed(LedController.RED, true);
+                        break;
+                    case GOLD_ON_LEFT:
+                        Leds.setModuleLed(LedController.RED, false);
+                        Leds.setModuleLed(LedController.BLUE, true);
+                        break;
+                    case GOLD_CENTER:
+                        Leds.setModuleLed(LedController.RED, true);
+                        Leds.setModuleLed(LedController.BLUE, true);
+                        break;
+                    default:
+                        Leds.setModuleLed(LedController.RED, false);
+                        Leds.setModuleLed(LedController.BLUE, false);
+                        break;
+                }
+            }
+        }
+    }
+
     /**
      * Determine if the test recognition is better than the reference
      * @param test
      * @param reference
      * @return
      */
-    Boolean IsBetter( Recognition test, Recognition reference){
+    boolean IsBetter( Recognition test, Recognition reference){
         if (test == null) return false;
         if (reference == null) return true;
         return (test.getConfidence() > reference.getConfidence());
@@ -261,18 +299,20 @@ public class TflowController extends HardwareController {
      */
     float getPos(Recognition gold, List<Recognition> silvers, boolean vert)
     {
-        float hpos = Float.NaN;
-        float vpos = Float.NaN;
-        if (gold != null) {
-            float left = Math.min(gold.getLeft(), Math.min(silvers.get(0).getLeft(), silvers.get(1).getLeft()));
-            float right = Math.max(gold.getRight(), Math.min(silvers.get(0).getRight(), silvers.get(1).getRight()));
-            float top = Math.min(gold.getTop(), Math.min(silvers.get(0).getTop(), silvers.get(1).getTop()));
-            float bottom = Math.max(gold.getBottom(), Math.min(silvers.get(0).getBottom(), silvers.get(1).getBottom()));
-            hpos = ( ((gold.getLeft()+gold.getRight() )/2) - ((left+right)/2) ) / (right-left);
-            vpos = ( ((gold.getTop() +gold.getBottom())/2) - ((bottom+top)/2) ) / (bottom-top);
+        //!! implement vert=false
+        float pos = Float.NaN;
+        if (gold != null && silvers!= null && silvers.size()>1) {
+
+            float gold_pos = (gold.getTop()+gold.getBottom())/2;
+            float silver0_pos = (silvers.get(0).getTop()+silvers.get(0).getBottom())/2;
+            float silver1_pos = (silvers.get(1).getTop()+silvers.get(1).getBottom())/2;
+
+            float min = Math.min(gold_pos, Math.min(silver0_pos, silver1_pos));
+            float max = Math.max(gold_pos, Math.max(silver0_pos, silver1_pos));
+            pos = ( gold_pos - ((min+max)/2) ) / (min-max);
         }
 
-        return vert ? hpos : vpos;
+        return pos;
     }
 
     /**
