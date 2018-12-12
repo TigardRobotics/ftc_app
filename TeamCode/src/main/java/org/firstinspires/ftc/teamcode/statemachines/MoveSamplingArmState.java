@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.statemachines;
 
 import org.firstinspires.ftc.teamcode.controllers.SamplingArm;
+import org.firstinspires.ftc.teamcode.controllers.TflowController;
 import org.firstinspires.ftc.teamcode.controllers.TrophyDropper;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
@@ -22,12 +23,11 @@ public class MoveSamplingArmState extends State {
     @Override
     public void onEntry() {
         super.onEntry();
-        arm.setDrop(true);
+        arm.setDrop(drop);
     }
 
     @Override
     public void onExit(){
         super.onExit();
-        //dropper.setDrop(false);
     }
 }
