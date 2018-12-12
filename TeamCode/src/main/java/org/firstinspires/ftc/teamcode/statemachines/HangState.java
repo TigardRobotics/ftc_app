@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.statemachines;
 
 import org.firstinspires.ftc.teamcode.controllers.KnockerController;
 import org.firstinspires.ftc.teamcode.controllers.RobotHanger;
+import org.firstinspires.ftc.teamcode.controllers.TflowController;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
@@ -32,5 +33,15 @@ public class HangState extends State {
     public void onExit() {
         super.onExit();
         hanger.setSpeed(0.0);
+        if(speed < 0.0) {
+            try {
+                TflowController tflow = (TflowController) Robot.findController(TflowController.class);
+                tflow.lock();
+            }
+            catch(RuntimeException e) {
+                Robot.log("Exception finding TflowController or locking recognitions");
+                Robot.telemetry.addLine("Exception finding TflowController or locking recognitions");
+            }
+        }
     }
 }
