@@ -19,6 +19,16 @@ public class LedController extends HardwareController implements IColorIndicator
     public static final String NO_COLOR = "NONE";
     public static final String ALL_COLORS = "ALL";
 
+    public static final Map<String, Byte> DEFAULT_LED_IO_MAP = new HashMap<String, Byte>(){{
+        put(LedController.ALL_COLORS, (byte)0x1F);
+        put(LedController.NO_COLOR, (byte)0x00);
+        put(LedController.RED, (byte)0x01);   //D0
+        put(LedController.WHITE, (byte)0x02); //D1
+        put(LedController.BLUE, (byte)0x04);  //D2
+        put(LedController.GREEN, (byte)0x08); //D3
+        put(LedController.YELLOW, (byte)0x10);//D4
+    }};
+
     private static Map<String, Byte> ioMap; //Maps Color Name to byte to write to DeviceInterfaceModule
 
     private DeviceInterfaceModule io;   //Where LEDs are connected to
@@ -33,6 +43,11 @@ public class LedController extends HardwareController implements IColorIndicator
         this.io = ledIo;
         this.ioMap = ledIoMap;
         colorData = 0x00;
+    }
+
+    @Override
+    public void init() {
+        setModuleLed(ALL_COLORS, false);
     }
 
      /**
