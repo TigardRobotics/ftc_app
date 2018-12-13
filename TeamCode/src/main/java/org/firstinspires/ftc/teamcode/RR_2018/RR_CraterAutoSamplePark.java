@@ -31,9 +31,9 @@ import java.util.List;
  * Created by Derek on 10/26/18.
  */
 
-@Autonomous(name="A-CraterAutoSample", group="3965")
+@Autonomous(name="B-CraterAutoSamplePark", group="3965")
 //@Disabled
-public class RR_CraterAutoSample extends SwerveBase {
+public class RR_CraterAutoSamplePark extends SwerveBase {
 
     private DeviceInterfaceModule io;
 
@@ -80,35 +80,26 @@ public class RR_CraterAutoSample extends SwerveBase {
                         new MineralTrans("R drop", TflowController.GOLD_ON_RIGHT),
                         new MineralTrans("C drop", TflowController.GOLD_CENTER),
                         new MineralTrans("L crab left", TflowController.GOLD_ON_LEFT),
-                        new GlobalTimeTrans("no sample", 10.0)),
+                        new GlobalTimeTrans("to crater", 10.0)),
                 //Gold on right
                 new MoveSamplingArmState("R drop", true, new TimeTrans("R knock", 0.2)),
-                new CrabState("R knock", 0.0, -0.2, new ProgressTrans("R raise", 14*2.54)),
-                new MoveSamplingArmState("R raise", false, new TimeTrans("R to wall", 0.2)),
-                new CrabState("R to wall", 0.0, 0.4, new ProgressTrans("to spin", 74*2.54)),
+                new CrabState("R knock", 0.0, -0.2, new ProgressTrans("R raise", 12*2.54)),
+                new MoveSamplingArmState("R raise", false, new TimeTrans("to crater", 1.0)),
 
                 //Gold at center
                 new MoveSamplingArmState("C drop", true, new TimeTrans("C knock", 0.2)),
                 new CrabState("C knock", 0.0, 0.2, new ProgressTrans("C raise", 10*2.54)),
-                new MoveSamplingArmState("C raise", false, new TimeTrans("C to wall", 0.2)),
-                new CrabState("C to wall", 0.0, 0.4, new ProgressTrans("to spin", 54*2.54)),
+                new MoveSamplingArmState("C raise", false, new TimeTrans("C bacl", 1.0)),
+                new CrabState("C back", 0.0, -0.2, new ProgressTrans("to crater", 10*2.54)),
 
                 //Gold on left
                 new CrabState("L crab left", 0.0, 0.2, new ProgressTrans("L drop", 14*2.54)),
                 new MoveSamplingArmState("L drop", true, new TimeTrans("L knock", 0.2)),
-                new CrabState("L knock", 0.0, 0.2, new ProgressTrans("L raise", 10*2.54)),
-                new MoveSamplingArmState("L raise", false, new TimeTrans("L to wall", 0.2)),
-                new CrabState("L to wall", 0.0, 0.4, new ProgressTrans("to spin", 32*2.54)),
+                new CrabState("L knock", 0.0, 0.2, new ProgressTrans("L raise", 12*2.54)),
+                new MoveSamplingArmState("L raise", false, new TimeTrans("to crater", 1.0)),
 
-                //Gold not detected
-                new CrabState("no sample", 0.0, 0.4, new ProgressTrans("to spin", 62*2.54)),
-
-                new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),
-                new SpinState("spin", 0.4, new ProgressTrans("to crab", 60.0)),
-                new CrabState("to crab", 90.0, 0.0, new TimeTrans("to depot", 1.0)),
-                new CrabState("to depot", 90.0, -0.4, new ProgressTrans("drop", 40*2.54)),
-                new DropTrophyState("drop",new TimeTrans("to park",3.0)),
-                new CrabState("to park", 90.0, 0.6, new ProgressTrans("park", 80*2.54)),
+                new CrabState("to crater", 90.0, 0.0, new TimeTrans("drive", 1.0)),
+                new CrabState("drive", 90.0, 0.6, new ProgressTrans("park", 10*2.54)),
                 new WaitState("park", new TimeTrans("park", 1.0))
         );
     }

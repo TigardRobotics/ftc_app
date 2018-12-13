@@ -31,9 +31,9 @@ import java.util.List;
  * Created by Derek on 10/26/18.
  */
 
-@Autonomous(name="A-CraterAutoSample", group="3965")
+@Autonomous(name="A-DepotAutoSample", group="3965")
 //@Disabled
-public class RR_CraterAutoSample extends SwerveBase {
+public class RR_DepotAutoSample extends SwerveBase {
 
     private DeviceInterfaceModule io;
 
@@ -104,11 +104,16 @@ public class RR_CraterAutoSample extends SwerveBase {
                 new CrabState("no sample", 0.0, 0.4, new ProgressTrans("to spin", 62*2.54)),
 
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),
-                new SpinState("spin", 0.4, new ProgressTrans("to crab", 60.0)),
+                new SpinState("spin", -0.5, new ProgressTrans("to crab", 127.0)),
                 new CrabState("to crab", 90.0, 0.0, new TimeTrans("to depot", 1.0)),
-                new CrabState("to depot", 90.0, -0.4, new ProgressTrans("drop", 40*2.54)),
-                new DropTrophyState("drop",new TimeTrans("to park",3.0)),
-                new CrabState("to park", 90.0, 0.6, new ProgressTrans("park", 80*2.54)),
+                new CrabState("to depot", 90.0, -0.4, new ProgressTrans("to spin2", 50*2.54)),
+                new SpinState("to spin2", 0.0, new TimeTrans("spin2", 0.1)),
+                new SpinState("spin2", -0.4, new ProgressTrans("drop", 45.0)),
+                new DropTrophyState("drop",new TimeTrans("to spin3",1.0)),
+                new SpinState("to spin3", 0.0, new TimeTrans("spin3", 0.1)),
+                new SpinState("spin3", 0.45, new ProgressTrans("to to park", 45.0)),
+                new CrabState("to to park", 90.0, 0.0, new TimeTrans("to park", 1.0)),
+                new CrabState("to park", 90.0, 0.6, new ProgressTrans("park", 90*2.54)),
                 new WaitState("park", new TimeTrans("park", 1.0))
         );
     }

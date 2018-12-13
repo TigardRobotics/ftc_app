@@ -63,6 +63,7 @@ public class RR_DepotAuto extends SwerveBase {
                 new CrabState("pre to wall", 0.0, 0.0, new TimeTrans("to wall", 1.0)),
                 //new CrabState("to wall", 0.0, 0.2, new ProgressTrans("to spin", 80.0)), //Tune Progress here
                 new CrabState("to wall", 0.0, 0.4, new ProgressTrans("to spin", 52*2.54)),
+
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),
                 new SpinState("spin", -0.5, new ProgressTrans("to crab", 127.0)),
                 new CrabState("to crab", 90.0, 0.0, new TimeTrans("to depot", 1.0)),
