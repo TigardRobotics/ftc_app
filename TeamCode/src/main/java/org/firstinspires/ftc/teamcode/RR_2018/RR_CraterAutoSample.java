@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.controllers.TrophyDropper;
 import org.firstinspires.ftc.teamcode.opmodes.SwerveBase;
 import org.firstinspires.ftc.teamcode.statemachines.CrabState;
 import org.firstinspires.ftc.teamcode.statemachines.DropTrophyState;
+import org.firstinspires.ftc.teamcode.statemachines.GlobalTimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.HangState;
 import org.firstinspires.ftc.teamcode.statemachines.MineralTrans;
 import org.firstinspires.ftc.teamcode.statemachines.MoveSamplingArmState;
@@ -68,46 +69,46 @@ public class RR_CraterAutoSample extends SwerveBase {
 
                 // Crab to side to unhook from lander
                 new CrabState("pre unhook", 0.0, 0.0 ,new TimeTrans("unhook", 1.0)),
-                new CrabState("unhook", 0.0, -0.2, new ProgressTrans("pre back away", 6*2.54)),
+                new CrabState("unhook", 0.0, -0.2, new ProgressTrans("pre back away", 9.5*2.54)),
 
                 // Back away from lander
                 new CrabState("pre back away", 90.0, 0.0, new TimeTrans("back away", 1.0)),
-                new CrabState("back away", 90.0, 0.4, new ProgressTrans("pre sample", 15*2.54)),
+                new CrabState("back away", 90.0, 0.4, new ProgressTrans("pre sample", 13*2.54)),
                 new CrabState("pre sample", 0.0, 0.0, new TimeTrans("wait", 1.0)),
                 //Sample
                 new WaitState( "wait",
                         new MineralTrans("R drop", TflowController.GOLD_ON_RIGHT),
                         new MineralTrans("C drop", TflowController.GOLD_CENTER),
                         new MineralTrans("L crab left", TflowController.GOLD_ON_LEFT),
-                        new TimeTrans("no sample", 20.0)),
+                        new GlobalTimeTrans("no sample", 10.0)),
                 //Gold on right
                 new MoveSamplingArmState("R drop", true, new TimeTrans("R knock", 0.2)),
-                new CrabState("R knock", 0.0, -0.2, new ProgressTrans("R raise", 10*2.54)),
+                new CrabState("R knock", 0.0, -0.2, new ProgressTrans("R raise", 14*2.54)),
                 new MoveSamplingArmState("R raise", false, new TimeTrans("R to wall", 0.2)),
-                new CrabState("R to wall", 0.0, 0.4, new ProgressTrans("to spin", 58*2.54)),
+                new CrabState("R to wall", 0.0, 0.4, new ProgressTrans("to spin", 74*2.54)),
 
                 //Gold at center
                 new MoveSamplingArmState("C drop", true, new TimeTrans("C knock", 0.2)),
                 new CrabState("C knock", 0.0, 0.2, new ProgressTrans("C raise", 10*2.54)),
                 new MoveSamplingArmState("C raise", false, new TimeTrans("C to wall", 0.2)),
-                new CrabState("C to wall", 0.0, 0.4, new ProgressTrans("to spin", 38*2.54)),
+                new CrabState("C to wall", 0.0, 0.4, new ProgressTrans("to spin", 54*2.54)),
 
                 //Gold on left
-                new CrabState("L crab left", 0.0, 0.2, new ProgressTrans("L drop", 10*2.54)),
+                new CrabState("L crab left", 0.0, 0.2, new ProgressTrans("L drop", 14*2.54)),
                 new MoveSamplingArmState("L drop", true, new TimeTrans("L knock", 0.2)),
                 new CrabState("L knock", 0.0, 0.2, new ProgressTrans("L raise", 10*2.54)),
                 new MoveSamplingArmState("L raise", false, new TimeTrans("L to wall", 0.2)),
-                new CrabState("L to wall", 0.0, 0.4, new ProgressTrans("to spin", 28*2.54)),
+                new CrabState("L to wall", 0.0, 0.4, new ProgressTrans("to spin", 32*2.54)),
 
                 //Gold not detected
-                new CrabState("no sample", 0.0, 0.4, new ProgressTrans("to spin", 48*2.54)),
+                new CrabState("no sample", 0.0, 0.4, new ProgressTrans("to spin", 62*2.54)),
 
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 0.1)),
-                new SpinState("spin", 0.5, new ProgressTrans("to crab", 45.0)),
+                new SpinState("spin", 0.4, new ProgressTrans("to crab", 60.0)),
                 new CrabState("to crab", 90.0, 0.0, new TimeTrans("to depot", 1.0)),
                 new CrabState("to depot", 90.0, -0.4, new ProgressTrans("drop", 40*2.54)),
                 new DropTrophyState("drop",new TimeTrans("to park",3.0)),
-                new CrabState("to park", 90.0, 0.5, new ProgressTrans("park", 80*2.54)),
+                new CrabState("to park", 90.0, 0.6, new ProgressTrans("park", 80*2.54)),
                 new WaitState("park", new TimeTrans("park", 1.0))
         );
     }
