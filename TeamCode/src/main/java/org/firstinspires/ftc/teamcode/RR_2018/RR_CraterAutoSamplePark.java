@@ -69,7 +69,7 @@ public class RR_CraterAutoSamplePark extends SwerveBase {
 
                 // Crab to side to unhook from lander
                 new CrabState("pre unhook", 0.0, 0.0 ,new TimeTrans("unhook", 1.0)),
-                new CrabState("unhook", 0.0, -0.2, new ProgressTrans("pre back away", 9.5*2.54)),
+                new CrabState("unhook", 0.0, -0.2, new ProgressTrans("pre back away", 9*2.54)),
 
                 // Back away from lander
                 new CrabState("pre back away", 90.0, 0.0, new TimeTrans("back away", 1.0)),
@@ -89,17 +89,16 @@ public class RR_CraterAutoSamplePark extends SwerveBase {
                 //Gold at center
                 new MoveSamplingArmState("C drop", true, new TimeTrans("C knock", 0.2)),
                 new CrabState("C knock", 0.0, 0.2, new ProgressTrans("C raise", 10*2.54)),
-                new MoveSamplingArmState("C raise", false, new TimeTrans("C bacl", 1.0)),
-                new CrabState("C back", 0.0, -0.2, new ProgressTrans("to crater", 10*2.54)),
+                new MoveSamplingArmState("C raise", false, new TimeTrans("to crater", 1.0)),
 
                 //Gold on left
                 new CrabState("L crab left", 0.0, 0.2, new ProgressTrans("L drop", 14*2.54)),
                 new MoveSamplingArmState("L drop", true, new TimeTrans("L knock", 0.2)),
-                new CrabState("L knock", 0.0, 0.2, new ProgressTrans("L raise", 12*2.54)),
+                new CrabState("L knock", 0.0, 0.2, new ProgressTrans("L raise", 14*2.54)),
                 new MoveSamplingArmState("L raise", false, new TimeTrans("to crater", 1.0)),
 
                 new CrabState("to crater", 90.0, 0.0, new TimeTrans("drive", 1.0)),
-                new CrabState("drive", 90.0, 0.6, new ProgressTrans("park", 10*2.54)),
+                new CrabState("drive", 90.0, 0.6, new ProgressTrans("park", 18*2.54)),
                 new WaitState("park", new TimeTrans("park", 1.0))
         );
     }
