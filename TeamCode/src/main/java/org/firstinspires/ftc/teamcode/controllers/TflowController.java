@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode.controllers;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.vuforia.CameraDevice;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -110,6 +111,7 @@ public class TflowController extends HardwareController {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
+        //Try this: CameraDevice.getInstance().setFlashTorchMode(true);
 
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
             initTfod();
@@ -139,6 +141,7 @@ public class TflowController extends HardwareController {
     @Override
     public void start() {
         super.start();
+        lock();
     }
 
     @Override
@@ -146,7 +149,7 @@ public class TflowController extends HardwareController {
         super.loop();
         if (ShowMessages) Robot.telemetry.clearAll();
 
-        if (tfod != null) {
+        if (tfod != null && !lockRecognitions) {
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             processRecognitions(updatedRecognitions);
         }
@@ -154,6 +157,7 @@ public class TflowController extends HardwareController {
 
     @Override
     public void stop() {
+        //Try this: CameraDevice.getInstance().setFlashTorchMode(false);
         if (tfod != null) {
             tfod.shutdown();
         }
@@ -243,7 +247,7 @@ public class TflowController extends HardwareController {
             }
         }
 
-        if (Gold!=null)
+        if (Gold!=null && !lockRecognitions)
         {
             /* Ignore for now
             if (ShowMessages) Robot.telemetry.addData("Final Gold-H",getPos(Gold, Silvers, false) );
