@@ -111,7 +111,9 @@ public class TflowController extends HardwareController {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
-        //Try this: CameraDevice.getInstance().setFlashTorchMode(true);
+
+        //Try this:
+        CameraDevice.getInstance().setFlashTorchMode(true);
 
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
             initTfod();
@@ -157,7 +159,8 @@ public class TflowController extends HardwareController {
 
     @Override
     public void stop() {
-        //Try this: CameraDevice.getInstance().setFlashTorchMode(false);
+        //Try this:
+        CameraDevice.getInstance().setFlashTorchMode(false);
         if (tfod != null) {
             tfod.shutdown();
         }
