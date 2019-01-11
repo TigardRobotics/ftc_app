@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.opmodes.RobotBase;
 
 /**
- * Created by Derek on 11/7/2017.
+ * Created by Derek on 1/8/19
  */
 
 public class LineDetector extends HardwareController {
