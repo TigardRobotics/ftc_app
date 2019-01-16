@@ -6,50 +6,28 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by Brandon on 10/2/2018.
  */
 
-public class RobotHanger extends HardwareController {
-    private DcMotor hangMotor;
+public class MineralCollector extends HardwareController {
+    private DcMotor sweepMotor;
+    private DcMotor angleMotor;
 
-    private double speed = 0.95;
-    private boolean ignoreLimit = false;
-
-    private static final double LIMIT = 20.0;
-
-    public RobotHanger(DcMotor hangMotor) {
-        this.hangMotor = hangMotor;
+    public MineralCollector(DcMotor sweepMotor, DcMotor angleMotor) {
+        this.sweepMotor = sweepMotor;
     }
 
     @Override
     public void init() {
-        //! TODO: Add homing by stalling
-        hangMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        hangMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //! TODO: finish
     }
 
     @Override
     public void loop() {
-        // If motor position is beyond limit and power is in the direction to beyond the limit
-        if(Math.abs(hangMotor.getCurrentPosition()) > LIMIT && speed*hangMotor.getCurrentPosition() > 0 && !ignoreLimit) {
-            hangMotor.setPower(0.0);
-        }
-        else {
-            hangMotor.setPower(speed);
-        }
+        //! TODO: finish
     }
 
     @Override
     public void stop() {
-        hangMotor.setPower(0.0);
+        //! TODO: finsih
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
 
-    public double getSpeed() {
-        return speed;
-    }
-
-    public double getPos() {
-        return hangMotor.getCurrentPosition();
-    }
 }
