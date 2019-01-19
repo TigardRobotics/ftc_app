@@ -31,7 +31,7 @@ import java.util.List;
  * Created by Derek on 10/26/18.
  */
 
-@Autonomous(name="A-DepotAutoSample", group="3965")
+@Autonomous(name="PlowDepotAutoSample", group="3965")
 //@Disabled
 public class RR_PlowDepotAutoSample extends SwerveBase {
 
@@ -61,7 +61,7 @@ public class RR_PlowDepotAutoSample extends SwerveBase {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new HangState("lower", HangState.LOWER_SPEED, new TimeTrans("pre ground", 1.4)),
+                new HangState("lower", HangState.LOWER_SPEED, new TimeTrans("pre ground", 2.0)),
 
                 // Back up to ground all 4 wheels
                 new CrabState("pre ground", 90.0, 0.0, new TimeTrans("ground", 1.0)),
@@ -83,6 +83,7 @@ public class RR_PlowDepotAutoSample extends SwerveBase {
                         new GlobalTimeTrans("no sample", 10.0)),
 
                 //Gold on right
+                //To depot might be 0.0 direction and to crater might be 90.0 if it doesnt work the first time.
                 new MoveSamplingArmState("R drop", true, new TimeTrans("R knock", 0.2)),
                 new CrabState("R knock", 0.0, -0.2, new ProgressTrans("R raise", 20*2.54)),
                 new MoveSamplingArmState("R raise", false, new TimeTrans("R to align wall", 0.2)),
@@ -97,27 +98,30 @@ public class RR_PlowDepotAutoSample extends SwerveBase {
                 //Gold at center
                 new MoveSamplingArmState("C drop", true, new TimeTrans("C knock", 0.2)),
                 new CrabState("C knock", 0.0, 0.2, new ProgressTrans("C raise", 12*2.54)),
-                new MoveSamplingArmState("C raise", false, new TimeTrans("C to wall", 0.2)),
-                new CrabState("C pre to depot", 0.0, 0.0, new TimeTrans("C to depot", 1.0)),
-                new CrabState("C to depot", 0.0, 0.4, new ProgressTrans("C pre align wall", 40*2.54)),
+                new MoveSamplingArmState("C raise", false, new TimeTrans("C pre to depot", 0.2)),
+                new CrabState("C pre to depot", 90.0, 0.0, new TimeTrans("C to depot", 1.0)),
+                new CrabState("C to depot", 90.0, 0.4, new ProgressTrans("C pre align wall", 40*2.54)),
                 new SpinState("C pre align wall", 0.0, new TimeTrans("C align wall", 1.0)),
                 new SpinState("C align wall", -0.5, new ProgressTrans("C drop trophy", 135.0)),
                 new DropTrophyState("C drop trophy", new TimeTrans("C pre to crater", 1.0)),
+                //Test center last crab state might be 90.0 direction
                 new CrabState("C pre to crater", 0.0, 0.0, new TimeTrans("C to crater", 1.0)),
                 new CrabState("C to crater", 0.0, 0.5, new ProgressTrans("park", 90*2.54)),
 
                 //Gold on left
+                //Left is good
                 new CrabState("L crab left", 0.0, 0.2, new ProgressTrans("L drop", 14*2.54)),
                 new MoveSamplingArmState("L drop", true, new TimeTrans("L knock", 0.2)),
                 new CrabState("L knock", 0.0, 0.2, new ProgressTrans("L raise", 10*2.54)),
-                new MoveSamplingArmState("L raise", false, new TimeTrans("L to wall", 0.2)),
-                new CrabState("L to wall", 0.0, 0.5, new ProgressTrans("L pre align wall", 20*2.54)),
+                new MoveSamplingArmState("L raise", false, new TimeTrans("L pre to wall", 0.2)),
+                new CrabState("L pre to wall", 90.0, 0.0, new TimeTrans("L to wall", 1.0)),
+                new CrabState("L to wall", 90.0, 0.5, new ProgressTrans("L pre align to wall", 20*2.54)),
                 new SpinState("L pre align to wall", 0.0, new TimeTrans("L align to wall", 1.0)),
                 new SpinState("L align to wall", -0.5, new ProgressTrans("L pre to depot", 135.0)),
-                new CrabState("L pre to depot", 0.0, 0.0, new TimeTrans("L to depot", 1.0)),
-                new CrabState("L to depot",0.0, -0.5, new ProgressTrans("L drop trophy", 10*2.54)),
+                new CrabState("L pre to depot", 90.0, 0.0, new TimeTrans("L to depot", 1.0)),
+                new CrabState("L to depot",90.0, -0.5, new ProgressTrans("L drop trophy", 10*2.54)),
                 new DropTrophyState("L drop trophy", new TimeTrans("L to crater",1.0)),
-                new CrabState("L to crater",0.0,0.5, new ProgressTrans("park", 90*2.54)),
+                new CrabState("L to crater",90.0,0.5, new ProgressTrans("park", 90*2.54)),
 
                 //Gold not detected
                 new CrabState("no sample", 0.0, 0.4, new ProgressTrans("to spin", 62*2.54)),
