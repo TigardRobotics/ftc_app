@@ -69,7 +69,7 @@ public class RR_PlowDepotAutoSample extends SwerveBase {
 
                 // Crab to side to unhook from lander
                 new CrabState("pre unhook", 0.0, 0.0 ,new TimeTrans("unhook", 1.0)),
-                new CrabState("unhook", 0.0, -0.2, new ProgressTrans("pre back away", 9*2.54)),
+                new CrabState("unhook", 0.0, -0.2, new ProgressTrans("pre back away", 4.5*2.54)),
 
                 // Back away from lander
                 new CrabState("pre back away", 90.0, 0.0, new TimeTrans("back away", 0.5)),
@@ -77,13 +77,14 @@ public class RR_PlowDepotAutoSample extends SwerveBase {
                 new CrabState("pre sample", 0.0, 0.0, new TimeTrans("wait", 1.0)),
                 //Sample
                 new WaitState( "wait",
-                        new MineralTrans("R drop", TflowController.GOLD_ON_RIGHT),
+                        new MineralTrans("R crab right", TflowController.GOLD_ON_RIGHT),
                         new MineralTrans("C drop", TflowController.GOLD_CENTER),
                         new MineralTrans("L crab left", TflowController.GOLD_ON_LEFT),
                         new GlobalTimeTrans("no sample", 10.0)),
 
                 //Gold on right
                 //To depot might be 0.0 direction and to crater might be 90.0 if it doesnt work the first time.
+                new CrabState("R crab right", 0.0, -0.2, new ProgressTrans("R drop", 4.5*2.54)),
                 new MoveSamplingArmState("R drop", true, new TimeTrans("R knock", 0.2)),
                 new CrabState("R knock", 0.0, -0.2, new ProgressTrans("R raise", 25*2.54)),
                 new MoveSamplingArmState("R raise", false, new TimeTrans("R to align wall", 0.2)),
