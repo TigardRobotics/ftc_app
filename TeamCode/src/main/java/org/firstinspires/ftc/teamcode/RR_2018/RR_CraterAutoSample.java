@@ -61,11 +61,11 @@ public class RR_CraterAutoSample extends SwerveBase {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new HangState("lower", HangState.LOWER_SPEED, new TimeTrans("pre ground", 1.4)),
+                new HangState("lower", HangState.LOWER_SPEED, new TimeTrans("pre unhook", 2.0)),
 
                 // Back up to ground all 4 wheels
-                new CrabState("pre ground", 90.0, 0.0, new TimeTrans("ground", 1.0)),
-                new CrabState("ground", 90.0, 0.2, new TimeTrans("pre unhook", 0.25)),
+               // new CrabState("pre ground", 90.0, 0.0, new TimeTrans("ground", 1.0)),
+                //new CrabState("ground", 90.0, 0.2, new TimeTrans("pre unhook", 0.25)),
 
                 // Crab to side to unhook from lander
                 new CrabState("pre unhook", 0.0, 0.0 ,new TimeTrans("unhook", 1.0)),
@@ -104,7 +104,7 @@ public class RR_CraterAutoSample extends SwerveBase {
                 new CrabState("no sample", 0.0, 0.4, new ProgressTrans("to spin", 62*2.54)),
 
                 new SpinState("to spin", 0.0, new TimeTrans("spin", 1.0)),
-                new SpinState("spin", 0.4, new ProgressTrans("to crab", 60.0)),
+                new SpinState("spin", 0.4, new ProgressTrans("to crab", 45.0)),
                 new CrabState("to crab", 90.0, 0.0, new TimeTrans("to depot", 1.0)),
                 new CrabState("to depot", 90.0, -0.4, new ProgressTrans("drop", 40*2.54)),
                 new DropTrophyState("drop",new TimeTrans("to park",3.0)),
