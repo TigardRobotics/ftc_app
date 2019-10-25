@@ -17,7 +17,7 @@ import java.util.Map;
  */
 
 @TeleOp(name="Basic Teleop", group="3965")
-@Disabled
+//@Disabled
 public class BasicTeleop extends TankBot {
 
     @Override
@@ -43,11 +43,15 @@ public class BasicTeleop extends TankBot {
         Drive.setDriveDirection(steer_direction);
 
         double drive_power = -gamepad1.left_stick_y * Math.abs(gamepad1.left_stick_y); //speed is Left joystick vertical (with square acceleration)
-        Drive.setDrivePower(drive_power);
-
         //Right JoyStick sets Rotation Power
         double rotation_power = gamepad1.right_stick_x; //rotation power is right joystick horizontal
-        Drive.setRotationPower(rotation_power);
+
+        if (Math.abs(drive_power)>Math.abs(rotation_power)) {
+            Drive.setDrivePower(drive_power);
+        }
+        else {
+            Drive.setRotationPower(rotation_power);
+        }
 
         telemetry.addData("drive power", drive_power);
         telemetry.addData("steer direction", steer_direction);

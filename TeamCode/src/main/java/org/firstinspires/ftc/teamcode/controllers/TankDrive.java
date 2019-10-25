@@ -40,8 +40,8 @@ public class TankDrive extends HardwareController implements IDrive {
         //Direction = +1 => All power to left wheel (steer right)
         double right_power = Range.clip(drivePower*(1-driveDirection), -1.0, 1.0);
         double left_power = Range.clip(drivePower*(1+driveDirection), -1.0, 1.0);
-        setLeftDrivePower(right_power);
-        setRightDrivePower(left_power);
+        setLeftDrivePower(left_power);
+        setRightDrivePower(right_power);
     }
 
     @Override
