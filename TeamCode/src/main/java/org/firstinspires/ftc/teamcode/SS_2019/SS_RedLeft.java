@@ -15,11 +15,11 @@ import java.util.List;
 
 @Autonomous(name="Short Drive", group="3965")
 //@Disabled
-public class SS_ShortDrive extends TankBot {
+
+public class SS_RedLeft extends TankBot {
     @Override
     public void init() {
-        super.init();
-    }
+        super.init(); }
 
     @Override
     public List<HardwareController> getControllers() {
@@ -33,8 +33,9 @@ public class SS_ShortDrive extends TankBot {
         super.start();
         stateMachine = new StateMachine(
                 new DriveState("forward", 0.5, new ProgressTrans("wait", 400)),
+                new TurnState("turn", 0.5, new ProgressTrans("line", 90.0)),
+                new DriveState("line", 0.5, new TimeTrans("wait", 4.0)),
                 new WaitState("wait", new TimeTrans("wait", 1.0))
         );
     }
-
-}
+    }
