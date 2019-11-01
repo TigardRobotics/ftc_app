@@ -16,7 +16,7 @@ import java.util.Map;
  * Drive Teleop using iDrive interface
  */
 
-@TeleOp(name="Basic Teleop", group="3965")
+@TeleOp(name="Tank Teleop", group="3965")
 //@Disabled
 public class BasicTeleop extends TankBot {
 

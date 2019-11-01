@@ -70,7 +70,7 @@ public class TankDrive extends HardwareController implements IDrive {
 
     @Override
     public double getRotationPosition() {
-        return RotationToDegrees(leftDriveMotor.getCurrentPosition() - rightDriveMotor.getCurrentPosition());
+        return RotationToDegrees(Math.max(leftDriveMotor.getCurrentPosition(), rightDriveMotor.getCurrentPosition()));
     }
 
     public void setLeftDrivePower(double leftPower) {
