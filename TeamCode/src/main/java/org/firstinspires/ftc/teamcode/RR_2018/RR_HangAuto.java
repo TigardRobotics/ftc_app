@@ -36,7 +36,7 @@ import static org.firstinspires.ftc.teamcode.opmodes.RobotBase.findController;
  */
 
 @Autonomous(name="HangAuto", group="3965")
-//@Disabled
+@Disabled
 public class RR_HangAuto extends SwerveBase {
     @Override
     public void init() {

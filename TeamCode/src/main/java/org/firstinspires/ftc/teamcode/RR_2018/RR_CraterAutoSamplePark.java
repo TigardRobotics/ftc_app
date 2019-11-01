@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.RR_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -32,7 +33,7 @@ import java.util.List;
  */
 
 @Autonomous(name="B-CraterAutoSamplePark", group="3965")
-//@Disabled
+@Disabled
 public class RR_CraterAutoSamplePark extends SwerveBase {
 
     private DeviceInterfaceModule io;

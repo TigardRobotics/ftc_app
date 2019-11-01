@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @TeleOp(name="Rover Ruckus Teleop", group="3965")
-//@Disabled
+@Disabled
 public class RR_Teleop extends SwerveTeleop {
 
     RobotHanger hanger;

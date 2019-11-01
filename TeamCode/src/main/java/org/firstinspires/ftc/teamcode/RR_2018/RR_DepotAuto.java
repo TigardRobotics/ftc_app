@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.RR_2018;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -25,7 +26,7 @@ import java.util.List;
  */
 
 @Autonomous(name="DepotAuto", group="3965")
-//@Disabled
+@Disabled
 public class RR_DepotAuto extends SwerveBase {
     @Override
     public void init() {
