@@ -13,10 +13,10 @@ import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 import java.util.List;
 
-@Autonomous(name="SS_BlueLeft", group="3965")
+@Autonomous(name="SS_RedRight", group="3965")
 //@Disabled
 
-public class SS_BlueLeft extends TankBot {
+public class SS_RedRight extends TankBot {
     @Override
     public void init() {
         super.init(); }
@@ -32,9 +32,10 @@ public class SS_BlueLeft extends TankBot {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("forward", 0.5, new ProgressTrans("turn", 1400)),
-                new TurnState("turn", 0.5, new ProgressTrans("line", 38.0)),
+                new DriveState("forward", 0.5, new ProgressTrans("turn", 1100)),
+                new TurnState("turn", 0.5, new ProgressTrans("line", 114.0)),
                 new DriveState("line", 0.5, new TimeTrans("wait", 0.5)),
+                //new DriveState("line", 0.5, new TimeTrans("wait", 4.0)),
                 new WaitState("wait", new TimeTrans("wait", 1.0))
         );
     }
