@@ -10,8 +10,12 @@ public class SamplingArm extends HardwareController {
     private Servo dropServo;
 
     // Tune these values with core discovery
+
     private static final double UP_POS = 46.0/255.0;
     private static final double DOWN_POS = 30.0/255.0;
+
+    // Clockwise 0
+    // Counterclockwise 255
 
     private boolean drop = false;
 

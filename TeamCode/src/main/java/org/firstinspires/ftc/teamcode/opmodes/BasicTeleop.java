@@ -2,13 +2,10 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
-import org.firstinspires.ftc.teamcode.controllers.LedController;
-import org.firstinspires.ftc.teamcode.controllers.SamplingArm;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
@@ -24,19 +21,16 @@ import java.util.Map;
 //@Disabled
 public class BasicTeleop extends TankBot {
 
-    SamplingArm arm;
     @Override
     public List<HardwareController> getControllers() {
         List<HardwareController> controllers = super.getControllers();
-        Servo armServo = hardwareMap.servo.get(Names.sampler);
-        controllers.add(new SamplingArm(armServo));
+       Servo armServo = hardwareMap.servo.get(Names.sampler);
         return controllers;
     }
     public void init() {
         super.init();
-
         telemetry.addLine("Basic Hardware Initialized");
-        arm = (SamplingArm)(findController(SamplingArm.class));
+
 
     }
 
@@ -70,7 +64,7 @@ public class BasicTeleop extends TankBot {
         telemetry.addData("steer direction", steer_direction);
         telemetry.addData("rotation power", rotation_power);
 
-        super.loop();
+
     }
 
     @Override
