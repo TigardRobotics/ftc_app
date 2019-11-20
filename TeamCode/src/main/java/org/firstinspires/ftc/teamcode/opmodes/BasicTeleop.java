@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Names;
+
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
+import org.firstinspires.ftc.teamcode.controllers.SamplingArm;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
@@ -24,7 +26,8 @@ public class BasicTeleop extends TankBot {
     @Override
     public List<HardwareController> getControllers() {
         List<HardwareController> controllers = super.getControllers();
-       Servo armServo = hardwareMap.servo.get(Names.sampler);
+        Servo armServo = hardwareMap.servo.get(Names.sampler);
+        controllers.add(new SamplingArm(armServo));
         return controllers;
     }
     public void init() {
