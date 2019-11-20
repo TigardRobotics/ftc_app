@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 public class SamplingArm extends HardwareController {
-    private Servo dropServo;
+    protected Servo dropServo;
 
     // Tune these values with core discovery
 

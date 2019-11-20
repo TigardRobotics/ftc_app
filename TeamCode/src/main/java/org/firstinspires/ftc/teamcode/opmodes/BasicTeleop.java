@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Names;
 
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.controllers.SamplingArm;
+import org.firstinspires.ftc.teamcode.controllers.DualServoGrabber;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
@@ -26,8 +27,9 @@ public class BasicTeleop extends TankBot {
     @Override
     public List<HardwareController> getControllers() {
         List<HardwareController> controllers = super.getControllers();
-        Servo armServo = hardwareMap.servo.get(Names.sampler);
-        controllers.add(new SamplingArm(armServo));
+        Servo grabServoR = hardwareMap.servo.get(Names.grabServoR);
+        Servo grabServoL = hardwareMap.servo.get(Names.grabServoL);
+        controllers.add(new DualServoGrabber(grabServoR,grabServoL));
         return controllers;
     }
     public void init() {

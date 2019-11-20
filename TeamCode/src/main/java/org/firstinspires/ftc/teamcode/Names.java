@@ -19,7 +19,8 @@ public final class Names {
     public static String gyro = "gyro";
     public static String trophyDrop = "drop";
     public static String sampler = "sampler";
-
+    public static String grabServoL = "grabber_l";
+    public static String grabServoR = "grabber_r";
     // Names for swerve
     public static String frm = "frm";
     public static String frs = "frs";
