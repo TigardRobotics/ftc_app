@@ -67,7 +67,7 @@ public class BasicTeleop extends TankBot {
         telemetry.addData("steer direction", steer_direction);
         telemetry.addData("rotation power", rotation_power);
 
-
+        super.loop();
     }
 
     @Override
