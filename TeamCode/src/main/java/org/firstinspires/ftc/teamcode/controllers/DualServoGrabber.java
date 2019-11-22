@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.controllers;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * Created by Derek on 10/2/2018
+ * Created by Mark Hancock on 11/21/2019
  */
 
 public class DualServoGrabber extends SamplingArm {

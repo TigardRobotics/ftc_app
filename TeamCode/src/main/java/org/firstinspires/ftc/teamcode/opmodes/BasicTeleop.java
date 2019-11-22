@@ -24,14 +24,6 @@ import java.util.Map;
 //@Disabled
 public class BasicTeleop extends TankBot {
 
-    @Override
-    public List<HardwareController> getControllers() {
-        List<HardwareController> controllers = super.getControllers();
-        Servo grabServoR = hardwareMap.servo.get(Names.grabServoR);
-        Servo grabServoL = hardwareMap.servo.get(Names.grabServoL);
-        controllers.add(new DualServoGrabber(grabServoR,grabServoL));
-        return controllers;
-    }
     public void init() {
         super.init();
         telemetry.addLine("Basic Hardware Initialized");
