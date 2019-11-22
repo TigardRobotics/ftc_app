@@ -16,20 +16,24 @@ public class TankDrive extends HardwareController implements IDrive {
 
     private DcMotor leftDriveMotor;
     private DcMotor rightDriveMotor;
+    private boolean motorsreverse;
 
     protected double drivePower;
     protected double driveDirection;
 
-    public TankDrive(DcMotor right, DcMotor left) {
+    public TankDrive(DcMotor right, DcMotor left, boolean reverse) {
         leftDriveMotor = left;
         rightDriveMotor = right;
+        motorsreverse = reverse;
         rightDriveMotor.setDirection(DcMotor.Direction.REVERSE);
         leftDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
-
+    public TankDrive(DcMotor right, DcMotor left ) {
+        this( right,  left , false);
+    }
     @Override
     public void setDrivePower(double power) {
         drivePower = power;
@@ -73,13 +77,15 @@ public class TankDrive extends HardwareController implements IDrive {
         return RotationToDegrees(Math.max(leftDriveMotor.getCurrentPosition(), rightDriveMotor.getCurrentPosition()));
     }
 
-    public void setLeftDrivePower(double leftPower) {
+    public void setLeftDrivePower(double power) {
+        double leftPower = motorsreverse ? -power : power;
         RobotBase.log(String.format("Enabling Left Motor w/ speed: %f", leftPower));
         Robot.telemetry.addLine(String.format("Enabling Left Motor w/ speed: %f", leftPower));
         leftDriveMotor.setPower(leftPower);
     }
 
-    public void setRightDrivePower(double rightPower) {
+    public void setRightDrivePower(double power) {
+        double rightPower = motorsreverse ? -power : power;
         RobotBase.log(String.format("Enabling Right Motor w/ speed: %f", rightPower));
         Robot.telemetry.addLine(String.format("Enabling Right Motor w/ speed: %f", rightPower));
         rightDriveMotor.setPower(rightPower);

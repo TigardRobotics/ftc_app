@@ -21,12 +21,16 @@ public class AccelDrive extends TankDrive {
 
     public double accel;    //Motor accel/time  1=0 to full power in 1 sec
 
-    public AccelDrive(DcMotor right, DcMotor left, double accel) {
-        super(right, left);
+    public AccelDrive(DcMotor right, DcMotor left, double accel, boolean reverse) {
+        super(right, left, reverse);
         targetLeftPower = 0;
         targetRightPower = 0;
         this.accel = accel;
         loopTimer = new ElapsedTime();
+    }
+
+    public AccelDrive(DcMotor right, DcMotor left, double accel) {
+        this( right,  left ,accel, false);
     }
 
     @Override
