@@ -35,10 +35,12 @@ public class DualServoGrabber extends SamplingArm {
     @Override
     public void loop() {
         if(drop) {
+            Robot.telemetry.addLine("Dropping both servos");
             dropServo.setPosition(DOWN_POS1);
             secondServo.setPosition(DOWN_POS2);
         }
         else {
+            Robot.telemetry.addLine("Raising both servos");
             dropServo.setPosition(UP_POS1);
             secondServo.setPosition(UP_POS2);
         }

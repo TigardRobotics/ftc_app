@@ -80,14 +80,14 @@ public class TankDrive extends HardwareController implements IDrive {
     public void setLeftDrivePower(double power) {
         double leftPower = motorsreverse ? -power : power;
         RobotBase.log(String.format("Enabling Left Motor w/ speed: %f", leftPower));
-        Robot.telemetry.addLine(String.format("Enabling Left Motor w/ speed: %f", leftPower));
+        //Robot.telemetry.addLine(String.format("Enabling Left Motor w/ speed: %f", leftPower));
         leftDriveMotor.setPower(leftPower);
     }
 
     public void setRightDrivePower(double power) {
         double rightPower = motorsreverse ? -power : power;
         RobotBase.log(String.format("Enabling Right Motor w/ speed: %f", rightPower));
-        Robot.telemetry.addLine(String.format("Enabling Right Motor w/ speed: %f", rightPower));
+        //Robot.telemetry.addLine(String.format("Enabling Right Motor w/ speed: %f", rightPower));
         rightDriveMotor.setPower(rightPower);
     }
 

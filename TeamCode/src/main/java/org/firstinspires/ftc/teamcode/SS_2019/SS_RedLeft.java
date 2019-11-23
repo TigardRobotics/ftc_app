@@ -33,8 +33,8 @@ public class SS_RedLeft extends TankBot {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("forward", 0.5, new ProgressTrans("turn", 1100)),
-                new TurnState("turn", 0.5, new ProgressTrans("line", 38.0)),
+                new DriveState("forward", 0.5, new ProgressTrans("turn", 1900)),
+                new TurnState("turn", 0.5, new ProgressTrans("line", 20.0)),
                 new DriveState("line", 0.5, new TimeTrans("wait", 0.5)),
                 //new DriveState("line", 0.5, new TimeTrans("wait", 4.0)),
                 new WaitState("wait", new TimeTrans("wait", 1.0))
