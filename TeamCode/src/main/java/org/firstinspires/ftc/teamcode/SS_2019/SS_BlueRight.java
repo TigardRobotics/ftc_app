@@ -32,7 +32,7 @@ public class SS_BlueRight extends TankBot {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("forward", 0.5, new ProgressTrans("turn", 1900)),
+                new DriveState("forward", 0.5, new ProgressTrans("turn", 1700)),
                 new TurnState("turn", -0.5, new ProgressTrans("line", 17.0)),
                 new DriveState("line", 0.5, new TimeTrans("wait", 0.5)),
                 new WaitState("wait", new TimeTrans("wait", 1.0))

@@ -11,11 +11,9 @@ import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.TurnState;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
-import java.util.List;
+@Autonomous(name = "SS_FoundationRed ", group = "3965")
 
-@Autonomous(name = "SS_FoundationBlue", group = "3965")
-
-public class SS_Foundation extends TankBot{
+public class SS_FoundationRed extends TankBot{
 
     @Override
     public void init() {
@@ -30,12 +28,14 @@ public class SS_Foundation extends TankBot{
                 new DualGrabberState("grab",true, new TimeTrans("pull", 1.0)),
                 new DriveState("pull",-0.5, new ProgressTrans("release",2000)),
                 new DualGrabberState("release",false, new TimeTrans("turn",1.0)),
-                new TurnState("turn",0.5, new ProgressTrans("move1", 18.0)),
-                new DriveState("move1", 0.5, new ProgressTrans("turn1",700)),
-                new TurnState("turn1",-0.5, new ProgressTrans("move2", 18.0) ),
-                new DriveState("move2",0.5, new ProgressTrans("turn2",1600)),
-                new TurnState("turn2",-0.5, new ProgressTrans("move3", 18.0)),
-                new DriveState("move3",0.5,new ProgressTrans("wait", 2000)),
+                new TurnState("turn",-0.5, new ProgressTrans("move1", 15.0)),
+                new DriveState("move1", 0.5, new ProgressTrans("turn1",900)),
+                new TurnState("turn1",0.5, new ProgressTrans("move2", 17.0) ),
+                new DriveState("move2",0.5, new TimeTrans("turn2",1.5)),
+                new TurnState("turn2",0.5, new ProgressTrans("move3", 15.0)),
+                new DriveState("move3", 0.5, new ProgressTrans("turn3",900)),
+                new TurnState("turn3",0.5, new ProgressTrans("move4", 15.0)),
+                new DriveState("move4",0.5,new ProgressTrans("wait", 2000)),
                 new WaitState("wait", new TimeTrans("wait", 1.0))
         );
     }

@@ -1,56 +1,61 @@
 package org.firstinspires.ftc.teamcode.controllers;
 
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.configuration.ControllerConfiguration;
 
 /**
  * Created by Mark Hancock on 11/21/2019
  */
 
-public class DualServoGrabber extends SamplingArm {
-    private Servo secondServo;
+public class DualServoGrabber extends HardwareController{
+    protected Servo grabServo;
+    protected Servo grabServo1;
 
-    // Tune these values with core discovery
+    // Tune these values with REV Hub Interface
 
-    private static final double UP_POS1 = 0.75;
-    private static final double DOWN_POS1 = 0.0;
-    private static final double UP_POS2 = 1-UP_POS1;
-    private static final double DOWN_POS2 = 1-DOWN_POS1;
-    // Clockwise 0
-    // Counterclockwise 255
+    private static final double DOWN_POS = 0.00;
+    private static final double UP_POS = 1.00;
+    private static final double DOWN_POS1 = 1.00;
+    private static final double UP_POS1 = 0.10;
 
     private boolean drop = false;
 
-    public DualServoGrabber(Servo servo1, Servo servo2) {
-        super(servo1);
-        this.secondServo = servo2;
+    public DualServoGrabber(Servo servo, Servo servo1) {
+        this.grabServo = servo;
+        this.grabServo1 = servo1;
     }
+
+
 
     @Override
     public void init() {
         super.init();
-        dropServo.setPosition(UP_POS1);
-        secondServo.setPosition(UP_POS2);
+        grabServo.setPosition(UP_POS);
+        grabServo1.setPosition(UP_POS1);
     }
 
     @Override
     public void loop() {
         if(drop) {
             Robot.telemetry.addLine("Dropping both servos");
-            dropServo.setPosition(DOWN_POS1);
-            secondServo.setPosition(DOWN_POS2);
+            grabServo.setPosition(DOWN_POS);
+            grabServo1.setPosition(DOWN_POS1);
         }
         else {
             Robot.telemetry.addLine("Raising both servos");
-            dropServo.setPosition(UP_POS1);
-            secondServo.setPosition(UP_POS2);
+            grabServo.setPosition(UP_POS);
+            grabServo1.setPosition(UP_POS1);
         }
     }
 
     @Override
     public void stop() {
         super.stop();
-        dropServo.setPosition(UP_POS1);
-        secondServo.setPosition(UP_POS2);
+        grabServo.setPosition(UP_POS);
+        grabServo1.setPosition(UP_POS1);
     }
-
+    public void setDrop(boolean drop) {
+        Robot.telemetry.addLine(String.format("Setting drop: %b", drop));
+        this.drop = drop;
+    }
 }
