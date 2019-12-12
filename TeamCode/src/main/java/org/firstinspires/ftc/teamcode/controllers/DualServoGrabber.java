@@ -18,6 +18,7 @@ public class DualServoGrabber extends HardwareController{
     private static final double DOWN_POS1 = 1.00;
     private static final double UP_POS1 = 0.10;
 
+
     private boolean drop = false;
 
     public DualServoGrabber(Servo servo, Servo servo1) {

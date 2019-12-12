@@ -24,16 +24,21 @@ public class SS_FoundationBluePull extends TankBot{
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("forward", 0.5, new ProgressTrans("grab", 2200)),
+                new DriveState("forward", 0.75, new ProgressTrans("adjust", 1000)),
+                new TurnState("adjust", -0.5, new ProgressTrans("pre-inch", 18.0)),
+                new WaitState("pre-inch", new TimeTrans("inch",1.0)),
+                new DriveState("inch", 0.5, new ProgressTrans("readjust", 130.0)),
+                new TurnState("readjust", 0.5, new ProgressTrans("foundation", 23.0)),
+                new DriveState("foundation", 0.5, new ProgressTrans("grab",1000)),
                 new DualGrabberState("grab",true, new TimeTrans("pull", 1.0)),
-                new DriveState("pull",-0.5, new ProgressTrans("release",2600)),
-                new DualGrabberState("release", false, new TimeTrans("bump", 1.0)),
-                new DriveState("bump", 0.5, new ProgressTrans("pullback", 300)),
-                new DriveState("pullback", -0.5, new ProgressTrans("wait", 500)),
+                new DriveState("pull",-0.75, new ProgressTrans("release",8000)),
+                new DualGrabberState("release", false, new TimeTrans("pre-bump", 1.0)),
+                new TurnState("pre-bump", 0.5, new ProgressTrans("bump", 9.0)),
+                new DriveState("bump", 0.5, new ProgressTrans("pullback", 1000)),
+                new DriveState("pullback", -0.5, new ProgressTrans("wait", 1100)),
                 new WaitState("wait", new TimeTrans("wait", 1.0))
         );
     }
-
 }
 //Turn State + speed = Right turn
 //Turn state - speed = Left turn

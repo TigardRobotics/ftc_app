@@ -26,8 +26,9 @@ public class SS_StoneGrabBlue extends TankBot{
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-           new DriveState("forward",0.5, new ProgressTrans("Grab", 2200.0)),//Forward
-           new DualGrabberState("Grab", true, new TimeTrans("Turn", 1.0)),     //Grab block
+           new DriveState("forward",0.5, new ProgressTrans("Grab", 2500.0)),//Forward
+           new DualGrabberState("Grab", true, new TimeTrans("reposition", 1.0)),     //Grab block
+                new DriveState("reposition", -0.5, new ProgressTrans("Turn", 700)),
            new TurnState("Turn", -0.5, new ProgressTrans("deliver", 18.0)),     //Turn Left 90 degrees
            new DriveState("deliver",0.5, new ProgressTrans("release",3000.0)),    //Deliver Drive straight
                 new DualGrabberState("release", false, new TimeTrans("turn", 1.0)), //Let go of block
@@ -37,8 +38,7 @@ public class SS_StoneGrabBlue extends TankBot{
                 new DriveState("reverse",-0.5, new ProgressTrans("releasefoundation", 2600.0)), // Back up to wall
                 new DualGrabberState("releasefoundation", false, new TimeTrans("bump", 1.0)),
                 new DriveState("bump", 0.5, new ProgressTrans("pullback", 300)),
-                new DriveState("pullback", -0.5, new ProgressTrans("wait", 500)),
-
+                new DriveState("pullback", -0.5, new ProgressTrans("park", 500)),
                 new WaitState("park", new TimeTrans("wait",1.0))
         );
     }
