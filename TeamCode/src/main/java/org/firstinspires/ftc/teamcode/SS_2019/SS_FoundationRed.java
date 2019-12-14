@@ -24,7 +24,7 @@ public class SS_FoundationRed extends TankBot{
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("forward", 0.5, new ProgressTrans("grab", 2200)),
+                new DriveState("forward", 0.75, new ProgressTrans("grab", 2200)),
                 new DualGrabberState("grab",true, new TimeTrans("pull", 1.0)),
                 new DriveState("pull",-0.5, new ProgressTrans("release",2000)),
                 new DualGrabberState("release",false, new TimeTrans("turn",1.0)),

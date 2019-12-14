@@ -24,13 +24,21 @@ public class SS_FoundationRedPull extends TankBot{
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("forward", -0.5, new ProgressTrans("spin", 2200)),
-                new TurnState("spin", 0.5, new ProgressTrans("grab", 36)),
+                new DriveState("forward", 0.75, new ProgressTrans("adjust", 1000)),
+                new TurnState("adjust", 0.5, new ProgressTrans("pre-inch", 15.0)),
+                new WaitState("pre-inch", new TimeTrans("inch",1.0)),
+                new DriveState("inch", 0.5, new ProgressTrans("readjust", 130.0)),
+                new TurnState("readjust", -0.5, new ProgressTrans("foundation", 23.0)),
+                new DriveState("foundation", 0.5, new ProgressTrans("grab",1000)),
                 new DualGrabberState("grab",true, new TimeTrans("pull", 1.0)),
-                new DriveState("pull",-0.5, new ProgressTrans("release",2600)),
-                new DualGrabberState("release", false, new TimeTrans("bump", 1.0)),
-                new DriveState("bump", 0.5, new ProgressTrans("pullback", 300)),
-                new DriveState("pullback", -0.5, new ProgressTrans("wait", 500)),
+                new DriveState("pull",-0.75, new ProgressTrans("release",6500)),
+                new DualGrabberState("release", false, new TimeTrans("pre-bump", 2.0)),
+                new TurnState("pre-bump", -0.5, new ProgressTrans("bump", 5.0)),
+                new DriveState("bump", 0.5, new ProgressTrans("parkturn", 4000)),
+                new TurnState("parkturn", 0.5, new ProgressTrans("nudge", 15.0)),
+                new DriveState("nudge",0.5, new ProgressTrans("turn2",100)),
+                new TurnState("turn2",0.5, new ProgressTrans("park", 15.0)),
+                new DriveState("park", 0.5, new ProgressTrans("wait", 3500)),
                 new WaitState("wait", new TimeTrans("wait", 1.0))
         );
     }
