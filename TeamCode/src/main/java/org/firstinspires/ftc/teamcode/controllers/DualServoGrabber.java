@@ -29,8 +29,8 @@ public class DualServoGrabber extends HardwareController{
 
 
     @Override
-    public void init() {
-        super.init();
+    public void start() {
+        super.start();
         grabServo.setPosition(UP_POS);
         grabServo1.setPosition(UP_POS1);
     }

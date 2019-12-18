@@ -11,9 +11,9 @@ import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.TurnState;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
-@Autonomous(name = "SS_FoundationRedPull", group = "3965")
+@Autonomous(name = "SS_FoundationRedPullReverse", group = "3965")
 
-public class SS_FoundationRedPull extends TankBot{
+public class SS_FoundationRedPullReverse extends TankBot{
 
     @Override
     public void init() {
@@ -28,17 +28,15 @@ public class SS_FoundationRedPull extends TankBot{
                 new TurnState("adjust", 0.5, new ProgressTrans("pre-inch", 10.0)),
                 new WaitState("pre-inch", new TimeTrans("inch",1.0)),
                 new DriveState("inch", 0.5, new ProgressTrans("readjust", 130.0)),
-                new TurnState("readjust", -0.5, new ProgressTrans("foundation", 20.0)),
+                new TurnState("readjust", -0.5, new ProgressTrans("foundation", 23.0)),
                 new DriveState("foundation", 0.5, new ProgressTrans("grab",1000)),
                 new DualGrabberState("grab",true, new TimeTrans("pull", 1.0)),
                 new DriveState("pull",-0.75, new ProgressTrans("release",6500)),
                 new DualGrabberState("release", false, new TimeTrans("pre-bump", 2.0)),
-                new TurnState("pre-bump", -0.5, new ProgressTrans("bump", 2.0)),
+                new TurnState("pre-bump", -0.5, new ProgressTrans("bump", 5.0)),
                 new DriveState("bump", 0.5, new ProgressTrans("parkturn", 4000)),
-                new TurnState("parkturn", 0.5, new ProgressTrans("nudge", 12.0)),
-                new DriveState("nudge",0.5, new ProgressTrans("turn2",100)),
-                new TurnState("turn2",0.5, new ProgressTrans("park", 12.0)),
-                new DriveState("park", 0.5, new ProgressTrans("wait", 3500)),
+                new TurnState("parkturn", 0.5, new ProgressTrans("park", 8.0)),
+                new DriveState("park", -0.5, new ProgressTrans("wait", 3500)),
                 new WaitState("wait", new TimeTrans("wait", 1.0))
         );
     }
