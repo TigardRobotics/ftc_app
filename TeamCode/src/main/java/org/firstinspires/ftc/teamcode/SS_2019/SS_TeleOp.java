@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.opmodes.BasicTeleop;
 public class SS_TeleOp extends BasicTeleop {
 
     DualServoGrabber grabber=null;
+    SamplingArm arm;
 
     @Override
     public void init() {
@@ -22,6 +23,7 @@ public class SS_TeleOp extends BasicTeleop {
         else {
             telemetry.addLine("Got Controller");
         }
+        arm = (SamplingArm)(findController(SamplingArm.class));
     }
 
     @Override
@@ -40,6 +42,8 @@ public class SS_TeleOp extends BasicTeleop {
             telemetry.addLine("L Bumper");
             grabber.setDrop(false);
         }
+        if(gamepad1.right_bumper) arm.setDrop(true);
+        else if(gamepad1.left_bumper) arm.setDrop(false);
         super.loop();
     }
 

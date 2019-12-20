@@ -11,7 +11,7 @@ public class SamplingArm extends HardwareController {
 
     // Tune these values with core discovery
 
-    private static final double UP_POS = 0.75;
+    private static final double UP_POS = 1.00;
     private static final double DOWN_POS = 0.0;
 
     // Clockwise 0

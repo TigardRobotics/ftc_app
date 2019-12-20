@@ -34,6 +34,17 @@ public class TankDrive extends HardwareController implements IDrive {
     public TankDrive(DcMotor right, DcMotor left ) {
         this( right,  left , false);
     }
+
+    @Override
+    public void init() {
+        stopDriveMotors();
+    }
+
+    @Override
+    public void stop() {
+        stopDriveMotors();
+    }
+
     @Override
     public void setDrivePower(double power) {
         drivePower = power;

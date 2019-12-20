@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.AccelDrive;
 import org.firstinspires.ftc.teamcode.controllers.DualServoGrabber;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
+import org.firstinspires.ftc.teamcode.controllers.SamplingArm;
 import org.firstinspires.ftc.teamcode.controllers.TankDrive;
 
 import java.util.List;
@@ -37,6 +38,8 @@ public abstract class TankBot extends RobotBase {
         Servo grabServoR = hardwareMap.servo.get(Names.grabServoR);
         Servo grabServoL = hardwareMap.servo.get(Names.grabServoL);
         controllers.add(new DualServoGrabber(grabServoR,grabServoL));
+        Servo armServo = hardwareMap.servo.get(Names.sampler);
+        controllers.add(new SamplingArm(armServo));
         return controllers;
     }
 
