@@ -36,7 +36,9 @@ public class DriveWithHeadingState extends DriveState {
 
     protected double getSteer() {
         //calculate direction error (-180 to +180)
-        double error = (targetHeading - gyro.getBearing() + 360.0 + 180.0) % 360.0 - 180.0;
+        double actualHeading = gyro.getBearing();
+        double error = (targetHeading - actualHeading + 360.0 + 180.0) % 360.0 - 180.0;
+        Robot.telemetry.addData(name, String.format("Heading %f of %f", targetHeading, actualHeading));
         return Range.clip(error * STEER_COOEF, -1, 1);
     }
 

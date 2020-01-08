@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -7,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Names;
 import org.firstinspires.ftc.teamcode.controllers.AccelDrive;
 import org.firstinspires.ftc.teamcode.controllers.DualServoGrabber;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
+import org.firstinspires.ftc.teamcode.controllers.RevImuController;
 import org.firstinspires.ftc.teamcode.controllers.SamplingArm;
 import org.firstinspires.ftc.teamcode.controllers.TankDrive;
 
@@ -21,6 +23,7 @@ public abstract class TankBot extends RobotBase {
 
     private DcMotor leftDriveMotor;
     private DcMotor rightDriveMotor;
+    private BNO055IMU imu;
     public TankDrive Drive;
 
     public void init() {
@@ -40,6 +43,8 @@ public abstract class TankBot extends RobotBase {
         controllers.add(new DualServoGrabber(grabServoR,grabServoL));
         Servo armServo = hardwareMap.servo.get(Names.sampler);
         controllers.add(new SamplingArm(armServo));
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        controllers.add(new RevImuController(imu));
         return controllers;
     }
 
