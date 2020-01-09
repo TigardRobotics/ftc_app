@@ -77,6 +77,6 @@ public class AccelDrive extends TankDrive {
         super.setRightDrivePower(actualRightPower);
 
         super.loop();
-        Robot.telemetry.addLine(String.format("Left: %f of %f Right: %f of %f", actualLeftPower, targetLeftPower, actualRightPower, targetRightPower));
+        Robot.telemetry.addLine(String.format("Accel: %f, Left: %f of %f Right: %f of %f", accel, actualLeftPower, targetLeftPower, actualRightPower, targetRightPower));
     }
 }

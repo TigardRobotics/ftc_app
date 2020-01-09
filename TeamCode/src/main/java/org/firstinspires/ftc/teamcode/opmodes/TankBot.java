@@ -25,6 +25,7 @@ public abstract class TankBot extends RobotBase {
     private DcMotor rightDriveMotor;
     private BNO055IMU imu;
     public TankDrive Drive;
+    public double Accel = 100000.0;  // %/sec
 
     public void init() {
         super.init();
@@ -36,7 +37,7 @@ public abstract class TankBot extends RobotBase {
         List<HardwareController> controllers = super.getControllers();
         leftDriveMotor = hardwareMap.dcMotor.get("motor_l");
         rightDriveMotor = hardwareMap.dcMotor.get("motor_r");
-        controllers.add(new AccelDrive(rightDriveMotor, leftDriveMotor, 3.0, true));
+        controllers.add(new AccelDrive(rightDriveMotor, leftDriveMotor, Accel, true));
         //controllers.add(new TankDrive(rightDriveMotor, leftDriveMotor));
         Servo grabServoR = hardwareMap.servo.get(Names.grabServoR);
         Servo grabServoL = hardwareMap.servo.get(Names.grabServoL);

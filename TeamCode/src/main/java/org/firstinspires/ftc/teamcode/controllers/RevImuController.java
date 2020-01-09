@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 /**
- * Modern Robotics Gyro Orientation Sensor
+ * REV Expansion Hub Gyro Orientation Sensor
  */
 
 public class RevImuController extends HardwareController  implements IOrientation{
@@ -76,7 +76,7 @@ public class RevImuController extends HardwareController  implements IOrientatio
 
         Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-        double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
+        double deltaAngle = lastAngles.firstAngle - angles.firstAngle;
 
         if (deltaAngle < -180)
             deltaAngle += 360;

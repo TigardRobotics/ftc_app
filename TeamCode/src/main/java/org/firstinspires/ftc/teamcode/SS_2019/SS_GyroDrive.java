@@ -18,6 +18,7 @@ public class SS_GyroDrive extends TankBot {
     @Override
     public void init() {
         super.init();
+        this.Accel = 100000.0;   //Set Accel really high to Disable Accel Drive (100% Accel/ 1 ms)
     }
 
     @Override
@@ -31,7 +32,7 @@ public class SS_GyroDrive extends TankBot {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new DriveWithHeadingState("forward", 0.5, 0.0, new ProgressTrans("wait", 8000)),
+                new DriveWithHeadingState("forward", 0.25, 0.0, new ProgressTrans("wait", 8000)),
                 new WaitState("wait", new TimeTrans("wait", 1.0))
         );
     }
