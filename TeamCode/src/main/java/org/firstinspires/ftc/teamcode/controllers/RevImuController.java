@@ -47,11 +47,12 @@ public class RevImuController extends HardwareController  implements IOrientatio
     public void start() {
         //!! imu.resetZAxisIntegrator();
         super.start();
+        resetAngle();
     }
 
     @Override
     public double getBearing(){
-        return ((getAngle()+offset)+360.0)%360.0 ;
+        return ((getAngle())+360.0)%360.0 ; //0-360
     }
 
     /**
@@ -65,7 +66,7 @@ public class RevImuController extends HardwareController  implements IOrientatio
 
     /**
      * Get current cumulative angle rotation from last reset.
-     * @return Angle in degrees. + = left, - = right.
+     * @return Angle in degrees. - = left, + = right.
      */
     private double getAngle()
     {

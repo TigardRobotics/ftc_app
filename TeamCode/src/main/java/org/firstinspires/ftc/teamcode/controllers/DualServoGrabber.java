@@ -19,7 +19,7 @@ public class DualServoGrabber extends HardwareController{
     private static final double UP_POS1 = 0.10;
 
 
-    private boolean drop = false;
+    private boolean drop = true;
 
     public DualServoGrabber(Servo servo, Servo servo1) {
         this.grabServo = servo;
