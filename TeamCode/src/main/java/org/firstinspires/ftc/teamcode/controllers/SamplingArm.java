@@ -11,13 +11,13 @@ public class SamplingArm extends HardwareController {
 
     // Tune these values with core discovery
 
-    private static final double UP_POS = 1.00;
-    private static final double DOWN_POS = 0.0;
+    private static final double UP_POS = 0.84;
+    private static final double DOWN_POS = 0.18;
 
     // Clockwise 0
     // Counterclockwise 255
 
-    private boolean drop = false;
+    private boolean sample = false;
 
     public SamplingArm(Servo servo) {
         this.dropServo = servo;
@@ -31,7 +31,7 @@ public class SamplingArm extends HardwareController {
 
     @Override
     public void loop() {
-        if(drop) {
+        if(sample) {
             Robot.telemetry.addLine("Dropping one servo");
             dropServo.setPosition(DOWN_POS);
         }
@@ -47,9 +47,9 @@ public class SamplingArm extends HardwareController {
         dropServo.setPosition(UP_POS);
     }
 
-    public void setDrop(boolean drop) {
-        Robot.telemetry.addLine(String.format("Setting drop: %b", drop));
-        this.drop = drop;
+    public void setDrop(boolean sample) {
+        Robot.telemetry.addLine(String.format("Setting sample: %b", sample));
+        this.sample = sample;
     }
 
 }

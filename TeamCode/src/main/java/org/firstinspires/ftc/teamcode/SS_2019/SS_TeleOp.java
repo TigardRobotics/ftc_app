@@ -42,8 +42,16 @@ public class SS_TeleOp extends BasicTeleop {
             telemetry.addLine("L Bumper");
             grabber.setDrop(false);
         }
-        if(gamepad1.right_bumper) arm.setDrop(true);
-        else if(gamepad1.left_bumper) arm.setDrop(false);
+
+        if (gamepad1.x)
+        {
+            telemetry.addLine("x");
+            arm.setDrop(true);
+        }
+        else if (gamepad1.b) {
+            telemetry.addLine("b");
+            arm.setDrop(false);
+        }
         super.loop();
     }
 
