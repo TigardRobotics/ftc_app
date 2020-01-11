@@ -12,7 +12,7 @@ public class SamplingArm extends HardwareController {
     // Tune these values with core discovery
 
     private static final double UP_POS = 0.84;
-    private static final double DOWN_POS = 0.18;
+    private static final double DOWN_POS = 0.30;
 
     // Clockwise 0
     // Counterclockwise 255

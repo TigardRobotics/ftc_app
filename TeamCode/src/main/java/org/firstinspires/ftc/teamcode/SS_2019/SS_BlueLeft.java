@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.controllers.HardwareController;
 import org.firstinspires.ftc.teamcode.opmodes.TankBot;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
+import org.firstinspires.ftc.teamcode.statemachines.DriveWithHeadingState;
 import org.firstinspires.ftc.teamcode.statemachines.ProgressTrans;
 import org.firstinspires.ftc.teamcode.statemachines.StateMachine;
 import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
@@ -32,9 +33,9 @@ public class SS_BlueLeft extends TankBot {
     public void start() {
         super.start();
         stateMachine = new StateMachine(
-                new DriveState("forward", 0.5, new ProgressTrans("turn", 1600)),
-                new TurnState("turn", 0.5, new ProgressTrans("line", 18.0)),
-                new DriveState("line", 0.5, new TimeTrans("wait", 0.5)),
+                new DriveWithHeadingState("forward", 0.5, 0.0, new ProgressTrans("turn", 1600)),
+                new TurnState("turn", 0.5, new ProgressTrans("line", 14.0)),
+                new DriveWithHeadingState("line", 0.5, 90.0, new TimeTrans("wait", 0.5)),
                 new WaitState("wait", new TimeTrans("wait", 1.0))
         );
     }
