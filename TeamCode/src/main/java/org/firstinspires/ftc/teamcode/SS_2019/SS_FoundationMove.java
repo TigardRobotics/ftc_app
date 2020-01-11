@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.SS_2019;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.opmodes.TankBot;
 import org.firstinspires.ftc.teamcode.statemachines.DriveState;
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.statemachines.TurnState;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
 @Autonomous(name = "SS_FoundationMove", group = "3965")
+@Disabled
 
 public class SS_FoundationMove extends TankBot{
 
