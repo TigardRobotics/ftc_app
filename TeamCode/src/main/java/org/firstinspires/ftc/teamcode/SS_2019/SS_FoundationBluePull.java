@@ -36,7 +36,7 @@ public class SS_FoundationBluePull extends TankBot{
                 new DriveState("pre-bump",0.50, new ProgressTrans("bump",200)),
                 new DriveState("bump",-0.5, new ProgressTrans("turn1", 200)),
                 new TurnState("turn1", 0.5, new ProgressTrans("move1", 14.0)),
-                new DriveWithHeadingState("move1", 0.5,90.0 + start_angle, new ProgressTrans("turn2", 1900)),
+                new DriveWithHeadingState("move1", 0.5,90.0 + start_angle, new ProgressTrans("turn2", 1700)),
                 new TurnState("turn2", -0.5, new ProgressTrans("move2", 14.0)),
                 new DriveWithHeadingState("move2",0.5, start_angle, new ProgressTrans("turn3",4300)),
                 new TurnState("turn3",-0.5, new ProgressTrans("move3", 14.0)),

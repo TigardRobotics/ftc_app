@@ -12,11 +12,9 @@ import org.firstinspires.ftc.teamcode.statemachines.TimeTrans;
 import org.firstinspires.ftc.teamcode.statemachines.TurnState;
 import org.firstinspires.ftc.teamcode.statemachines.WaitState;
 
-import java.nio.file.Watchable;
+@Autonomous(name = "SS_StoneGrabRed", group = "3965")
 
-@Autonomous(name = "SS_StoneGrabBlue", group = "3965")
-
-public class SS_StoneGrabBlue extends TankBot{
+public class SS_StoneGrabRed extends TankBot{
 
     @Override
     public void init() {
@@ -30,8 +28,8 @@ public class SS_StoneGrabBlue extends TankBot{
            new DualGrabberState("reset", true, new TimeTrans("forward", 0.5)),
                 new DriveWithHeadingState("forward", 0.5, 0.0, new ProgressTrans("grab", 1200.0)),
                 new DualGrabberState("grab", false, new TimeTrans("turn", 1.0)),
-                new TurnState("turn", 0.5, new ProgressTrans("deliver", 14.0)),
-                new DriveWithHeadingState("deliver", 0.5, 90.0, new ProgressTrans("release", 3000)),
+                new TurnState("turn", -0.5, new ProgressTrans("deliver", 14.0)),
+                new DriveWithHeadingState("deliver", 0.5, -90.0, new ProgressTrans("release", 3000)),
                 new DualGrabberState("release", true, new TimeTrans("park", 1.0)),
                 new DriveState("park",-0.5,new ProgressTrans("wait",2000)),
                 new WaitState("wait", new TimeTrans("wait", 30.0))
